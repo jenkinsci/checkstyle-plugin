@@ -6,7 +6,7 @@ import hudson.maven.MavenModule;
 import hudson.maven.MavenReporterDescriptor;
 import hudson.maven.MojoInfo;
 import hudson.model.Action;
-import hudson.plugins.checkstyle.parser.PmdCollector;
+import hudson.plugins.checkstyle.parser.CheckstyleCollector;
 import hudson.plugins.checkstyle.util.HealthAwareMavenReporter;
 import hudson.plugins.checkstyle.util.HealthReportBuilder;
 import hudson.plugins.checkstyle.util.model.JavaProject;
@@ -63,7 +63,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     public JavaProject perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PrintStream logger) throws InterruptedException, IOException {
-        PmdCollector pmdCollector = new PmdCollector(logger, PMD_XML_FILE);
+        CheckstyleCollector pmdCollector = new CheckstyleCollector(logger, PMD_XML_FILE);
 
         return getTargetPath(pom).act(pmdCollector);
     }

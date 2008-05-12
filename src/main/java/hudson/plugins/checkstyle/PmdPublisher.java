@@ -4,7 +4,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.Descriptor;
-import hudson.plugins.checkstyle.parser.PmdCollector;
+import hudson.plugins.checkstyle.parser.CheckstyleCollector;
 import hudson.plugins.checkstyle.util.HealthAwarePublisher;
 import hudson.plugins.checkstyle.util.HealthReportBuilder;
 import hudson.plugins.checkstyle.util.model.JavaProject;
@@ -99,7 +99,7 @@ public class PmdPublisher extends HealthAwarePublisher {
      */
     private JavaProject parseAllWorkspaceFiles(final AbstractBuild<?, ?> build,
             final PrintStream logger) throws IOException, InterruptedException {
-        PmdCollector pmdCollector = new PmdCollector(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN));
+        CheckstyleCollector pmdCollector = new CheckstyleCollector(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN));
 
         return build.getProject().getWorkspace().act(pmdCollector);
     }
