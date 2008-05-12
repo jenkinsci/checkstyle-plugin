@@ -1,15 +1,14 @@
 package hudson.plugins.checkstyle.parser;
 
-import hudson.plugins.checkstyle.parser.Warning;
 import hudson.plugins.checkstyle.util.AnnotationDifferencer;
 import hudson.plugins.checkstyle.util.AnnotationDifferencerTest;
 import hudson.plugins.checkstyle.util.model.FileAnnotation;
 import hudson.plugins.checkstyle.util.model.Priority;
 
 /**
- * Tests the {@link AnnotationDifferencer} for bugs.
+ * Tests the {@link AnnotationDifferencer} for warnings.
  */
-public class BugsDifferencerTest extends AnnotationDifferencerTest {
+public class WarningsDifferencerTest extends AnnotationDifferencerTest {
     /** {@inheritDoc} */
     @Override
     public FileAnnotation createAnnotation(final Priority priority, final String message, final String category,
