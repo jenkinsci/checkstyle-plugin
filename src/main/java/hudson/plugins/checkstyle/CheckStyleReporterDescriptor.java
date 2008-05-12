@@ -11,7 +11,7 @@ import hudson.plugins.checkstyle.util.ReporterDescriptor;
  */
 public class CheckStyleReporterDescriptor extends ReporterDescriptor {
     /**
-     * Creates a new instance of <code>PmdReporterDescriptor</code>.
+     * Creates a new instance of <code>CheckStyleReporterDescriptor</code>.
      *
      * @param pluginDescriptor
      *            the plug-in descriptor of the publisher

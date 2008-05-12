@@ -5,7 +5,7 @@
 		<st:include it="${it.owner}" page="sidepanel.jelly" />
 		<l:main-panel>
 
-			<h1>${%PMD Result}</h1>
+			<h1>${%CheckStyle Result}</h1>
 
 			<h2>${%Warnings Trend}</h2>
 

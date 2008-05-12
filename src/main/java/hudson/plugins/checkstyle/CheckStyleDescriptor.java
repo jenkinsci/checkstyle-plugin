@@ -1,7 +1,6 @@
 package hudson.plugins.checkstyle;
 
 import hudson.plugins.checkstyle.util.PluginDescriptor;
-import hudson.plugins.checkstyle.Messages;
 
 /**
  * Descriptor for the class {@link CheckStylePublisher}. Used as a singleton. The
@@ -11,9 +10,9 @@ import hudson.plugins.checkstyle.Messages;
  */
 public final class CheckStyleDescriptor extends PluginDescriptor {
     /** Plug-in name. */
-    private static final String PLUGIN_NAME = "pmd";
+    private static final String PLUGIN_NAME = "checkstyle";
     /** Icon to use for the result and project action. */
-    private static final String ACTION_ICON = "/plugin/pmd/icons/pmd-24x24.gif";
+    private static final String ACTION_ICON = "/plugin/checkstyle/icons/checkstyle-24x24.gif";
 
     /**
      * Instantiates a new find bugs descriptor.

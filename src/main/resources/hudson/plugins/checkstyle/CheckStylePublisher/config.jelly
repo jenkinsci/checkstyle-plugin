@@ -1,14 +1,14 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
 	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <f:entry title="${%PMD results}"
+  <f:entry title="${%Checkstyle results}"
 	description="${%description.pattern}">
-	<f:textbox name="pmd.pattern" value="${instance.pattern}"
-		checkUrl="'${rootURL}/publisher/PmdPublisher/checkPattern?job=${it.fullName}&amp;value='+escape(this.value)" />
+	<f:textbox name="checkstyle.pattern" value="${instance.pattern}"
+		checkUrl="'${rootURL}/publisher/CheckStylePublisher/checkPattern?job=${it.fullName}&amp;value='+escape(this.value)" />
   </f:entry>
   <f:advanced>
 	<f:entry title="${%Unstable threshold}" description="${%description.threshold}">
-		<f:textbox name="pmd.threshold" value="${instance.threshold}"
-			checkUrl="'${rootURL}/publisher/PmdPublisher/checkThreshold?job=${it.fullName}&amp;value='+escape(this.value)" />
+		<f:textbox name="checkstyle.threshold" value="${instance.threshold}"
+			checkUrl="'${rootURL}/publisher/CheckStylePublisher/checkThreshold?job=${it.fullName}&amp;value='+escape(this.value)" />
 	</f:entry>
 	<f:entry title="${%Health reporting}" description="${%description.healthy}">
 		<table>
@@ -29,17 +29,17 @@
 				<tr>
 					<th>${%Number of warnings}</th>
 					<td>
-						<f:textbox name="pmd.healthy" value="${instance.healthy}" />
+						<f:textbox name="checkstyle.healthy" value="${instance.healthy}" />
 					</td>
 					<td>
-						<f:textbox name="pmd.unHealthy" value="${instance.unHealthy}" />
+						<f:textbox name="checkstyle.unHealthy" value="${instance.unHealthy}" />
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</f:entry>
 	<f:entry title="${%Trend report height}" description="${%description.height}">
-		<f:textbox name="pmd.height" value="${instance.height}" />
+		<f:textbox name="checkstyle.height" value="${instance.height}" />
 	</f:entry>
   </f:advanced>
 </j:jelly>

@@ -2,10 +2,9 @@ package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractProject;
 import hudson.plugins.checkstyle.util.AbstractProjectAction;
-import hudson.plugins.checkstyle.Messages;
 
 /**
- * Entry point to visualize the PMD trend graph in the project screen.
+ * Entry point to visualize the Checkstyle trend graph in the project screen.
  * Drawing of the graph is delegated to the associated
  * {@link CheckStyleResultAction}.
  *
@@ -24,7 +23,7 @@ public class CheckStyleProjectAction extends AbstractProjectAction<CheckStyleRes
      *            the height of the trend graph
      */
     public CheckStyleProjectAction(final AbstractProject<?, ?> project, final int height) {
-        super(project, CheckStyleResultAction.class, CheckStylePublisher.PMD_DESCRIPTOR, height);
+        super(project, CheckStyleResultAction.class, CheckStylePublisher.CHECKSTYLE_DESCRIPTOR, height);
     }
 
     /** {@inheritDoc} */
@@ -35,7 +34,7 @@ public class CheckStyleProjectAction extends AbstractProjectAction<CheckStyleRes
     /** {@inheritDoc} */
     @Override
     public String getCookieName() {
-        return "PMD_displayMode";
+        return "Checkstyle_displayMode";
     }
 
     /** {@inheritDoc} */

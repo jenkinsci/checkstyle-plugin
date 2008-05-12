@@ -18,7 +18,7 @@ import org.apache.maven.project.MavenProject;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
- * Publishes the results of the PMD analysis  (maven 2 project type).
+ * Publishes the results of the Checkstyle analysis (maven 2 project type).
  *
  * @author Ulli Hafner
  */
@@ -26,15 +26,12 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 2272875032054063496L;
     /** Descriptor of this publisher. */
-    public static final CheckStyleReporterDescriptor PMD_SCANNER_DESCRIPTOR = new CheckStyleReporterDescriptor(CheckStylePublisher.PMD_DESCRIPTOR);
-    /** Default PMD pattern. */
-    private static final String PMD_XML_FILE = "pmd.xml";
-    /** Ant file-set pattern of files to work with. */
-    @SuppressWarnings("unused")
-    private String pattern; // obsolete since release 2.5
+    public static final CheckStyleReporterDescriptor CHECKSTYLE_SCANNER_DESCRIPTOR = new CheckStyleReporterDescriptor(CheckStylePublisher.CHECKSTYLE_DESCRIPTOR);
+    /** Default Checkstyle pattern. */
+    private static final String CHECKSTYLE_XML_FILE = "checkstyle-results.xml";
 
     /**
-     * Creates a new instance of <code>PmdReporter</code>.
+     * Creates a new instance of <code>CheckStyleReporter</code>.
      *
      * @param threshold
      *            Bug threshold to be reached if a build should be considered as
@@ -50,21 +47,21 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
      */
     @DataBoundConstructor
     public CheckStyleReporter(final String threshold, final String healthy, final String unHealthy, final String height) {
-        super(threshold, healthy, unHealthy, height, "PMD");
+        super(threshold, healthy, unHealthy, height, "CHECKSTYLE");
     }
 
     /** {@inheritDoc} */
     @Override
     protected boolean acceptGoal(final String goal) {
-        return "pmd".equals(goal) || "site".equals(goal);
+        return "checkstyle".equals(goal) || "site".equals(goal);
     }
 
     /** {@inheritDoc} */
     @Override
     public JavaProject perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PrintStream logger) throws InterruptedException, IOException {
-        CheckstyleCollector pmdCollector = new CheckstyleCollector(logger, PMD_XML_FILE);
+        CheckstyleCollector checkstyleCollector = new CheckstyleCollector(logger, CHECKSTYLE_XML_FILE);
 
-        return getTargetPath(pom).act(pmdCollector);
+        return getTargetPath(pom).act(checkstyleCollector);
     }
 
     /** {@inheritDoc} */
@@ -93,7 +90,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     public MavenReporterDescriptor getDescriptor() {
-        return PMD_SCANNER_DESCRIPTOR;
+        return CHECKSTYLE_SCANNER_DESCRIPTOR;
     }
 }
 

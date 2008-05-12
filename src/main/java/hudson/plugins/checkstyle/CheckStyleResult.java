@@ -20,7 +20,6 @@ import hudson.plugins.checkstyle.util.model.JavaPackage;
 import hudson.plugins.checkstyle.util.model.JavaProject;
 import hudson.plugins.checkstyle.util.model.MavenModule;
 import hudson.plugins.checkstyle.util.model.Priority;
-import hudson.plugins.checkstyle.Messages;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +44,7 @@ import com.thoughtworks.xstream.XStream;
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 
 /**
- * Represents the results of the PMD analysis. One instance of this class is persisted for
+ * Represents the results of the Checkstyle analysis. One instance of this class is persisted for
  * each build via an XML file.
  *
  * @author Ulli Hafner
@@ -58,10 +57,10 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
     /** Serialization provider. */
     private static final XStream XSTREAM = new AnnotationStream();
     static {
-        XSTREAM.alias("bug", Warning.class);
+        XSTREAM.alias("warning", Warning.class);
     }
 
-    /** The parsed PMD result. */
+    /** The parsed Checkstyle result. */
     @SuppressWarnings("Se")
     private transient WeakReference<JavaProject> project;
     /** All new warnings in the current build.*/
@@ -108,26 +107,26 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
     private final int numberOfModules;
 
     /**
-     * Creates a new instance of <code>PmdResult</code>.
+     * Creates a new instance of <code>CheckStyleResult</code>.
      *
      * @param build
      *            the current build as owner of this action
      * @param project
-     *            the parsed PMD result
+     *            the parsed Checkstyle result
      */
     public CheckStyleResult(final AbstractBuild<?, ?> build, final JavaProject project) {
         this(build, project, new JavaProject(), 0);
     }
 
     /**
-     * Creates a new instance of <code>PmdResult</code>.
+     * Creates a new instance of <code>CheckStyleResult</code>.
      *
      * @param build
      *            the current build as owner of this action
      * @param project
-     *            the parsed PMD result
+     *            the parsed Checkstyle result
      * @param previousProject
-     *            the parsed PMD result of the previous build
+     *            the parsed Checkstyle result of the previous build
      * @param highScore
      *            the maximum period with zero warnings in a build
      */
@@ -175,7 +174,7 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
             getDataFile().write(files.toArray(new FileAnnotation[files.size()]));
         }
         catch (IOException exception) {
-            LOGGER.log(Level.WARNING, "Failed to serialize the pmd result.", exception);
+            LOGGER.log(Level.WARNING, "Failed to serialize the checkstyle result.", exception);
         }
     }
 
@@ -256,7 +255,7 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
      * @return the serialization file.
      */
     private XmlFile getDataFile() {
-        return new XmlFile(XSTREAM, new File(getOwner().getRootDir(), "pmd-warnings.xml"));
+        return new XmlFile(XSTREAM, new File(getOwner().getRootDir(), "checkstyle-warnings.xml"));
     }
 
     /**
@@ -406,7 +405,7 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
     }
 
     /**
-     * Loads the PMD results and wraps them in a weak reference that might
+     * Loads the Checkstyle results and wraps them in a weak reference that might
      * get removed by the garbage collector.
      */
     private void loadResult() {
@@ -416,7 +415,7 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
             FileAnnotation[] annotations = (FileAnnotation[])getDataFile().read();
             newProject.addAnnotations(annotations);
 
-            LOGGER.log(Level.INFO, "Loaded pmd data file " + getDataFile() + " for build " + getOwner().getNumber());
+            LOGGER.log(Level.INFO, "Loaded checkstyle data file " + getDataFile() + " for build " + getOwner().getNumber());
             result = newProject;
         }
         catch (IOException exception) {
@@ -427,7 +426,7 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
     }
 
     /**
-     * Loads the PMD results and the result of the previous build and wraps
+     * Loads the Checkstyle results and the result of the previous build and wraps
      * them in a weak reference that might get removed by the garbage collector.
      */
     @java.lang.SuppressWarnings("unchecked")
@@ -451,7 +450,7 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
     }
 
     /**
-     * Returns the dynamic result of the PMD analysis (a detail page for a
+     * Returns the dynamic result of the Checkstyle analysis (a detail page for a
      * module, package or warnings file or a detail object for new or fixed
      * warnings).
      *
@@ -461,7 +460,7 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
      *            Stapler request
      * @param response
      *            Stapler response
-     * @return the dynamic result of the PMD analysis (detail page for a
+     * @return the dynamic result of the Checkstyle analysis (detail page for a
      *         package).
      */
     public Object getDynamic(final String link, final StaplerRequest request, final StaplerResponse response) {
@@ -476,7 +475,7 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
             return new NewWarningsDetail(getOwner(), getNewWarnings(), Messages.Checkstyle_NewWarnings_Detail_header());
         }
         else if ("error".equals(link)) {
-            return new ErrorDetail(getOwner(), "PMD", errors);
+            return new ErrorDetail(getOwner(), "Checkstyle", errors);
         }
         else {
             if (isSingleModuleProject()) {

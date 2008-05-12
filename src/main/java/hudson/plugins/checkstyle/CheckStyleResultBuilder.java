@@ -4,14 +4,14 @@ import hudson.model.AbstractBuild;
 import hudson.plugins.checkstyle.util.model.JavaProject;
 
 /**
- * Creates a new PMD result based on the values of a previous build and the
+ * Creates a new Checkstyle result based on the values of a previous build and the
  * current project.
  *
  * @author Ulli Hafner
  */
 public class CheckStyleResultBuilder {
     /**
-     * Creates a result that persists the PMD information for the
+     * Creates a result that persists the Checkstyle information for the
      * specified build.
      *
      * @param build

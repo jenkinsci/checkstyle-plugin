@@ -1,11 +1,10 @@
 package hudson.plugins.checkstyle;
 
-import hudson.plugins.checkstyle.Messages;
 
 
 /**
- * Represents the result summary of the PMD parser. This summary will be
- * shown in the summary.jelly script of the PMD result action.
+ * Represents the result summary of the Checkstyle parser. This summary will be
+ * shown in the summary.jelly script of the Checkstyle result action.
  *
  * @author Ulli Hafner
  */
@@ -21,9 +20,9 @@ public final class ResultSummary {
         StringBuilder summary = new StringBuilder();
         int bugs = result.getNumberOfAnnotations();
 
-        summary.append("PMD: ");
+        summary.append("Checkstyle: ");
         if (bugs > 0) {
-            summary.append("<a href=\"pmdResult\">");
+            summary.append("<a href=\"checkstyleResult\">");
         }
         if (bugs == 1) {
             summary.append(Messages.Checkstyle_ResultAction_OneWarning());
@@ -54,7 +53,7 @@ public final class ResultSummary {
     public static String createDeltaMessage(final CheckStyleResult result) {
         StringBuilder summary = new StringBuilder();
         if (result.getNumberOfNewWarnings() > 0) {
-            summary.append("<li><a href=\"pmdResult/new\">");
+            summary.append("<li><a href=\"checkstyleResult/new\">");
             if (result.getNumberOfNewWarnings() == 1) {
                 summary.append(Messages.Checkstyle_ResultAction_OneNewWarning());
             }
@@ -64,7 +63,7 @@ public final class ResultSummary {
             summary.append("</a></li>");
         }
         if (result.getNumberOfFixedWarnings() > 0) {
-            summary.append("<li><a href=\"pmdResult/fixed\">");
+            summary.append("<li><a href=\"checkstyleResult/fixed\">");
             if (result.getNumberOfFixedWarnings() == 1) {
                 summary.append(Messages.Checkstyle_ResultAction_OneFixedWarning());
             }

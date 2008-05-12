@@ -8,12 +8,12 @@ import hudson.plugins.checkstyle.util.PluginDescriptor;
 import java.util.NoSuchElementException;
 
 /**
- * Controls the live cycle of the PMD results. This action persists the
- * results of the PMD analysis of a build and displays the results on the
+ * Controls the live cycle of the Checkstyle results. This action persists the
+ * results of the Checkstyle analysis of a build and displays the results on the
  * build page. The actual visualization of the results is defined in the
  * matching <code>summary.jelly</code> file.
  * <p>
- * Moreover, this class renders the PMD result trend.
+ * Moreover, this class renders the Checkstyle result trend.
  * </p>
  *
  * @author Ulli Hafner
@@ -23,7 +23,7 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
     private static final long serialVersionUID = -5329651349674842873L;
 
     /**
-     * Creates a new instance of <code>PmdResultAction</code>.
+     * Creates a new instance of <code>CheckStyleResultAction</code>.
      *
      * @param owner
      *            the associated build of this action
@@ -37,7 +37,7 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
     }
 
     /**
-     * Creates a new instance of <code>PmdResultAction</code>.
+     * Creates a new instance of <code>CheckStyleResultAction</code>.
      *
      * @param owner
      *            the associated build of this action
@@ -56,13 +56,13 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
     /** {@inheritDoc} */
     @Override
     protected PluginDescriptor getDescriptor() {
-        return CheckStylePublisher.PMD_DESCRIPTOR;
+        return CheckStylePublisher.CHECKSTYLE_DESCRIPTOR;
     }
 
     /**
-     * Gets the PMD result of the previous build.
+     * Gets the Checkstyle result of the previous build.
      *
-     * @return the PMD result of the previous build.
+     * @return the Checkstyle result of the previous build.
      * @throws NoSuchElementException
      *             if there is no previous build for this action
      */

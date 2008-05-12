@@ -30,7 +30,7 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
     private final String height;
 
     /**
-     * Creates a new instance of <code>MavenPmdResultAction</code>.
+     * Creates a new instance of <code>MavenCheckStyleResultAction</code>.
      *
      * @param owner
      *            the associated build of this action
@@ -45,7 +45,7 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
     }
 
     /**
-     * Creates a new instance of <code>MavenPmdResultAction</code>.
+     * Creates a new instance of <code>MavenCheckStyleResultAction</code>.
      *
      * @param owner
      *            the associated build of this action

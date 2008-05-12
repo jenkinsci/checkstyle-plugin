@@ -5,7 +5,7 @@ import hudson.maven.MavenReporters;
 import hudson.tasks.BuildStep;
 
 /**
- * Registers the PMD plug-in publisher.
+ * Registers the Checkstyle plug-in publisher.
  *
  * @author Ulli Hafner
  */
@@ -14,8 +14,8 @@ public class CheckStylePlugin extends Plugin {
     @Override
     @SuppressWarnings("PMD")
     public void start() throws Exception {
-        BuildStep.PUBLISHERS.addRecorder(CheckStylePublisher.PMD_DESCRIPTOR);
+        BuildStep.PUBLISHERS.addRecorder(CheckStylePublisher.CHECKSTYLE_DESCRIPTOR);
 
-        MavenReporters.LIST.add(CheckStyleReporter.PMD_SCANNER_DESCRIPTOR);
+        MavenReporters.LIST.add(CheckStyleReporter.CHECKSTYLE_SCANNER_DESCRIPTOR);
     }
 }
