@@ -33,7 +33,7 @@ public class CheckStyleParserTest {
         assertEquals("Wrong number of files detected.", 2, files.size());
         Iterator<WorkspaceFile> iterator = files.iterator();
         WorkspaceFile file = iterator.next();
-        assertEquals("package.html not detected.", "C:/Build/Results/jobs/Maven/workspace/tasks/src/main/java/hudson/plugins/tasks/util/model/package.html", file.getName());
+        assertEquals("package.html not detected.", "X:/Build/Results/jobs/Maven/workspace/tasks/src/main/java/hudson/plugins/tasks/util/model/package.html", file.getName());
 
         assertEquals("Wrong number of annotations detected.", 1, file.getNumberOfAnnotations());
         FileAnnotation annotation = file.getAnnotations().iterator().next();
@@ -48,7 +48,7 @@ public class CheckStyleParserTest {
         assertEquals("Wrong message detected.", "Fehlende Package-Dokumentation.", warning.getMessage());
 
         file = iterator.next();
-        assertEquals("CsharpNamespaceDetector.java not detected.", "C:/Build/Results/jobs/Maven/workspace/tasks/src/main/java/hudson/plugins/tasks/parser/CsharpNamespaceDetector.java", file.getName());
+        assertEquals("CsharpNamespaceDetector.java not detected.", "X:/Build/Results/jobs/Maven/workspace/tasks/src/main/java/hudson/plugins/tasks/parser/CsharpNamespaceDetector.java", file.getName());
         assertEquals("Wrong number of annotations detected.", 6, file.getNumberOfAnnotations());
     }
 }

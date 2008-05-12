@@ -1,6 +1,7 @@
 package hudson.plugins.checkstyle.parser;
 
 import hudson.plugins.checkstyle.util.AnnotationParser;
+import hudson.plugins.checkstyle.util.JavaPackageDetector;
 import hudson.plugins.checkstyle.util.model.MavenModule;
 import hudson.plugins.checkstyle.util.model.Priority;
 
@@ -70,28 +71,31 @@ public class CheckStyleParser implements AnnotationParser {
     private MavenModule convert(final CheckStyle collection, final String moduleName) {
         MavenModule module = new MavenModule(moduleName);
         for (hudson.plugins.checkstyle.parser.File file : collection.getFiles()) {
-            for (Error warning : file.getErrors()) {
+            String packageName = new JavaPackageDetector().detectPackageName(file.getName());
+            for (Error error : file.getErrors()) {
                 Priority priority;
-                if ("error".equalsIgnoreCase(warning.getSeverity())) {
+                if ("error".equalsIgnoreCase(error.getSeverity())) {
                     priority = Priority.HIGH;
                 }
-                else if ("warning".equalsIgnoreCase(warning.getSeverity())) {
+                else if ("warning".equalsIgnoreCase(error.getSeverity())) {
                     priority = Priority.NORMAL;
                 }
-                else if ("info".equalsIgnoreCase(warning.getSeverity())) {
+                else if ("info".equalsIgnoreCase(error.getSeverity())) {
                     priority = Priority.LOW;
                 }
                 else {
                     continue; // ignore
                 }
-                String source = warning.getSource();
+                String source = error.getSource();
                 String type = StringUtils.substringAfterLast(source, ".");
                 String category = StringUtils.substringAfterLast(StringUtils.substringBeforeLast(source, "."), ".");
-                Warning bug = new Warning(priority, warning.getMessage(), StringUtils.capitalize(category), type, warning.getLine());
-                bug.setModuleName(moduleName);
-                bug.setFileName(file.getName());
 
-                module.addAnnotation(bug);
+                Warning warning = new Warning(priority, error.getMessage(), StringUtils.capitalize(category), type, error.getLine());
+                warning.setModuleName(moduleName);
+                warning.setFileName(file.getName());
+                warning.setPackageName(packageName);
+
+                module.addAnnotation(warning);
             }
         }
         return module;
