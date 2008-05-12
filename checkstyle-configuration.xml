@@ -131,7 +131,7 @@
         <metadata name="com.atlassw.tools.eclipse.checkstyle.comment" value="Coupling Checks"/>
         <property name="offCommentFormat" value="CHECKSTYLE\:COUPLING-OFF"/>
         <property name="onCommentFormat" value="CHECKSTYLE\:COUPLING-ON"/>
-        <property name="checkFormat" value=".*(Coupling|Complexity)"/>
+        <property name="checkFormat" value=".*(Coupling|Complexity|)"/>
     </module>
     <module name="SuppressionCommentFilter">
         <metadata name="com.atlassw.tools.eclipse.checkstyle.comment" value="All Checks"/>
