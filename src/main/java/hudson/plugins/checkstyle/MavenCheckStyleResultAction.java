@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A {@link PmdResultAction} for native maven jobs. This action
+ * A {@link CheckStyleResultAction} for native maven jobs. This action
  * additionally provides result aggregation for sub-modules and for the main
  * project.
  *
  * @author Ulli Hafner
  */
-public class MavenCheckStyleResultAction extends PmdResultAction implements AggregatableAction, MavenAggregatedReport {
+public class MavenCheckStyleResultAction extends CheckStyleResultAction implements AggregatableAction, MavenAggregatedReport {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 1273798369273225973L;
     /** Determines the height of the trend graph. */
@@ -56,7 +56,7 @@ public class MavenCheckStyleResultAction extends PmdResultAction implements Aggr
      * @param result
      *            the result in this build
      */
-    public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final String height, final PmdResult result) {
+    public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final String height, final CheckStyleResult result) {
         super(owner, healthReportBuilder, result);
         this.height = height;
     }
@@ -68,7 +68,7 @@ public class MavenCheckStyleResultAction extends PmdResultAction implements Aggr
 
     /** {@inheritDoc} */
     public Action getProjectAction(final MavenModuleSet moduleSet) {
-        return new PmdProjectAction(moduleSet, new TrendReportSize(height).getHeight());
+        return new CheckStyleProjectAction(moduleSet, new TrendReportSize(height).getHeight());
     }
 
     /** {@inheritDoc} */
@@ -94,7 +94,7 @@ public class MavenCheckStyleResultAction extends PmdResultAction implements Aggr
                 addModule(project, builds);
             }
         }
-        setResult(new PmdResultBuilder().build(getOwner(), project));
+        setResult(new CheckStyleResultBuilder().build(getOwner(), project));
     }
 
     /**

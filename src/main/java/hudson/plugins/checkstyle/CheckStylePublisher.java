@@ -22,11 +22,11 @@ import org.kohsuke.stapler.DataBoundConstructor;
  *
  * @author Ulli Hafner
  */
-public class PmdPublisher extends HealthAwarePublisher {
+public class CheckStylePublisher extends HealthAwarePublisher {
     /** Default PMD pattern. */
     private static final String DEFAULT_PATTERN = "**/pmd.xml";
     /** Descriptor of this publisher. */
-    public static final PmdDescriptor PMD_DESCRIPTOR = new PmdDescriptor();
+    public static final CheckStyleDescriptor PMD_DESCRIPTOR = new CheckStyleDescriptor();
     /** Ant file-set pattern of files to work with. */
     private final String pattern;
 
@@ -48,7 +48,7 @@ public class PmdPublisher extends HealthAwarePublisher {
      *            the height of the trend graph
      */
     @DataBoundConstructor
-    public PmdPublisher(final String pattern, final String threshold, final String healthy, final String unHealthy, final String height) {
+    public CheckStylePublisher(final String pattern, final String threshold, final String healthy, final String unHealthy, final String height) {
         super(threshold, healthy, unHealthy, height, "PMD");
         this.pattern = pattern;
     }
@@ -65,7 +65,7 @@ public class PmdPublisher extends HealthAwarePublisher {
     /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final AbstractProject<?, ?> project) {
-        return new PmdProjectAction(project, getTrendHeight());
+        return new CheckStyleProjectAction(project, getTrendHeight());
     }
 
     /** {@inheritDoc} */
@@ -74,11 +74,11 @@ public class PmdPublisher extends HealthAwarePublisher {
         log(logger, "Collecting pmd analysis files...");
 
         JavaProject project = parseAllWorkspaceFiles(build, logger);
-        PmdResult result = new PmdResultBuilder().build(build, project);
+        CheckStyleResult result = new CheckStyleResultBuilder().build(build, project);
         HealthReportBuilder healthReportBuilder = createHealthReporter(
                 Messages.Checkstyle_ResultAction_HealthReportSingleItem(),
                 Messages.Checkstyle_ResultAction_HealthReportMultipleItem("%d"));
-        build.getActions().add(new PmdResultAction(build, healthReportBuilder, result));
+        build.getActions().add(new CheckStyleResultAction(build, healthReportBuilder, result));
 
         return project;
     }

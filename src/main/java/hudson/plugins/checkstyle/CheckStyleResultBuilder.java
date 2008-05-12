@@ -9,7 +9,7 @@ import hudson.plugins.checkstyle.util.model.JavaProject;
  *
  * @author Ulli Hafner
  */
-public class PmdResultBuilder {
+public class CheckStyleResultBuilder {
     /**
      * Creates a result that persists the PMD information for the
      * specified build.
@@ -20,17 +20,17 @@ public class PmdResultBuilder {
      *            the project containing the annotations
      * @return the result action
      */
-    public PmdResult build(final AbstractBuild<?, ?> build, final JavaProject project) {
+    public CheckStyleResult build(final AbstractBuild<?, ?> build, final JavaProject project) {
         Object previous = build.getPreviousBuild();
         if (previous instanceof AbstractBuild<?, ?>) {
             AbstractBuild<?, ?> previousBuild = (AbstractBuild<?, ?>)previous;
-            PmdResultAction previousAction = previousBuild.getAction(PmdResultAction.class);
+            CheckStyleResultAction previousAction = previousBuild.getAction(CheckStyleResultAction.class);
             if (previousAction != null) {
-                return new PmdResult(build, project, previousAction.getResult().getProject(),
+                return new CheckStyleResult(build, project, previousAction.getResult().getProject(),
                         previousAction.getResult().getZeroWarningsHighScore());
             }
         }
-        return new PmdResult(build, project);
+        return new CheckStyleResult(build, project);
     }
 }
 

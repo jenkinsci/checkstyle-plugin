@@ -7,11 +7,11 @@ import hudson.plugins.checkstyle.Messages;
 /**
  * Entry point to visualize the PMD trend graph in the project screen.
  * Drawing of the graph is delegated to the associated
- * {@link PmdResultAction}.
+ * {@link CheckStyleResultAction}.
  *
  * @author Ulli Hafner
  */
-public class PmdProjectAction extends AbstractProjectAction<PmdResultAction> {
+public class CheckStyleProjectAction extends AbstractProjectAction<CheckStyleResultAction> {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = -654316141132780561L;
 
@@ -23,8 +23,8 @@ public class PmdProjectAction extends AbstractProjectAction<PmdResultAction> {
      * @param height
      *            the height of the trend graph
      */
-    public PmdProjectAction(final AbstractProject<?, ?> project, final int height) {
-        super(project, PmdResultAction.class, PmdPublisher.PMD_DESCRIPTOR, height);
+    public CheckStyleProjectAction(final AbstractProject<?, ?> project, final int height) {
+        super(project, CheckStyleResultAction.class, CheckStylePublisher.PMD_DESCRIPTOR, height);
     }
 
     /** {@inheritDoc} */

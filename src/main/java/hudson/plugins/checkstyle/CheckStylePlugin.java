@@ -9,12 +9,12 @@ import hudson.tasks.BuildStep;
  *
  * @author Ulli Hafner
  */
-public class PmdPlugin extends Plugin {
+public class CheckStylePlugin extends Plugin {
     /** {@inheritDoc} */
     @Override
     @SuppressWarnings("PMD")
     public void start() throws Exception {
-        BuildStep.PUBLISHERS.addRecorder(PmdPublisher.PMD_DESCRIPTOR);
+        BuildStep.PUBLISHERS.addRecorder(CheckStylePublisher.PMD_DESCRIPTOR);
 
         MavenReporters.LIST.add(CheckStyleReporter.PMD_SCANNER_DESCRIPTOR);
     }

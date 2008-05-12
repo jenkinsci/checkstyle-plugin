@@ -4,7 +4,6 @@ import hudson.model.AbstractBuild;
 import hudson.plugins.checkstyle.util.AbstractResultAction;
 import hudson.plugins.checkstyle.util.HealthReportBuilder;
 import hudson.plugins.checkstyle.util.PluginDescriptor;
-import hudson.plugins.checkstyle.Messages;
 
 import java.util.NoSuchElementException;
 
@@ -19,7 +18,7 @@ import java.util.NoSuchElementException;
  *
  * @author Ulli Hafner
  */
-public class PmdResultAction extends AbstractResultAction<PmdResult> {
+public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResult> {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = -5329651349674842873L;
 
@@ -33,7 +32,7 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
      * @param result
      *            the result in this build
      */
-    public PmdResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final PmdResult result) {
+    public CheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final CheckStyleResult result) {
         super(owner, healthReportBuilder, result);
     }
 
@@ -45,7 +44,7 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
      * @param healthReportBuilder
      *            health builder to use
      */
-    public PmdResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder) {
+    public CheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder) {
         super(owner, healthReportBuilder);
     }
 
@@ -57,7 +56,7 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
     /** {@inheritDoc} */
     @Override
     protected PluginDescriptor getDescriptor() {
-        return PmdPublisher.PMD_DESCRIPTOR;
+        return CheckStylePublisher.PMD_DESCRIPTOR;
     }
 
     /**
@@ -67,10 +66,10 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
      * @throws NoSuchElementException
      *             if there is no previous build for this action
      */
-    public PmdResultAction getPreviousResultAction() {
-        AbstractResultAction<PmdResult> previousBuild = getPreviousBuild();
-        if (previousBuild instanceof PmdResultAction) {
-            return (PmdResultAction)previousBuild;
+    public CheckStyleResultAction getPreviousResultAction() {
+        AbstractResultAction<CheckStyleResult> previousBuild = getPreviousBuild();
+        if (previousBuild instanceof CheckStyleResultAction) {
+            return (CheckStyleResultAction)previousBuild;
         }
         throw new NoSuchElementException("There is no previous build for action " + this);
     }

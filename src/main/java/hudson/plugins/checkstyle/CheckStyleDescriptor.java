@@ -4,12 +4,12 @@ import hudson.plugins.checkstyle.util.PluginDescriptor;
 import hudson.plugins.checkstyle.Messages;
 
 /**
- * Descriptor for the class {@link PmdPublisher}. Used as a singleton. The
+ * Descriptor for the class {@link CheckStylePublisher}. Used as a singleton. The
  * class is marked as public so that it can be accessed from views.
  *
  * @author Ulli Hafner
  */
-public final class PmdDescriptor extends PluginDescriptor {
+public final class CheckStyleDescriptor extends PluginDescriptor {
     /** Plug-in name. */
     private static final String PLUGIN_NAME = "pmd";
     /** Icon to use for the result and project action. */
@@ -18,8 +18,8 @@ public final class PmdDescriptor extends PluginDescriptor {
     /**
      * Instantiates a new find bugs descriptor.
      */
-    PmdDescriptor() {
-        super(PmdPublisher.class);
+    CheckStyleDescriptor() {
+        super(CheckStylePublisher.class);
     }
 
     /** {@inheritDoc} */

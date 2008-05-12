@@ -26,7 +26,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 2272875032054063496L;
     /** Descriptor of this publisher. */
-    public static final CheckStyleReporterDescriptor PMD_SCANNER_DESCRIPTOR = new CheckStyleReporterDescriptor(PmdPublisher.PMD_DESCRIPTOR);
+    public static final CheckStyleReporterDescriptor PMD_SCANNER_DESCRIPTOR = new CheckStyleReporterDescriptor(CheckStylePublisher.PMD_DESCRIPTOR);
     /** Default PMD pattern. */
     private static final String PMD_XML_FILE = "pmd.xml";
     /** Ant file-set pattern of files to work with. */
@@ -70,7 +70,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     protected void persistResult(final JavaProject project, final MavenBuild build) {
-        PmdResult result = new PmdResultBuilder().build(build, project);
+        CheckStyleResult result = new CheckStyleResultBuilder().build(build, project);
         HealthReportBuilder healthReportBuilder = createHealthBuilder(
                 Messages.Checkstyle_ResultAction_HealthReportSingleItem(),
                 Messages.Checkstyle_ResultAction_HealthReportMultipleItem("%d"));
@@ -81,7 +81,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final MavenModule module) {
-        return new PmdProjectAction(module, getTrendHeight());
+        return new CheckStyleProjectAction(module, getTrendHeight());
     }
 
     /** {@inheritDoc} */

@@ -17,7 +17,7 @@ public final class ResultSummary {
      *            the result
      * @return the message
      */
-    public static String createSummary(final PmdResult result) {
+    public static String createSummary(final CheckStyleResult result) {
         StringBuilder summary = new StringBuilder();
         int bugs = result.getNumberOfAnnotations();
 
@@ -51,7 +51,7 @@ public final class ResultSummary {
      *            the result
      * @return the message
      */
-    public static String createDeltaMessage(final PmdResult result) {
+    public static String createDeltaMessage(final CheckStyleResult result) {
         StringBuilder summary = new StringBuilder();
         if (result.getNumberOfNewWarnings() > 0) {
             summary.append("<li><a href=\"pmdResult/new\">");

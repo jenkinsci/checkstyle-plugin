@@ -50,11 +50,11 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  *
  * @author Ulli Hafner
  */
-public class PmdResult implements ModelObject, Serializable, AnnotationProvider {
+public class CheckStyleResult implements ModelObject, Serializable, AnnotationProvider {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 2768250056765266658L;
     /** Logger. */
-    private static final Logger LOGGER = Logger.getLogger(PmdResult.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CheckStyleResult.class.getName());
     /** Serialization provider. */
     private static final XStream XSTREAM = new AnnotationStream();
     static {
@@ -115,7 +115,7 @@ public class PmdResult implements ModelObject, Serializable, AnnotationProvider 
      * @param project
      *            the parsed PMD result
      */
-    public PmdResult(final AbstractBuild<?, ?> build, final JavaProject project) {
+    public CheckStyleResult(final AbstractBuild<?, ?> build, final JavaProject project) {
         this(build, project, new JavaProject(), 0);
     }
 
@@ -131,7 +131,7 @@ public class PmdResult implements ModelObject, Serializable, AnnotationProvider 
      * @param highScore
      *            the maximum period with zero warnings in a build
      */
-    public PmdResult(final AbstractBuild<?, ?> build, final JavaProject project, final JavaProject previousProject, final long highScore) {
+    public CheckStyleResult(final AbstractBuild<?, ?> build, final JavaProject project, final JavaProject previousProject, final long highScore) {
         owner = build;
 
         numberOfWarnings = project.getNumberOfAnnotations();
@@ -579,7 +579,7 @@ public class PmdResult implements ModelObject, Serializable, AnnotationProvider 
      *         such build exists
      */
     public JavaProject getPreviousResult() {
-        PmdResultAction action = getOwner().getAction(PmdResultAction.class);
+        CheckStyleResultAction action = getOwner().getAction(CheckStyleResultAction.class);
         if (action.hasPreviousResultAction()) {
             return action.getPreviousResultAction().getResult().getProject();
         }
@@ -594,7 +594,7 @@ public class PmdResult implements ModelObject, Serializable, AnnotationProvider 
      * @return <code>true</code> if a previous build result exists.
      */
     public boolean hasPreviousResult() {
-        return getOwner().getAction(PmdResultAction.class).hasPreviousResultAction();
+        return getOwner().getAction(CheckStyleResultAction.class).hasPreviousResultAction();
     }
 
     /**
