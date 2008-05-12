@@ -4,7 +4,8 @@ import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.Descriptor;
-import hudson.plugins.checkstyle.parser.CheckstyleCollector;
+import hudson.plugins.checkstyle.parser.CheckStyleParser;
+import hudson.plugins.checkstyle.util.FilesParser;
 import hudson.plugins.checkstyle.util.HealthAwarePublisher;
 import hudson.plugins.checkstyle.util.HealthReportBuilder;
 import hudson.plugins.checkstyle.util.model.JavaProject;
@@ -72,7 +73,8 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     public JavaProject perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
         log(logger, "Collecting checkstyle analysis files...");
 
-        JavaProject project = parseAllWorkspaceFiles(build, logger);
+        FilesParser parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new CheckStyleParser());
+        JavaProject project = build.getProject().getWorkspace().act(parser);
         CheckStyleResult result = new CheckStyleResultBuilder().build(build, project);
         HealthReportBuilder healthReportBuilder = createHealthReporter(
                 Messages.Checkstyle_ResultAction_HealthReportSingleItem(),
@@ -80,27 +82,6 @@ public class CheckStylePublisher extends HealthAwarePublisher {
         build.getActions().add(new CheckStyleResultAction(build, healthReportBuilder, result));
 
         return project;
-    }
-
-    /**
-     * Scans the workspace for Checkstyle files matching the specified pattern and
-     * returns all found annotations merged in a project.
-     *
-     * @param build
-     *            the build to create the action for
-     * @param logger
-     *            the logger
-     * @return the project with the annotations
-     * @throws IOException
-     *             if the files could not be read
-     * @throws InterruptedException
-     *             if user cancels the operation
-     */
-    private JavaProject parseAllWorkspaceFiles(final AbstractBuild<?, ?> build,
-            final PrintStream logger) throws IOException, InterruptedException {
-        CheckstyleCollector checkStyleCollector = new CheckstyleCollector(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN));
-
-        return build.getProject().getWorkspace().act(checkStyleCollector);
     }
 
     /** {@inheritDoc} */

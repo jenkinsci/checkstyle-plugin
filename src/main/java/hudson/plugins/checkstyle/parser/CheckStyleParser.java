@@ -1,10 +1,13 @@
 package hudson.plugins.checkstyle.parser;
 
+import hudson.plugins.checkstyle.util.AnnotationParser;
+import hudson.plugins.checkstyle.util.JavaPackageDetector;
 import hudson.plugins.checkstyle.util.model.MavenModule;
 import hudson.plugins.checkstyle.util.model.Priority;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.digester.Digester;
 import org.apache.commons.lang.StringUtils;
@@ -15,45 +18,45 @@ import org.xml.sax.SAXException;
  *
  * @author Ulli Hafner
  */
-public class CheckStyleParser {
-    /**
-     * Returns the parsed Checkstyle analysis file.
-     *
-     * @param file
-     *            the Checkstyle analysis file
-     * @param moduleName
-     *            name of the maven module
-     * @return the parsed result (stored in the module instance)
-     * @throws IOException
-     *             if the file could not be parsed
-     * @throws SAXException
-     *             if the file is not in valid XML format
-     */
-    public MavenModule parse(final InputStream file, final String moduleName) throws IOException, SAXException {
-        Digester digester = new Digester();
-        digester.setValidating(false);
-        digester.setClassLoader(CheckStyleParser.class.getClassLoader());
+public class CheckStyleParser implements AnnotationParser {
+    /** Unique identifier of this class. */
+    private static final long serialVersionUID = -8705621875291182458L;
 
-        String rootXPath = "checkstyle";
-        digester.addObjectCreate(rootXPath, CheckStyle.class);
-        digester.addSetProperties(rootXPath);
+    /** {@inheritDoc} */
+    public MavenModule parse(final InputStream file, final String moduleName) throws InvocationTargetException {
+        try {
+            Digester digester = new Digester();
+            digester.setValidating(false);
+            digester.setClassLoader(CheckStyleParser.class.getClassLoader());
 
-        String fileXPath = "checkstyle/file";
-        digester.addObjectCreate(fileXPath, hudson.plugins.checkstyle.parser.File.class);
-        digester.addSetProperties(fileXPath);
-        digester.addSetNext(fileXPath, "addFile", hudson.plugins.checkstyle.parser.File.class.getName());
+            String rootXPath = "checkstyle";
+            digester.addObjectCreate(rootXPath, CheckStyle.class);
+            digester.addSetProperties(rootXPath);
 
-        String bugXPath = "checkstyle/file/error";
-        digester.addObjectCreate(bugXPath, Error.class);
-        digester.addSetProperties(bugXPath);
-        digester.addSetNext(bugXPath, "addError", Error.class.getName());
+            String fileXPath = "checkstyle/file";
+            digester.addObjectCreate(fileXPath, hudson.plugins.checkstyle.parser.File.class);
+            digester.addSetProperties(fileXPath);
+            digester.addSetNext(fileXPath, "addFile", hudson.plugins.checkstyle.parser.File.class.getName());
 
-        CheckStyle module = (CheckStyle)digester.parse(file);
-        if (module == null) {
-            throw new SAXException("Input stream is not a Checkstyle file.");
+            String bugXPath = "checkstyle/file/error";
+            digester.addObjectCreate(bugXPath, Error.class);
+            digester.addSetProperties(bugXPath);
+            digester.addSetNext(bugXPath, "addError", Error.class.getName());
+
+            CheckStyle module;
+            module = (CheckStyle)digester.parse(file);
+            if (module == null) {
+                throw new SAXException("Input stream is not a Checkstyle file.");
+            }
+
+            return convert(module, moduleName);
         }
-
-        return convert(module, moduleName);
+        catch (IOException exception) {
+            throw new InvocationTargetException(exception);
+        }
+        catch (SAXException exception) {
+            throw new InvocationTargetException(exception);
+        }
     }
 
     /**
@@ -68,31 +71,39 @@ public class CheckStyleParser {
     private MavenModule convert(final CheckStyle collection, final String moduleName) {
         MavenModule module = new MavenModule(moduleName);
         for (hudson.plugins.checkstyle.parser.File file : collection.getFiles()) {
-            for (Error warning : file.getErrors()) {
+            String packageName = new JavaPackageDetector().detectPackageName(file.getName());
+            for (Error error : file.getErrors()) {
                 Priority priority;
-                if ("error".equalsIgnoreCase(warning.getSeverity())) {
+                if ("error".equalsIgnoreCase(error.getSeverity())) {
                     priority = Priority.HIGH;
                 }
-                else if ("warning".equalsIgnoreCase(warning.getSeverity())) {
+                else if ("warning".equalsIgnoreCase(error.getSeverity())) {
                     priority = Priority.NORMAL;
                 }
-                else if ("info".equalsIgnoreCase(warning.getSeverity())) {
+                else if ("info".equalsIgnoreCase(error.getSeverity())) {
                     priority = Priority.LOW;
                 }
                 else {
                     continue; // ignore
                 }
-                String source = warning.getSource();
+                String source = error.getSource();
                 String type = StringUtils.substringAfterLast(source, ".");
                 String category = StringUtils.substringAfterLast(StringUtils.substringBeforeLast(source, "."), ".");
-                Warning bug = new Warning(priority, warning.getMessage(), category, type, warning.getLine());
-                bug.setModuleName(moduleName);
-                bug.setFileName(file.getName());
 
-                module.addAnnotation(bug);
+                Warning warning = new Warning(priority, error.getMessage(), StringUtils.capitalize(category), type, error.getLine());
+                warning.setModuleName(moduleName);
+                warning.setFileName(file.getName());
+                warning.setPackageName(packageName);
+
+                module.addAnnotation(warning);
             }
         }
         return module;
+    }
+
+    /** {@inheritDoc} */
+    public String getName() {
+        return "CHECKSTYLE";
     }
 }
 

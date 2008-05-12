@@ -6,7 +6,8 @@ import hudson.maven.MavenModule;
 import hudson.maven.MavenReporterDescriptor;
 import hudson.maven.MojoInfo;
 import hudson.model.Action;
-import hudson.plugins.checkstyle.parser.CheckstyleCollector;
+import hudson.plugins.checkstyle.parser.CheckStyleParser;
+import hudson.plugins.checkstyle.util.FilesParser;
 import hudson.plugins.checkstyle.util.HealthAwareMavenReporter;
 import hudson.plugins.checkstyle.util.HealthReportBuilder;
 import hudson.plugins.checkstyle.util.model.JavaProject;
@@ -28,7 +29,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** Descriptor of this publisher. */
     public static final CheckStyleReporterDescriptor CHECKSTYLE_SCANNER_DESCRIPTOR = new CheckStyleReporterDescriptor(CheckStylePublisher.CHECKSTYLE_DESCRIPTOR);
     /** Default Checkstyle pattern. */
-    private static final String CHECKSTYLE_XML_FILE = "checkstyle-results.xml";
+    private static final String CHECKSTYLE_XML_FILE = "checkstyle-result.xml";
 
     /**
      * Creates a new instance of <code>CheckStyleReporter</code>.
@@ -59,7 +60,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     public JavaProject perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PrintStream logger) throws InterruptedException, IOException {
-        CheckstyleCollector checkstyleCollector = new CheckstyleCollector(logger, CHECKSTYLE_XML_FILE);
+        FilesParser checkstyleCollector = new FilesParser(logger, CHECKSTYLE_XML_FILE, new CheckStyleParser());
 
         return getTargetPath(pom).act(checkstyleCollector);
     }
