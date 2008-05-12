@@ -2,7 +2,7 @@ package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractProject;
 import hudson.plugins.checkstyle.util.AbstractProjectAction;
-import hudson.plugins.pmd.Messages;
+import hudson.plugins.checkstyle.Messages;
 
 /**
  * Entry point to visualize the PMD trend graph in the project screen.
@@ -29,7 +29,7 @@ public class PmdProjectAction extends AbstractProjectAction<PmdResultAction> {
 
     /** {@inheritDoc} */
     public String getDisplayName() {
-        return Messages.PMD_ProjectAction_Name();
+        return Messages.Checkstyle_ProjectAction_Name();
     }
 
     /** {@inheritDoc} */
@@ -41,7 +41,7 @@ public class PmdProjectAction extends AbstractProjectAction<PmdResultAction> {
     /** {@inheritDoc} */
     @Override
     public String getTrendName() {
-        return Messages.PMD_Trend_Name();
+        return Messages.Checkstyle_Trend_Name();
     }
 }
 

@@ -2,7 +2,6 @@ package hudson.plugins.checkstyle.util;
 
 import hudson.model.AbstractBuild;
 import hudson.plugins.checkstyle.util.model.FileAnnotation;
-import hudson.plugins.pmd.util.Messages;
 
 import java.util.Collection;
 

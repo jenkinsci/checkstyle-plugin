@@ -10,7 +10,7 @@ import hudson.plugins.checkstyle.parser.PmdCollector;
 import hudson.plugins.checkstyle.util.HealthAwareMavenReporter;
 import hudson.plugins.checkstyle.util.HealthReportBuilder;
 import hudson.plugins.checkstyle.util.model.JavaProject;
-import hudson.plugins.pmd.Messages;
+import hudson.plugins.checkstyle.Messages;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -73,8 +73,8 @@ public class PmdReporter extends HealthAwareMavenReporter {
     protected void persistResult(final JavaProject project, final MavenBuild build) {
         PmdResult result = new PmdResultBuilder().build(build, project);
         HealthReportBuilder healthReportBuilder = createHealthBuilder(
-                Messages.PMD_ResultAction_HealthReportSingleItem(),
-                Messages.PMD_ResultAction_HealthReportMultipleItem("%d"));
+                Messages.Checkstyle_ResultAction_HealthReportSingleItem(),
+                Messages.Checkstyle_ResultAction_HealthReportMultipleItem("%d"));
         build.getActions().add(new MavenPmdResultAction(build, healthReportBuilder, getHeight(), result));
         build.registerAsProjectAction(PmdReporter.this);
     }

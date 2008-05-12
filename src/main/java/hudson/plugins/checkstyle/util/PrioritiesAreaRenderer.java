@@ -1,7 +1,5 @@
 package hudson.plugins.checkstyle.util;
 
-import hudson.plugins.pmd.util.Messages;
-
 import org.jfree.data.category.CategoryDataset;
 
 /**

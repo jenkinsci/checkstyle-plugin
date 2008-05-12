@@ -20,7 +20,7 @@ import hudson.plugins.checkstyle.util.model.JavaPackage;
 import hudson.plugins.checkstyle.util.model.JavaProject;
 import hudson.plugins.checkstyle.util.model.MavenModule;
 import hudson.plugins.checkstyle.util.model.Priority;
-import hudson.plugins.pmd.Messages;
+import hudson.plugins.checkstyle.Messages;
 
 import java.io.File;
 import java.io.IOException;
@@ -218,7 +218,7 @@ public class PmdResult implements ModelObject, Serializable, AnnotationProvider 
     public String getDetails() {
         String message = ResultSummary.createDeltaMessage(this);
         if (numberOfWarnings == 0 && delta == 0) {
-            return message + "<li>" + Messages.PMD_ResultAction_NoWarningsSince(zeroWarningsSinceBuild) + "</li>";
+            return message + "<li>" + Messages.Checkstyle_ResultAction_NoWarningsSince(zeroWarningsSinceBuild) + "</li>";
         }
         return message;
     }
@@ -297,7 +297,7 @@ public class PmdResult implements ModelObject, Serializable, AnnotationProvider 
 
     /** {@inheritDoc} */
     public String getDisplayName() {
-        return Messages.PMD_ProjectAction_Name();
+        return Messages.Checkstyle_ProjectAction_Name();
     }
 
     /**
@@ -467,13 +467,13 @@ public class PmdResult implements ModelObject, Serializable, AnnotationProvider 
     public Object getDynamic(final String link, final StaplerRequest request, final StaplerResponse response) {
         PriorityDetailFactory factory = new PriorityDetailFactory();
         if (factory.isPriority(link)) {
-            return factory.create(link, owner, getProject(), Messages.PMD_Detail_header());
+            return factory.create(link, owner, getProject(), Messages.Checkstyle_Detail_header());
         }
         else if ("fixed".equals(link)) {
-            return new FixedWarningsDetail(getOwner(), getFixedWarnings(), Messages.PMD_FixedWarnings_Detail_header());
+            return new FixedWarningsDetail(getOwner(), getFixedWarnings(), Messages.Checkstyle_FixedWarnings_Detail_header());
         }
         else if ("new".equals(link)) {
-            return new NewWarningsDetail(getOwner(), getNewWarnings(), Messages.PMD_NewWarnings_Detail_header());
+            return new NewWarningsDetail(getOwner(), getNewWarnings(), Messages.Checkstyle_NewWarnings_Detail_header());
         }
         else if ("error".equals(link)) {
             return new ErrorDetail(getOwner(), "PMD", errors);
@@ -484,11 +484,11 @@ public class PmdResult implements ModelObject, Serializable, AnnotationProvider 
                     return new SourceDetail(getOwner(), getProject().getAnnotation(link));
                 }
                 else {
-                    return new PackageDetail(getOwner(), getModules().iterator().next().getPackage(link), Messages.PMD_Detail_header());
+                    return new PackageDetail(getOwner(), getModules().iterator().next().getPackage(link), Messages.Checkstyle_Detail_header());
                 }
             }
             else {
-                return new ModuleDetail(getOwner(), getModule(link), Messages.PMD_Detail_header());
+                return new ModuleDetail(getOwner(), getModule(link), Messages.Checkstyle_Detail_header());
             }
         }
     }

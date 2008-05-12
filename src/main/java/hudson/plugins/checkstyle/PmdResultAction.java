@@ -4,7 +4,7 @@ import hudson.model.AbstractBuild;
 import hudson.plugins.checkstyle.util.AbstractResultAction;
 import hudson.plugins.checkstyle.util.HealthReportBuilder;
 import hudson.plugins.checkstyle.util.PluginDescriptor;
-import hudson.plugins.pmd.Messages;
+import hudson.plugins.checkstyle.Messages;
 
 import java.util.NoSuchElementException;
 
@@ -51,7 +51,7 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
 
     /** {@inheritDoc} */
     public String getDisplayName() {
-        return Messages.PMD_ProjectAction_Name();
+        return Messages.Checkstyle_ProjectAction_Name();
     }
 
     /** {@inheritDoc} */
@@ -77,11 +77,11 @@ public class PmdResultAction extends AbstractResultAction<PmdResult> {
 
     /** {@inheritDoc} */
     public String getMultipleItemsTooltip(final int numberOfItems) {
-        return Messages.PMD_ResultAction_MultipleWarnings(numberOfItems);
+        return Messages.Checkstyle_ResultAction_MultipleWarnings(numberOfItems);
     }
 
     /** {@inheritDoc} */
     public String getSingleItemTooltip() {
-        return Messages.PMD_ResultAction_OneWarning();
+        return Messages.Checkstyle_ResultAction_OneWarning();
     }
 }

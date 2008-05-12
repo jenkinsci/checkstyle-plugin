@@ -5,7 +5,6 @@ import hudson.model.ModelObject;
 import hudson.plugins.checkstyle.util.model.JavaPackage;
 import hudson.plugins.checkstyle.util.model.MavenModule;
 import hudson.plugins.checkstyle.util.model.WorkspaceFile;
-import hudson.plugins.pmd.util.Messages;
 
 import java.io.IOException;
 import java.util.Collection;

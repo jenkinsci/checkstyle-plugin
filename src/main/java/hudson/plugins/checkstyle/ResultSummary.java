@@ -1,6 +1,6 @@
 package hudson.plugins.checkstyle;
 
-import hudson.plugins.pmd.Messages;
+import hudson.plugins.checkstyle.Messages;
 
 
 /**
@@ -26,20 +26,20 @@ public final class ResultSummary {
             summary.append("<a href=\"pmdResult\">");
         }
         if (bugs == 1) {
-            summary.append(Messages.PMD_ResultAction_OneWarning());
+            summary.append(Messages.Checkstyle_ResultAction_OneWarning());
         }
         else {
-            summary.append(Messages.PMD_ResultAction_MultipleWarnings(bugs));
+            summary.append(Messages.Checkstyle_ResultAction_MultipleWarnings(bugs));
         }
         if (bugs > 0) {
             summary.append("</a>");
         }
         summary.append(" ");
         if (result.getNumberOfModules() == 1) {
-            summary.append(Messages.PMD_ResultAction_OneFile());
+            summary.append(Messages.Checkstyle_ResultAction_OneFile());
         }
         else {
-            summary.append(Messages.PMD_ResultAction_MultipleFiles(result.getNumberOfModules()));
+            summary.append(Messages.Checkstyle_ResultAction_MultipleFiles(result.getNumberOfModules()));
         }
         return summary.toString();
     }
@@ -56,20 +56,20 @@ public final class ResultSummary {
         if (result.getNumberOfNewWarnings() > 0) {
             summary.append("<li><a href=\"pmdResult/new\">");
             if (result.getNumberOfNewWarnings() == 1) {
-                summary.append(Messages.PMD_ResultAction_OneNewWarning());
+                summary.append(Messages.Checkstyle_ResultAction_OneNewWarning());
             }
             else {
-                summary.append(Messages.PMD_ResultAction_MultipleNewWarnings(result.getNumberOfNewWarnings()));
+                summary.append(Messages.Checkstyle_ResultAction_MultipleNewWarnings(result.getNumberOfNewWarnings()));
             }
             summary.append("</a></li>");
         }
         if (result.getNumberOfFixedWarnings() > 0) {
             summary.append("<li><a href=\"pmdResult/fixed\">");
             if (result.getNumberOfFixedWarnings() == 1) {
-                summary.append(Messages.PMD_ResultAction_OneFixedWarning());
+                summary.append(Messages.Checkstyle_ResultAction_OneFixedWarning());
             }
             else {
-                summary.append(Messages.PMD_ResultAction_MultipleFixedWarnings(result.getNumberOfFixedWarnings()));
+                summary.append(Messages.Checkstyle_ResultAction_MultipleFixedWarnings(result.getNumberOfFixedWarnings()));
             }
             summary.append("</a></li>");
         }

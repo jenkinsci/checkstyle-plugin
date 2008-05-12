@@ -1,7 +1,7 @@
 package hudson.plugins.checkstyle;
 
 import hudson.plugins.checkstyle.util.PluginDescriptor;
-import hudson.plugins.pmd.Messages;
+import hudson.plugins.checkstyle.Messages;
 
 /**
  * Descriptor for the class {@link PmdPublisher}. Used as a singleton. The
@@ -25,7 +25,7 @@ public final class PmdDescriptor extends PluginDescriptor {
     /** {@inheritDoc} */
     @Override
     public String getDisplayName() {
-        return Messages.PMD_Publisher_Name();
+        return Messages.Checkstyle_Publisher_Name();
     }
 
     /** {@inheritDoc} */

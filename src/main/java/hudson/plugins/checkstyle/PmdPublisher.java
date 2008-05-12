@@ -8,7 +8,7 @@ import hudson.plugins.checkstyle.parser.PmdCollector;
 import hudson.plugins.checkstyle.util.HealthAwarePublisher;
 import hudson.plugins.checkstyle.util.HealthReportBuilder;
 import hudson.plugins.checkstyle.util.model.JavaProject;
-import hudson.plugins.pmd.Messages;
+import hudson.plugins.checkstyle.Messages;
 import hudson.tasks.Publisher;
 
 import java.io.IOException;
@@ -76,8 +76,8 @@ public class PmdPublisher extends HealthAwarePublisher {
         JavaProject project = parseAllWorkspaceFiles(build, logger);
         PmdResult result = new PmdResultBuilder().build(build, project);
         HealthReportBuilder healthReportBuilder = createHealthReporter(
-                Messages.PMD_ResultAction_HealthReportSingleItem(),
-                Messages.PMD_ResultAction_HealthReportMultipleItem("%d"));
+                Messages.Checkstyle_ResultAction_HealthReportSingleItem(),
+                Messages.Checkstyle_ResultAction_HealthReportMultipleItem("%d"));
         build.getActions().add(new PmdResultAction(build, healthReportBuilder, result));
 
         return project;

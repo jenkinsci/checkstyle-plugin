@@ -2,10 +2,10 @@ package hudson.plugins.checkstyle.parser;
 
 import hudson.FilePath;
 import hudson.FilePath.FileCallable;
+import hudson.plugins.checkstyle.Messages;
 import hudson.plugins.checkstyle.util.MavenModuleDetector;
 import hudson.plugins.checkstyle.util.model.JavaProject;
 import hudson.plugins.checkstyle.util.model.MavenModule;
-import hudson.plugins.pmd.Messages;
 import hudson.remoting.VirtualChannel;
 
 import java.io.File;
@@ -77,13 +77,13 @@ public class PmdCollector implements FileCallable<JavaProject> {
                 MavenModule module = new MavenModule(moduleName);
 
                 if (!pmdFile.canRead()) {
-                    String message = Messages.PMD_PMDCollector_Error_NoPermission(pmdFile);
+                    String message = Messages.Checkstyle_CheckstyleCollector_Error_NoPermission(pmdFile);
                     log(message);
                     module.setError(message);
                     continue;
                 }
                 if (new FilePath(pmdFile).length() <= 0) {
-                    String message = Messages.PMD_PMDCollector_Error_EmptyFile(pmdFile);
+                    String message = Messages.Checkstyle_CheckstyleCollector_Error_EmptyFile(pmdFile);
                     log(message);
                     module.setError(message);
                     continue;
@@ -130,7 +130,7 @@ public class PmdCollector implements FileCallable<JavaProject> {
             exception = e;
         }
         if (exception != null) {
-            String errorMessage = Messages.PMD_PMDCollector_Error_Exception(pmdFile)
+            String errorMessage = Messages.Checkstyle_CheckstyleCollector_Error_Exception(pmdFile)
                     + "\n\n" + ExceptionUtils.getStackTrace(exception);
             log(errorMessage);
             module.setError(errorMessage);

@@ -1,6 +1,6 @@
 package hudson.plugins.checkstyle.util.model;
 
-import hudson.plugins.pmd.util.Messages;
+import hudson.plugins.checkstyle.util.Messages;
 
 import org.apache.commons.lang.StringUtils;
 
