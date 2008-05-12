@@ -6,13 +6,12 @@ import hudson.plugins.checkstyle.util.model.MavenModule;
 import hudson.plugins.checkstyle.util.model.Priority;
 import hudson.plugins.checkstyle.util.model.WorkspaceFile;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
 /**
  *  Tests the extraction of Checkstyle analysis results.
@@ -21,11 +20,10 @@ public class CheckStyleParserTest {
     /**
      * Tests parsing of a simple Checkstyle file.
      *
-     * @throws IOException Signals that an I/O exception has occurred
-     * @throws SAXException Signals that an Parser exception has occurred
+     * @throws InvocationTargetException Signals that an I/O exception has occurred
      */
     @Test
-    public void analyseCheckStyleFile() throws IOException, SAXException {
+    public void analyseCheckStyleFile() throws InvocationTargetException {
         InputStream inputStream = CheckStyleParserTest.class.getResourceAsStream("checkstyle.xml");
 
         MavenModule module = new CheckStyleParser().parse(inputStream, "empty");

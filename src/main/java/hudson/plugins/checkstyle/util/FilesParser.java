@@ -1,9 +1,7 @@
-package hudson.plugins.checkstyle.parser;
+package hudson.plugins.checkstyle.util;
 
 import hudson.FilePath;
 import hudson.FilePath.FileCallable;
-import hudson.plugins.checkstyle.Messages;
-import hudson.plugins.checkstyle.util.MavenModuleDetector;
 import hudson.plugins.checkstyle.util.model.JavaProject;
 import hudson.plugins.checkstyle.util.model.MavenModule;
 import hudson.remoting.VirtualChannel;
@@ -11,25 +9,25 @@ import hudson.remoting.VirtualChannel;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.tools.ant.types.FileSet;
-import org.xml.sax.SAXException;
 
 /**
- * Parses the Checkstyle files that match the specified pattern and creates a
+ * Parses the files that match the specified pattern and creates a
  * corresponding Java project with a collection of annotations.
  *
  * @author Ulli Hafner
  */
-// FIXME: generalize this class
-public class CheckstyleCollector implements FileCallable<JavaProject> {
+public class FilesParser implements FileCallable<JavaProject> {
     /** Generated ID. */
     private static final long serialVersionUID = -6415863872891783891L;
     /** Logger. */
     private final transient PrintStream logger;
     /** Ant file-set pattern to scan for Checkstyle files. */
     private final String filePattern;
+    /** Parser to be used to process the workspace files. */
+    private final AnnotationParser parser;
 
     /**
      * Creates a new instance of <code>CheckstyleCollector</code>.
@@ -38,10 +36,12 @@ public class CheckstyleCollector implements FileCallable<JavaProject> {
      *            the Logger
      * @param filePattern
      *            ant file-set pattern to scan for PMD files
+     * @param parser the parser to use
      */
-    public CheckstyleCollector(final PrintStream listener, final String filePattern) {
+    public FilesParser(final PrintStream listener, final String filePattern, final AnnotationParser parser) {
         logger = listener;
         this.filePattern = filePattern;
+        this.parser = parser;
     }
 
     /**
@@ -51,46 +51,46 @@ public class CheckstyleCollector implements FileCallable<JavaProject> {
      */
     protected void log(final String message) {
         if (logger != null) {
-            logger.println("[CHECKSTYLE] " + message);
+            logger.println("[" + parser.getName() + "] " + message);
         }
     }
 
     /** {@inheritDoc} */
     public JavaProject invoke(final File workspace, final VirtualChannel channel) throws IOException {
-        String[] pmdFiles = findPmdFiles(workspace);
+        String[] fileNames = new FileFinder(filePattern).find(workspace);
         JavaProject project = new JavaProject();
 
-        if (pmdFiles.length == 0) {
-            project.setError("No checkstyle report files were found. Configuration error?");
+        if (fileNames.length == 0) {
+            project.setError(Messages.FilesParser_Error_NoFiles());
             return project;
         }
 
         try {
             MavenModuleDetector detector = new MavenModuleDetector();
             int duplicateModuleCounter = 1;
-            for (String file : pmdFiles) {
-                File pmdFile = new File(workspace, file);
+            for (String fileName : fileNames) {
+                File file = new File(workspace, fileName);
 
-                String moduleName = detector.guessModuleName(pmdFile.getAbsolutePath());
+                String moduleName = detector.guessModuleName(file.getAbsolutePath());
                 if (project.containsModule(moduleName)) {
                     moduleName += "-" + duplicateModuleCounter++;
                 }
                 MavenModule module = new MavenModule(moduleName);
 
-                if (!pmdFile.canRead()) {
-                    String message = Messages.Checkstyle_CheckstyleCollector_Error_NoPermission(pmdFile);
+                if (!file.canRead()) {
+                    String message = Messages.FilesParser_Error_NoPermission(file);
                     log(message);
                     module.setError(message);
                     continue;
                 }
-                if (new FilePath(pmdFile).length() <= 0) {
-                    String message = Messages.Checkstyle_CheckstyleCollector_Error_EmptyFile(pmdFile);
+                if (new FilePath(file).length() <= 0) {
+                    String message = Messages.FilesParser_Error_EmptyFile(file);
                     log(message);
                     module.setError(message);
                     continue;
                 }
 
-                module = parseFile(workspace, pmdFile, module);
+                module = parseFile(workspace, file, module);
                 project.addModule(module);
             }
         }
@@ -101,59 +101,45 @@ public class CheckstyleCollector implements FileCallable<JavaProject> {
     }
 
     /**
-     * Parses the specified PMD file and maps all warnings to a
+     * Parses the specified file and maps all warnings to a
      * corresponding annotation. If the file could not be parsed then an empty
      * module with an error message is returned.
      *
      * @param workspace
      *            the root of the workspace
-     * @param pmdFile
+     * @param file
      *            the file to parse
      * @param emptyModule
      *            an empty module with the guessed module name
      * @return the created module
      * @throws InterruptedException
      */
-    private MavenModule parseFile(final File workspace, final File pmdFile, final MavenModule emptyModule) throws InterruptedException {
-        Exception exception = null;
+    private MavenModule parseFile(final File workspace, final File file, final MavenModule emptyModule) throws InterruptedException {
+        Throwable exception = null;
         MavenModule module = emptyModule;
         try {
-            FilePath filePath = new FilePath(pmdFile);
-            CheckStyleParser pmdParser = new CheckStyleParser();
-            module = pmdParser.parse(filePath.read(), emptyModule.getName());
-            log("Successfully parsed Checkstyle file " + pmdFile + " of module "
+            FilePath filePath = new FilePath(file);
+            module = parser.parse(filePath.read(), emptyModule.getName());
+            log("Successfully parsed file " + file + " of module "
                     + module.getName() + " with " + module.getNumberOfAnnotations() + " warnings.");
         }
         catch (IOException e) {
             exception = e;
         }
-        catch (SAXException e) {
-            exception = e;
+        catch (InvocationTargetException e) {
+            if (e.getCause() == null) {
+                exception = e;
+            }
+            else {
+                exception = e.getCause();
+            }
         }
         if (exception != null) {
-            String errorMessage = Messages.Checkstyle_CheckstyleCollector_Error_Exception(pmdFile)
+            String errorMessage = Messages.FilesParser_Error_Exception(file)
                     + "\n\n" + ExceptionUtils.getStackTrace(exception);
             log(errorMessage);
             module.setError(errorMessage);
         }
         return module;
-    }
-
-    /**
-     * Returns an array with the filenames of the PMD files that have been
-     * found in the workspace.
-     *
-     * @param workspaceRoot
-     *            root directory of the workspace
-     * @return the filenames of the PMD files
-     */
-    private String[] findPmdFiles(final File workspaceRoot) {
-        FileSet fileSet = new FileSet();
-        org.apache.tools.ant.Project project = new org.apache.tools.ant.Project();
-        fileSet.setProject(project);
-        fileSet.setDir(workspaceRoot);
-        fileSet.setIncludes(filePattern);
-
-        return fileSet.getDirectoryScanner(project).getIncludedFiles();
     }
 }

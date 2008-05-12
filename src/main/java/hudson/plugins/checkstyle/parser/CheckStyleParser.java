@@ -1,10 +1,12 @@
 package hudson.plugins.checkstyle.parser;
 
+import hudson.plugins.checkstyle.util.AnnotationParser;
 import hudson.plugins.checkstyle.util.model.MavenModule;
 import hudson.plugins.checkstyle.util.model.Priority;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.digester.Digester;
 import org.apache.commons.lang.StringUtils;
@@ -15,45 +17,45 @@ import org.xml.sax.SAXException;
  *
  * @author Ulli Hafner
  */
-public class CheckStyleParser {
-    /**
-     * Returns the parsed Checkstyle analysis file.
-     *
-     * @param file
-     *            the Checkstyle analysis file
-     * @param moduleName
-     *            name of the maven module
-     * @return the parsed result (stored in the module instance)
-     * @throws IOException
-     *             if the file could not be parsed
-     * @throws SAXException
-     *             if the file is not in valid XML format
-     */
-    public MavenModule parse(final InputStream file, final String moduleName) throws IOException, SAXException {
-        Digester digester = new Digester();
-        digester.setValidating(false);
-        digester.setClassLoader(CheckStyleParser.class.getClassLoader());
+public class CheckStyleParser implements AnnotationParser {
+    /** Unique identifier of this class. */
+    private static final long serialVersionUID = -8705621875291182458L;
 
-        String rootXPath = "checkstyle";
-        digester.addObjectCreate(rootXPath, CheckStyle.class);
-        digester.addSetProperties(rootXPath);
+    /** {@inheritDoc} */
+    public MavenModule parse(final InputStream file, final String moduleName) throws InvocationTargetException {
+        try {
+            Digester digester = new Digester();
+            digester.setValidating(false);
+            digester.setClassLoader(CheckStyleParser.class.getClassLoader());
 
-        String fileXPath = "checkstyle/file";
-        digester.addObjectCreate(fileXPath, hudson.plugins.checkstyle.parser.File.class);
-        digester.addSetProperties(fileXPath);
-        digester.addSetNext(fileXPath, "addFile", hudson.plugins.checkstyle.parser.File.class.getName());
+            String rootXPath = "checkstyle";
+            digester.addObjectCreate(rootXPath, CheckStyle.class);
+            digester.addSetProperties(rootXPath);
 
-        String bugXPath = "checkstyle/file/error";
-        digester.addObjectCreate(bugXPath, Error.class);
-        digester.addSetProperties(bugXPath);
-        digester.addSetNext(bugXPath, "addError", Error.class.getName());
+            String fileXPath = "checkstyle/file";
+            digester.addObjectCreate(fileXPath, hudson.plugins.checkstyle.parser.File.class);
+            digester.addSetProperties(fileXPath);
+            digester.addSetNext(fileXPath, "addFile", hudson.plugins.checkstyle.parser.File.class.getName());
 
-        CheckStyle module = (CheckStyle)digester.parse(file);
-        if (module == null) {
-            throw new SAXException("Input stream is not a Checkstyle file.");
+            String bugXPath = "checkstyle/file/error";
+            digester.addObjectCreate(bugXPath, Error.class);
+            digester.addSetProperties(bugXPath);
+            digester.addSetNext(bugXPath, "addError", Error.class.getName());
+
+            CheckStyle module;
+            module = (CheckStyle)digester.parse(file);
+            if (module == null) {
+                throw new SAXException("Input stream is not a Checkstyle file.");
+            }
+
+            return convert(module, moduleName);
         }
-
-        return convert(module, moduleName);
+        catch (IOException exception) {
+            throw new InvocationTargetException(exception);
+        }
+        catch (SAXException exception) {
+            throw new InvocationTargetException(exception);
+        }
     }
 
     /**
@@ -93,6 +95,11 @@ public class CheckStyleParser {
             }
         }
         return module;
+    }
+
+    /** {@inheritDoc} */
+    public String getName() {
+        return "CHECKSTYLE";
     }
 }
 
