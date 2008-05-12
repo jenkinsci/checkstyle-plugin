@@ -44,7 +44,7 @@ public class CheckStyleParserTest {
         assertEquals("Wrong number of line ranges detected.", 1, warning.getLineRanges().size());
         assertEquals("Wrong line detected.", 0, warning.getLineRanges().iterator().next().getStart());
         assertEquals("Wrong line detected.", 0, warning.getPrimaryLineNumber());
-        assertEquals("Wrong category detected.", "javadoc", warning.getCategory());
+        assertEquals("Wrong category detected.", "Javadoc", warning.getCategory());
         assertEquals("Wrong type detected.", "PackageHtmlCheck", warning.getType());
         assertEquals("Wrong priority detected.", Priority.HIGH, warning.getPriority());
         assertEquals("Wrong message detected.", "Fehlende Package-Dokumentation.", warning.getMessage());

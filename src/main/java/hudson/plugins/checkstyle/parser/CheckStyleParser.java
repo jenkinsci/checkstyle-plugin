@@ -85,7 +85,7 @@ public class CheckStyleParser {
                 String source = warning.getSource();
                 String type = StringUtils.substringAfterLast(source, ".");
                 String category = StringUtils.substringAfterLast(StringUtils.substringBeforeLast(source, "."), ".");
-                Warning bug = new Warning(priority, warning.getMessage(), category, type, warning.getLine());
+                Warning bug = new Warning(priority, warning.getMessage(), StringUtils.capitalize(category), type, warning.getLine());
                 bug.setModuleName(moduleName);
                 bug.setFileName(file.getName());
 
