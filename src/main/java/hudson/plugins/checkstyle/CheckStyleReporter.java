@@ -10,7 +10,6 @@ import hudson.plugins.checkstyle.parser.CheckstyleCollector;
 import hudson.plugins.checkstyle.util.HealthAwareMavenReporter;
 import hudson.plugins.checkstyle.util.HealthReportBuilder;
 import hudson.plugins.checkstyle.util.model.JavaProject;
-import hudson.plugins.checkstyle.Messages;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -23,11 +22,11 @@ import org.kohsuke.stapler.DataBoundConstructor;
  *
  * @author Ulli Hafner
  */
-public class PmdReporter extends HealthAwareMavenReporter {
+public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 2272875032054063496L;
     /** Descriptor of this publisher. */
-    public static final PmdReporterDescriptor PMD_SCANNER_DESCRIPTOR = new PmdReporterDescriptor(PmdPublisher.PMD_DESCRIPTOR);
+    public static final CheckStyleReporterDescriptor PMD_SCANNER_DESCRIPTOR = new CheckStyleReporterDescriptor(PmdPublisher.PMD_DESCRIPTOR);
     /** Default PMD pattern. */
     private static final String PMD_XML_FILE = "pmd.xml";
     /** Ant file-set pattern of files to work with. */
@@ -50,7 +49,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
      *            the height of the trend graph
      */
     @DataBoundConstructor
-    public PmdReporter(final String threshold, final String healthy, final String unHealthy, final String height) {
+    public CheckStyleReporter(final String threshold, final String healthy, final String unHealthy, final String height) {
         super(threshold, healthy, unHealthy, height, "PMD");
     }
 
@@ -75,8 +74,8 @@ public class PmdReporter extends HealthAwareMavenReporter {
         HealthReportBuilder healthReportBuilder = createHealthBuilder(
                 Messages.Checkstyle_ResultAction_HealthReportSingleItem(),
                 Messages.Checkstyle_ResultAction_HealthReportMultipleItem("%d"));
-        build.getActions().add(new MavenPmdResultAction(build, healthReportBuilder, getHeight(), result));
-        build.registerAsProjectAction(PmdReporter.this);
+        build.getActions().add(new MavenCheckStyleResultAction(build, healthReportBuilder, getHeight(), result));
+        build.registerAsProjectAction(CheckStyleReporter.this);
     }
 
     /** {@inheritDoc} */
@@ -88,7 +87,7 @@ public class PmdReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     protected Class<? extends Action> getResultActionClass() {
-        return MavenPmdResultAction.class;
+        return MavenCheckStyleResultAction.class;
     }
 
     /** {@inheritDoc} */

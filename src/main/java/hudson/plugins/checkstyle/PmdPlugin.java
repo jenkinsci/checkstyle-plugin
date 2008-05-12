@@ -16,6 +16,6 @@ public class PmdPlugin extends Plugin {
     public void start() throws Exception {
         BuildStep.PUBLISHERS.addRecorder(PmdPublisher.PMD_DESCRIPTOR);
 
-        MavenReporters.LIST.add(PmdReporter.PMD_SCANNER_DESCRIPTOR);
+        MavenReporters.LIST.add(CheckStyleReporter.PMD_SCANNER_DESCRIPTOR);
     }
 }

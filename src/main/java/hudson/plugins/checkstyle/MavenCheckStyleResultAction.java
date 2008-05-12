@@ -23,7 +23,7 @@ import java.util.Map;
  *
  * @author Ulli Hafner
  */
-public class MavenPmdResultAction extends PmdResultAction implements AggregatableAction, MavenAggregatedReport {
+public class MavenCheckStyleResultAction extends PmdResultAction implements AggregatableAction, MavenAggregatedReport {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 1273798369273225973L;
     /** Determines the height of the trend graph. */
@@ -39,7 +39,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
      * @param height
      *            the height of the trend graph
      */
-    public MavenPmdResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final String height) {
+    public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final String height) {
         super(owner, healthReportBuilder);
         this.height = height;
     }
@@ -56,14 +56,14 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
      * @param result
      *            the result in this build
      */
-    public MavenPmdResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final String height, final PmdResult result) {
+    public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final String height, final PmdResult result) {
         super(owner, healthReportBuilder, result);
         this.height = height;
     }
 
     /** {@inheritDoc} */
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
-        return new MavenPmdResultAction(build, getHealthReportBuilder(), height);
+        return new MavenCheckStyleResultAction(build, getHealthReportBuilder(), height);
     }
 
     /** {@inheritDoc} */
@@ -108,7 +108,7 @@ public class MavenPmdResultAction extends PmdResultAction implements Aggregatabl
      */
     private void addModule(final JavaProject project, final List<MavenBuild> builds) {
         MavenBuild mavenBuild = builds.get(0);
-        MavenPmdResultAction action = mavenBuild.getAction(getClass());
+        MavenCheckStyleResultAction action = mavenBuild.getAction(getClass());
         if (action != null) {
             Collection<hudson.plugins.checkstyle.util.model.MavenModule> modules = action.getResult().getProject().getModules();
             for (hudson.plugins.checkstyle.util.model.MavenModule mavenModule : modules) {
