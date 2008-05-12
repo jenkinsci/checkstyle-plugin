@@ -29,7 +29,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** Descriptor of this publisher. */
     public static final CheckStyleReporterDescriptor CHECKSTYLE_SCANNER_DESCRIPTOR = new CheckStyleReporterDescriptor(CheckStylePublisher.CHECKSTYLE_DESCRIPTOR);
     /** Default Checkstyle pattern. */
-    private static final String CHECKSTYLE_XML_FILE = "checkstyle-results.xml";
+    private static final String CHECKSTYLE_XML_FILE = "checkstyle-result.xml";
 
     /**
      * Creates a new instance of <code>CheckStyleReporter</code>.
