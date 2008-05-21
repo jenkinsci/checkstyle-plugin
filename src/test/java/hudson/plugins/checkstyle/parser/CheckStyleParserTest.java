@@ -46,6 +46,7 @@ public class CheckStyleParserTest {
         assertEquals("Wrong type detected.", "PackageHtmlCheck", warning.getType());
         assertEquals("Wrong priority detected.", Priority.HIGH, warning.getPriority());
         assertEquals("Wrong message detected.", "Fehlende Package-Dokumentation.", warning.getMessage());
+        assertTrue("Wrong description detected.", warning.getToolTip().contains("exists for each package"));
 
         file = iterator.next();
         assertEquals("CsharpNamespaceDetector.java not detected.", "X:/Build/Results/jobs/Maven/workspace/tasks/src/main/java/hudson/plugins/tasks/parser/CsharpNamespaceDetector.java", file.getName());
