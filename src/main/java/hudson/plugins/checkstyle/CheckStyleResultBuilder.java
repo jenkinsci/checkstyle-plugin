@@ -22,13 +22,14 @@ public class CheckStyleResultBuilder {
      */
     public CheckStyleResult build(final AbstractBuild<?, ?> build, final JavaProject project) {
         Object previous = build.getPreviousBuild();
-        if (previous instanceof AbstractBuild<?, ?>) {
+        while (previous instanceof AbstractBuild<?, ?> && previous != null) {
             AbstractBuild<?, ?> previousBuild = (AbstractBuild<?, ?>)previous;
             CheckStyleResultAction previousAction = previousBuild.getAction(CheckStyleResultAction.class);
             if (previousAction != null) {
                 return new CheckStyleResult(build, project, previousAction.getResult().getProject(),
                         previousAction.getResult().getZeroWarningsHighScore());
             }
+            previous = previousBuild.getPreviousBuild();
         }
         return new CheckStyleResult(build, project);
     }
