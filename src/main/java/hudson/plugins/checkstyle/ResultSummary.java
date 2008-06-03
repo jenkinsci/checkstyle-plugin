@@ -1,7 +1,5 @@
 package hudson.plugins.checkstyle;
 
-
-
 /**
  * Represents the result summary of the Checkstyle parser. This summary will be
  * shown in the summary.jelly script of the Checkstyle result action.

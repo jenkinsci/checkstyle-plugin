@@ -45,6 +45,6 @@ public final class CheckStyleDescriptor extends PluginDescriptor {
     /** {@inheritDoc} */
     @Override
     public CheckStylePublisher newInstance(final StaplerRequest request, final JSONObject formData) throws FormException {
-        return request.bindParameters(CheckStylePublisher.class, PLUGIN_NAME + ".");
+        return request.bindJSON(CheckStylePublisher.class, formData);
     }
 }

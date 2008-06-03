@@ -27,7 +27,7 @@ public class CheckStyleReporterDescriptor extends ReporterDescriptor {
     /** {@inheritDoc} */
     @Override
     public MavenReporter newInstance(final StaplerRequest request, final JSONObject formData) throws FormException {
-        return request.bindParameters(CheckStyleReporter.class, getPublisherDescriptor().getPluginName() + ".");
+        return request.bindJSON(CheckStyleReporter.class, formData);
     }
 }
 
