@@ -36,6 +36,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
@@ -479,19 +480,16 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
         else if ("error".equals(link)) {
             return new ErrorDetail(getOwner(), "Checkstyle", errors);
         }
-        else {
-            if (isSingleModuleProject()) {
-                if (isSinglePackageProject()) {
-                    return new SourceDetail(getOwner(), getProject().getAnnotation(link));
-                }
-                else {
-                    return new PackageDetail(getOwner(), getModules().iterator().next().getPackage(link), Messages.Checkstyle_Detail_header());
-                }
-            }
-            else {
-                return new ModuleDetail(getOwner(), getModule(link), Messages.Checkstyle_Detail_header());
-            }
+        else if (link.startsWith("module.")) {
+            return new ModuleDetail(getOwner(), getModule(StringUtils.substringAfter(link, "module.")), Messages.Checkstyle_Detail_header());
         }
+        else if (link.startsWith("package.")) {
+            return new PackageDetail(getOwner(), getPackage(StringUtils.substringAfter(link, "package.")), Messages.Checkstyle_Detail_header());
+        }
+        else if (link.startsWith("source.")) {
+            return new SourceDetail(getOwner(), getProject().getAnnotation(StringUtils.substringAfter(link, "source.")));
+        }
+        return null;
     }
 
     /**
@@ -520,7 +518,7 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
      * @return the package
      */
     public JavaPackage getPackage(final String name) {
-        return getModules().iterator().next().getPackage(name);
+        return getProject().getPackage(name);
     }
 
     /**
@@ -634,8 +632,7 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
      *             in case of an error
      */
     public final void doPackageStatistics(final StaplerRequest request, final StaplerResponse response) throws IOException {
-        MavenModule module = getModules().iterator().next();
-        ChartRenderer.renderPriorititesChart(request, response, module.getPackage(request.getParameter("package")), module.getAnnotationBound());
+        ChartRenderer.renderPriorititesChart(request, response, getPackage(request.getParameter("package")), getProject().getAnnotationBound());
     }
 
     /**
