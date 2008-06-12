@@ -15,83 +15,10 @@
 
       <l:layout>
 
-            <style type="text/css">
-
-        /* .yui-navset defaults to .yui-navset-top */
-        .yui-skin-sam .yui-navset .yui-nav,
-        .yui-skin-sam .yui-navset .yui-navset-top .yui-nav { /* protect nested tabviews from other orientations */
-            border:solid #b0b0b0; /* color between tab list and content */
-            border-width:0 0 1px;
-            color:#bbb;
-            Xposition:relative;
-            zoom:1;
-        }
-
-        .yui-skin-sam .yui-navset .yui-nav li,
-        .yui-skin-sam .yui-navset .yui-navset-top .yui-nav li {
-            margin:0 0.16em 0 0; /* space between tabs */
-            padding:1px 0 0; /* gecko: make room for overflow */
-            zoom:1;
-        }
-
-        .yui-skin-sam .yui-navset .yui-nav a,
-        .yui-skin-sam .yui-navset .yui-navset-top .yui-nav a {
-            background:#ffffff url(../../../../assets/skins/sam/sprite.png) repeat-x; /* tab background */
-            border:solid #b0b0b0;
-            border-width:0 1px;
-            color:#000;
-            text-decoration:none;
-        }
-
-        .yui-skin-sam .yui-navset .yui-nav a em,
-        .yui-skin-sam .yui-navset .yui-navset-top .yui-nav a em {
-            border:solid #b0b0b0;
-            border-width:1px 0 0;
-            cursor:hand;
-            padding:0.25em .75em;
-            left:0; right: 0; bottom: 0; /* protect from other orientations */
-            top:-1px; /* for 1px rounded corners */
-            position:relative;
-        }
-
-        .yui-skin-sam .yui-navset .yui-nav .selected a,
-        .yui-skin-sam .yui-navset .yui-nav .selected a:focus, /* no focus effect for selected */
-        .yui-skin-sam .yui-navset .yui-nav .selected a:hover { /* no hover effect for selected */
-            background:#f0f0f0 url(../../../../assets/skins/sam/sprite.png) repeat-x left -1400px; /* selected tab background */
-            color:#000;
-            font-weight:bold;
-        }
-
-        .yui-skin-sam .yui-navset .yui-nav a:hover,
-        .yui-skin-sam .yui-navset .yui-nav a:focus {
-            background:#b0b0b0 url(../../../../assets/skins/sam/sprite.png) repeat-x left -1300px; /* selected tab background */
-            outline:0;
-        }
-
-        .yui-skin-sam .yui-navset .yui-nav .selected a em {
-            padding:0.35em 0.75em; /* raise selected tab */
-        }
-
-        .yui-skin-sam .yui-navset .yui-nav .selected a,
-        .yui-skin-sam .yui-navset .yui-nav .selected a em {
-            border-color:#b0b0b0; /* selected tab border color */
-        }
-
-        .yui-skin-sam .yui-navset .yui-content {
-            background:#ffffff; /* content background color */
-        }
-
-        .yui-skin-sam .yui-navset .yui-content,
-        .yui-skin-sam .yui-navset .yui-navset-top .yui-content {
-            border:1px solid #b0b0b0; /* content border */
-            border-top-color:#b0b0b0; /* different border color */
-            padding:0.25em 0.5em; /* content padding */
-        }
-      </style>
-
-
+        <st:include page="/tabview.jelly" />
 		<st:include it="${it.owner}" page="sidepanel.jelly" />
-		<l:main-panel>
+
+        <l:main-panel>
 
 			<h1>${%CheckStyle Result}</h1>
 
@@ -136,109 +63,79 @@
 
               <div id="statistics" class="yui-navset">
                   <ul class="yui-nav">
-                      <li class="selected"><a href="#tab1"><em>Modules</em></a></li>
-                      <li><a href="#tab2"><em>Packages</em></a></li>
-                      <li><a href="#tab3"><em>Warnings</em></a></li>
-                      <li><a href="#tab3"><em>Details</em></a></li>
+                    <j:if test="${it.container.modules.size() > 0}">
+                      <li class="selected"><a href="#tab_modules"><em>Modules</em></a></li>
+                    </j:if>
+                    <j:if test="${it.container.packages.size() > 0}">
+                      <li><a href="#tab_packages"><em>Packages</em></a></li>
+                    </j:if>
+                      <li><a href="#tab_warnings"><em>Warnings</em></a></li>
+                      <li><a href="#tab_details"><em>Details</em></a></li>
+                    <j:if test="${it.newWarnings.size() > 0}">
+                      <li><a href="#tab_new"><em>New</em></a></li>
+                    </j:if>
+                    <j:if test="${it.fixedWarnings.size() > 0}">
+                      <li><a href="#tab_fixed"><em>Fixed</em></a></li>
+                    </j:if>
+                    <j:if test="${it.container.highAnnotations.size() > 0}">
+                      <li><a href="#tab_high"><em>High</em></a></li>
+                    </j:if>
+                    <j:if test="${it.container.normalAnnotations.size() > 0}">
+                      <li><a href="#tab_normal"><em>Normal</em></a></li>
+                    </j:if>
+                    <j:if test="${it.container.lowAnnotations.size() > 0}">
+                      <li><a href="#tab_low"><em>Low</em></a></li>
+                    </j:if>
                   </ul>
                   <div class="yui-content">
-                      <div>
-    					<table class="pane sortable" id="tasks">
-    						<tr>
-    							<td class="pane-header">${%Module}</td>
-    							<td class="pane-header" style="width:2em">${%Total}</td>
-    							<td class="pane-header">${%Distribution}</td>
-    						</tr>
-    						<tbody>
-    							<j:forEach var="module" items="${it.modules}">
-    								<tr>
-    									<td class="pane"><a href="module.${module.name}/">${module.name}</a></td>
-    									<td class="pane">${module.numberOfAnnotations}</td>
-    									<td class="pane">
-    								        <div tooltip="${it.getModule(module.name).toolTip}">
-    											<img src="moduleStatistics?module=${module.name}"/>
-    										</div>
-    									</td>
-    								</tr>
-    							</j:forEach>
-    						</tbody>
-    					</table>
-                      </div>
-                      <div>
-    					<table class="pane sortable" id="tasks">
-    						<tr>
-    							<td class="pane-header">${%Package}</td>
-    							<td class="pane-header" style="width:2em">${%Total}</td>
-    							<td class="pane-header">${%Distribution}</td>
-    						</tr>
-    						<tbody>
-    							<j:forEach var="package" items="${it.packages}">
-    								<tr>
-    									<td class="pane"><a href="package.${package.name}/">${package.name}</a></td>
-    									<td class="pane">${package.numberOfAnnotations}</td>
-    									<td class="pane">
-    								        <div tooltip="${it.getPackage(package.name).toolTip}">
-    											<img src="packageStatistics?package=${package.name}"/>
-    										</div>
-    									</td>
-    								</tr>
-    							</j:forEach>
-    						</tbody>
-    					</table>
-                      </div>
-                        <div>
-                          <table class="pane sortable" id="all">
-                            <tr>
-                              <td class="pane-header">File</td>
-                              <td class="pane-header">Priority</td>
-                              <td class="pane-header">Type</td>
-                              <td class="pane-header">Category</td>
-                            </tr>
-                            <tbody>
-                              <j:forEach var="warning" items="${it.annotations}">
-                              <div tooltip="${warning.message}">
-                                  <tr>
-                                    <td class="pane">
-                                      ${warning.shortFileName}
-                                    </td>
-                                    <td class="pane">
-                                    ${warning.priority.localizedString}
-                                    </td>
-                                    <td class="pane">
-                                    ${warning.type}
-                                    </td>
-                                    <td class="pane">
-                                    ${warning.category}
-                                    </td>
-                                  </tr>
-                                </div>
-                              </j:forEach>
-                            </tbody>
-                          </table>
-                      </div>
 
-                      <div>
-                    	<j:forEach var="warning" items="${it.annotations}">
-                    		<table class="pane" id="summary">
-                    			<tr>
-                    			<td class="pane-header">
-                    				<j:choose>
-                    					<j:when test="${it.isCurrent() &amp;&amp; warning.fileName != null}">
-                    						${%File}: <a href="source.${warning.key}/#${warning.primaryLineNumber}">${warning.shortFileName}</a>,
-                    					</j:when>
-                    					<j:otherwise>
-                    						${%File}: ${warning.shortFileName},
-                    					</j:otherwise>
-                    				</j:choose>
-                    				${%Type}: ${warning.type},
-                    				${%Priority}: ${warning.priority.localizedString},
-                    				${%Category}: ${warning.category}</td>
-                    			</tr>
-                    		</table>
-                    		<p><b>${warning.message}</b></p>
-                    		<p>${warning.toolTip}</p>
-                    	</j:forEach>
+        	        <j:if test="${it.container.modules.size() > 0}">
+                      <div id="tab_modules">
+                         <st:include page="/modules.jelly" />
                       </div>
+                    </j:if>
+                    <j:if test="${it.container.packages.size() > 0}">
+                      <div id="tab_packages">
+                         <st:include page="/packages.jelly" />
+                      </div>
+                    </j:if>
+                      <div id="tab_warnings">
+                         <j:set var="annotations" value="${it.container.annotations}" />
+                         <st:include page="/warnings.jelly" />
+                      </div>
+                      <div id="tab_details">
+                         <st:include page="/details.jelly" />
+                      </div>
+                    <j:if test="${it.newWarnings.size() > 0}">
+                      <div id="tab_new">
+                         <j:set var="annotations" value="${it.newWarnings}" />
+                         <st:include page="/details.jelly" />
+                      </div>
+                    </j:if>
+                    <j:if test="${it.fixedWarnings.size() > 0}">
+                      <div id="tab_fixed">
+                         <j:set var="annotations" value="${it.fixedWarnings}" />
+                         <st:include page="/fixed.jelly" />
+                      </div>
+                    </j:if>
+                    <j:if test="${it.container.highAnnotations.size() > 0}">
+                      <div id="tab_high">
+                         <j:set var="annotations" value="${it.container.highAnnotations}" />
+                         <st:include page="/details.jelly" />
+                      </div>
+                    </j:if>
+                    <j:if test="${it.container.normalAnnotations.size() > 0}">
+                      <div id="tab_normal">
+                         <j:set var="annotations" value="${it.container.normalAnnotations}" />
+                         <st:include page="/details.jelly" />
+                      </div>
+                    </j:if>
+                    <j:if test="${it.container.lowAnnotations.size() > 0}">
+                      <div id="tab_low">
+                         <j:set var="annotations" value="${it.container.lowAnnotations}" />
+                         <st:include page="/details.jelly" />
+                      </div>
+                    </j:if>
                   </div>
               </div>
 

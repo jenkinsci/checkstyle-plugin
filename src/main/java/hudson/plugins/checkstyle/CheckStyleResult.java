@@ -13,6 +13,7 @@ import hudson.plugins.checkstyle.util.NewWarningsDetail;
 import hudson.plugins.checkstyle.util.PackageDetail;
 import hudson.plugins.checkstyle.util.PriorityDetailFactory;
 import hudson.plugins.checkstyle.util.SourceDetail;
+import hudson.plugins.checkstyle.util.model.AnnotationContainer;
 import hudson.plugins.checkstyle.util.model.AnnotationProvider;
 import hudson.plugins.checkstyle.util.model.AnnotationStream;
 import hudson.plugins.checkstyle.util.model.FileAnnotation;
@@ -490,6 +491,10 @@ public class CheckStyleResult implements ModelObject, Serializable, AnnotationPr
             return new SourceDetail(getOwner(), getProject().getAnnotation(StringUtils.substringAfter(link, "source.")));
         }
         return null;
+    }
+
+    public AnnotationContainer getContainer() {
+        return getProject();
     }
 
     /**

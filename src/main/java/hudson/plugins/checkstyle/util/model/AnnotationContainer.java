@@ -66,6 +66,10 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
         this(StringUtils.EMPTY, hierarchy);
     }
 
+    public AnnotationContainer getContainer() {
+        return this;
+    }
+
     /**
      * Creates a new instance of <code>AnnotationContainer</code>.
      *
@@ -239,6 +243,18 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     /** {@inheritDoc} */
     public final Collection<FileAnnotation> getAnnotations(final Priority priority) {
         return Collections.unmodifiableCollection(annotationsByPriority.get(priority));
+    }
+
+    public final Collection<FileAnnotation> getHighAnnotations() {
+        return getAnnotations(Priority.HIGH);
+    }
+
+    public final Collection<FileAnnotation> getNormalAnnotations() {
+        return getAnnotations(Priority.NORMAL);
+    }
+
+    public final Collection<FileAnnotation> getLowAnnotations() {
+        return getAnnotations(Priority.LOW);
     }
 
     /** {@inheritDoc} */

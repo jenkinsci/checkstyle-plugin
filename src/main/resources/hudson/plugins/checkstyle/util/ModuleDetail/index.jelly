@@ -1,22 +1,95 @@
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
-  xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
-  xmlns:f="/lib/form" xmlns:i="jelly:fmt">
-  <l:layout norefresh="true">
-    <st:include it="${it.owner}" page="sidepanel.jelly" />
-    <l:main-panel>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
+  xmlns:i="jelly:fmt">
+  <!-- JavaScript Dependencies for Tabview: -->
+  <script type="text/javascript"
+    src="http://yui.yahooapis.com/2.5.2/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+  <script type="text/javascript"
+    src="http://yui.yahooapis.com/2.5.2/build/element/element-beta-min.js"></script>
 
+  <!-- Source file for TabView -->
+  <script type="text/javascript"
+    src="http://yui.yahooapis.com/2.5.2/build/tabview/tabview-min.js"></script>
+
+  <script type="text/javascript">
+    var myTabs = new YAHOO.widget.TabView("statistics");
+  </script>
+  <l:layout norefresh="true">
+
+    <st:include it="${it.owner}" page="sidepanel.jelly" />
+    <st:include page="/tabview.jelly" />
+
+    <l:main-panel>
       <h1>${it.header}</h1>
 
       <st:include page="/summaryTable.jelly" />
 
-      <j:if test="${!it.isSinglePackageModule()}">
-		<st:include page="/packagesTable.jelly" />
-      </j:if>
+        <h2>${%Details}</h2>
 
-      <j:if test="${it.isSinglePackageModule()}">
-		<st:include page="/annotationsTable.jelly" />
+          <j:if test="${it.hasAnnotations()}">
+
+              <div id="statistics" class="yui-navset">
+                  <ul class="yui-nav">
+                    <j:if test="${it.container.modules.size() > 0}">
+                      <li class="selected"><a href="#tab_modules"><em>Modules</em></a></li>
+                    </j:if>
+                    <j:if test="${it.container.packages.size() > 0}">
+                      <li><a href="#tab_packages"><em>Packages</em></a></li>
+                    </j:if>
+                      <li><a href="#tab_warnings"><em>Warnings</em></a></li>
+                      <li><a href="#tab_details"><em>Details</em></a></li>
+                    <j:if test="${it.container.highAnnotations.size() > 0}">
+                      <li><a href="#tab_high"><em>High</em></a></li>
+                    </j:if>
+                    <j:if test="${it.container.normalAnnotations.size() > 0}">
+                      <li><a href="#tab_normal"><em>Normal</em></a></li>
+                    </j:if>
+                    <j:if test="${it.container.lowAnnotations.size() > 0}">
+                      <li><a href="#tab_low"><em>Low</em></a></li>
+                    </j:if>
+                  </ul>
+                  <div class="yui-content">
+
+        	        <j:if test="${it.container.modules.size() > 0}">
+                      <div id="tab_modules">
+                         <st:include page="/modules.jelly" />
+                      </div>
+                    </j:if>
+                    <j:if test="${it.container.packages.size() > 0}">
+                      <div id="tab_packages">
+                         <st:include page="/packages.jelly" />
+                      </div>
+                    </j:if>
+                      <div id="tab_warnings">
+                         <j:set var="annotations" value="${it.container.annotations}" />
+                         <st:include page="/warnings.jelly" />
+                      </div>
+                      <div id="tab_details">
+                         <st:include page="/details.jelly" />
+                      </div>
+                    <j:if test="${it.container.highAnnotations.size() > 0}">
+                      <div id="tab_high">
+                         <j:set var="annotations" value="${it.container.highAnnotations}" />
+                         <st:include page="/details.jelly" />
+                      </div>
+                    </j:if>
+                    <j:if test="${it.container.normalAnnotations.size() > 0}">
+                      <div id="tab_normal">
+                         <j:set var="annotations" value="${it.container.normalAnnotations}" />
+                         <st:include page="/details.jelly" />
+                      </div>
+                    </j:if>
+                    <j:if test="${it.container.lowAnnotations.size() > 0}">
+                      <div id="tab_low">
+                         <j:set var="annotations" value="${it.container.lowAnnotations}" />
+                         <st:include page="/details.jelly" />
+                      </div>
+                    </j:if>
+                  </div>
+              </div>
+
       </j:if>
 
     </l:main-panel>
+
   </l:layout>
 </j:jelly>
