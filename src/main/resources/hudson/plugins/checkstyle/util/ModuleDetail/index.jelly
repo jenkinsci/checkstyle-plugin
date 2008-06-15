@@ -16,78 +16,14 @@
   <l:layout norefresh="true">
 
     <st:include it="${it.owner}" page="sidepanel.jelly" />
-    <st:include page="/tabview.jelly" />
+    <st:include page="/tabview/css.jelly" />
 
     <l:main-panel>
       <h1>${it.header}</h1>
 
       <st:include page="/summaryTable.jelly" />
 
-        <h2>${%Details}</h2>
-
-          <j:if test="${it.hasAnnotations()}">
-
-              <div id="statistics" class="yui-navset">
-                  <ul class="yui-nav">
-                    <j:if test="${it.container.modules.size() > 0}">
-                      <li class="selected"><a href="#tab_modules"><em>Modules</em></a></li>
-                    </j:if>
-                    <j:if test="${it.container.packages.size() > 0}">
-                      <li><a href="#tab_packages"><em>Packages</em></a></li>
-                    </j:if>
-                      <li><a href="#tab_warnings"><em>Warnings</em></a></li>
-                      <li><a href="#tab_details"><em>Details</em></a></li>
-                    <j:if test="${it.container.highAnnotations.size() > 0}">
-                      <li><a href="#tab_high"><em>High</em></a></li>
-                    </j:if>
-                    <j:if test="${it.container.normalAnnotations.size() > 0}">
-                      <li><a href="#tab_normal"><em>Normal</em></a></li>
-                    </j:if>
-                    <j:if test="${it.container.lowAnnotations.size() > 0}">
-                      <li><a href="#tab_low"><em>Low</em></a></li>
-                    </j:if>
-                  </ul>
-                  <div class="yui-content">
-
-        	        <j:if test="${it.container.modules.size() > 0}">
-                      <div id="tab_modules">
-                         <st:include page="/modules.jelly" />
-                      </div>
-                    </j:if>
-                    <j:if test="${it.container.packages.size() > 0}">
-                      <div id="tab_packages">
-                         <st:include page="/packages.jelly" />
-                      </div>
-                    </j:if>
-                      <div id="tab_warnings">
-                         <j:set var="annotations" value="${it.container.annotations}" />
-                         <st:include page="/warnings.jelly" />
-                      </div>
-                      <div id="tab_details">
-                         <st:include page="/details.jelly" />
-                      </div>
-                    <j:if test="${it.container.highAnnotations.size() > 0}">
-                      <div id="tab_high">
-                         <j:set var="annotations" value="${it.container.highAnnotations}" />
-                         <st:include page="/details.jelly" />
-                      </div>
-                    </j:if>
-                    <j:if test="${it.container.normalAnnotations.size() > 0}">
-                      <div id="tab_normal">
-                         <j:set var="annotations" value="${it.container.normalAnnotations}" />
-                         <st:include page="/details.jelly" />
-                      </div>
-                    </j:if>
-                    <j:if test="${it.container.lowAnnotations.size() > 0}">
-                      <div id="tab_low">
-                         <j:set var="annotations" value="${it.container.lowAnnotations}" />
-                         <st:include page="/details.jelly" />
-                      </div>
-                    </j:if>
-                  </div>
-              </div>
-
-      </j:if>
+      <st:include page="/tabview/main.jelly" />
 
     </l:main-panel>
 
