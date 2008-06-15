@@ -2,6 +2,19 @@
   xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
   xmlns:i="jelly:fmt" xmlns:local="local">
   <j:if test="${it.hasAnnotations()}">
+    <!-- JavaScript Dependencies for Tabview: -->
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/element/element-beta-min.js"></script>
+
+    <!-- Source file for TabView -->
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/tabview/tabview-min.js"></script>
+
+    <script type="text/javascript">
+      var myTabs = new YAHOO.widget.TabView("statistics");
+    </script>
+
+    <st:include page="/tabview/css.jelly" />
+
     <h2>${%Details}</h2>
     <div id="statistics" class="yui-navset">
       <ul class="yui-nav">
