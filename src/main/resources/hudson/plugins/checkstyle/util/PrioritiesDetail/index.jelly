@@ -9,8 +9,6 @@
 
       <h1>${it.header}</h1>
 
-      <st:include page="/annotationsTable.jelly" />
-
       <st:include page="/tabview/main.jelly" />
 
     </l:main-panel>

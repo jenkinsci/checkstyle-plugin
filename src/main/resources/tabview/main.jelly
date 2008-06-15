@@ -35,11 +35,30 @@
           </li>
           <j:set var="class" value="" />
         </j:if>
-        <li class="${class}">
-          <a href="#tab_warnings">
-            <em>Warnings</em>
-          </a>
-        </li>
+        <j:if test="${it.container.categories.size() > 1}">
+          <li class="${class}">
+            <a href="#tab_categories">
+              <em>Categories</em>
+            </a>
+          </li>
+          <j:set var="class" value="" />
+        </j:if>
+        <j:if test="${it.container.types.size() > 1}">
+          <li class="${class}">
+            <a href="#tab_types">
+              <em>Types</em>
+            </a>
+          </li>
+          <j:set var="class" value="" />
+        </j:if>
+        <j:if test="${it.container.numberOfAnnotations > 1}">
+          <li class="${class}">
+            <a href="#tab_warnings">
+              <em>Warnings</em>
+            </a>
+          </li>
+          <j:set var="class" value="" />
+        </j:if>
         <li>
           <a href="#tab_details">
             <em>Details</em>
@@ -59,21 +78,21 @@
             </a>
           </li>
         </j:if>
-        <j:if test="${it.container.highAnnotations.size() > 0}">
+        <j:if test="${it.container.highAnnotations.size() > 0 and it.container.highAnnotations.size() != it.container.numberOfAnnotations}">
           <li>
             <a href="#tab_high">
               <em>High</em>
             </a>
           </li>
         </j:if>
-        <j:if test="${it.container.normalAnnotations.size() > 0}">
+        <j:if test="${it.container.normalAnnotations.size() > 0 and it.container.normalAnnotations.size() != it.container.numberOfAnnotations}">
           <li>
             <a href="#tab_normal">
               <em>Normal</em>
             </a>
           </li>
         </j:if>
-        <j:if test="${it.container.lowAnnotations.size() > 0}">
+        <j:if test="${it.container.lowAnnotations.size() > 0} and it.container.lowAnnotations.size() != it.container.numberOfAnnotations">
           <li>
             <a href="#tab_low">
               <em>Low</em>
@@ -92,10 +111,22 @@
             <st:include page="/tabview/packages.jelly" />
           </div>
         </j:if>
-        <div id="tab_warnings">
-          <j:set var="annotations" value="${it.container.annotations}" />
-          <st:include page="/tabview/warnings.jelly" />
-        </div>
+        <j:if test="${it.container.categories.size() > 1}">
+          <div id="tab_categories">
+            <st:include page="/tabview/categories.jelly" />
+          </div>
+        </j:if>
+        <j:if test="${it.container.types.size() > 1}">
+          <div id="tab_types">
+            <st:include page="/tabview/types.jelly" />
+          </div>
+        </j:if>
+        <j:if test="${it.container.numberOfAnnotations > 1}">
+          <div id="tab_warnings">
+            <j:set var="annotations" value="${it.container.annotations}" />
+            <st:include page="/tabview/warnings.jelly" />
+          </div>
+        </j:if>
         <div id="tab_details">
           <st:include page="/tabview/details.jelly" />
         </div>
@@ -111,19 +142,19 @@
             <st:include page="/tabview/fixed.jelly" />
           </div>
         </j:if>
-        <j:if test="${it.container.highAnnotations.size() > 0}">
+        <j:if test="${it.container.highAnnotations.size() > 0 and it.container.highAnnotations.size() != it.container.numberOfAnnotations}">
           <div id="tab_high">
             <j:set var="annotations" value="${it.container.highAnnotations}" />
             <st:include page="/tabview/details.jelly" />
           </div>
         </j:if>
-        <j:if test="${it.container.normalAnnotations.size() > 0}">
+        <j:if test="${it.container.normalAnnotations.size() > 0 and it.container.normalAnnotations.size() != it.container.numberOfAnnotations}">
           <div id="tab_normal">
             <j:set var="annotations" value="${it.container.normalAnnotations}" />
             <st:include page="/tabview/details.jelly" />
           </div>
         </j:if>
-        <j:if test="${it.container.lowAnnotations.size() > 0}">
+        <j:if test="${it.container.lowAnnotations.size() > 0 and it.container.lowAnnotations.size() != it.container.numberOfAnnotations}">
           <div id="tab_low">
             <j:set var="annotations" value="${it.container.lowAnnotations}" />
             <st:include page="/tabview/details.jelly" />

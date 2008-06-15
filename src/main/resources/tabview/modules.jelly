@@ -17,7 +17,7 @@
           </td>
           <td class="pane">
             <div tooltip="${it.container.getModule(module.name).toolTip}">
-              <img src="moduleStatistics?module=${module.name}" />
+              <img src="statistics?object=module.${module.name}" />
             </div>
           </td>
         </tr>
