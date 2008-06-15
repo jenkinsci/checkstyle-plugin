@@ -79,12 +79,12 @@
         </j:if>
       </ul>
       <div class="yui-content">
-        <j:if test="${it.container.modules.size() > 0}">
+        <j:if test="${it.container.modules.size() > 1}">
           <div id="tab_modules">
             <st:include page="/tabview/modules.jelly" />
           </div>
         </j:if>
-        <j:if test="${it.container.packages.size() > 0}">
+        <j:if test="${it.container.packages.size() > 1}">
           <div id="tab_packages">
             <st:include page="/tabview/packages.jelly" />
           </div>
