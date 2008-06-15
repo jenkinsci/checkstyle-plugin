@@ -18,21 +18,24 @@
     <h2>${%Details}</h2>
     <div id="statistics" class="yui-navset">
       <ul class="yui-nav">
-        <j:if test="${it.container.modules.size() > 0}">
-          <li class="selected">
+        <j:set var="class" value="selected" />
+        <j:if test="${it.container.modules.size() > 1}">
+          <li class="${class}">
             <a href="#tab_modules">
               <em>Modules</em>
             </a>
           </li>
+          <j:set var="class" value="" />
         </j:if>
-        <j:if test="${it.container.packages.size() > 0}">
-          <li>
+        <j:if test="${it.container.packages.size() > 1}">
+          <li class="${class}">
             <a href="#tab_packages">
               <em>Packages</em>
             </a>
           </li>
+          <j:set var="class" value="" />
         </j:if>
-        <li>
+        <li class="${class}">
           <a href="#tab_warnings">
             <em>Warnings</em>
           </a>
