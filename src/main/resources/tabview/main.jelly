@@ -129,6 +129,7 @@
           </div>
         </j:if>
         <div id="tab_details">
+            <j:set var="annotations" value="${it.container.annotations}" />
           <st:include page="/tabview/details.jelly" />
         </div>
         <j:if test="${it.newWarnings.size() > 0}">
