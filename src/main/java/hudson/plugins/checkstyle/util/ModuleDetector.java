@@ -16,9 +16,7 @@ import org.xml.sax.SAXException;
  * @author Ulli Hafner
  */
 public final class ModuleDetector {
-    /**
-     * FIXME: Document field TARGET
-     */
+    /** Prefix of a maven target folder. */
     private static final String TARGET = "/target";
     /** The factory to create input streams with. */
     private FileInputStreamFactory factory = new DefaultFileInputStreamFactory();
