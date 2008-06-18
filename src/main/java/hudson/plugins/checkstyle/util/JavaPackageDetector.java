@@ -29,7 +29,7 @@ public class JavaPackageDetector extends AbstractPackageDetector {
     /** {@inheritDoc}*/
     public String detectPackageName(final InputStream stream) {
         try {
-            LineIterator iterator = IOUtils.lineIterator(stream, "UTF-8");
+            LineIterator iterator = IOUtils.lineIterator(stream, null);
             while (iterator.hasNext()) {
                 String line = iterator.nextLine();
                 Matcher matcher = pattern.matcher(line);
