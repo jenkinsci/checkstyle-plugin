@@ -3,13 +3,9 @@ package hudson.plugins.checkstyle.util;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
-import hudson.plugins.checkstyle.util.FileInputStreamFactory;
-import hudson.plugins.checkstyle.util.MavenModuleDetector;
-
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 /**
@@ -66,7 +62,7 @@ public class MavenModuleDetectorTest {
         assertEquals(ERROR_MESSAGE, EXPECTED_MODULE, detector.guessModuleName(input));
 
         input = "com.avaloq.adt.core\\findbugs.xml";
-        assertEquals(ERROR_MESSAGE, "", detector.guessModuleName(input));
+        assertEquals(ERROR_MESSAGE, EXPECTED_MODULE, detector.guessModuleName(input));
     }
 
     /**
@@ -129,11 +125,14 @@ public class MavenModuleDetectorTest {
     }
 
     /**
-     * Checks whether we return an empty string if we can't guess the module name.
+     * Checks whether we return the folder before the filename if there is no pom or folder match.
      */
     @Test
-    public void testEmptyString() {
-        String moduleName = detector.guessModuleName("base/com.hello.world/com.avaloq.adt.core/source/com/avaloq/adt/core/job/AvaloqJob.java");
-        assertEquals(ERROR_MESSAGE, StringUtils.EMPTY, moduleName);
+    public void testNoGuess() {
+        String moduleName = detector.guessModuleName("base/com.hello.world/com.avaloq.adt.core/pmd.xml");
+        assertEquals(ERROR_MESSAGE, "com.avaloq.adt.core", moduleName);
+
+        moduleName = detector.guessModuleName("com.avaloq.adt.core/pmd.xml");
+        assertEquals(ERROR_MESSAGE, "com.avaloq.adt.core", moduleName);
     }
 }

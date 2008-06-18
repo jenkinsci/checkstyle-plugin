@@ -59,11 +59,12 @@
           </li>
           <j:set var="class" value="" />
         </j:if>
-        <li>
+        <li class="${class}">
           <a href="#tab_details">
             <em>Details</em>
           </a>
         </li>
+        <j:set var="class" value="" />
         <j:if test="${it.newWarnings.size() > 0}">
           <li>
             <a href="#tab_new">
@@ -79,7 +80,7 @@
           </li>
         </j:if>
         <j:if test="${it.container.highAnnotations.size() > 0 and it.container.highAnnotations.size() != it.container.numberOfAnnotations}">
-          <li>
+          <li>m
             <a href="#tab_high">
               <em>High</em>
             </a>

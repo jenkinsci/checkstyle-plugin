@@ -47,7 +47,18 @@ public final class MavenModuleDetector {
         if (StringUtils.isNotBlank(module)) {
             return module;
         }
-        return StringUtils.EMPTY;
+        if (unixName.contains("/")) {
+            String path = StringUtils.substringBeforeLast(unixName, "/");
+            if (path.contains("/")) {
+                return StringUtils.substringAfterLast(path, "/");
+            }
+            else {
+                return path;
+            }
+        }
+        else {
+            return StringUtils.EMPTY;
+        }
     }
 
     /**
