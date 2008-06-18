@@ -92,7 +92,7 @@
             </a>
           </li>
         </j:if>
-        <j:if test="${it.container.lowAnnotations.size() > 0} and it.container.lowAnnotations.size() != it.container.numberOfAnnotations">
+        <j:if test="${it.container.lowAnnotations.size() > 0 and it.container.lowAnnotations.size() != it.container.numberOfAnnotations">
           <li>
             <a href="#tab_low">
               <em>Low</em>
