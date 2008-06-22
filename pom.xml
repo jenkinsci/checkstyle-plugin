@@ -21,6 +21,10 @@
       <name>MIT license</name>
       <comments>All source code is under the MIT license.</comments>
     </license>
+    <license>
+      <name>BSD license</name>
+      <comments>All YUI source code is under the BSD license.</comments>
+    </license>
   </licenses>
 
   <dependencies>
