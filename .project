@@ -1,6 +1,7 @@
 <projectDescription>
   <name>checkstyle</name>
-  <comment>This plug-in generates the trend report for Checkstyle, an open source static code analysis program.</comment>
+  <comment>This plug-in generates the trend report for
+    Checkstyle, an open source static code analysis program.</comment>
   <projects/>
   <buildSpec>
     <buildCommand>
