@@ -6,6 +6,9 @@ import hudson.plugins.checkstyle.util.JavaPackageDetector;
 import hudson.plugins.checkstyle.util.model.MavenModule;
 import hudson.plugins.checkstyle.util.model.Priority;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -22,6 +25,16 @@ import org.xml.sax.SAXException;
 public class CheckStyleParser implements AnnotationParser {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = -8705621875291182458L;
+
+    /** {@inheritDoc} */
+    public MavenModule parse(final File file, final String moduleName) throws InvocationTargetException {
+        try {
+            return parse(new FileInputStream(file), moduleName);
+        }
+        catch (FileNotFoundException exception) {
+            throw new InvocationTargetException(exception);
+        }
+    }
 
     /** {@inheritDoc} */
     public MavenModule parse(final InputStream file, final String moduleName) throws InvocationTargetException {
