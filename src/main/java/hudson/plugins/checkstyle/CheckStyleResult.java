@@ -3,6 +3,7 @@ package hudson.plugins.checkstyle;
 import hudson.model.AbstractBuild;
 import hudson.plugins.checkstyle.parser.Warning;
 import hudson.plugins.checkstyle.util.AnnotationsBuildResult;
+import hudson.plugins.checkstyle.util.ParserResult;
 import hudson.plugins.checkstyle.util.model.JavaProject;
 
 /**
@@ -23,11 +24,11 @@ public class CheckStyleResult extends AnnotationsBuildResult {
      *
      * @param build
      *            the current build as owner of this action
-     * @param project
+     * @param result
      *            the parsed result with all annotations
      */
-    public CheckStyleResult(final AbstractBuild<?, ?> build, final JavaProject project) {
-        super(build, project);
+    public CheckStyleResult(final AbstractBuild<?, ?> build, final ParserResult result) {
+        super(build, result);
     }
 
     /**
@@ -35,13 +36,13 @@ public class CheckStyleResult extends AnnotationsBuildResult {
      *
      * @param build
      *            the current build as owner of this action
-     * @param project
+     * @param result
      *            the parsed result with all annotations
      * @param previous
      *            the result of the previous build
      */
-    public CheckStyleResult(final AbstractBuild<?, ?> build, final JavaProject project, final CheckStyleResult previous) {
-        super(build, project, previous);
+    public CheckStyleResult(final AbstractBuild<?, ?> build, final ParserResult result, final CheckStyleResult previous) {
+        super(build, result, previous);
     }
 
     /**

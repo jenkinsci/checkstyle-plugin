@@ -26,7 +26,10 @@ public class CheckStyleParserTest {
     public void analyseCheckStyleFile() throws InvocationTargetException {
         InputStream inputStream = CheckStyleParserTest.class.getResourceAsStream("checkstyle.xml");
 
-        MavenModule module = new CheckStyleParser().parse(inputStream, "empty");
+        Collection<FileAnnotation> annotations = new CheckStyleParser().parse(inputStream, "empty");
+
+        MavenModule module = new MavenModule();
+        module.addAnnotations(annotations);
 
         assertEquals("Wrong number of annotations detected.", 7, module.getNumberOfAnnotations());
         Collection<WorkspaceFile> files = module.getFiles();

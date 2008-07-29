@@ -2,7 +2,7 @@ package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractBuild;
 import hudson.plugins.checkstyle.util.AbstractAnnotationsBuildResultTest;
-import hudson.plugins.checkstyle.util.model.JavaProject;
+import hudson.plugins.checkstyle.util.ParserResult;
 
 /**
  * Tests the class {@link CheckStyleResult}.
@@ -10,13 +10,13 @@ import hudson.plugins.checkstyle.util.model.JavaProject;
 public class CheckstyleResultTest extends AbstractAnnotationsBuildResultTest<CheckStyleResult> {
     /** {@inheritDoc} */
     @Override
-    protected CheckStyleResult createBuildResult(final AbstractBuild<?, ?> build, final JavaProject project) {
+    protected CheckStyleResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project) {
         return new CheckStyleResult(build, project);
     }
 
     /** {@inheritDoc} */
     @Override
-    protected CheckStyleResult createBuildResult(final AbstractBuild<?, ?> build, final JavaProject project, final CheckStyleResult previous) {
+    protected CheckStyleResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project, final CheckStyleResult previous) {
         return new CheckStyleResult(build, project, previous);
     }
 }

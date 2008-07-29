@@ -10,7 +10,7 @@ import hudson.plugins.checkstyle.parser.CheckStyleParser;
 import hudson.plugins.checkstyle.util.FilesParser;
 import hudson.plugins.checkstyle.util.HealthAwareMavenReporter;
 import hudson.plugins.checkstyle.util.HealthReportBuilder;
-import hudson.plugins.checkstyle.util.model.JavaProject;
+import hudson.plugins.checkstyle.util.ParserResult;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -59,7 +59,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
 
     /** {@inheritDoc} */
     @Override
-    public JavaProject perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PrintStream logger) throws InterruptedException, IOException {
+    public ParserResult perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PrintStream logger) throws InterruptedException, IOException {
         FilesParser checkstyleCollector = new FilesParser(logger, CHECKSTYLE_XML_FILE, new CheckStyleParser(), true, false);
 
         return getTargetPath(pom).act(checkstyleCollector);
@@ -67,7 +67,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
 
     /** {@inheritDoc} */
     @Override
-    protected void persistResult(final JavaProject project, final MavenBuild build) {
+    protected void persistResult(final ParserResult project, final MavenBuild build) {
         CheckStyleResult result = new CheckStyleResultBuilder().build(build, project);
         HealthReportBuilder healthReportBuilder = createHealthBuilder(
                 Messages.Checkstyle_ResultAction_HealthReportSingleItem(),

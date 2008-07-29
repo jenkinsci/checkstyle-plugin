@@ -8,7 +8,7 @@ import hudson.plugins.checkstyle.parser.CheckStyleParser;
 import hudson.plugins.checkstyle.util.FilesParser;
 import hudson.plugins.checkstyle.util.HealthAwarePublisher;
 import hudson.plugins.checkstyle.util.HealthReportBuilder;
-import hudson.plugins.checkstyle.util.model.JavaProject;
+import hudson.plugins.checkstyle.util.ParserResult;
 import hudson.tasks.Publisher;
 
 import java.io.IOException;
@@ -70,12 +70,12 @@ public class CheckStylePublisher extends HealthAwarePublisher {
 
     /** {@inheritDoc} */
     @Override
-    public JavaProject perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
+    public ParserResult perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
         log(logger, "Collecting checkstyle analysis files...");
 
         FilesParser parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new CheckStyleParser(),
                 isMavenBuild(build), isAntBuild(build));
-        JavaProject project = build.getProject().getWorkspace().act(parser);
+        ParserResult project = build.getProject().getWorkspace().act(parser);
         CheckStyleResult result = new CheckStyleResultBuilder().build(build, project);
         HealthReportBuilder healthReportBuilder = createHealthReporter(
                 Messages.Checkstyle_ResultAction_HealthReportSingleItem(),

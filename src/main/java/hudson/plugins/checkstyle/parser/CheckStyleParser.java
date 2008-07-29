@@ -3,7 +3,7 @@ package hudson.plugins.checkstyle.parser;
 import hudson.plugins.checkstyle.rules.CheckStyleRules;
 import hudson.plugins.checkstyle.util.AnnotationParser;
 import hudson.plugins.checkstyle.util.JavaPackageDetector;
-import hudson.plugins.checkstyle.util.model.MavenModule;
+import hudson.plugins.checkstyle.util.model.FileAnnotation;
 import hudson.plugins.checkstyle.util.model.Priority;
 
 import java.io.File;
@@ -12,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.apache.commons.digester.Digester;
 import org.apache.commons.lang.StringUtils;
@@ -27,7 +29,7 @@ public class CheckStyleParser implements AnnotationParser {
     private static final long serialVersionUID = -8705621875291182458L;
 
     /** {@inheritDoc} */
-    public MavenModule parse(final File file, final String moduleName) throws InvocationTargetException {
+    public Collection<FileAnnotation> parse(final File file, final String moduleName) throws InvocationTargetException {
         try {
             return parse(new FileInputStream(file), moduleName);
         }
@@ -37,7 +39,7 @@ public class CheckStyleParser implements AnnotationParser {
     }
 
     /** {@inheritDoc} */
-    public MavenModule parse(final InputStream file, final String moduleName) throws InvocationTargetException {
+    public Collection<FileAnnotation> parse(final InputStream file, final String moduleName) throws InvocationTargetException {
         try {
             Digester digester = new Digester();
             digester.setValidating(false);
@@ -82,8 +84,9 @@ public class CheckStyleParser implements AnnotationParser {
      *            name of the maven module
      * @return a maven module of the annotations API
      */
-    private MavenModule convert(final CheckStyle collection, final String moduleName) {
-        MavenModule module = new MavenModule(moduleName);
+    private Collection<FileAnnotation> convert(final CheckStyle collection, final String moduleName) {
+        ArrayList<FileAnnotation> annotations = new ArrayList<FileAnnotation>();
+
         for (hudson.plugins.checkstyle.parser.File file : collection.getFiles()) {
             String packageName = new JavaPackageDetector().detectPackageName(file.getName());
             for (Error error : file.getErrors()) {
@@ -104,15 +107,16 @@ public class CheckStyleParser implements AnnotationParser {
                 String type = StringUtils.substringAfterLast(source, ".");
                 String category = StringUtils.substringAfterLast(StringUtils.substringBeforeLast(source, "."), ".");
 
-                Warning warning = new Warning(priority, error.getMessage(), StringUtils.capitalize(category), type, error.getLine(), error.getLine(), CheckStyleRules.getInstance().getDescription(type));
+                Warning warning = new Warning(priority, error.getMessage(), StringUtils.capitalize(category), type, error.getLine(), error.getLine(),
+                        CheckStyleRules.getInstance().getDescription(type));
                 warning.setModuleName(moduleName);
                 warning.setFileName(file.getName());
                 warning.setPackageName(packageName);
 
-                module.addAnnotation(warning);
+                annotations.add(warning);
             }
         }
-        return module;
+        return annotations;
     }
 
     /** {@inheritDoc} */
