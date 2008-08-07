@@ -1,6 +1,5 @@
 package hudson.plugins.checkstyle.parser;
 
-import hudson.plugins.checkstyle.rules.CheckStyleRules;
 import hudson.plugins.checkstyle.util.AnnotationParser;
 import hudson.plugins.checkstyle.util.JavaPackageDetector;
 import hudson.plugins.checkstyle.util.model.FileAnnotation;
@@ -107,8 +106,7 @@ public class CheckStyleParser implements AnnotationParser {
                 String type = StringUtils.substringAfterLast(source, ".");
                 String category = StringUtils.substringAfterLast(StringUtils.substringBeforeLast(source, "."), ".");
 
-                Warning warning = new Warning(priority, error.getMessage(), StringUtils.capitalize(category), type, error.getLine(), error.getLine(),
-                        CheckStyleRules.getInstance().getDescription(type));
+                Warning warning = new Warning(priority, error.getMessage(), StringUtils.capitalize(category), type, error.getLine(), error.getLine());
                 warning.setModuleName(moduleName);
                 warning.setFileName(file.getName());
                 warning.setPackageName(packageName);
