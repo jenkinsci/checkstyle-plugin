@@ -1,7 +1,6 @@
 package hudson.plugins.checkstyle.util;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.checkstyle.util.model.AnnotationContainer;
 import hudson.plugins.checkstyle.util.model.FileAnnotation;
 import hudson.plugins.checkstyle.util.model.Priority;
 
@@ -48,12 +47,6 @@ public class PrioritiesDetail extends AbstractAnnotationsDetail {
     /** {@inheritDoc} */
     public String getDisplayName() {
         return priority.getLongLocalizedString();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected Collection<? extends AnnotationContainer> getChildren() {
-        return getModules();
     }
 }
 
