@@ -21,7 +21,7 @@ public class Warning extends AbstractAnnotation {
     /** The tooltip. */
     @SuppressWarnings("all")
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("")
-    private final String tooltip = StringUtils.EMPTY; // backward compatibility
+    private final String tooltip = StringUtils.EMPTY; // backward compatibility NOPMD
 
     /**
      * Creates a new instance of {@link Warning}.

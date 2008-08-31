@@ -1,7 +1,6 @@
 package hudson.plugins.checkstyle.util;
 
 import static org.easymock.EasyMock.*;
-import hudson.plugins.checkstyle.util.SourceDetail;
 import hudson.plugins.checkstyle.util.model.FileAnnotation;
 import hudson.plugins.checkstyle.util.model.LineRange;
 
