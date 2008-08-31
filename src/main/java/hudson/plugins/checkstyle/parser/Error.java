@@ -6,6 +6,7 @@ package hudson.plugins.checkstyle.parser;
  * @author Ulli Hafner
  */
 public class Error {
+// CHECKSTYLE:OFF
     /** Source of warning. */
     private String source;
     /** Priority of warning. */
@@ -14,6 +15,7 @@ public class Error {
     private String message;
     /** The first line of the warning range. */
     private int line;
+// CHECKSTYLE:ON
 
     /**
      * Returns the source.
