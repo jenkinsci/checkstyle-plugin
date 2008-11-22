@@ -9,7 +9,6 @@ import hudson.model.Action;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
 import hudson.plugins.checkstyle.util.FilesParser;
 import hudson.plugins.checkstyle.util.HealthAwareMavenReporter;
-import hudson.plugins.checkstyle.util.HealthReportBuilder;
 import hudson.plugins.checkstyle.util.ParserResult;
 
 import java.io.IOException;
@@ -72,10 +71,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     @Override
     protected void persistResult(final ParserResult project, final MavenBuild build) {
         CheckStyleResult result = new CheckStyleResultBuilder().build(build, project);
-        HealthReportBuilder healthReportBuilder = createHealthBuilder(
-                Messages.Checkstyle_ResultAction_HealthReportSingleItem(),
-                Messages.Checkstyle_ResultAction_HealthReportMultipleItem());
-        build.getActions().add(new MavenCheckStyleResultAction(build, healthReportBuilder, getHeight(), result));
+        build.getActions().add(new MavenCheckStyleResultAction(build, getHeight(), result, this));
         build.registerAsProjectAction(CheckStyleReporter.this);
     }
 

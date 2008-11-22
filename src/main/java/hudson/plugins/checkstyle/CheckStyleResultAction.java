@@ -2,7 +2,7 @@ package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractBuild;
 import hudson.plugins.checkstyle.util.AbstractResultAction;
-import hudson.plugins.checkstyle.util.HealthReportBuilder;
+import hudson.plugins.checkstyle.util.HealthDescriptor;
 import hudson.plugins.checkstyle.util.PluginDescriptor;
 
 import java.util.NoSuchElementException;
@@ -27,13 +27,13 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
      *
      * @param owner
      *            the associated build of this action
-     * @param healthReportBuilder
-     *            health builder to use
      * @param result
      *            the result in this build
+     * @param healthDescriptor
+     *            health descriptor
      */
-    public CheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final CheckStyleResult result) {
-        super(owner, healthReportBuilder, result);
+    public CheckStyleResultAction(final AbstractBuild<?, ?> owner, final CheckStyleResult result, final HealthDescriptor healthDescriptor) {
+        super(owner, result, new CheckStyleHealthDescriptor(healthDescriptor));
     }
 
     /**
@@ -41,11 +41,11 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
      *
      * @param owner
      *            the associated build of this action
-     * @param healthReportBuilder
-     *            health builder to use
+     * @param healthDescriptor
+     *            health descriptor
      */
-    public CheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder) {
-        super(owner, healthReportBuilder);
+    public CheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor) {
+        super(owner, new CheckStyleHealthDescriptor(healthDescriptor));
     }
 
     /** {@inheritDoc} */

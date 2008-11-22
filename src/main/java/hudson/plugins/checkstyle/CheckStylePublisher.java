@@ -7,7 +7,6 @@ import hudson.model.Descriptor;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
 import hudson.plugins.checkstyle.util.FilesParser;
 import hudson.plugins.checkstyle.util.HealthAwarePublisher;
-import hudson.plugins.checkstyle.util.HealthReportBuilder;
 import hudson.plugins.checkstyle.util.ParserResult;
 import hudson.tasks.Publisher;
 
@@ -80,10 +79,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
                 isMavenBuild(build), isAntBuild(build));
         ParserResult project = build.getProject().getWorkspace().act(parser);
         CheckStyleResult result = new CheckStyleResultBuilder().build(build, project);
-        HealthReportBuilder healthReportBuilder = createHealthReporter(
-                Messages.Checkstyle_ResultAction_HealthReportSingleItem(),
-                Messages.Checkstyle_ResultAction_HealthReportMultipleItem());
-        build.getActions().add(new CheckStyleResultAction(build, healthReportBuilder, result));
+        build.getActions().add(new CheckStyleResultAction(build, result, this));
 
         return project;
     }
