@@ -2,9 +2,9 @@ package hudson.plugins.checkstyle;
 
 import static junit.framework.Assert.*;
 import hudson.model.AbstractBuild;
-import hudson.plugins.checkstyle.util.AbstractAnnotationsBuildResultTest;
-import hudson.plugins.checkstyle.util.AnnotationsBuildResult;
-import hudson.plugins.checkstyle.util.ParserResult;
+import hudson.plugins.annotations.util.AbstractAnnotationsBuildResultTest;
+import hudson.plugins.annotations.util.AnnotationsBuildResult;
+import hudson.plugins.annotations.util.ParserResult;
 
 /**
  * Tests the class {@link CheckStyleResult}.

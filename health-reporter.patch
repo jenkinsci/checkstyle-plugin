@@ -1,0 +1,1467 @@
+Index: src/main/java/hudson/plugins/checkstyle/CheckStyleHealthDescriptor.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/CheckStyleHealthDescriptor.java	(revision 0)
++++ src/main/java/hudson/plugins/checkstyle/CheckStyleHealthDescriptor.java	(revision 0)
+@@ -0,0 +1,42 @@
++package hudson.plugins.checkstyle;
++
++import hudson.plugins.checkstyle.util.AbstractHealthDescriptor;
++import hudson.plugins.checkstyle.util.HealthDescriptor;
++import hudson.plugins.checkstyle.util.model.AnnotationProvider;
++
++import org.jvnet.localizer.Localizable;
++
++/**
++ * A health descriptor for CheckStyle build results.
++ *
++ * @author Ulli Hafner
++ */
++public class CheckStyleHealthDescriptor extends AbstractHealthDescriptor {
++    /** Unique ID of this class. */
++    private static final long serialVersionUID = -3404826986876607396L;
++
++    /**
++     * Creates a new instance of {@link CheckStyleHealthDescriptor} based on the
++     * values of the specified descriptor.
++     *
++     * @param healthDescriptor the descriptor to copy the values from
++     */
++    public CheckStyleHealthDescriptor(final HealthDescriptor healthDescriptor) {
++        super(healthDescriptor);
++    }
++
++    /** {@inheritDoc} */
++    @Override
++    protected Localizable createDescription(final AnnotationProvider result) {
++        if (result.getNumberOfAnnotations() == 0) {
++            return Messages._Checkstyle_ResultAction_HealthReportNoItem();
++        }
++        else if (result.getNumberOfAnnotations() == 1) {
++            return Messages._Checkstyle_ResultAction_HealthReportSingleItem();
++        }
++        else {
++            return Messages._Checkstyle_ResultAction_HealthReportMultipleItem(result.getNumberOfAnnotations());
++        }
++    }
++}
++
+Index: src/main/java/hudson/plugins/checkstyle/CheckStylePublisher.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/CheckStylePublisher.java	(revision 13109)
++++ src/main/java/hudson/plugins/checkstyle/CheckStylePublisher.java	(working copy)
+@@ -7,7 +7,6 @@
+ import hudson.plugins.checkstyle.parser.CheckStyleParser;
+ import hudson.plugins.checkstyle.util.FilesParser;
+ import hudson.plugins.checkstyle.util.HealthAwarePublisher;
+-import hudson.plugins.checkstyle.util.HealthReportBuilder;
+ import hudson.plugins.checkstyle.util.ParserResult;
+ import hudson.tasks.Publisher;
+ 
+@@ -80,10 +79,7 @@
+                 isMavenBuild(build), isAntBuild(build));
+         ParserResult project = build.getProject().getWorkspace().act(parser);
+         CheckStyleResult result = new CheckStyleResultBuilder().build(build, project);
+-        HealthReportBuilder healthReportBuilder = createHealthReporter(
+-                Messages.Checkstyle_ResultAction_HealthReportSingleItem(),
+-                Messages.Checkstyle_ResultAction_HealthReportMultipleItem());
+-        build.getActions().add(new CheckStyleResultAction(build, healthReportBuilder, result));
++        build.getActions().add(new CheckStyleResultAction(build, result, this));
+ 
+         return project;
+     }
+Index: src/main/java/hudson/plugins/checkstyle/CheckStyleReporter.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/CheckStyleReporter.java	(revision 13109)
++++ src/main/java/hudson/plugins/checkstyle/CheckStyleReporter.java	(working copy)
+@@ -9,7 +9,6 @@
+ import hudson.plugins.checkstyle.parser.CheckStyleParser;
+ import hudson.plugins.checkstyle.util.FilesParser;
+ import hudson.plugins.checkstyle.util.HealthAwareMavenReporter;
+-import hudson.plugins.checkstyle.util.HealthReportBuilder;
+ import hudson.plugins.checkstyle.util.ParserResult;
+ 
+ import java.io.IOException;
+@@ -72,10 +71,7 @@
+     @Override
+     protected void persistResult(final ParserResult project, final MavenBuild build) {
+         CheckStyleResult result = new CheckStyleResultBuilder().build(build, project);
+-        HealthReportBuilder healthReportBuilder = createHealthBuilder(
+-                Messages.Checkstyle_ResultAction_HealthReportSingleItem(),
+-                Messages.Checkstyle_ResultAction_HealthReportMultipleItem());
+-        build.getActions().add(new MavenCheckStyleResultAction(build, healthReportBuilder, getHeight(), result));
++        build.getActions().add(new MavenCheckStyleResultAction(build, getHeight(), result, this));
+         build.registerAsProjectAction(CheckStyleReporter.this);
+     }
+ 
+Index: src/main/java/hudson/plugins/checkstyle/CheckStyleResultAction.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/CheckStyleResultAction.java	(revision 12976)
++++ src/main/java/hudson/plugins/checkstyle/CheckStyleResultAction.java	(working copy)
+@@ -2,7 +2,7 @@
+ 
+ import hudson.model.AbstractBuild;
+ import hudson.plugins.checkstyle.util.AbstractResultAction;
+-import hudson.plugins.checkstyle.util.HealthReportBuilder;
++import hudson.plugins.checkstyle.util.HealthDescriptor;
+ import hudson.plugins.checkstyle.util.PluginDescriptor;
+ 
+ import java.util.NoSuchElementException;
+@@ -27,13 +27,13 @@
+      *
+      * @param owner
+      *            the associated build of this action
+-     * @param healthReportBuilder
+-     *            health builder to use
+      * @param result
+      *            the result in this build
++     * @param healthDescriptor
++     *            health descriptor
+      */
+-    public CheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final CheckStyleResult result) {
+-        super(owner, healthReportBuilder, result);
++    public CheckStyleResultAction(final AbstractBuild<?, ?> owner, final CheckStyleResult result, final HealthDescriptor healthDescriptor) {
++        super(owner, result, new CheckStyleHealthDescriptor(healthDescriptor));
+     }
+ 
+     /**
+@@ -41,11 +41,11 @@
+      *
+      * @param owner
+      *            the associated build of this action
+-     * @param healthReportBuilder
+-     *            health builder to use
++     * @param healthDescriptor
++     *            health descriptor
+      */
+-    public CheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder) {
+-        super(owner, healthReportBuilder);
++    public CheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor) {
++        super(owner, new CheckStyleHealthDescriptor(healthDescriptor));
+     }
+ 
+     /** {@inheritDoc} */
+Index: src/main/java/hudson/plugins/checkstyle/MavenCheckStyleResultAction.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/MavenCheckStyleResultAction.java	(revision 12976)
++++ src/main/java/hudson/plugins/checkstyle/MavenCheckStyleResultAction.java	(working copy)
+@@ -8,7 +8,7 @@
+ import hudson.maven.MavenModuleSetBuild;
+ import hudson.model.AbstractBuild;
+ import hudson.model.Action;
+-import hudson.plugins.checkstyle.util.HealthReportBuilder;
++import hudson.plugins.checkstyle.util.HealthDescriptor;
+ import hudson.plugins.checkstyle.util.TrendReportSize;
+ 
+ import java.util.List;
+@@ -32,13 +32,11 @@
+      *
+      * @param owner
+      *            the associated build of this action
+-     * @param healthReportBuilder
+-     *            health builder to use
+      * @param height
+      *            the height of the trend graph
+      */
+-    public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final String height) {
+-        super(owner, healthReportBuilder);
++    public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final String height, final HealthDescriptor healthDescriptor) {
++        super(owner, healthDescriptor);
+         this.height = height;
+     }
+ 
+@@ -47,21 +45,21 @@
+      *
+      * @param owner
+      *            the associated build of this action
+-     * @param healthReportBuilder
+-     *            health builder to use
+      * @param height
+      *            the height of the trend graph
+      * @param result
+      *            the result in this build
++     * @param healthDescriptor
++     *            health descriptor
+      */
+-    public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final String height, final CheckStyleResult result) {
+-        super(owner, healthReportBuilder, result);
++    public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final String height, final CheckStyleResult result, final HealthDescriptor healthDescriptor) {
++        super(owner, result, healthDescriptor);
+         this.height = height;
+     }
+ 
+     /** {@inheritDoc} */
+     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
+-        return new MavenCheckStyleResultAction(build, getHealthReportBuilder(), height);
++        return new MavenCheckStyleResultAction(build, height, getHealthDescriptor());
+     }
+ 
+     /** {@inheritDoc} */
+Index: src/main/java/hudson/plugins/checkstyle/util/AbstractHealthDescriptor.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/util/AbstractHealthDescriptor.java	(revision 0)
++++ src/main/java/hudson/plugins/checkstyle/util/AbstractHealthDescriptor.java	(revision 0)
+@@ -0,0 +1,96 @@
++package hudson.plugins.checkstyle.util;
++
++import hudson.plugins.checkstyle.util.model.AnnotationProvider;
++import hudson.plugins.checkstyle.util.model.Priority;
++
++import org.jvnet.localizer.Localizable;
++
++/**
++ * A base class for serializable health descriptors. Instances of this class are
++ * immutable.
++ *
++ * @author Ulli Hafner
++ */
++public abstract class AbstractHealthDescriptor implements HealthDescriptor {
++    /** Unique ID of this class. */
++    private static final long serialVersionUID = -3709673381162699834L;
++    /** Determines whether to use the provided threshold to mark a build as unstable. */
++    private final boolean isFailureThresholdEnabled;
++    /** Integer threshold to be reached if a build should be considered as unstable. */
++    private final int minimumAnnotations;
++    /** Report health as 100% when the number of warnings is less than this value. */
++    private final int healthyAnnotations;
++    /** Report health as 0% when the number of warnings is greater than this value. */
++    private final int unHealthyAnnotations;
++    /** Determines whether to use the provided healthy thresholds. */
++    private final boolean isHealthyReportEnabled;
++    /** The minimum priority to consider during health and stability calculation. */
++    private final Priority priority;
++
++    /**
++     * Creates a new instance of {@link AbstractHealthDescriptor} based on the
++     * values of the specified descriptor.
++     *
++     * @param healthDescriptor the descriptor to copy the values from
++     */
++    public AbstractHealthDescriptor(final HealthDescriptor healthDescriptor) {
++        isFailureThresholdEnabled = healthDescriptor.isThresholdEnabled();
++        minimumAnnotations = healthDescriptor.getMinimumAnnotations();
++        isHealthyReportEnabled = healthDescriptor.isHealthyReportEnabled();
++        healthyAnnotations = healthDescriptor.getHealthyAnnotations();
++        unHealthyAnnotations = healthDescriptor.getUnHealthyAnnotations();
++        priority = healthDescriptor.getMinimumPriority();
++    }
++
++    /**
++     * Creates a new instance of {@link AbstractHealthDescriptor}.
++     */
++    public AbstractHealthDescriptor() {
++        isFailureThresholdEnabled = false;
++        isHealthyReportEnabled = false;
++        minimumAnnotations = 0;
++        healthyAnnotations = 0;
++        unHealthyAnnotations = 0;
++        priority = Priority.LOW;
++    }
++
++    /** {@inheritDoc} */
++    public int getHealthyAnnotations() {
++        return healthyAnnotations;
++    }
++
++    /** {@inheritDoc} */
++    public int getMinimumAnnotations() {
++        return minimumAnnotations;
++    }
++
++    /** {@inheritDoc} */
++    public int getUnHealthyAnnotations() {
++        return unHealthyAnnotations;
++    }
++
++    /** {@inheritDoc} */
++    public boolean isHealthyReportEnabled() {
++        return isHealthyReportEnabled;
++    }
++
++    /** {@inheritDoc} */
++    public boolean isThresholdEnabled() {
++        return isFailureThresholdEnabled;
++    }
++
++    /** {@inheritDoc} */
++    public Priority getMinimumPriority() {
++        return priority;
++    }
++
++    /**
++     * Returns a localized description of the build health.
++     *
++     * @param result
++     *            the result of the build
++     * @return a localized description of the build health
++     */
++    protected abstract Localizable createDescription(final AnnotationProvider result);
++}
++
+Index: src/main/java/hudson/plugins/checkstyle/util/AbstractResultAction.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/util/AbstractResultAction.java	(revision 12976)
++++ src/main/java/hudson/plugins/checkstyle/util/AbstractResultAction.java	(working copy)
+@@ -49,8 +49,10 @@
+     /** The associated build of this action. */
+     @SuppressWarnings("Se")
+     private final AbstractBuild<?, ?> owner;
+-    /** Builds a health report. */
+-    private HealthReportBuilder healthReportBuilder;
++    /** Backward compatibility. */
++    private HealthReportBuilder healthReportBuilder; // FIXME
++    /** Parameters for the health report. */
++    private final AbstractHealthDescriptor healthDescriptor;
+     /** The actual result of this action. */
+     private T result;
+ 
+@@ -59,14 +61,15 @@
+      *
+      * @param owner
+      *            the associated build of this action
+-     * @param healthReportBuilder
+-     *            health builder to use
+      * @param result
+      *            the result of the action
++     * @param healthDescriptor
++     *            health descriptor
+      */
+-    public AbstractResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder, final T result) {
+-        this(owner, healthReportBuilder);
++    public AbstractResultAction(final AbstractBuild<?, ?> owner, final T result, final AbstractHealthDescriptor healthDescriptor) {
++        this.owner = owner;
+         this.result = result;
++        this.healthDescriptor = healthDescriptor;
+     }
+ 
+     /**
+@@ -74,13 +77,26 @@
+      *
+      * @param owner
+      *            the associated build of this action
+-     * @param healthReportBuilder
+-     *            health builder to use
++     * @param healthDescriptor
++     *            health descriptor
+      */
+-    public AbstractResultAction(final AbstractBuild<?, ?> owner, final HealthReportBuilder healthReportBuilder) {
+-        super();
++    public AbstractResultAction(final AbstractBuild<?, ?> owner, final AbstractHealthDescriptor healthDescriptor) {
+         this.owner = owner;
+-        this.healthReportBuilder = healthReportBuilder;
++        this.healthDescriptor = healthDescriptor;
++    }
++
++    /**
++     * Returns the healthDescriptor.
++     *
++     * @return the healthDescriptor
++     */
++    public AbstractHealthDescriptor getHealthDescriptor() {
++        if (healthDescriptor != null) {
++            return healthDescriptor;
++        }
++        else {
++            return NullHealthDescriptor.NULL_HEALTH_DESCRIPTOR; // for old serialized actions
++        }
+     }
+ 
+     /**
+@@ -101,15 +117,12 @@
+      * @return the associated health report builder
+      */
+     public final HealthReportBuilder getHealthReportBuilder() {
+-        if (healthReportBuilder == null) { // support for old serialization information
+-            healthReportBuilder = new HealthReportBuilder();
+-        }
+-        return healthReportBuilder;
++        return new HealthReportBuilder(getHealthDescriptor());
+     }
+ 
+     /** {@inheritDoc} */
+     public final HealthReport getBuildHealth() {
+-        return healthReportBuilder.computeHealth(getResult(), owner.getProject(), getDescriptor());
++        return getHealthReportBuilder().computeHealth(getResult());
+     }
+ 
+     /**
+Index: src/main/java/hudson/plugins/checkstyle/util/HealthAwareMavenReporter.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/util/HealthAwareMavenReporter.java	(revision 12976)
++++ src/main/java/hudson/plugins/checkstyle/util/HealthAwareMavenReporter.java	(working copy)
+@@ -21,7 +21,6 @@
+ import java.io.FileNotFoundException;
+ import java.io.IOException;
+ import java.io.PrintStream;
+-import java.util.ArrayList;
+ import java.util.Collection;
+ 
+ import org.apache.commons.lang.StringUtils;
+@@ -42,7 +41,7 @@
+  * @author Ulli Hafner
+  */
+ // CHECKSTYLE:COUPLING-OFF
+-public abstract class HealthAwareMavenReporter extends MavenReporter {
++public abstract class HealthAwareMavenReporter extends MavenReporter implements HealthDescriptor {
+     /** Default threshold priority limit. */
+     private static final String DEFAULT_PRIORITY_THRESHOLD_LIMIT = "low";
+     /** Unique identifier of this class. */
+@@ -312,7 +311,7 @@
+      */
+     private void evaluateBuildResult(final MavenBuildProxy build, final PrintStream logger, final ParserResult result) {
+         int annotationCount = 0;
+-        for (Priority priority : getPriorities()) {
++        for (Priority priority : Priority.collectPrioritiesFrom(getMinimumPriority())) {
+             int numberOfAnnotations = result.getNumberOfAnnotations(priority);
+             log(logger, "A total of " + numberOfAnnotations + " annotations have been found for priority " + priority);
+             annotationCount += numberOfAnnotations;
+@@ -359,27 +358,7 @@
+         return new FilePath(new FilePath(pom.getBasedir()), "target");
+     }
+ 
+-    /**
+-     * Creates a new instance of <code>HealthReportBuilder</code>.
+-     *
+-     * @param reportSingleCount
+-     *            message to be shown if there is exactly one item found
+-     * @param reportMultipleCount
+-     *            message to be shown if there are zero or more than one items
+-     *            found
+-     * @return the new health report builder
+-     */
+-    protected HealthReportBuilder createHealthBuilder(final String reportSingleCount, final String reportMultipleCount) {
+-        return new HealthReportBuilder(isThresholdEnabled(), getMinimumAnnotations(),
+-                isHealthyReportEnabled(), getHealthyAnnotations(), getUnHealthyAnnotations(),
+-                reportSingleCount, reportMultipleCount);
+-    }
+-
+-    /**
+-     * Determines whether a threshold has been defined.
+-     *
+-     * @return <code>true</code> if a threshold has been defined
+-     */
++    /** {@inheritDoc} */
+     public boolean isThresholdEnabled() {
+         return thresholdEnabled;
+     }
+@@ -393,20 +372,12 @@
+         return threshold;
+     }
+ 
+-    /**
+-     * Returns the threshold to be reached if a build should be considered as unstable.
+-     *
+-     * @return the threshold to be reached if a build should be considered as unstable
+-     */
++    /** {@inheritDoc} */
+     public int getMinimumAnnotations() {
+         return minimumAnnotations;
+     }
+ 
+-    /**
+-     * Returns the isHealthyReportEnabled.
+-     *
+-     * @return the isHealthyReportEnabled
+-     */
++    /** {@inheritDoc} */
+     public boolean isHealthyReportEnabled() {
+         return healthyReportEnabled;
+     }
+@@ -420,11 +391,7 @@
+         return healthy;
+     }
+ 
+-    /**
+-     * Returns the healthy threshold for annotations, i.e. when health is reported as 100%.
+-     *
+-     * @return the 100% healthiness
+-     */
++    /** {@inheritDoc} */
+     public int getHealthyAnnotations() {
+         return healthyAnnotations;
+     }
+@@ -438,11 +405,7 @@
+         return unHealthy;
+     }
+ 
+-    /**
+-     * Returns the unhealthy threshold of annotations, i.e. when health is reported as 0%.
+-     *
+-     * @return the 0% unhealthiness
+-     */
++    /** {@inheritDoc} */
+     public int getUnHealthyAnnotations() {
+         return unHealthyAnnotations;
+     }
+@@ -465,23 +428,9 @@
+         return new TrendReportSize(height).getHeight();
+     }
+ 
+-    /**
+-     * Returns the priorities that should should be considered when evaluating
+-     * the build stability and health.
+-     *
+-     * @return the priorities
+-     */
+-    protected Collection<Priority> getPriorities() {
+-        ArrayList<Priority> priorities = new ArrayList<Priority>();
+-        priorities.add(Priority.HIGH);
+-        if ("normal".equals(thresholdLimit)) {
+-            priorities.add(Priority.NORMAL);
+-        }
+-        if ("low".equals(thresholdLimit)) {
+-            priorities.add(Priority.NORMAL);
+-            priorities.add(Priority.LOW);
+-        }
+-        return priorities;
++    /** {@inheritDoc} */
++    public Priority getMinimumPriority() {
++        return Priority.valueOf(StringUtils.upperCase(getThresholdLimit()));
+     }
+ 
+     /**
+Index: src/main/java/hudson/plugins/checkstyle/util/HealthAwarePublisher.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/util/HealthAwarePublisher.java	(revision 12976)
++++ src/main/java/hudson/plugins/checkstyle/util/HealthAwarePublisher.java	(working copy)
+@@ -24,7 +24,6 @@
+ import java.io.FileOutputStream;
+ import java.io.IOException;
+ import java.io.PrintStream;
+-import java.util.ArrayList;
+ import java.util.Collection;
+ 
+ import org.apache.commons.io.IOUtils;
+@@ -45,7 +44,7 @@
+  * @author Ulli Hafner
+  */
+ // CHECKSTYLE:COUPLING-OFF
+-public abstract class HealthAwarePublisher extends Publisher {
++public abstract class HealthAwarePublisher extends Publisher implements HealthDescriptor {
+     /** Default threshold priority limit. */
+     private static final String DEFAULT_PRIORITY_THRESHOLD_LIMIT = "low";
+     /** Annotation threshold to be reached if a build should be considered as unstable. */
+@@ -278,7 +277,7 @@
+      */
+     private void evaluateBuildResult(final AbstractBuild<?, ?> build, final PrintStream logger, final ParserResult project) {
+         int annotationCount = 0;
+-        for (Priority priority : getPriorities()) {
++        for (Priority priority : Priority.collectPrioritiesFrom(getMinimumPriority())) {
+             int numberOfAnnotations = project.getNumberOfAnnotations(priority);
+             log(logger, "A total of " + numberOfAnnotations + " annotations have been found for priority " + priority);
+             annotationCount += numberOfAnnotations;
+@@ -298,27 +297,7 @@
+         logger.println(StringUtils.defaultString(pluginName) + message);
+     }
+ 
+-    /**
+-     * Creates a new instance of <code>HealthReportBuilder</code>.
+-     *
+-     * @param reportSingleCount
+-     *            message to be shown if there is exactly one item found
+-     * @param reportMultipleCount
+-     *            message to be shown if there are zero or more than one items
+-     *            found
+-     * @return the new health report builder
+-     */
+-    protected HealthReportBuilder createHealthReporter(final String reportSingleCount, final String reportMultipleCount) {
+-        return new HealthReportBuilder(thresholdEnabled, minimumAnnotations, healthyReportEnabled, healthyAnnotations, unHealthyAnnotations,
+-                reportSingleCount, reportMultipleCount);
+-    }
+-
+-
+-    /**
+-     * Determines whether a threshold has been defined.
+-     *
+-     * @return <code>true</code> if a threshold has been defined
+-     */
++    /** {@inheritDoc} */
+     public boolean isThresholdEnabled() {
+         return thresholdEnabled;
+     }
+@@ -332,20 +311,12 @@
+         return threshold;
+     }
+ 
+-    /**
+-     * Returns the threshold to be reached if a build should be considered as unstable.
+-     *
+-     * @return the threshold to be reached if a build should be considered as unstable
+-     */
++    /** {@inheritDoc} */
+     public int getMinimumAnnotations() {
+         return minimumAnnotations;
+     }
+ 
+-    /**
+-     * Returns the isHealthyReportEnabled.
+-     *
+-     * @return the isHealthyReportEnabled
+-     */
++    /** {@inheritDoc} */
+     public boolean isHealthyReportEnabled() {
+         return healthyReportEnabled;
+     }
+@@ -359,11 +330,7 @@
+         return healthy;
+     }
+ 
+-    /**
+-     * Returns the healthy threshold for annotations, i.e. when health is reported as 100%.
+-     *
+-     * @return the 100% healthiness
+-     */
++    /** {@inheritDoc} */
+     public int getHealthyAnnotations() {
+         return healthyAnnotations;
+     }
+@@ -377,11 +344,7 @@
+         return unHealthy;
+     }
+ 
+-    /**
+-     * Returns the unhealthy threshold of annotations, i.e. when health is reported as 0%.
+-     *
+-     * @return the 0% unhealthiness
+-     */
++    /** {@inheritDoc} */
+     public int getUnHealthyAnnotations() {
+         return unHealthyAnnotations;
+     }
+@@ -444,29 +407,15 @@
+         return false;
+     }
+ 
+-    /**
+-     * Returns the priorities that should should be considered when evaluating
+-     * the build stability and health.
+-     *
+-     * @return the priorities
+-     */
+-    protected Collection<Priority> getPriorities() {
+-        ArrayList<Priority> priorities = new ArrayList<Priority>();
+-        priorities.add(Priority.HIGH);
+-        if ("normal".equals(thresholdLimit)) {
+-            priorities.add(Priority.NORMAL);
+-        }
+-        if ("low".equals(thresholdLimit)) {
+-            priorities.add(Priority.NORMAL);
+-            priorities.add(Priority.LOW);
+-        }
+-        return priorities;
++    /** {@inheritDoc} */
++    public Priority getMinimumPriority() {
++        return Priority.valueOf(StringUtils.upperCase(getThresholdLimit()));
+     }
+ 
+     /**
+-     * Returns the thresholdLimit.
++     * Returns the threshold limit.
+      *
+-     * @return the thresholdLimit
++     * @return the threshold limit
+      */
+     public String getThresholdLimit() {
+         return thresholdLimit;
+Index: src/main/java/hudson/plugins/checkstyle/util/HealthDescriptor.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/util/HealthDescriptor.java	(revision 0)
++++ src/main/java/hudson/plugins/checkstyle/util/HealthDescriptor.java	(revision 0)
+@@ -0,0 +1,67 @@
++package hudson.plugins.checkstyle.util;
++
++import hudson.plugins.checkstyle.util.model.Priority;
++
++import java.io.Serializable;
++
++
++/**
++ * A health descriptor defines the parameters to create the build health. It
++ * consists of the following constraints:
++ * <ul>
++ * <li>A flag to determine whether a build should be marked unstable if the
++ * number of annotations reaches a given threshold.</li>
++ * <li>A flag to determine whether a build should change its healthiness
++ * according to the number of warnings. The healthiness is interpolated between
++ * the specified minimum and maximum values.</li>
++ *
++ * @author Ulli Hafner
++ */
++public interface HealthDescriptor extends Serializable {
++    /**
++     * Determines whether a threshold has been defined.
++     *
++     * @return <code>true</code> if a threshold has been defined
++     */
++    boolean isThresholdEnabled();
++
++    /**
++     * Returns the threshold to be reached if a build should be considered as
++     * unstable.
++     *
++     * @return the threshold to be reached if a build should be considered as
++     *         unstable
++     */
++    int getMinimumAnnotations();
++
++    /**
++     * Determines whether a health report should be created.
++     *
++     * @return <code>true</code> if a health report should be created
++     */
++    boolean isHealthyReportEnabled();
++
++    /**
++     * Returns the healthy threshold for annotations, i.e. when health is reported as 100%.
++     *
++     * @return the 100% healthiness
++     */
++    int getHealthyAnnotations();
++
++    /**
++     * Returns the unhealthy threshold of annotations, i.e. when health is reported as 0%.
++     *
++     * @return the 0% unhealthiness
++     */
++    int getUnHealthyAnnotations();
++
++    /**
++     * Returns the minimum priority that should be considered when computing
++     * build health and stability. E.g., if {@link Priority#NORMAL} is
++     * returned, then annotations with priority {@link Priority#LOW} are
++     * ignored.
++     *
++     * @return the minimum priority to consider
++     */
++    Priority getMinimumPriority();
++}
+Index: src/main/java/hudson/plugins/checkstyle/util/HealthReportBuilder.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/util/HealthReportBuilder.java	(revision 13109)
++++ src/main/java/hudson/plugins/checkstyle/util/HealthReportBuilder.java	(working copy)
+@@ -1,13 +1,8 @@
+ package hudson.plugins.checkstyle.util;
+ 
+-import hudson.Util;
+-import hudson.model.AbstractProject;
+-import hudson.model.Descriptor;
+ import hudson.model.HealthReport;
+ import hudson.plugins.checkstyle.util.model.AnnotationProvider;
+ import hudson.plugins.checkstyle.util.model.Priority;
+-import hudson.tasks.Publisher;
+-import hudson.util.DescribableList;
+ 
+ import java.io.Serializable;
+ import java.util.ArrayList;
+@@ -27,63 +22,17 @@
+ public class HealthReportBuilder implements Serializable {
+     /** Unique identifier of this class. */
+     private static final long serialVersionUID = 5191317904662711835L;
+-    /** Report health as 100% when the number of warnings is less than this value. */
+-    private int healthy;
+-    /** Report health as 0% when the number of warnings is greater than this value. */
+-    private int unHealthy;
+-    /** Determines whether to use the provided healthy thresholds. */
+-    private boolean isHealthEnabled;
+-    /** Name of the report. */
+-    private String reportName;
+-    /** Name of a item. */
+-    private String itemName;
+-    /** Determines whether to use the provided unstable threshold. */
+-    private boolean isThresholdEnabled;
+-    /** Bug threshold to be reached if a build should be considered as unstable. */
+-    private int threshold;
+-    /** Message to be shown for a single item count. */
+-    private final String reportSingleCount;
+-    /** Message to be shown for a multiple item count. */
+-    private final String reportMultipleCount;
++    /** Health descriptor. */
++    private final AbstractHealthDescriptor healthDescriptor;
+ 
+     /**
+-     * Creates a new instance of <code>HealthReportBuilder</code>.
++     * Creates a new instance of {@link HealthReportBuilder}.
+      *
+-     * @param isFailureThresholdEnabled
+-     *            determines whether to use the provided unstable threshold
+-     * @param threshold
+-     *            bug threshold to be reached if a build should be considered as
+-     *            unstable.
+-     * @param isHealthyReportEnabled
+-     *            determines whether to use the provided healthy thresholds.
+-     * @param healthy
+-     *            report health as 100% when the number of warnings is less than
+-     *            this value
+-     * @param unHealthy
+-     *            report health as 0% when the number of warnings is greater
+-     *            than this value
+-     * @param reportSingleCount
+-     *            message to be shown if there is exactly one item found
+-     * @param reportMultipleCount
+-     *            message to be shown if there are zero or more than one items
+-     *            found
+-     */
+-    public HealthReportBuilder(final boolean isFailureThresholdEnabled, final int threshold, final boolean isHealthyReportEnabled, final int healthy, final int unHealthy,
+-            final String reportSingleCount, final String reportMultipleCount) {
+-        this.reportSingleCount = reportSingleCount;
+-        this.reportMultipleCount = reportMultipleCount;
+-        this.threshold = threshold;
+-        this.healthy = healthy;
+-        this.unHealthy = unHealthy;
+-        isThresholdEnabled = isFailureThresholdEnabled;
+-        isHealthEnabled = isHealthyReportEnabled;
+-    }
+-
+-    /**
+-     * Creates a new dummy instance of <code>HealthReportBuilder</code>.
++     * @param healthDescriptor
++     *            health descriptor
+      */
+-    public HealthReportBuilder() {
+-        this(false, 0, false, 0, 0, "1 item", "%d items");
++    public HealthReportBuilder(final AbstractHealthDescriptor healthDescriptor) {
++        this.healthDescriptor = healthDescriptor;
+     }
+ 
+     /**
+@@ -95,23 +44,12 @@
+      *
+      * @param result
+      *            annotations of the current build
+-     * @param project
+-     *            the current project
+-     * @param pluginDescriptor
+-     *            the descriptor of the current plug-in
+      * @return the healthiness of a build
+      */
+-    public HealthReport computeHealth(final AnnotationProvider result, final AbstractProject<?, ?> project, final PluginDescriptor pluginDescriptor) {
+-        int numberOfAnnotations = result.getNumberOfAnnotations();
+-
+-        DescribableList<Publisher, Descriptor<Publisher>> publishers = project.getPublishersList();
+-        Publisher publisher = publishers.get(pluginDescriptor);
+-        if (publisher instanceof HealthAwarePublisher) {
+-            HealthAwarePublisher healthAwarePublisher = (HealthAwarePublisher)publisher;
+-            numberOfAnnotations = 0;
+-            for (Priority priority : healthAwarePublisher.getPriorities()) {
+-                numberOfAnnotations += result.getNumberOfAnnotations(priority);
+-            }
++    public HealthReport computeHealth(final AnnotationProvider result) {
++        int numberOfAnnotations = 0;
++        for (Priority priority : Priority.collectPrioritiesFrom(healthDescriptor.getMinimumPriority())) {
++            numberOfAnnotations += result.getNumberOfAnnotations(priority);
+         }
+ 
+         return computeHealth(numberOfAnnotations, result);
+@@ -130,197 +68,32 @@
+      *            annotations of the current build
+      * @return the healthiness of a build
+      */
+-    public HealthReport computeHealth(final int counter, final AnnotationProvider result) {
+-        if (isHealthEnabled) {
++    protected HealthReport computeHealth(final int counter, final AnnotationProvider result) {
++        if (healthDescriptor.isHealthyReportEnabled()) {
+             int percentage;
+-            if (counter < healthy) {
++            if (counter < healthDescriptor.getHealthyAnnotations()) {
+                 percentage = 100;
+             }
+-            else if (counter > unHealthy) {
++            else if (counter > healthDescriptor.getUnHealthyAnnotations()) {
+                 percentage = 0;
+             }
+             else {
+-                percentage = 100 - ((counter - healthy) * 100 / (unHealthy - healthy));
++                percentage = 100 - ((counter - healthDescriptor.getHealthyAnnotations()) * 100
++                        / (healthDescriptor.getUnHealthyAnnotations() - healthDescriptor.getHealthyAnnotations()));
+             }
+-            String description;
+-            if (isLocalizedRelease()) {
+-                description = createDescription(result);
+-            }
+-            else {
+-                description = reportName + ": " + Util.combine(result.getNumberOfAnnotations(), itemName) + " found.";
+-            }
+-            return new HealthReport(percentage, description);
++            return new HealthReport(percentage, healthDescriptor.createDescription(result));
+         }
+         return null;
+     }
+ 
+     /**
+-     * Creates a localized description of the build health.
+-     *
+-     * @param result
+-     *            the result of the build
+-     * @return a localized description of the build health
+-     */
+-    private String createDescription(final AnnotationProvider result) {
+-        String description;
+-        if (result.getNumberOfAnnotations() == 1) {
+-            description = reportSingleCount;
+-        }
+-        else {
+-            description = String.format(reportMultipleCount,
+-                    result.getNumberOfAnnotations(),
+-                    result.getNumberOfAnnotations(Priority.HIGH), Priority.HIGH.getLocalizedString(),
+-                    result.getNumberOfAnnotations(Priority.NORMAL), Priority.NORMAL.getLocalizedString(),
+-                    result.getNumberOfAnnotations(Priority.LOW), Priority.LOW.getLocalizedString());
+-        }
+-        return description;
+-    }
+-
+-    /**
+-     * Returns whether the result is recorded in a localized release (i.e.,
+-     * release 2.2 and newer).
+-     *
+-     * @return <code>true</code> if the result is recorded in a localized
+-     *         release (i.e., release 2.2 and newer)
+-     */
+-    private boolean isLocalizedRelease() {
+-        return itemName == null;
+-    }
+-
+-    /**
+      * Returns whether this health report build is enabled, i.e. at least one of
+      * the health or failed thresholds are provided.
+      *
+      * @return <code>true</code> if health or failed thresholds are provided
+      */
+     public boolean isEnabled() {
+-        return isHealthEnabled || isThresholdEnabled;
+-    }
+-
+-    /**
+-     * Returns the healthy.
+-     *
+-     * @return the healthy
+-     */
+-    public final int getHealthy() {
+-        return healthy;
+-    }
+-
+-    /**
+-     * Sets the healthy to the specified value.
+-     *
+-     * @param healthy the value to set
+-     */
+-    public final void setHealthy(final int healthy) {
+-        this.healthy = healthy;
+-    }
+-
+-    /**
+-     * Returns the unHealthy.
+-     *
+-     * @return the unHealthy
+-     */
+-    public final int getUnHealthy() {
+-        return unHealthy;
+-    }
+-
+-    /**
+-     * Sets the unHealthy to the specified value.
+-     *
+-     * @param unHealthy the value to set
+-     */
+-    public final void setUnHealthy(final int unHealthy) {
+-        this.unHealthy = unHealthy;
+-    }
+-
+-    /**
+-     * Returns the isHealthyReportEnabled.
+-     *
+-     * @return the isHealthyReportEnabled
+-     */
+-    public final boolean isHealthyReportEnabled() {
+-        return isHealthEnabled;
+-    }
+-
+-    /**
+-     * Sets the isHealthyReportEnabled to the specified value.
+-     *
+-     * @param isHealthyReportEnabled the value to set
+-     */
+-    public final void setHealthyReportEnabled(final boolean isHealthyReportEnabled) {
+-        isHealthEnabled = isHealthyReportEnabled;
+-    }
+-
+-    /**
+-     * Returns the isThresholdEnabled.
+-     *
+-     * @return the isThresholdEnabled
+-     */
+-    public boolean isFailureThresholdEnabled() {
+-        return isThresholdEnabled;
+-    }
+-
+-    /**
+-     * Sets the isThresholdEnabled to the specified value.
+-     *
+-     * @param isFailureThresholdEnabled the value to set
+-     */
+-    public void setFailureThresholdEnabled(final boolean isFailureThresholdEnabled) {
+-        isThresholdEnabled = isFailureThresholdEnabled;
+-    }
+-
+-    /**
+-     * Returns the reportName.
+-     *
+-     * @return the reportName
+-     */
+-    public final String getReportName() {
+-        return reportName;
+-    }
+-
+-    /**
+-     * Sets the reportName to the specified value.
+-     *
+-     * @param reportName the value to set
+-     */
+-    public final void setReportName(final String reportName) {
+-        this.reportName = reportName;
+-    }
+-
+-    /**
+-     * Returns the itemName.
+-     *
+-     * @return the itemName
+-     */
+-    public final String getItemName() {
+-        return itemName;
+-    }
+-
+-    /**
+-     * Sets the itemName to the specified value.
+-     *
+-     * @param itemName the value to set
+-     */
+-    public final void setItemName(final String itemName) {
+-        this.itemName = itemName;
+-    }
+-
+-    /**
+-     * Returns the threshold.
+-     *
+-     * @return the threshold
+-     */
+-    public int getThreshold() {
+-        return threshold;
+-    }
+-
+-    /**
+-     * Sets the threshold to the specified value.
+-     *
+-     * @param threshold the value to set
+-     */
+-    public void setThreshold(final int threshold) {
+-        this.threshold = threshold;
++        return healthDescriptor.isHealthyReportEnabled() || healthDescriptor.isThresholdEnabled();
+     }
+ 
+     /**
+@@ -335,11 +108,11 @@
+         List<Integer> series = new ArrayList<Integer>(3);
+         int remainder = totalCount;
+ 
+-        if (isHealthEnabled) {
+-            series.add(Math.min(remainder, healthy));
++        if (healthDescriptor.isHealthyReportEnabled()) {
++            series.add(Math.min(remainder, healthDescriptor.getHealthyAnnotations()));
+ 
+-            int range = unHealthy - healthy;
+-            remainder -= healthy;
++            int range = healthDescriptor.getUnHealthyAnnotations() - healthDescriptor.getHealthyAnnotations();
++            remainder -= healthDescriptor.getHealthyAnnotations();
+             if (remainder > 0) {
+                 series.add(Math.min(remainder, range));
+             }
+@@ -355,10 +128,10 @@
+                 series.add(0);
+             }
+         }
+-        else if (isThresholdEnabled) {
+-            series.add(Math.min(remainder, threshold));
++        else if (healthDescriptor.isThresholdEnabled()) {
++            series.add(Math.min(remainder, healthDescriptor.getMinimumAnnotations()));
+ 
+-            remainder -= threshold;
++            remainder -= healthDescriptor.getMinimumAnnotations();
+             if (remainder > 0) {
+                 series.add(remainder);
+             }
+@@ -394,8 +167,47 @@
+             renderer = new PrioritiesAreaRenderer(url, toolTipProvider);
+         }
+ 
+-        return ChartBuilder.createChart(dataset, renderer, getThreshold(),
+-                isHealthyReportEnabled() || !isFailureThresholdEnabled() || !useHealthBuilder);
++        return ChartBuilder.createChart(dataset, renderer, healthDescriptor.getMinimumAnnotations(),
++                healthDescriptor.isHealthyReportEnabled()
++                || !healthDescriptor.isThresholdEnabled()
++                || !useHealthBuilder);
+     }
++
++    /** Backward compatibility. */
++    @SuppressWarnings("unused")
++    @Deprecated
++    private int healthy;
++    /** Backward compatibility. */
++    @SuppressWarnings("unused")
++    @Deprecated
++    private int unHealthy;
++    /** Backward compatibility. */
++    @SuppressWarnings("unused")
++    @Deprecated
++    private boolean isHealthEnabled;
++    /** Backward compatibility. */
++    @SuppressWarnings("unused")
++    @Deprecated
++    private boolean isThresholdEnabled;
++    /** Backward compatibility. */
++    @SuppressWarnings("unused")
++    @Deprecated
++    private int threshold;
++    /** Backward compatibility. */
++    @SuppressWarnings("unused")
++    @Deprecated
++    private String reportName;
++    /** Backward compatibility. */
++    @SuppressWarnings("unused")
++    @Deprecated
++    private String itemName;
++    /** Backward compatibility. */
++    @SuppressWarnings("unused")
++    @Deprecated
++    private String reportSingleCount;
++    /** Backward compatibility. */
++    @SuppressWarnings("unused")
++    @Deprecated
++    private String reportMultipleCount;
+ }
+ 
+Index: src/main/java/hudson/plugins/checkstyle/util/NullHealthDescriptor.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/util/NullHealthDescriptor.java	(revision 0)
++++ src/main/java/hudson/plugins/checkstyle/util/NullHealthDescriptor.java	(revision 0)
+@@ -0,0 +1,54 @@
++package hudson.plugins.checkstyle.util;
++
++import hudson.plugins.checkstyle.util.model.AnnotationProvider;
++
++import java.util.Locale;
++
++import org.apache.commons.lang.StringUtils;
++import org.jvnet.localizer.Localizable;
++
++/**
++ * A {@link HealthDescriptor} that neither has the failure threshold nor the
++ * health report enabled.
++ *
++ * @author Ulli Hafner
++ */
++public class NullHealthDescriptor extends AbstractHealthDescriptor {
++    /** Null localizable. */
++    private static final NullLocalizable NULL_LOCALIZABLE = new NullLocalizable();
++    /** Shared null health descriptor. */
++    public static final NullHealthDescriptor NULL_HEALTH_DESCRIPTOR = new NullHealthDescriptor();
++    /** Unique ID of this class. */
++    private static final long serialVersionUID = -4856077818215392075L;
++
++    /** {@inheritDoc} */
++    @Override
++    protected Localizable createDescription(final AnnotationProvider result) {
++        return NULL_LOCALIZABLE;
++    }
++
++    /**
++     * A null {@link Localizable}.
++     */
++    private static final class NullLocalizable extends Localizable {
++        /**
++         * Creates a new instance of {@link NullLocalizable}.
++         */
++        private NullLocalizable() {
++            super(null, null);
++        }
++
++        /** {@inheritDoc} */
++        @Override
++        public String toString() {
++            return StringUtils.EMPTY;
++        }
++
++        /** {@inheritDoc} */
++        @Override
++        public String toString(final Locale locale) {
++            return toString();
++        }
++    }
++}
++
+Index: src/main/java/hudson/plugins/checkstyle/util/model/Priority.java
+===================================================================
+--- src/main/java/hudson/plugins/checkstyle/util/model/Priority.java	(revision 12976)
++++ src/main/java/hudson/plugins/checkstyle/util/model/Priority.java	(working copy)
+@@ -2,6 +2,9 @@
+ 
+ import hudson.plugins.checkstyle.util.Messages;
+ 
++import java.util.ArrayList;
++import java.util.Collection;
++
+ import org.apache.commons.lang.StringUtils;
+ 
+ import com.thoughtworks.xstream.XStream;
+@@ -78,4 +81,25 @@
+         }
+         return Messages.NormalPriority();
+     }
++
++    /**
++     * Gets the priorities starting from the specified priority to
++     * {@link Priority#HIGH}.
++     *
++     * @param minimumPriority
++     *            the minimum priority
++     * @return the priorities starting from the specified priority
++     */
++    public static Collection<Priority> collectPrioritiesFrom(final Priority minimumPriority) {
++        ArrayList<Priority> priorities = new ArrayList<Priority>();
++        priorities.add(Priority.HIGH);
++        if (minimumPriority == Priority.NORMAL) {
++            priorities.add(Priority.NORMAL);
++        }
++        if (minimumPriority == Priority.LOW) {
++            priorities.add(Priority.NORMAL);
++            priorities.add(Priority.LOW);
++        }
++        return priorities;
++    }
+ }
+\ No newline at end of file
+Index: src/main/resources/hudson/plugins/checkstyle/Messages.properties
+===================================================================
+--- src/main/resources/hudson/plugins/checkstyle/Messages.properties	(revision 12976)
++++ src/main/resources/hudson/plugins/checkstyle/Messages.properties	(working copy)
+@@ -18,8 +18,9 @@
+ Checkstyle.ResultAction.OneFile=in 1 Checkstyle file.
+ Checkstyle.ResultAction.MultipleFiles=in {0} Checkstyle files.
+ 
+-Checkstyle.ResultAction.HealthReportSingleItem=Checkstyle: 1 warning found.
+-Checkstyle.ResultAction.HealthReportMultipleItem=Checkstyle: %d warnings found (%d %s, %d %s, %d %s).
++Checkstyle.ResultAction.HealthReportNoItem=Checkstyle: no warnings found.
++Checkstyle.ResultAction.HealthReportSingleItem=Checkstyle: one warning found.
++Checkstyle.ResultAction.HealthReportMultipleItem=Checkstyle: {0} warnings found.
+ 
+ Checkstyle.Detail.header=Checkstyle Warnings
+ 
+Index: src/main/resources/hudson/plugins/checkstyle/Messages_de.properties
+===================================================================
+--- src/main/resources/hudson/plugins/checkstyle/Messages_de.properties	(revision 12976)
++++ src/main/resources/hudson/plugins/checkstyle/Messages_de.properties	(working copy)
+@@ -17,8 +17,9 @@
+ Checkstyle.ResultAction.MultipleFixedWarnings={0} behobene Warnungen
+ Checkstyle.ResultAction.OneFile=in einer Checkstyle Datei.
+ Checkstyle.ResultAction.MultipleFiles=in {0} Checkstyle Dateien.
++Checkstyle.ResultAction.HealthReportNoItem=Checkstyle: Keine Warnungen gefunden.
+ Checkstyle.ResultAction.HealthReportSingleItem=Checkstyle: Eine Warnung gefunden.
+-Checkstyle.ResultAction.HealthReportMultipleItem=Checkstyle: %d Warnungen gefunden (%d %s, %d %s, %d %s).
++Checkstyle.ResultAction.HealthReportMultipleItem=Checkstyle: {0} Warnungen gefunden.
+ 
+ Checkstyle.Detail.header=Checkstyle Warnungen
+ 
+Index: src/main/resources/hudson/plugins/checkstyle/Messages_fr.properties
+===================================================================
+--- src/main/resources/hudson/plugins/checkstyle/Messages_fr.properties	(revision 12976)
++++ src/main/resources/hudson/plugins/checkstyle/Messages_fr.properties	(working copy)
+@@ -12,4 +12,4 @@
+ Checkstyle.ResultAction.OneFile=dans 1 fichier Checkstyle.
+ Checkstyle.ResultAction.MultipleFiles=dans {0} fichiers Checkstyle.
+ Checkstyle.ResultAction.HealthReportSingleItem=Checkstyle: 1 warning d�couvert.
+-Checkstyle.ResultAction.HealthReportMultipleItem=Checkstyle: %d warnings d�couverts (%d %s, %d %s, %d %s).
++Checkstyle.ResultAction.HealthReportMultipleItem=Checkstyle: {0} warnings d�couverts.
+Index: src/test/java/hudson/plugins/checkstyle/CheckStyleHealthDescriptorTest.java
+===================================================================
+--- src/test/java/hudson/plugins/checkstyle/CheckStyleHealthDescriptorTest.java	(revision 0)
++++ src/test/java/hudson/plugins/checkstyle/CheckStyleHealthDescriptorTest.java	(revision 0)
+@@ -0,0 +1,40 @@
++package hudson.plugins.checkstyle;
++
++import static org.junit.Assert.*;
++import static org.mockito.Mockito.*;
++import hudson.plugins.checkstyle.util.AbstractEnglishLocaleTest;
++import hudson.plugins.checkstyle.util.NullHealthDescriptor;
++import hudson.plugins.checkstyle.util.model.AnnotationProvider;
++
++import org.junit.Test;
++import org.jvnet.localizer.Localizable;
++
++
++
++/**
++ * Tests the class {@link CheckStyleHealthDescriptor}.
++ *
++ * @author Ulli Hafner
++ */
++public class CheckStyleHealthDescriptorTest extends AbstractEnglishLocaleTest {
++    /**
++     * Verify number of items.
++     */
++    @Test
++    public void verifyNumberOfItems() {
++        AnnotationProvider provider = mock(AnnotationProvider.class);
++        CheckStyleHealthDescriptor healthDescriptor = new CheckStyleHealthDescriptor(NullHealthDescriptor.NULL_HEALTH_DESCRIPTOR);
++
++        Localizable description = healthDescriptor.createDescription(provider);
++        assertEquals(Messages.Checkstyle_ResultAction_HealthReportNoItem(), description.toString());
++
++        stub(provider.getNumberOfAnnotations()).toReturn(1);
++        description = healthDescriptor.createDescription(provider);
++        assertEquals(Messages.Checkstyle_ResultAction_HealthReportSingleItem(), description.toString());
++
++        stub(provider.getNumberOfAnnotations()).toReturn(2);
++        description = healthDescriptor.createDescription(provider);
++        assertEquals(Messages.Checkstyle_ResultAction_HealthReportMultipleItem(2), description.toString());
++    }
++}
++
+Index: src/test/java/hudson/plugins/checkstyle/util/HealthReportBuilderTest.java
+===================================================================
+--- src/test/java/hudson/plugins/checkstyle/util/HealthReportBuilderTest.java	(revision 12976)
++++ src/test/java/hudson/plugins/checkstyle/util/HealthReportBuilderTest.java	(working copy)
+@@ -14,10 +14,6 @@
+  */
+ @edu.umd.cs.findbugs.annotations.SuppressWarnings("SIC")
+ public class HealthReportBuilderTest extends AbstractEnglishLocaleTest {
+-    /** Multiple items text. */
+-    private static final String MULTIPLE_ITEMS = "%d items";
+-    /** Single item text. */
+-    private static final String ONE_ITEM = "One item";
+     /** Number of elements in a series with failure threshold. */
+     private static final int THRESHOLD_SERIES_SIZE = 2;
+     /** Number of elements in a series with healthy threshold. */
+@@ -25,7 +21,7 @@
+     /** Error message. */
+     private static final String WRONG_SERIES_VALUE = "Wrong series value.";
+     /** Error message. */
+-    private static final String WRONG_NUMBER = "Number of created point is wrong.";
++    private static final String WRONG_NUMBER = "Number of created points is wrong.";
+     /** Error message. */
+     private static final String ERROR_MESSAGE = "Wrong healthiness calculation.";
+ 
+@@ -39,16 +35,6 @@
+     }
+ 
+     /**
+-     * Tests whether we correctly display the result.
+-     */
+-    @Test
+-    public void testDisplay() {
+-        assertEquals(ERROR_MESSAGE, "0 items", createHealthReport(true, 50, 150, 0).getDescription());
+-        assertEquals(ERROR_MESSAGE, "One item", createHealthReport(true, 50, 150, 1).getDescription());
+-        assertEquals(ERROR_MESSAGE, "2 items", createHealthReport(true, 50, 150, 2).getDescription());
+-    }
+-
+-    /**
+      * Tests whether we evaluate correctly to a 100% health.
+      */
+     @Test
+@@ -103,11 +89,31 @@
+     }
+ 
+     /**
++     * Creates a health report using a {@link HealthReportBuilder} with the specified parameters.
++     *
++     * @param isEnabled
++     *            defines whether health reporting is enabled
++     * @param min
++     *            minimum number of bugs
++     * @param max
++     *            maximum number of bugs
++     * @param actual
++     *            actual number of bugs
++     * @return the actual healthiness
++     */
++    private HealthReport createHealthReport(final boolean isEnabled, final int min, final int max, final int actual) {
++        HealthReportBuilder builder = createHealthBuilder(false, 0, isEnabled, min, max);
++        AnnotationProvider result = mock(AnnotationProvider.class);
++        stub(result.getNumberOfAnnotations()).toReturn(actual);
++        return builder.computeHealth(actual, result);
++    }
++
++    /**
+      * Tests whether we correctly compute the series if health reporting is enabled.
+      */
+     @Test
+     public void testHealthySeriesCalculator() {
+-        HealthReportBuilder builder = new HealthReportBuilder(true, 0, true, 10, 30, ONE_ITEM, MULTIPLE_ITEMS);
++        HealthReportBuilder builder = createHealthBuilder(true, 0, true, 10, 30);
+ 
+         List<Integer> series = builder.createSeries(5);
+         assertEquals(WRONG_NUMBER, HEALTHY_SERIES_SIZE, series.size());
+@@ -145,7 +151,7 @@
+      */
+     @Test
+     public void testThresholdSeriesCalculator() {
+-        HealthReportBuilder builder = new HealthReportBuilder(true, 10, false, 20, 50, ONE_ITEM, MULTIPLE_ITEMS);
++        HealthReportBuilder builder = createHealthBuilder(true, 10, false, 20, 50);
+ 
+         List<Integer> series = builder.createSeries(5);
+         assertEquals(WRONG_NUMBER, THRESHOLD_SERIES_SIZE, series.size());
+@@ -168,7 +174,7 @@
+      */
+     @Test
+     public void testIssue796() {
+-        HealthReportBuilder builder = new HealthReportBuilder(false, 0, true, 1, 10, ONE_ITEM, MULTIPLE_ITEMS);
++        HealthReportBuilder builder = createHealthBuilder(false, 0, true, 1, 10);
+ 
+         List<Integer> series = builder.createSeries(1);
+         assertEquals(WRONG_NUMBER, HEALTHY_SERIES_SIZE, series.size());
+@@ -184,23 +190,34 @@
+     }
+ 
+     /**
+-     * Creates the test fixture.
++     * Creates the {@link HealthReportBuilder} under test with the specified
++     * parameters.
+      *
+-     * @param isEnabled
+-     *            defines whether health reporting is enabled
+-     * @param min
+-     *            minimum number of bugs
+-     * @param max
+-     *            maximum number of bugs
+-     * @param actual
+-     *            actual number of bugs
+-     * @return the actual healthiness
++     * @param isHealthEnabled
++     *            determines whether to use the provided unstable threshold
++     * @param threshold
++     *            bug threshold to be reached if a build should be considered as
++     *            unstable.
++     * @param isThresholdEnabled
++     *            determines whether to use the provided healthy thresholds.
++     * @param healthy
++     *            report health as 100% when the number of warnings is less than
++     *            this value
++     * @param unHealthy
++     *            report health as 0% when the number of warnings is greater
++     *            than this value
++     * @return the {@link HealthReportBuilder} under test
+      */
+-    private HealthReport createHealthReport(final boolean isEnabled, final int min, final int max, final int actual) {
+-        HealthReportBuilder builder = new HealthReportBuilder(false, 0, isEnabled, min, max, ONE_ITEM, MULTIPLE_ITEMS);
+-        AnnotationProvider result = mock(AnnotationProvider.class);
+-        stub(result.getNumberOfAnnotations()).toReturn(actual);
+-        return builder.computeHealth(actual, result);
++    private HealthReportBuilder createHealthBuilder(final boolean isThresholdEnabled, final int threshold,
++            final boolean isHealthEnabled, final int healthy, final int unHealthy) {
++        AbstractHealthDescriptor healthDescriptor = mock(AbstractHealthDescriptor.class);
++        stub(healthDescriptor.isThresholdEnabled()).toReturn(isThresholdEnabled);
++        stub(healthDescriptor.getMinimumAnnotations()).toReturn(threshold);
++        stub(healthDescriptor.isHealthyReportEnabled()).toReturn(isHealthEnabled);
++        stub(healthDescriptor.getHealthyAnnotations()).toReturn(healthy);
++        stub(healthDescriptor.getUnHealthyAnnotations()).toReturn(unHealthy);
++
++        return new HealthReportBuilder(healthDescriptor);
+     }
+ }
+ 

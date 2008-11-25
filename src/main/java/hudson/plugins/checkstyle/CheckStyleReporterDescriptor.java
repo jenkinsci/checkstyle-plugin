@@ -1,8 +1,8 @@
 package hudson.plugins.checkstyle;
 
 import hudson.maven.MavenReporter;
-import hudson.plugins.checkstyle.util.PluginDescriptor;
-import hudson.plugins.checkstyle.util.ReporterDescriptor;
+import hudson.plugins.annotations.util.PluginDescriptor;
+import hudson.plugins.annotations.util.ReporterDescriptor;
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.StaplerRequest;

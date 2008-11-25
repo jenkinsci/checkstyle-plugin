@@ -1,10 +1,10 @@
 package hudson.plugins.checkstyle.parser;
 
 import static org.junit.Assert.*;
-import hudson.plugins.checkstyle.util.model.FileAnnotation;
-import hudson.plugins.checkstyle.util.model.MavenModule;
-import hudson.plugins.checkstyle.util.model.Priority;
-import hudson.plugins.checkstyle.util.model.WorkspaceFile;
+import hudson.plugins.annotations.util.model.FileAnnotation;
+import hudson.plugins.annotations.util.model.MavenModule;
+import hudson.plugins.annotations.util.model.Priority;
+import hudson.plugins.annotations.util.model.WorkspaceFile;
 
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;

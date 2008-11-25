@@ -8,8 +8,8 @@ import hudson.maven.MavenModuleSet;
 import hudson.maven.MavenModuleSetBuild;
 import hudson.model.AbstractBuild;
 import hudson.model.Action;
-import hudson.plugins.checkstyle.util.HealthDescriptor;
-import hudson.plugins.checkstyle.util.TrendReportSize;
+import hudson.plugins.annotations.util.HealthDescriptor;
+import hudson.plugins.annotations.util.TrendReportSize;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +27,7 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
     /** Determines the height of the trend graph. */
     private final String height;
 
+
     /**
      * Creates a new instance of <code>MavenCheckStyleResultAction</code>.
      *
@@ -34,6 +35,8 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
      *            the associated build of this action
      * @param height
      *            the height of the trend graph
+     * @param healthDescriptor
+     *            the health descriptor
      */
     public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final String height, final HealthDescriptor healthDescriptor) {
         super(owner, healthDescriptor);

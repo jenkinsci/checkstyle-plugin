@@ -1,7 +1,7 @@
 package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.checkstyle.util.ParserResult;
+import hudson.plugins.annotations.util.ParserResult;
 
 /**
  * Creates a new Checkstyle result based on the values of a previous build and the
