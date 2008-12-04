@@ -100,8 +100,6 @@
   <classpathentry kind="var" path="M2_REPO/org/codehaus/plexus/plexus-container-default/1.0-alpha-9-stable-1/plexus-container-default-1.0-alpha-9-stable-1.jar" sourcepath="M2_REPO/org/codehaus/plexus/plexus-container-default/1.0-alpha-9-stable-1/plexus-container-default-1.0-alpha-9-stable-1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/codehaus/plexus/plexus-interactivity-api/1.0-alpha-4/plexus-interactivity-api-1.0-alpha-4.jar" sourcepath="M2_REPO/org/codehaus/plexus/plexus-interactivity-api/1.0-alpha-4/plexus-interactivity-api-1.0-alpha-4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/codehaus/plexus/plexus-utils/1.5.1/plexus-utils-1.5.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jvnet/hudson/plugins/plugin-util/1.0-SNAPSHOT/plugin-util-1.0-SNAPSHOT-tests.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jvnet/hudson/plugins/plugin-util/1.0-SNAPSHOT/plugin-util-1.0-SNAPSHOT.jar"/>
   <classpathentry kind="var" path="M2_REPO/pull-parser/pull-parser/2/pull-parser-2.jar"/>
   <classpathentry kind="var" path="M2_REPO/msv/relaxngDatatype/20030807/relaxngDatatype-20030807.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jvnet/hudson/main/remoting/1.262/remoting-1.262.jar" sourcepath="M2_REPO/org/jvnet/hudson/main/remoting/1.262/remoting-1.262-sources.jar"/>

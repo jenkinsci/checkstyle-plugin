@@ -1,9 +1,9 @@
 package hudson.plugins.checkstyle.parser;
 
-import hudson.plugins.annotations.util.AnnotationDifferencer;
-import hudson.plugins.annotations.util.AnnotationDifferencerTest;
-import hudson.plugins.annotations.util.model.FileAnnotation;
-import hudson.plugins.annotations.util.model.Priority;
+import hudson.plugins.checkstyle.util.AnnotationDifferencer;
+import hudson.plugins.checkstyle.util.AnnotationDifferencerTest;
+import hudson.plugins.checkstyle.util.model.FileAnnotation;
+import hudson.plugins.checkstyle.util.model.Priority;
 
 /**
  * Tests the {@link AnnotationDifferencer} for warnings.

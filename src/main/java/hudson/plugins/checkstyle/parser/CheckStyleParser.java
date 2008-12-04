@@ -1,9 +1,9 @@
 package hudson.plugins.checkstyle.parser;
 
-import hudson.plugins.annotations.util.AnnotationParser;
-import hudson.plugins.annotations.util.JavaPackageDetector;
-import hudson.plugins.annotations.util.model.FileAnnotation;
-import hudson.plugins.annotations.util.model.Priority;
+import hudson.plugins.checkstyle.util.AnnotationParser;
+import hudson.plugins.checkstyle.util.JavaPackageDetector;
+import hudson.plugins.checkstyle.util.model.FileAnnotation;
+import hudson.plugins.checkstyle.util.model.Priority;
 
 import java.io.File;
 import java.io.FileInputStream;

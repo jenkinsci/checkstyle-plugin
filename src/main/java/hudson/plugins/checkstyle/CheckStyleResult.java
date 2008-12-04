@@ -1,10 +1,10 @@
 package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.annotations.util.AnnotationsBuildResult;
-import hudson.plugins.annotations.util.ParserResult;
-import hudson.plugins.annotations.util.model.JavaProject;
 import hudson.plugins.checkstyle.parser.Warning;
+import hudson.plugins.checkstyle.util.AnnotationsBuildResult;
+import hudson.plugins.checkstyle.util.ParserResult;
+import hudson.plugins.checkstyle.util.model.JavaProject;
 
 /**
  * Represents the results of the Checkstyle analysis. One instance of this class is persisted for

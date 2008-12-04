@@ -1,8 +1,8 @@
 package hudson.plugins.checkstyle.parser;
 
-import hudson.plugins.annotations.util.model.AbstractAnnotation;
-import hudson.plugins.annotations.util.model.Priority;
 import hudson.plugins.checkstyle.rules.CheckStyleRules;
+import hudson.plugins.checkstyle.util.model.AbstractAnnotation;
+import hudson.plugins.checkstyle.util.model.Priority;
 
 import org.apache.commons.lang.StringUtils;
 

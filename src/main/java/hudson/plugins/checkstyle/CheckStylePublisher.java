@@ -4,10 +4,10 @@ import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.Descriptor;
-import hudson.plugins.annotations.util.FilesParser;
-import hudson.plugins.annotations.util.HealthAwarePublisher;
-import hudson.plugins.annotations.util.ParserResult;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
+import hudson.plugins.checkstyle.util.FilesParser;
+import hudson.plugins.checkstyle.util.HealthAwarePublisher;
+import hudson.plugins.checkstyle.util.ParserResult;
 import hudson.tasks.Publisher;
 
 import java.io.IOException;
@@ -22,8 +22,6 @@ import org.kohsuke.stapler.DataBoundConstructor;
  * @author Ulli Hafner
  */
 public class CheckStylePublisher extends HealthAwarePublisher {
-    /** Unique ID of this class. */
-    private static final long serialVersionUID = 5115463974347185621L;
     /** Default Checkstyle pattern. */
     private static final String DEFAULT_PATTERN = "**/checkstyle-result.xml";
     /** Descriptor of this publisher. */
@@ -81,7 +79,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
                 isMavenBuild(build), isAntBuild(build));
         ParserResult project = build.getProject().getWorkspace().act(parser);
         CheckStyleResult result = new CheckStyleResultBuilder().build(build, project);
-        build.getActions().add(new CheckStyleResultAction(build, result, this));
+        build.getActions().add(new CheckStyleResultAction(build, this, result));
 
         return project;
     }
