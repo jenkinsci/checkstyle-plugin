@@ -13,13 +13,13 @@ public class CheckstyleResultTest extends AbstractAnnotationsBuildResultTest<Che
     /** {@inheritDoc} */
     @Override
     protected CheckStyleResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project) {
-        return new CheckStyleResult(build, project);
+        return new CheckStyleResult(build, null, project);
     }
 
     /** {@inheritDoc} */
     @Override
     protected CheckStyleResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project, final CheckStyleResult previous) {
-        return new CheckStyleResult(build, project, previous);
+        return new CheckStyleResult(build, null, project, previous);
     }
 
     /** {@inheritDoc} */

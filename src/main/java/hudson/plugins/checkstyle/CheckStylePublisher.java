@@ -22,6 +22,8 @@ import org.kohsuke.stapler.DataBoundConstructor;
  * @author Ulli Hafner
  */
 public class CheckStylePublisher extends HealthAwarePublisher {
+    /** Unique ID of this class. */
+    private static final long serialVersionUID = 6369581633551160418L;
     /** Default Checkstyle pattern. */
     private static final String DEFAULT_PATTERN = "**/checkstyle-result.xml";
     /** Descriptor of this publisher. */
@@ -48,12 +50,18 @@ public class CheckStylePublisher extends HealthAwarePublisher {
      * @param thresholdLimit
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
      */
+    // CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.ExcessiveParameterList")
     @DataBoundConstructor
-    public CheckStylePublisher(final String pattern, final String threshold, final String healthy, final String unHealthy, final String height, final String thresholdLimit) {
-        super(threshold, healthy, unHealthy, height, thresholdLimit, "CHECKSTYLE");
+    public CheckStylePublisher(final String pattern, final String threshold, final String healthy, final String unHealthy,
+            final String height, final String thresholdLimit, final String defaultEncoding) {
+        super(threshold, healthy, unHealthy, height, thresholdLimit, defaultEncoding, "CHECKSTYLE");
         this.pattern = pattern;
     }
+    // CHECKSTYLE:ON
 
     /**
      * Returns the Ant file-set pattern of files to work with.
@@ -78,7 +86,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
         FilesParser parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new CheckStyleParser(),
                 isMavenBuild(build), isAntBuild(build));
         ParserResult project = build.getProject().getWorkspace().act(parser);
-        CheckStyleResult result = new CheckStyleResultBuilder().build(build, project);
+        CheckStyleResult result = new CheckStyleResultBuilder().build(build, project, getDefaultEncoding());
         build.getActions().add(new CheckStyleResultAction(build, this, result));
 
         return project;

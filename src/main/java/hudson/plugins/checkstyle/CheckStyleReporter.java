@@ -70,8 +70,8 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     protected void persistResult(final ParserResult project, final MavenBuild build) {
-        CheckStyleResult result = new CheckStyleResultBuilder().build(build, project);
-        build.getActions().add(new MavenCheckStyleResultAction(build, this, getHeight(), result));
+        CheckStyleResult result = new CheckStyleResultBuilder().build(build, project, getDefaultEncoding());
+        build.getActions().add(new MavenCheckStyleResultAction(build, this, getHeight(), getDefaultEncoding(), result));
         build.registerAsProjectAction(CheckStyleReporter.this);
     }
 

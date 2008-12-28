@@ -18,19 +18,21 @@ public class CheckStyleResultBuilder {
      *            the build to create the action for
      * @param result
      *            the result containing the annotations
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
      * @return the result action
      */
-    public CheckStyleResult build(final AbstractBuild<?, ?> build, final ParserResult result) {
+    public CheckStyleResult build(final AbstractBuild<?, ?> build, final ParserResult result, final String defaultEncoding) {
         Object previous = build.getPreviousBuild();
         while (previous instanceof AbstractBuild<?, ?>) {
             AbstractBuild<?, ?> previousBuild = (AbstractBuild<?, ?>)previous;
             CheckStyleResultAction previousAction = previousBuild.getAction(CheckStyleResultAction.class);
             if (previousAction != null) {
-                return new CheckStyleResult(build, result, previousAction.getResult());
+                return new CheckStyleResult(build, defaultEncoding, result, previousAction.getResult());
             }
             previous = previousBuild.getPreviousBuild();
         }
-        return new CheckStyleResult(build, result);
+        return new CheckStyleResult(build, defaultEncoding, result);
     }
 }
 
