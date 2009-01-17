@@ -3,7 +3,7 @@
   <f:entry title="${%Checkstyle results}"
 	description="${%description.pattern}">
 	<f:textbox name="pattern" value="${instance.pattern}"
-		checkUrl="'${rootURL}/publisher/CheckStylePublisher/checkPattern?job=${it.fullName}&amp;value='+escape(this.value)" />
+		checkUrl="'descriptorByName/CheckStylePublisher/checkPattern?value='+escape(this.value)" />
   </f:entry>
   <f:advanced>
     <u:thresholds id="checkstyle"/>
