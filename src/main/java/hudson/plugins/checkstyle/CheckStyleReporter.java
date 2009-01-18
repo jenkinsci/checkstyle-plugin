@@ -62,7 +62,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     public ParserResult perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PrintStream logger) throws InterruptedException, IOException {
-        FilesParser checkstyleCollector = new FilesParser(logger, CHECKSTYLE_XML_FILE, new CheckStyleParser(), true, false);
+        FilesParser checkstyleCollector = new FilesParser(logger, CHECKSTYLE_XML_FILE, new CheckStyleParser(getDefaultEncoding()), true, false);
 
         return getTargetPath(pom).act(checkstyleCollector);
     }
