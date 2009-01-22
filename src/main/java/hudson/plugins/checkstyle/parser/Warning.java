@@ -18,11 +18,6 @@ public class Warning extends AbstractAnnotation {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 5171661552905752370L;
 
-    /** The tooltip. */
-    @SuppressWarnings("all")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("")
-    private final String tooltip = StringUtils.EMPTY; // backward compatibility NOPMD
-
     /**
      * Creates a new instance of {@link Warning}.
      *
@@ -66,5 +61,11 @@ public class Warning extends AbstractAnnotation {
     public String getToolTip() {
         return CheckStyleRules.getInstance().getDescription(getType());
     }
+
+    /** Not used anymore. */
+    @SuppressWarnings("all")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings("")
+    @Deprecated
+    private final transient String tooltip = StringUtils.EMPTY; // backward compatibility NOPMD
 }
 
