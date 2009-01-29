@@ -88,9 +88,8 @@ public class CheckStyleParser extends AbstractAnnotationParser {
      * @param moduleName
      *            name of the maven module
      * @return a maven module of the annotations API
-     * @throws IOException if the contents of a source file could not be read
      */
-    private Collection<FileAnnotation> convert(final CheckStyle collection, final String moduleName) throws IOException {
+    private Collection<FileAnnotation> convert(final CheckStyle collection, final String moduleName) {
         ArrayList<FileAnnotation> annotations = new ArrayList<FileAnnotation>();
 
         for (hudson.plugins.checkstyle.parser.File file : collection.getFiles()) {
@@ -121,7 +120,12 @@ public class CheckStyleParser extends AbstractAnnotationParser {
                     warning.setPackageName(packageName);
 
                     if (StringUtils.isNotBlank(getDefaultEncoding())) {
-                        warning.setContextHashCode(createContextHashCode(file.getName(), error.getLine()));
+                        try {
+                            warning.setContextHashCode(createContextHashCode(file.getName(), error.getLine()));
+                        }
+                        catch (IOException exception) {
+                            // ignore and continue
+                        }
                     }
                     annotations.add(warning);
                 }
