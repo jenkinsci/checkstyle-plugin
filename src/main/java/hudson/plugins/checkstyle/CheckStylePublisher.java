@@ -8,6 +8,7 @@ import hudson.plugins.checkstyle.parser.CheckStyleParser;
 import hudson.plugins.checkstyle.util.FilesParser;
 import hudson.plugins.checkstyle.util.HealthAwarePublisher;
 import hudson.plugins.checkstyle.util.ParserResult;
+import hudson.plugins.checkstyle.util.model.Priority;
 import hudson.tasks.Publisher;
 
 import java.io.IOException;
@@ -47,7 +48,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
      *            than this value
      * @param height
      *            the height of the trend graph
-     * @param thresholdLimit
+     * @param minimumPriority
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
      * @param defaultEncoding
@@ -57,8 +58,8 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     @SuppressWarnings("PMD.ExcessiveParameterList")
     @DataBoundConstructor
     public CheckStylePublisher(final String pattern, final String threshold, final String healthy, final String unHealthy,
-            final String height, final String thresholdLimit, final String defaultEncoding) {
-        super(threshold, healthy, unHealthy, height, thresholdLimit, defaultEncoding, "CHECKSTYLE");
+            final String height, final Priority minimumPriority, final String defaultEncoding) {
+        super(threshold, healthy, unHealthy, height, minimumPriority, defaultEncoding, "CHECKSTYLE");
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON

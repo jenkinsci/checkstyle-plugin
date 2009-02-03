@@ -10,6 +10,7 @@ import hudson.plugins.checkstyle.parser.CheckStyleParser;
 import hudson.plugins.checkstyle.util.FilesParser;
 import hudson.plugins.checkstyle.util.HealthAwareMavenReporter;
 import hudson.plugins.checkstyle.util.ParserResult;
+import hudson.plugins.checkstyle.util.model.Priority;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -44,13 +45,13 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
      *            than this value
      * @param height
      *            the height of the trend graph
-     * @param thresholdLimit
+     * @param minimumPriority
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
      */
     @DataBoundConstructor
-    public CheckStyleReporter(final String threshold, final String healthy, final String unHealthy, final String height, final String thresholdLimit) {
-        super(threshold, healthy, unHealthy, height, thresholdLimit, "CHECKSTYLE");
+    public CheckStyleReporter(final String threshold, final String healthy, final String unHealthy, final String height, final Priority minimumPriority) {
+        super(threshold, healthy, unHealthy, height, minimumPriority, "CHECKSTYLE");
     }
 
     /** {@inheritDoc} */
