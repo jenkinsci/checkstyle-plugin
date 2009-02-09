@@ -5,6 +5,7 @@ import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.Descriptor;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
+import hudson.plugins.checkstyle.util.AnnotationsBuildResult;
 import hudson.plugins.checkstyle.util.FilesParser;
 import hudson.plugins.checkstyle.util.HealthAwarePublisher;
 import hudson.plugins.checkstyle.util.ParserResult;
@@ -38,8 +39,11 @@ public class CheckStylePublisher extends HealthAwarePublisher {
      * @param pattern
      *            Ant file-set pattern to scan for Checkstyle files
      * @param threshold
-     *            Bug threshold to be reached if a build should be considered as
+     *            Annotation threshold to be reached if a build should be considered as
      *            unstable.
+     * @param newThreshold
+     *            New annotations threshold to be reached if a build should be
+     *            considered as unstable.
      * @param healthy
      *            Report health as 100% when the number of warnings is less than
      *            this value
@@ -57,9 +61,10 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     // CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveParameterList")
     @DataBoundConstructor
-    public CheckStylePublisher(final String pattern, final String threshold, final String healthy, final String unHealthy,
+    public CheckStylePublisher(final String pattern, final String threshold, final String newThreshold,
+            final String healthy, final String unHealthy,
             final String height, final Priority minimumPriority, final String defaultEncoding) {
-        super(threshold, healthy, unHealthy, height, minimumPriority, defaultEncoding, "CHECKSTYLE");
+        super(threshold, newThreshold, healthy, unHealthy, height, minimumPriority, defaultEncoding, "CHECKSTYLE");
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON
@@ -81,7 +86,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
 
     /** {@inheritDoc} */
     @Override
-    public ParserResult perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
+    public AnnotationsBuildResult perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
         log(logger, "Collecting checkstyle analysis files...");
 
         FilesParser parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new CheckStyleParser(getDefaultEncoding()),
@@ -90,7 +95,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
         CheckStyleResult result = new CheckStyleResultBuilder().build(build, project, getDefaultEncoding());
         build.getActions().add(new CheckStyleResultAction(build, this, result));
 
-        return project;
+        return result;
     }
 
     /** {@inheritDoc} */

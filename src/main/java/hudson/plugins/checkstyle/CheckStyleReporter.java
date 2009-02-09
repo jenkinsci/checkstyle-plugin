@@ -35,8 +35,11 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
      * Creates a new instance of <code>CheckStyleReporter</code>.
      *
      * @param threshold
-     *            Bug threshold to be reached if a build should be considered as
+     *            Annotation threshold to be reached if a build should be considered as
      *            unstable.
+     * @param newThreshold
+     *            New annotations threshold to be reached if a build should be
+     *            considered as unstable.
      * @param healthy
      *            Report health as 100% when the number of warnings is less than
      *            this value
@@ -50,8 +53,9 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
      *            evaluating the build stability and health
      */
     @DataBoundConstructor
-    public CheckStyleReporter(final String threshold, final String healthy, final String unHealthy, final String height, final Priority minimumPriority) {
-        super(threshold, healthy, unHealthy, height, minimumPriority, "CHECKSTYLE");
+    public CheckStyleReporter(final String threshold, final String newThreshold,
+            final String healthy, final String unHealthy, final String height, final Priority minimumPriority) {
+        super(threshold, newThreshold, healthy, unHealthy, height, minimumPriority, "CHECKSTYLE");
     }
 
     /** {@inheritDoc} */
@@ -70,10 +74,12 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
 
     /** {@inheritDoc} */
     @Override
-    protected void persistResult(final ParserResult project, final MavenBuild build) {
+    protected CheckStyleResult persistResult(final ParserResult project, final MavenBuild build) {
         CheckStyleResult result = new CheckStyleResultBuilder().build(build, project, getDefaultEncoding());
         build.getActions().add(new MavenCheckStyleResultAction(build, this, getHeight(), getDefaultEncoding(), result));
         build.registerAsProjectAction(CheckStyleReporter.this);
+
+        return result;
     }
 
     /** {@inheritDoc} */
