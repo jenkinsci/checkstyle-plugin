@@ -54,7 +54,7 @@ public class CheckStyleParserTest {
                         "Checks that classes are designed for extension."));
                 assertEquals(
                         "Wrong message detected.",
-                        "Die Methode 'detectPackageName' ist nicht für Vererbung entworfen - muss abstract, final oder leer sein.",
+                        "Die Methode 'detectPackageName' ist nicht fr Vererbung entworfen - muss abstract, final oder leer sein.",
                         warning.getMessage());
                 hasChecked = true;
             }

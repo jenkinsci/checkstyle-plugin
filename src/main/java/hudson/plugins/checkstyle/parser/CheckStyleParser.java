@@ -144,10 +144,5 @@ public class CheckStyleParser extends AbstractAnnotationParser {
     private boolean isValidWarning(final hudson.plugins.checkstyle.parser.File file) {
         return !file.getName().endsWith("package.html");
     }
-
-    /** {@inheritDoc} */
-    public String getName() {
-        return "CHECKSTYLE";
-    }
 }
 

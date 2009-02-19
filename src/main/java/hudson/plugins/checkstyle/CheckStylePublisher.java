@@ -9,11 +9,10 @@ import hudson.plugins.checkstyle.util.AnnotationsBuildResult;
 import hudson.plugins.checkstyle.util.FilesParser;
 import hudson.plugins.checkstyle.util.HealthAwarePublisher;
 import hudson.plugins.checkstyle.util.ParserResult;
-import hudson.plugins.checkstyle.util.model.Priority;
+import hudson.plugins.checkstyle.util.PluginLogger;
 import hudson.tasks.Publisher;
 
 import java.io.IOException;
-import java.io.PrintStream;
 
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -58,7 +57,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
      *            than this value
      * @param height
      *            the height of the trend graph
-     * @param minimumPriority
+     * @param thresholdLimit
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
      * @param defaultEncoding
@@ -70,9 +69,9 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     public CheckStylePublisher(final String pattern, final String threshold, final String newThreshold,
             final String failureThreshold, final String newFailureThreshold,
             final String healthy, final String unHealthy,
-            final String height, final Priority minimumPriority, final String defaultEncoding) {
+            final String height, final String thresholdLimit, final String defaultEncoding) {
         super(threshold, newThreshold, failureThreshold, newFailureThreshold,
-                healthy, unHealthy, height, minimumPriority, defaultEncoding, "CHECKSTYLE");
+                healthy, unHealthy, height, thresholdLimit, defaultEncoding, "CHECKSTYLE");
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON
@@ -94,8 +93,8 @@ public class CheckStylePublisher extends HealthAwarePublisher {
 
     /** {@inheritDoc} */
     @Override
-    public AnnotationsBuildResult perform(final AbstractBuild<?, ?> build, final PrintStream logger) throws InterruptedException, IOException {
-        log(logger, "Collecting checkstyle analysis files...");
+    public AnnotationsBuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
+        logger.log("Collecting checkstyle analysis files...");
 
         FilesParser parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new CheckStyleParser(getDefaultEncoding()),
                 isMavenBuild(build), isAntBuild(build));

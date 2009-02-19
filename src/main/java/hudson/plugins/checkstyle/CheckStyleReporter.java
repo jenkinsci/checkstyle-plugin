@@ -10,10 +10,9 @@ import hudson.plugins.checkstyle.parser.CheckStyleParser;
 import hudson.plugins.checkstyle.util.FilesParser;
 import hudson.plugins.checkstyle.util.HealthAwareMavenReporter;
 import hudson.plugins.checkstyle.util.ParserResult;
-import hudson.plugins.checkstyle.util.model.Priority;
+import hudson.plugins.checkstyle.util.PluginLogger;
 
 import java.io.IOException;
-import java.io.PrintStream;
 
 import org.apache.maven.project.MavenProject;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -54,18 +53,21 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
      *            than this value
      * @param height
      *            the height of the trend graph
-     * @param minimumPriority
+     * @param thresholdLimit
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
      */
+    // CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.ExcessiveParameterList")
     @DataBoundConstructor
     public CheckStyleReporter(final String threshold, final String newThreshold,
             final String failureThreshold, final String newFailureThreshold,
             final String healthy, final String unHealthy,
-            final String height, final Priority minimumPriority) {
+            final String height, final String thresholdLimit) {
         super(threshold, newThreshold, failureThreshold, newFailureThreshold,
-                healthy, unHealthy, height, minimumPriority, "CHECKSTYLE");
+                healthy, unHealthy, height, thresholdLimit, "CHECKSTYLE");
     }
+    // CHECKSTYLE:ON
 
     /** {@inheritDoc} */
     @Override
@@ -75,7 +77,8 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
 
     /** {@inheritDoc} */
     @Override
-    public ParserResult perform(final MavenBuildProxy build, final MavenProject pom, final MojoInfo mojo, final PrintStream logger) throws InterruptedException, IOException {
+    public ParserResult perform(final MavenBuildProxy build, final MavenProject pom,
+            final MojoInfo mojo, final PluginLogger logger) throws InterruptedException, IOException {
         FilesParser checkstyleCollector = new FilesParser(logger, CHECKSTYLE_XML_FILE, new CheckStyleParser(getDefaultEncoding()), true, false);
 
         return getTargetPath(pom).act(checkstyleCollector);
