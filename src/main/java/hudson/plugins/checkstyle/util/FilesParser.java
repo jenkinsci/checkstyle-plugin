@@ -1,5 +1,6 @@
 package hudson.plugins.checkstyle.util;
 
+import hudson.FilePath;
 import hudson.FilePath.FileCallable;
 import hudson.plugins.checkstyle.util.model.FileAnnotation;
 import hudson.remoting.VirtualChannel;
@@ -68,7 +69,7 @@ public class FilesParser implements FileCallable<ParserResult> {
 
     /** {@inheritDoc} */
     public ParserResult invoke(final File workspace, final VirtualChannel channel) throws IOException {
-        ParserResult result = new ParserResult();
+        ParserResult result = new ParserResult(new FilePath(workspace));
 
         try {
             String[] fileNames = new FileFinder(filePattern).find(workspace);
