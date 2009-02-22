@@ -14,12 +14,12 @@ import org.apache.commons.lang.time.DateUtils;
 import org.junit.Test;
 
 /**
- * Tests the class {@link AnnotationsBuildResult}.
+ * Tests the class {@link BuildResultTest}.
  *
  * @param <T>
  *            type of the result to test
  */
-public abstract class AbstractAnnotationsBuildResultTest<T extends AnnotationsBuildResult> extends AbstractEnglishLocaleTest {
+public abstract class BuildResultTest<T extends BuildResult> extends AbstractEnglishLocaleTest {
     /** Error message. */
     private static final String WRONG_NEW_HIGHSCORE_INDICATOR = "Wrong new highscore indicator.";
     /** Two days in msec. */
@@ -148,8 +148,7 @@ public abstract class AbstractAnnotationsBuildResultTest<T extends AnnotationsBu
      */
     private T createResultWithWarnings() {
         ParserResult projectWithWarning = createProjectWithWarning();
-        T resultWithAnnotations = createBuildResult(createBuild(42, new GregorianCalendar(2008, 1, 1, 12, 00)), projectWithWarning);
-        return resultWithAnnotations;
+        return createBuildResult(createBuild(42, new GregorianCalendar(2008, 1, 1, 12, 00)), projectWithWarning);
     }
 
     /**

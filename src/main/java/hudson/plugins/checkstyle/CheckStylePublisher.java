@@ -5,7 +5,7 @@ import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.Descriptor;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
-import hudson.plugins.checkstyle.util.AnnotationsBuildResult;
+import hudson.plugins.checkstyle.util.BuildResult;
 import hudson.plugins.checkstyle.util.FilesParser;
 import hudson.plugins.checkstyle.util.HealthAwarePublisher;
 import hudson.plugins.checkstyle.util.ParserResult;
@@ -93,7 +93,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
 
     /** {@inheritDoc} */
     @Override
-    public AnnotationsBuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
+    public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
         logger.log("Collecting checkstyle analysis files...");
 
         FilesParser parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new CheckStyleParser(getDefaultEncoding()),

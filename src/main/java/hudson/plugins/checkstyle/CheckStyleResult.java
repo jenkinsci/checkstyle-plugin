@@ -2,17 +2,17 @@ package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractBuild;
 import hudson.plugins.checkstyle.parser.Warning;
-import hudson.plugins.checkstyle.util.AnnotationsBuildResult;
+import hudson.plugins.checkstyle.util.BuildResult;
 import hudson.plugins.checkstyle.util.ParserResult;
 import hudson.plugins.checkstyle.util.model.JavaProject;
 
 /**
- * Represents the results of the Checkstyle analysis. One instance of this class is persisted for
- * each build via an XML file.
+ * Represents the results of the Checkstyle analysis. One instance of this class
+ * is persisted for each build via an XML file.
  *
  * @author Ulli Hafner
  */
-public class CheckStyleResult extends AnnotationsBuildResult {
+public class CheckStyleResult extends BuildResult {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 2768250056765266658L;
     static {

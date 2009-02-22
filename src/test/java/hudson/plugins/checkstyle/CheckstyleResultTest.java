@@ -2,14 +2,14 @@ package hudson.plugins.checkstyle;
 
 import static junit.framework.Assert.*;
 import hudson.model.AbstractBuild;
-import hudson.plugins.checkstyle.util.AbstractAnnotationsBuildResultTest;
-import hudson.plugins.checkstyle.util.AnnotationsBuildResult;
+import hudson.plugins.checkstyle.util.BuildResult;
+import hudson.plugins.checkstyle.util.BuildResultTest;
 import hudson.plugins.checkstyle.util.ParserResult;
 
 /**
  * Tests the class {@link CheckStyleResult}.
  */
-public class CheckstyleResultTest extends AbstractAnnotationsBuildResultTest<CheckStyleResult> {
+public class CheckstyleResultTest extends BuildResultTest<CheckStyleResult> {
     /** {@inheritDoc} */
     @Override
     protected CheckStyleResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project) {
@@ -28,7 +28,7 @@ public class CheckstyleResultTest extends AbstractAnnotationsBuildResultTest<Che
         if (result.hasNoAnnotations() && result.getDelta() == 0) {
             assertTrue(result.getDetails().contains(Messages.Checkstyle_ResultAction_NoWarningsSince(expectedZeroWarningsBuildNumber)));
             if (expectedIsNewHighScore) {
-                long days = AnnotationsBuildResult.getDays(expectedHighScore);
+                long days = BuildResult.getDays(expectedHighScore);
                 if (days == 1) {
                     assertTrue(result.getDetails().contains(Messages.Checkstyle_ResultAction_OneHighScore()));
                 }
@@ -37,7 +37,7 @@ public class CheckstyleResultTest extends AbstractAnnotationsBuildResultTest<Che
                 }
             }
             else {
-                long days = AnnotationsBuildResult.getDays(gap);
+                long days = BuildResult.getDays(gap);
                 if (days == 1) {
                     assertTrue(result.getDetails().contains(Messages.Checkstyle_ResultAction_OneNoHighScore()));
                 }
