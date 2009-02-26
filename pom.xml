@@ -11,7 +11,7 @@
   <artifactId>checkstyle</artifactId>
   <packaging>hpi</packaging>
   <name>Hudson Checkstyle Plug-in</name>
-  <version>2.6-SNAPSHOT</version>
+  <version>2.6</version>
   <url>http://hudson.gotdns.com/wiki/display/HUDSON/Checkstyle+Plugin</url>
   <description>This plug-in generates the trend report for
     Checkstyle, an open source static code analysis program.</description>
@@ -144,4 +144,10 @@
       </plugin>
     </plugins>
   </reporting>
+
+  <scm>
+    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/checkstyle-2.6</connection>
+    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/checkstyle-2.6</developerConnection>
+    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/checkstyle/tags/checkstyle-2.6</url>
+  </scm>
 </project>
