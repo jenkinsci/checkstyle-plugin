@@ -20,7 +20,7 @@ public class CheckStyleResult extends BuildResult {
     }
 
     /**
-     * Creates a new instance of <code>CheckStyleResult</code>.
+     * Creates a new instance of {@link CheckStyleResult}.
      *
      * @param build
      *            the current build as owner of this action
@@ -29,12 +29,13 @@ public class CheckStyleResult extends BuildResult {
      * @param result
      *            the parsed result with all annotations
      */
-    public CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
+    public CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
+            final ParserResult result) {
         super(build, defaultEncoding, result);
     }
 
     /**
-     * Creates a new instance of <code>CheckStyleResult</code>.
+     * Creates a new instance of {@link CheckStyleResult}.
      *
      * @param build
      *            the current build as owner of this action
@@ -45,7 +46,8 @@ public class CheckStyleResult extends BuildResult {
      * @param previous
      *            the result of the previous build
      */
-    public CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result, final CheckStyleResult previous) {
+    public CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
+            final ParserResult result, final CheckStyleResult previous) {
         super(build, defaultEncoding, result, previous);
     }
 

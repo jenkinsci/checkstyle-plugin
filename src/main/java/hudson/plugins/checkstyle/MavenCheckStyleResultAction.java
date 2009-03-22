@@ -41,7 +41,8 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
      * @param defaultEncoding
      *            the default encoding to be used when reading and parsing files
      */
-    public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor, final String height, final String defaultEncoding) {
+    public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor,
+            final String height, final String defaultEncoding) {
         super(owner, healthDescriptor);
         this.height = height;
         this.defaultEncoding = defaultEncoding;
@@ -61,7 +62,8 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
      * @param defaultEncoding
      *            the default encoding to be used when reading and parsing files
      */
-    public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor, final String height, final String defaultEncoding, final CheckStyleResult result) {
+    public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor,
+            final String height, final String defaultEncoding, final CheckStyleResult result) {
         super(owner, healthDescriptor, result);
         this.height = height;
         this.defaultEncoding = defaultEncoding;
@@ -83,18 +85,20 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
     }
 
     /**
-     * Called whenever a new module build is completed, to update the
-     * aggregated report. When multiple builds complete simultaneously,
-     * Hudson serializes the execution of this method, so this method
-     * needs not be concurrency-safe.
+     * Called whenever a new module build is completed, to update the aggregated
+     * report. When multiple builds complete simultaneously, Hudson serializes
+     * the execution of this method, so this method needs not be
+     * concurrency-safe.
      *
      * @param moduleBuilds
-     *      Same as <tt>MavenModuleSet.getModuleBuilds()</tt> but provided for convenience and efficiency.
+     *            Same as <tt>MavenModuleSet.getModuleBuilds()</tt> but provided
+     *            for convenience and efficiency.
      * @param newBuild
-     *      Newly completed build.
+     *            Newly completed build.
      */
     public void update(final Map<MavenModule, List<MavenBuild>> moduleBuilds, final MavenBuild newBuild) {
-        setResult(new CheckStyleResultBuilder().build(getOwner(), createAggregatedResult(moduleBuilds), defaultEncoding));
+        CheckStyleResult annotationsResult = new CheckStyleResultBuilder().buildMaven(getOwner(), createAggregatedResult(moduleBuilds), defaultEncoding);
+        setResult(annotationsResult);
+        updateBuildHealth(newBuild, annotationsResult);
     }
 }
-

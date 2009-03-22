@@ -2,7 +2,9 @@ package hudson.plugins.checkstyle;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import hudson.plugins.checkstyle.util.AbstractEnglishLocaleTest;
+import hudson.plugins.checkstyle.util.AbstractHealthDescriptor;
+import hudson.plugins.checkstyle.util.AbstractHealthDescriptorTest;
+import hudson.plugins.checkstyle.util.HealthDescriptor;
 import hudson.plugins.checkstyle.util.NullHealthDescriptor;
 import hudson.plugins.checkstyle.util.model.AnnotationProvider;
 
@@ -16,7 +18,7 @@ import org.jvnet.localizer.Localizable;
  *
  * @author Ulli Hafner
  */
-public class CheckStyleHealthDescriptorTest extends AbstractEnglishLocaleTest {
+public class CheckStyleHealthDescriptorTest extends AbstractHealthDescriptorTest {
     /**
      * Verify number of items.
      */
@@ -35,6 +37,12 @@ public class CheckStyleHealthDescriptorTest extends AbstractEnglishLocaleTest {
         when(provider.getNumberOfAnnotations()).thenReturn(2);
         description = healthDescriptor.createDescription(provider);
         assertEquals(Messages.Checkstyle_ResultAction_HealthReportMultipleItem(2), description.toString());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected AbstractHealthDescriptor createHealthDescriptor(final HealthDescriptor healthDescriptor) {
+        return new CheckStyleHealthDescriptor(healthDescriptor);
     }
 }
 
