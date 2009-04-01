@@ -1,8 +1,9 @@
 package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractBuild;
+import hudson.plugins.checkstyle.util.BuildResult;
 import hudson.plugins.checkstyle.util.ParserResult;
-import hudson.plugins.checkstyle.util.model.JavaProject;
+import hudson.plugins.checkstyle.util.ResultAction;
 
 /**
  * Represents the aggregated results of the Checkstyle analysis in m2 jobs.
@@ -45,31 +46,10 @@ public class CheckStyleMavenResult extends CheckStyleResult {
         super(build, defaultEncoding, result, previous);
     }
 
-    /**
-     * Returns the results of the previous build.
-     *
-     * @return the result of the previous build, or <code>null</code> if no
-     *         such build exists
-     */
+    /** {@inheritDoc} */
     @Override
-    public JavaProject getPreviousResult() {
-        MavenCheckStyleResultAction action = getOwner().getAction(MavenCheckStyleResultAction.class);
-        if (action.hasPreviousResultAction()) {
-            return action.getPreviousResultAction().getResult().getProject();
-        }
-        else {
-            return null;
-        }
-    }
-
-    /**
-     * Returns whether a previous build result exists.
-     *
-     * @return <code>true</code> if a previous build result exists.
-     */
-    @Override
-    public boolean hasPreviousResult() {
-        return getOwner().getAction(MavenCheckStyleResultAction.class).hasPreviousResultAction();
+    protected Class<? extends ResultAction<? extends BuildResult>> getResultActionType() {
+        return MavenCheckStyleResultAction.class;
     }
 }
 
