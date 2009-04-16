@@ -119,13 +119,11 @@ public class CheckStyleParser extends AbstractAnnotationParser {
                     warning.setFileName(file.getName());
                     warning.setPackageName(packageName);
 
-                    if (StringUtils.isNotBlank(getDefaultEncoding())) {
-                        try {
-                            warning.setContextHashCode(createContextHashCode(file.getName(), error.getLine()));
-                        }
-                        catch (IOException exception) {
-                            // ignore and continue
-                        }
+                    try {
+                        warning.setContextHashCode(createContextHashCode(file.getName(), error.getLine()));
+                    }
+                    catch (IOException exception) {
+                        // ignore and continue
                     }
                     annotations.add(warning);
                 }
