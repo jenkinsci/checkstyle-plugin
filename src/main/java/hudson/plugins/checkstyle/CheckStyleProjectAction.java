@@ -33,12 +33,6 @@ public class CheckStyleProjectAction extends AbstractProjectAction<CheckStyleRes
 
     /** {@inheritDoc} */
     @Override
-    public String getCookieName() {
-        return "Checkstyle_displayMode";
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String getTrendName() {
         return Messages.Checkstyle_Trend_Name();
     }
