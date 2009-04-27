@@ -51,8 +51,6 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
      * @param unHealthy
      *            Report health as 0% when the number of warnings is greater
      *            than this value
-     * @param height
-     *            the height of the trend graph
      * @param thresholdLimit
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
@@ -62,10 +60,9 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     @DataBoundConstructor
     public CheckStyleReporter(final String threshold, final String newThreshold,
             final String failureThreshold, final String newFailureThreshold,
-            final String healthy, final String unHealthy,
-            final String height, final String thresholdLimit) {
+            final String healthy, final String unHealthy, final String thresholdLimit) {
         super(threshold, newThreshold, failureThreshold, newFailureThreshold,
-                healthy, unHealthy, height, thresholdLimit, "CHECKSTYLE");
+                healthy, unHealthy, thresholdLimit, "CHECKSTYLE");
     }
     // CHECKSTYLE:ON
 
@@ -88,7 +85,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     @Override
     protected CheckStyleResult persistResult(final ParserResult project, final MavenBuild build) {
         CheckStyleResult result = new CheckStyleResultBuilder().build(build, project, getDefaultEncoding());
-        build.getActions().add(new MavenCheckStyleResultAction(build, this, getHeight(), getDefaultEncoding(), result));
+        build.getActions().add(new MavenCheckStyleResultAction(build, this, getDefaultEncoding(), result));
         build.registerAsProjectAction(CheckStyleReporter.this);
 
         return result;

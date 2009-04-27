@@ -55,8 +55,6 @@ public class CheckStylePublisher extends HealthAwarePublisher {
      * @param unHealthy
      *            Report health as 0% when the number of warnings is greater
      *            than this value
-     * @param height
-     *            the height of the trend graph
      * @param thresholdLimit
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
@@ -69,9 +67,9 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     public CheckStylePublisher(final String pattern, final String threshold, final String newThreshold,
             final String failureThreshold, final String newFailureThreshold,
             final String healthy, final String unHealthy,
-            final String height, final String thresholdLimit, final String defaultEncoding) {
+            final String thresholdLimit, final String defaultEncoding) {
         super(threshold, newThreshold, failureThreshold, newFailureThreshold,
-                healthy, unHealthy, height, thresholdLimit, defaultEncoding, "CHECKSTYLE");
+                healthy, unHealthy, thresholdLimit, defaultEncoding, "CHECKSTYLE");
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON
@@ -106,6 +104,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     }
 
     /** {@inheritDoc} */
+    @Override
     public Descriptor<Publisher> getDescriptor() {
         return CHECKSTYLE_DESCRIPTOR;
     }
