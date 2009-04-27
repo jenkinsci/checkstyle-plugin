@@ -7,7 +7,6 @@
   </f:entry>
   <f:advanced>
     <u:thresholds id="checkstyle"/>
-    <u:trendHeight/>
     <u:defaultEncoding id="checkstyle"/>
   </f:advanced>
 </j:jelly>
