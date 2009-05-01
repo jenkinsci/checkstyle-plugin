@@ -8,5 +8,6 @@
   <f:advanced>
     <u:thresholds id="checkstyle"/>
     <u:defaultEncoding id="checkstyle"/>
+    <u:trend id="checkstyle"/>
   </f:advanced>
 </j:jelly>
