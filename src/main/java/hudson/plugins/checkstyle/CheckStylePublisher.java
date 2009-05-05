@@ -86,7 +86,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final AbstractProject<?, ?> project) {
-        return new CheckStyleProjectAction(project, getTrendHeight());
+        return new CheckStyleProjectAction(project);
     }
 
     /** {@inheritDoc} */

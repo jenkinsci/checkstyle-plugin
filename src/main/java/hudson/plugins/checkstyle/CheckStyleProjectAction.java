@@ -22,8 +22,8 @@ public class CheckStyleProjectAction extends AbstractProjectAction<CheckStyleRes
      * @param height
      *            the height of the trend graph
      */
-    public CheckStyleProjectAction(final AbstractProject<?, ?> project, final int height) {
-        super(project, CheckStyleResultAction.class, CheckStylePublisher.CHECKSTYLE_DESCRIPTOR, height);
+    public CheckStyleProjectAction(final AbstractProject<?, ?> project) {
+        super(project, CheckStyleResultAction.class, CheckStylePublisher.CHECKSTYLE_DESCRIPTOR);
     }
 
     /** {@inheritDoc} */

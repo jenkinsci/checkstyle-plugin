@@ -94,7 +94,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final MavenModule module) {
-        return new CheckStyleProjectAction(module, getTrendHeight());
+        return new CheckStyleProjectAction(module);
     }
 
     /** {@inheritDoc} */

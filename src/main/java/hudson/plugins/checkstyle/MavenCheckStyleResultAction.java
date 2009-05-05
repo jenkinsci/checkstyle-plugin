@@ -9,7 +9,6 @@ import hudson.maven.MavenModuleSetBuild;
 import hudson.model.AbstractBuild;
 import hudson.model.Action;
 import hudson.plugins.checkstyle.util.HealthDescriptor;
-import hudson.plugins.checkstyle.util.TrendReportHeightValidator;
 
 import java.util.List;
 import java.util.Map;
@@ -68,7 +67,7 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
 
     /** {@inheritDoc} */
     public Action getProjectAction(final MavenModuleSet moduleSet) {
-        return new CheckStyleProjectAction(moduleSet, TrendReportHeightValidator.defaultHeight(height));
+        return new CheckStyleProjectAction(moduleSet);
     }
 
     /** {@inheritDoc} */
