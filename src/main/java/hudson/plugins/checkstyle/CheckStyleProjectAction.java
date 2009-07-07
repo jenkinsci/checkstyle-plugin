@@ -5,8 +5,6 @@ import hudson.plugins.checkstyle.util.AbstractProjectAction;
 
 /**
  * Entry point to visualize the Checkstyle trend graph in the project screen.
- * Drawing of the graph is delegated to the associated
- * {@link CheckStyleResultAction}.
  *
  * @author Ulli Hafner
  */
@@ -15,7 +13,7 @@ public class CheckStyleProjectAction extends AbstractProjectAction<CheckStyleRes
     private static final long serialVersionUID = -654316141132780561L;
 
     /**
-     * Instantiates a new find bugs project action.
+     * Instantiates a new {@link CheckStyleProjectAction}.
      *
      * @param project
      *            the project that owns this action
