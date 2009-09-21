@@ -1,12 +1,12 @@
 package hudson.plugins.checkstyle.parser;
 
 import hudson.XmlFile;
-import hudson.plugins.checkstyle.util.model.AbstractAnnotation;
-import hudson.plugins.checkstyle.util.model.AbstractSerializeModelTest;
-import hudson.plugins.checkstyle.util.model.AnnotationStream;
-import hudson.plugins.checkstyle.util.model.FileAnnotation;
-import hudson.plugins.checkstyle.util.model.JavaProject;
-import hudson.plugins.checkstyle.util.model.Priority;
+import hudson.plugins.analysis.test.AbstractSerializeModelTest;
+import hudson.plugins.analysis.util.model.AbstractAnnotation;
+import hudson.plugins.analysis.util.model.AnnotationStream;
+import hudson.plugins.analysis.util.model.FileAnnotation;
+import hudson.plugins.analysis.util.model.JavaProject;
+import hudson.plugins.analysis.util.model.Priority;
 
 import java.io.File;
 import java.io.IOException;

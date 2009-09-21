@@ -1,6 +1,6 @@
 package hudson.plugins.checkstyle;
 
-import hudson.plugins.checkstyle.util.PluginDescriptor;
+import hudson.plugins.analysis.util.PluginDescriptor;
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.StaplerRequest;

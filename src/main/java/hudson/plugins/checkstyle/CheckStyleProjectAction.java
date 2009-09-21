@@ -1,7 +1,7 @@
 package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractProject;
-import hudson.plugins.checkstyle.util.AbstractProjectAction;
+import hudson.plugins.analysis.util.AbstractProjectAction;
 
 /**
  * Entry point to visualize the Checkstyle trend graph in the project screen.

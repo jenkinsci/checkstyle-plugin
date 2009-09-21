@@ -1,8 +1,8 @@
 package hudson.plugins.checkstyle;
 
-import hudson.plugins.checkstyle.util.AbstractHealthDescriptor;
-import hudson.plugins.checkstyle.util.HealthDescriptor;
-import hudson.plugins.checkstyle.util.model.AnnotationProvider;
+import hudson.plugins.analysis.util.AbstractHealthDescriptor;
+import hudson.plugins.analysis.util.HealthDescriptor;
+import hudson.plugins.analysis.util.model.AnnotationProvider;
 
 import org.jvnet.localizer.Localizable;
 

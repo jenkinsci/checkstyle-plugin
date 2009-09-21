@@ -1,9 +1,9 @@
 package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.checkstyle.util.BuildResult;
-import hudson.plugins.checkstyle.util.ParserResult;
-import hudson.plugins.checkstyle.util.ResultAction;
+import hudson.plugins.analysis.util.BuildResult;
+import hudson.plugins.analysis.util.ParserResult;
+import hudson.plugins.analysis.util.ResultAction;
 
 /**
  * Represents the aggregated results of the Checkstyle analysis in m2 jobs.

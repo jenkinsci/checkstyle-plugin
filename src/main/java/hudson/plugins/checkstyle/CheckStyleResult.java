@@ -1,10 +1,10 @@
 package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractBuild;
+import hudson.plugins.analysis.util.BuildResult;
+import hudson.plugins.analysis.util.ParserResult;
+import hudson.plugins.analysis.util.ResultAction;
 import hudson.plugins.checkstyle.parser.Warning;
-import hudson.plugins.checkstyle.util.BuildResult;
-import hudson.plugins.checkstyle.util.ParserResult;
-import hudson.plugins.checkstyle.util.ResultAction;
 
 /**
  * Represents the results of the Checkstyle analysis. One instance of this class

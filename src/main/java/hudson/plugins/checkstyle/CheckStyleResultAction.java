@@ -1,9 +1,9 @@
 package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.checkstyle.util.AbstractResultAction;
-import hudson.plugins.checkstyle.util.HealthDescriptor;
-import hudson.plugins.checkstyle.util.PluginDescriptor;
+import hudson.plugins.analysis.util.AbstractResultAction;
+import hudson.plugins.analysis.util.HealthDescriptor;
+import hudson.plugins.analysis.util.PluginDescriptor;
 
 import java.util.NoSuchElementException;
 
