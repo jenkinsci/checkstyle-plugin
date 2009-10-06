@@ -41,13 +41,13 @@ public final class CheckStyleRules {
      * Creates the singleton instance.
      */
     private CheckStyleRules() {
-        initialize();
+        // prevents instantiation
     }
 
     /**
      * Initializes the rules.
      */
-    private void initialize() {
+    public void initialize() {
         try {
             String[] ruleFiles = new String[] {"blocks", "coding", "design", "duplicates", "header", "imports",
                     "j2ee", "javadoc", "metrics", "misc", "modifier", "naming", "reporting", "sizes", "whitespace"};

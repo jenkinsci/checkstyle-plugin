@@ -5,6 +5,7 @@ import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.MavenModule;
 import hudson.plugins.analysis.util.model.Priority;
 import hudson.plugins.analysis.util.model.WorkspaceFile;
+import hudson.plugins.checkstyle.rules.CheckStyleRules;
 
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,8 @@ public class CheckStyleParserTest {
      */
     @Test
     public void analyseCheckStyleFile() throws InvocationTargetException {
+        CheckStyleRules.getInstance().initialize();
+
         InputStream inputStream = CheckStyleParserTest.class.getResourceAsStream("checkstyle.xml");
 
         Collection<FileAnnotation> annotations = new CheckStyleParser().parse(inputStream, "empty");

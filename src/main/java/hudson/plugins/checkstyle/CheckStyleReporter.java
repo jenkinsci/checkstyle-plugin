@@ -1,5 +1,6 @@
 package hudson.plugins.checkstyle;
 
+import hudson.Extension;
 import hudson.maven.MavenBuild;
 import hudson.maven.MavenBuildProxy;
 import hudson.maven.MavenModule;
@@ -25,8 +26,11 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 2272875032054063496L;
+
     /** Descriptor of this publisher. */
+    @Extension
     public static final CheckStyleReporterDescriptor CHECKSTYLE_SCANNER_DESCRIPTOR = new CheckStyleReporterDescriptor(CheckStylePublisher.CHECKSTYLE_DESCRIPTOR);
+
     /** Default Checkstyle pattern. */
     private static final String CHECKSTYLE_XML_FILE = "checkstyle-result.xml";
 

@@ -15,6 +15,7 @@ public class CheckStyleRulesTest {
     @Test
     public void checkRuleLoader() {
         CheckStyleRules reader = CheckStyleRules.getInstance();
+        reader.initialize();
 
         assertEquals("Wrong number of rules detected.", 121, reader.getRules().size());
         assertNotNull("No EmptyBlock rule found.", reader.getRule("EmptyBlock"));
