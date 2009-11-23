@@ -1,6 +1,6 @@
 package hudson.plugins.checkstyle.parser;
 
-import hudson.plugins.analysis.util.AbstractAnnotationParser;
+import hudson.plugins.analysis.core.AbstractAnnotationParser;
 import hudson.plugins.analysis.util.JavaPackageDetector;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
