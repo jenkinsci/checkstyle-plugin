@@ -1,13 +1,9 @@
 package hudson.plugins.checkstyle;
 
 import hudson.plugins.analysis.core.PluginDescriptor;
-import net.sf.json.JSONObject;
-
-import org.kohsuke.stapler.StaplerRequest;
 
 /**
- * Descriptor for the class {@link CheckStylePublisher}. Used as a singleton. The
- * class is marked as public so that it can be accessed from views.
+ * Descriptor for the class {@link CheckStylePublisher}.
  *
  * @author Ulli Hafner
  */
@@ -40,11 +36,5 @@ public final class CheckStyleDescriptor extends PluginDescriptor {
     @Override
     public String getIconUrl() {
         return ACTION_ICON;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public CheckStylePublisher newInstance(final StaplerRequest request, final JSONObject formData) throws FormException {
-        return request.bindJSON(CheckStylePublisher.class, formData);
     }
 }
