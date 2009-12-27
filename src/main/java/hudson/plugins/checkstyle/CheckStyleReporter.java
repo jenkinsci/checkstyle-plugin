@@ -28,7 +28,7 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     private static final long serialVersionUID = 2272875032054063496L;
 
     /** Descriptor of this publisher. */
-    @Extension
+    @Extension(ordinal = 100)
     public static final CheckStyleReporterDescriptor CHECKSTYLE_SCANNER_DESCRIPTOR = new CheckStyleReporterDescriptor(CheckStylePublisher.CHECKSTYLE_DESCRIPTOR);
 
     /** Default Checkstyle pattern. */

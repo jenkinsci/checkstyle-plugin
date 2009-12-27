@@ -28,7 +28,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     private static final long serialVersionUID = 6369581633551160418L;
 
     /** Descriptor of this publisher. */
-    @Extension
+    @Extension(ordinal = 100)
     public static final CheckStyleDescriptor CHECKSTYLE_DESCRIPTOR = new CheckStyleDescriptor();
 
     /** Default Checkstyle pattern. */
