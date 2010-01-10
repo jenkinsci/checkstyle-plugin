@@ -2,6 +2,7 @@ package hudson.plugins.checkstyle.parser;
 
 import hudson.plugins.analysis.util.model.AbstractAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.checkstyle.Messages;
 import hudson.plugins.checkstyle.rules.CheckStyleRules;
 
 import org.apache.commons.lang.StringUtils;
@@ -37,6 +38,7 @@ public class Warning extends AbstractAnnotation {
     public Warning(final Priority priority, final String message, final String category, final String type,
             final int start, final int end) {
         super(priority, message, start, end, category, type);
+        setOrigin(Messages.Checkstyle_Warning_Origin());
     }
 
     /**
@@ -62,7 +64,7 @@ public class Warning extends AbstractAnnotation {
         return CheckStyleRules.getInstance().getDescription(getType());
     }
 
-    /** Not used anymore. */
+    /** Not used anymore. @deprecated */
     @SuppressWarnings("all")
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("")
     @Deprecated
