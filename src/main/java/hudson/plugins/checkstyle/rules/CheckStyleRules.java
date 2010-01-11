@@ -78,6 +78,7 @@ public final class CheckStyleRules {
      *
      * @return the new digester.
      * @throws ParserConfigurationException
+     *             if digester is not configured properly
      */
     private Digester createDigester() throws ParserConfigurationException {
         Digester digester = new Digester();
