@@ -10,7 +10,7 @@
 
   <artifactId>checkstyle</artifactId>
   <packaging>hpi</packaging>
-  <name>Hudson Checkstyle Plug-in</name>
+  <name>Checkstyle Plug-in</name>
   <version>3.2-SNAPSHOT</version>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Checkstyle+Plugin</url>
   <description>This plug-in generates the trend report for
