@@ -1,5 +1,6 @@
 package hudson.plugins.checkstyle;
 
+import hudson.Extension;
 import hudson.plugins.analysis.core.PluginDescriptor;
 
 /**
@@ -7,6 +8,7 @@ import hudson.plugins.analysis.core.PluginDescriptor;
  *
  * @author Ulli Hafner
  */
+@Extension(ordinal = 100)
 public final class CheckStyleDescriptor extends PluginDescriptor {
     /** Plug-in name. */
     private static final String PLUGIN_NAME = "checkstyle";
@@ -16,7 +18,7 @@ public final class CheckStyleDescriptor extends PluginDescriptor {
     /**
      * Instantiates a new find bugs descriptor.
      */
-    CheckStyleDescriptor() {
+    public CheckStyleDescriptor() {
         super(CheckStylePublisher.class);
     }
 

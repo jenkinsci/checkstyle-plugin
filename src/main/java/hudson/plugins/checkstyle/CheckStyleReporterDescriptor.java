@@ -1,7 +1,7 @@
 package hudson.plugins.checkstyle;
 
+import hudson.Extension;
 import hudson.maven.MavenReporter;
-import hudson.plugins.analysis.core.PluginDescriptor;
 import hudson.plugins.analysis.core.ReporterDescriptor;
 import net.sf.json.JSONObject;
 
@@ -13,15 +13,13 @@ import org.kohsuke.stapler.StaplerRequest;
  *
  * @author Ulli Hafner
  */
+@Extension(ordinal = 100)
 public class CheckStyleReporterDescriptor extends ReporterDescriptor {
     /**
      * Creates a new instance of <code>CheckStyleReporterDescriptor</code>.
-     *
-     * @param pluginDescriptor
-     *            the plug-in descriptor of the publisher
      */
-    public CheckStyleReporterDescriptor(final PluginDescriptor pluginDescriptor) {
-        super(CheckStyleReporter.class, pluginDescriptor);
+    public CheckStyleReporterDescriptor() {
+        super(CheckStyleReporter.class, new CheckStyleDescriptor());
     }
 
     /** {@inheritDoc} */

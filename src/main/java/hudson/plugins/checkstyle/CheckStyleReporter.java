@@ -1,10 +1,8 @@
 package hudson.plugins.checkstyle;
 
-import hudson.Extension;
 import hudson.maven.MavenBuild;
 import hudson.maven.MavenBuildProxy;
 import hudson.maven.MavenModule;
-import hudson.maven.MavenReporterDescriptor;
 import hudson.maven.MojoInfo;
 import hudson.model.Action;
 import hudson.plugins.analysis.core.FilesParser;
@@ -26,10 +24,6 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 2272875032054063496L;
-
-    /** Descriptor of this publisher. */
-    @Extension(ordinal = 100)
-    public static final CheckStyleReporterDescriptor CHECKSTYLE_SCANNER_DESCRIPTOR = new CheckStyleReporterDescriptor(CheckStylePublisher.CHECKSTYLE_DESCRIPTOR);
 
     /** Default Checkstyle pattern. */
     private static final String CHECKSTYLE_XML_FILE = "checkstyle-result.xml";
@@ -105,12 +99,6 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     @Override
     protected Class<? extends Action> getResultActionClass() {
         return MavenCheckStyleResultAction.class;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public MavenReporterDescriptor getDescriptor() {
-        return CHECKSTYLE_SCANNER_DESCRIPTOR;
     }
 }
 

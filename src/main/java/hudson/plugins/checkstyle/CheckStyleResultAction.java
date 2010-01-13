@@ -56,7 +56,7 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
     /** {@inheritDoc} */
     @Override
     protected PluginDescriptor getDescriptor() {
-        return CheckStylePublisher.CHECKSTYLE_DESCRIPTOR;
+        return new CheckStyleDescriptor();
     }
 
     /**
@@ -75,11 +75,13 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
     }
 
     /** {@inheritDoc} */
+    @Override
     public String getMultipleItemsTooltip(final int numberOfItems) {
         return Messages.Checkstyle_ResultAction_MultipleWarnings(numberOfItems);
     }
 
     /** {@inheritDoc} */
+    @Override
     public String getSingleItemTooltip() {
         return Messages.Checkstyle_ResultAction_OneWarning();
     }

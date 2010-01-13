@@ -19,7 +19,7 @@ public class CheckStyleProjectAction extends AbstractProjectAction<CheckStyleRes
      *            the project that owns this action
      */
     public CheckStyleProjectAction(final AbstractProject<?, ?> project) {
-        super(project, CheckStyleResultAction.class, CheckStylePublisher.CHECKSTYLE_DESCRIPTOR);
+        super(project, CheckStyleResultAction.class, new CheckStyleDescriptor());
     }
 
     /** {@inheritDoc} */
