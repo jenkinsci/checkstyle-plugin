@@ -93,10 +93,16 @@ public class CheckStylePublisher extends HealthAwarePublisher {
 
         FilesParser parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new CheckStyleParser(getDefaultEncoding()),
                 isMavenBuild(build), isAntBuild(build));
-        ParserResult project = build.getProject().getWorkspace().act(parser);
+        ParserResult project = build.getWorkspace().act(parser);
         CheckStyleResult result = new CheckStyleResultBuilder().build(build, project, getDefaultEncoding());
         build.getActions().add(new CheckStyleResultAction(build, this, result));
 
         return result;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public CheckStyleDescriptor getDescriptor() {
+        return (CheckStyleDescriptor)super.getDescriptor();
     }
 }
