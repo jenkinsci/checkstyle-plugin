@@ -2,7 +2,6 @@ package hudson.plugins.checkstyle.parser;
 
 import hudson.plugins.analysis.util.model.AbstractAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
-import hudson.plugins.checkstyle.Messages;
 import hudson.plugins.checkstyle.rules.CheckStyleRules;
 
 import org.apache.commons.lang.StringUtils;
@@ -18,6 +17,8 @@ import org.apache.commons.lang.StringUtils;
 public class Warning extends AbstractAnnotation {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 5171661552905752370L;
+    /** Origin of the annotation. */
+    public static final String ORIGIN = "checkstyle";
 
     /**
      * Creates a new instance of {@link Warning}.
@@ -38,7 +39,7 @@ public class Warning extends AbstractAnnotation {
     public Warning(final Priority priority, final String message, final String category, final String type,
             final int start, final int end) {
         super(priority, message, start, end, category, type);
-        setOrigin(Messages.Checkstyle_Warning_Origin());
+        setOrigin(ORIGIN);
     }
 
     /**
