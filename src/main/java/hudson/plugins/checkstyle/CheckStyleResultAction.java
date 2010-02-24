@@ -5,8 +5,6 @@ import hudson.plugins.analysis.core.AbstractResultAction;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.PluginDescriptor;
 
-import java.util.NoSuchElementException;
-
 /**
  * Controls the live cycle of the Checkstyle results. This action persists the
  * results of the Checkstyle analysis of a build and displays the results on the
@@ -57,21 +55,6 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
     @Override
     protected PluginDescriptor getDescriptor() {
         return new CheckStyleDescriptor();
-    }
-
-    /**
-     * Gets the Checkstyle result of the previous build.
-     *
-     * @return the Checkstyle result of the previous build.
-     * @throws NoSuchElementException
-     *             if there is no previous build for this action
-     */
-    public CheckStyleResultAction getPreviousResultAction() {
-        AbstractResultAction<CheckStyleResult> previousBuild = getPreviousBuild();
-        if (previousBuild instanceof CheckStyleResultAction) {
-            return (CheckStyleResultAction)previousBuild;
-        }
-        throw new NoSuchElementException("There is no previous build for action " + this);
     }
 
     /** {@inheritDoc} */
