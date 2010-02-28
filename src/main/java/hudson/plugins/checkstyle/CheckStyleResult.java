@@ -28,26 +28,8 @@ public class CheckStyleResult extends BuildResult {
      * @param result
      *            the parsed result with all annotations
      */
-    public CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
-            final ParserResult result) {
+    public CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
         super(build, defaultEncoding, result);
-    }
-
-    /**
-     * Creates a new instance of {@link CheckStyleResult}.
-     *
-     * @param build
-     *            the current build as owner of this action
-     * @param defaultEncoding
-     *            the default encoding to be used when reading and parsing files
-     * @param result
-     *            the parsed result with all annotations
-     * @param previous
-     *            the result of the previous build
-     */
-    public CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
-            final ParserResult result, final CheckStyleResult previous) {
-        super(build, defaultEncoding, result, previous);
     }
 
     /** {@inheritDoc} */

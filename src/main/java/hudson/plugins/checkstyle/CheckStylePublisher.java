@@ -91,10 +91,11 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
         logger.log("Collecting checkstyle analysis files...");
 
-        FilesParser parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN), new CheckStyleParser(getDefaultEncoding()),
+        FilesParser parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
+                new CheckStyleParser(getDefaultEncoding()),
                 isMavenBuild(build), isAntBuild(build));
         ParserResult project = build.getWorkspace().act(parser);
-        CheckStyleResult result = new CheckStyleResultBuilder().build(build, project, getDefaultEncoding());
+        CheckStyleResult result = new CheckStyleResult(build, getDefaultEncoding(), project);
         build.getActions().add(new CheckStyleResultAction(build, this, result));
 
         return result;

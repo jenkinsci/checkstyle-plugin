@@ -88,7 +88,7 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
      *            Newly completed build.
      */
     public void update(final Map<MavenModule, List<MavenBuild>> moduleBuilds, final MavenBuild newBuild) {
-        CheckStyleResult annotationsResult = new CheckStyleResultBuilder().buildMaven(getOwner(), createAggregatedResult(moduleBuilds), defaultEncoding);
+        CheckStyleResult annotationsResult = new CheckStyleResult(getOwner(), defaultEncoding, createAggregatedResult(moduleBuilds));
         setResult(annotationsResult);
         updateBuildHealth(newBuild, annotationsResult);
     }

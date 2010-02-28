@@ -18,12 +18,6 @@ public class CheckstyleResultTest extends BuildResultTest<CheckStyleResult> {
 
     /** {@inheritDoc} */
     @Override
-    protected CheckStyleResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project, final CheckStyleResult previous) {
-        return new CheckStyleResult(build, null, project, previous);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     protected void verifyHighScoreMessage(final int expectedZeroWarningsBuildNumber, final boolean expectedIsNewHighScore, final long expectedHighScore, final long gap, final CheckStyleResult result) {
         if (result.hasNoAnnotations() && result.getDelta() == 0) {
             assertTrue(result.getDetails().contains(Messages.Checkstyle_ResultAction_NoWarningsSince(expectedZeroWarningsBuildNumber)));
