@@ -2,6 +2,7 @@ package hudson.plugins.checkstyle;
 
 import static junit.framework.Assert.*;
 import hudson.model.AbstractBuild;
+import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.test.BuildResultTest;
@@ -12,8 +13,8 @@ import hudson.plugins.analysis.test.BuildResultTest;
 public class CheckstyleResultTest extends BuildResultTest<CheckStyleResult> {
     /** {@inheritDoc} */
     @Override
-    protected CheckStyleResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project) {
-        return new CheckStyleResult(build, null, project);
+    protected CheckStyleResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project, final BuildHistory history) {
+        return new CheckStyleResult(build, null, project, history);
     }
 
     /** {@inheritDoc} */
@@ -24,19 +25,19 @@ public class CheckstyleResultTest extends BuildResultTest<CheckStyleResult> {
             if (expectedIsNewHighScore) {
                 long days = BuildResult.getDays(expectedHighScore);
                 if (days == 1) {
-                    assertTrue(result.getDetails().contains(Messages.Checkstyle_ResultAction_OneHighScore()));
+                    assertTrue("Wrong message", result.getDetails().contains(Messages.Checkstyle_ResultAction_OneHighScore()));
                 }
                 else {
-                    assertTrue(result.getDetails().contains(Messages.Checkstyle_ResultAction_MultipleHighScore(days)));
+                    assertTrue("Wrong message", result.getDetails().contains(Messages.Checkstyle_ResultAction_MultipleHighScore(days)));
                 }
             }
             else {
                 long days = BuildResult.getDays(gap);
                 if (days == 1) {
-                    assertTrue(result.getDetails().contains(Messages.Checkstyle_ResultAction_OneNoHighScore()));
+                    assertTrue("Wrong message", result.getDetails().contains(Messages.Checkstyle_ResultAction_OneNoHighScore()));
                 }
                 else {
-                    assertTrue(result.getDetails().contains(Messages.Checkstyle_ResultAction_MultipleNoHighScore(days)));
+                    assertTrue("Wrong message", result.getDetails().contains(Messages.Checkstyle_ResultAction_MultipleNoHighScore(days)));
                 }
             }
         }

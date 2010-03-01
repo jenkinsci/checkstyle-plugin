@@ -1,6 +1,7 @@
 package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractBuild;
+import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
@@ -30,6 +31,23 @@ public class CheckStyleResult extends BuildResult {
      */
     public CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
         super(build, defaultEncoding, result);
+    }
+
+    /**
+     * Creates a new instance of {@link CheckStyleResult}.
+     *
+     * @param build
+     *            the current build as owner of this action
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param result
+     *            the parsed result with all annotations
+     * @param history
+     *            the plug-in history
+     */
+    protected CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
+            final BuildHistory history) {
+        super(build, defaultEncoding, result, history);
     }
 
     /** {@inheritDoc} */
