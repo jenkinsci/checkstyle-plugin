@@ -11,7 +11,7 @@ import hudson.plugins.checkstyle.rules.CheckStyleRules;
 public class CheckStylePlugin extends Plugin {
     /** {@inheritDoc} */
     @Override
-    public void start() throws Exception {
+    public void start() {
         CheckStyleRules.getInstance().initialize();
     }
 }

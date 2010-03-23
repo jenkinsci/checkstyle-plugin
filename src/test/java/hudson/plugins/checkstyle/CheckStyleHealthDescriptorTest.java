@@ -26,15 +26,15 @@ public class CheckStyleHealthDescriptorTest extends AbstractHealthDescriptorTest
         CheckStyleHealthDescriptor healthDescriptor = new CheckStyleHealthDescriptor(NullHealthDescriptor.NULL_HEALTH_DESCRIPTOR);
 
         Localizable description = healthDescriptor.createDescription(provider);
-        assertEquals(Messages.Checkstyle_ResultAction_HealthReportNoItem(), description.toString());
+        assertEquals(WRONG_DESCRIPTION, Messages.Checkstyle_ResultAction_HealthReportNoItem(), description.toString());
 
         when(provider.getNumberOfAnnotations()).thenReturn(1);
         description = healthDescriptor.createDescription(provider);
-        assertEquals(Messages.Checkstyle_ResultAction_HealthReportSingleItem(), description.toString());
+        assertEquals(WRONG_DESCRIPTION, Messages.Checkstyle_ResultAction_HealthReportSingleItem(), description.toString());
 
         when(provider.getNumberOfAnnotations()).thenReturn(2);
         description = healthDescriptor.createDescription(provider);
-        assertEquals(Messages.Checkstyle_ResultAction_HealthReportMultipleItem(2), description.toString());
+        assertEquals(WRONG_DESCRIPTION, Messages.Checkstyle_ResultAction_HealthReportMultipleItem(2), description.toString());
     }
 
     /** {@inheritDoc} */
