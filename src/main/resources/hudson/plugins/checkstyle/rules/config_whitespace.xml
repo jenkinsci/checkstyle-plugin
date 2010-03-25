@@ -1,13 +1,67 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <document>
-
   <properties>
     <title>Whitespace</title>
     <author>Checkstyle Development Team</author>
   </properties>
 
   <body>
+    <section name="GenericWhitespace">
+      <subsection name="Description">
+        <p>
+          Checks that the whitespace around the Generic tokens &lt; and &gt;
+          is correct to the <i>typical</i> convention. The convention is not
+          configurable.
+        </p>
+
+        <p>
+          For example the following is legal:
+        </p>
+
+        <source>
+List&lt;Integer&gt; x = new ArrayList&lt;Integer&gt;();
+List&lt;List&lt;Integer&gt;&gt; y = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+        </source>
+
+        <p>
+          But the following example is not:
+        </p>
+        <source>
+List &lt; Integer &gt; x = new ArrayList &lt; Integer &gt; ();
+List &lt; List &lt; Integer &gt; &gt; y = new ArrayList &lt; List &lt; Integer &gt; &gt; ();
+        </source>
+      </subsection>
+
+      <subsection name="Properties">
+
+        <p>
+          None.
+        </p>
+      </subsection>
+
+      <subsection name="Examples">
+        <p>
+          To configure the check:
+        </p>
+        <source>
+&lt;module name=&quot;GenericWhitespace&quot;/&gt;
+        </source>
+      </subsection>
+
+      <subsection name="Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.whitespace
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p>
+          <a href="config.html#treewalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
     <section name="EmptyForInitializerPad">
       <subsection name="Description">
         <p>
@@ -168,6 +222,14 @@ for (Iterator foo = very.long.line.iterator();
             </td>
             <td><a href="property_types.html#boolean">boolean</a></td>
             <td><span class="default">false</span></td>
+          </tr>
+          <tr>
+            <td>option</td>
+            <td>policy on how to pad method parameter</td>
+            <td>
+              <a href="property_types.html#parenPad">pad policy</a>
+            </td>
+            <td><span class="default">nospace</span></td>
           </tr>
           <tr>
             <td>tokens</td>
@@ -779,7 +841,7 @@ for (Iterator foo = very.long.line.iterator();
       </subsection>
     </section>
 
-    <section name="TabCharacter">
+    <section name="FileTabCharacter">
       <subsection name="Description">
         <p>
           Checks that there are no tab characters (<span
@@ -797,19 +859,51 @@ for (Iterator foo = very.long.line.iterator();
           </li>
           <li>
             From the Apache jakarta coding standards: In a distributed
-            development environment, when the cvs commit messages get sent to
-            a mailing list, they are almost impossible to read if you use
-            tabs.
+            development environment, when the commit messages get sent
+            to a mailing list, they are almost impossible to read if you
+            use tabs.
           </li>
         </ul>
       </subsection>
 
+      <subsection name="Properties">
+        <table>
+          <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>type</th>
+            <th>default value</th>
+          </tr>
+          <tr>
+            <td>eachLine</td>
+            <td>whether to report on each line containing a tab, or just the first instance</td>
+            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><span class="default">false</span></td>
+          </tr>
+          <tr>
+            <td>fileExtensions</td>
+            <td>file type extension of files to process</td>
+            <td><a href="property_types.html#stringSet">String Set</a></td>
+            <td><span class="default">{}</span></td>
+          </tr>
+        </table>
+      </subsection>
+
       <subsection name="Example">
         <p>
-          To configure the check:
+          To configure the check to report on the first instance in each
+          file:
         </p>
         <source>
-&lt;module name=&quot;TabCharacter&quot;/&gt;
+&lt;module name=&quot;FileTabCharacter&quot;/&gt;
+        </source>
+        <p>
+          To configure the check to report on each line in each file:
+        </p>
+        <source>
+&lt;module name=&quot;FileTabCharacter&quot;/&gt;
+    &lt;property name=&quot;eachLine&quot; value=&quot;true&quot;/&gt;
+&lt;module/&gt;
         </source>
       </subsection>
 
@@ -821,7 +915,7 @@ for (Iterator foo = very.long.line.iterator();
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#Checker">Checker</a>
         </p>
       </subsection>
     </section>
@@ -1023,13 +1117,7 @@ public void func() {}    // empty method</pre>
              <a
               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR_ASSIGN">STAR_ASSIGN</a>
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GENERIC_START">GENERIC_START</a>
-             <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GENERIC_END">GENERIC_END</a>
-             <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPE_EXTENSION">AND TYPE_EXTENSION_AND</a>
-             <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#WILDCARD_TYPE">WILDCARD_TYPE</a>
+              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPE_EXTENSION_AND">TYPE_EXTENSION_AND</a>
             </td>
             <td>all tokens</td>
           </tr>

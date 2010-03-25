@@ -15,19 +15,20 @@
         elements. Valid identifiers for a naming module are specified by its
         <span class="code"> format</span> property. The value of <span
         class="code">format</span> is a <a
-        href="http://jakarta.apache.org/regexp/">regular expression</a> for
-        valid identifiers.  This is an example of a configuration of the <span
-        class="code">MemberName</span> module to ensure that member
-        identifiers begin with <span class="code">&#39;m&#39;</span>, followed
+        href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/regex/Pattern.html">
+        regular expression</a> for valid identifiers.  This is an example of a
+        configuration of the <span class="code">MemberName</span> module to
+        ensure that member identifiers begin with
+        <span class="code">&#39;m&#39;</span>, followed
         by an upper case letter, and then letters and digits:
       </p>
-      
+
       <source>
 &lt;module name=&quot;MemberName&quot;&gt;
   &lt;property name=&quot;format&quot; value=&quot;^m[A-Z][a-zA-Z0-9]*$&quot;/&gt;
 &lt;/module&gt;
       </source>
-      
+
       <p>
         All naming modules belong to package <span
         class="code">com.puppycrawl.tools.checkstyle.checks.naming</span> and
@@ -47,6 +48,11 @@
           <td><span class="code">AbstractClassName</span></td>
           <td><span class="code">abstract</span> classes</td>
           <td><span class="default">^Abstract.*$|^.*Factory$</span></td>
+        </tr>
+        <tr>
+          <td><span class="code">ClassTypeParameterName</span></td>
+          <td>class type parameters</td>
+          <td><span class="default">^[A-Z]$</span></td>
         </tr>
         <tr>
           <td><span class="code">ConstantName</span></td>
@@ -79,6 +85,11 @@
           <td><span class="code">MethodName</span></td>
           <td>methods</td>
           <td><span class="default">^[a-z][a-zA-Z0-9]*$</span></td>
+        </tr>
+        <tr>
+          <td><span class="code">MethodTypeParameterName</span></td>
+          <td>method type parameters</td>
+          <td><span class="default">^[A-Z]$</span></td>
         </tr>
         <tr>
           <td><span class="code">PackageName</span></td>
@@ -140,7 +151,7 @@
         clause parameters begin with <span class="code">"e"</span>, followed
         by letters and digits:
       </p>
-      
+
       <source>
 &lt;module name=&quot;LocalVariableName&quot;&gt;
     &lt;property name=&quot;format&quot; value=&quot;^e[a-zA-Z0-9]*$&quot;/&gt;
@@ -168,10 +179,12 @@
       </source>
 
       <p>
-        Module <span class="code">MemberName</span> also has the following
-        properties:
+        The modules <span class="code">ConstantName</span>, <span
+        class="code">MemberName</span>, <span
+        class="code">StaticVariableName</span> and <span
+        class="code">TypeName</span> also have the following properties:
       </p>
-      
+
       <table>
         <tr>
           <th>name</th>
@@ -201,9 +214,41 @@
         </tr>
         <tr>
           <td>applyToPrivate</td>
-          <td>Controls whether to apply the check to pribvate member.</td>
+          <td>Controls whether to apply the check to private member.</td>
           <td><a href="property_types.html#boolean">Boolean</a></td>
           <td><span class="default">true</span></td>
+        </tr>
+      </table>
+
+      <p>
+        Module <span class="code">MethodName</span> also has the following
+        properties:
+      </p>
+
+      <table>
+        <tr>
+          <th>name</th>
+          <th>description</th>
+          <th>type</th>
+          <th>default value</th>
+        </tr>
+        <tr>
+          <td>allowClassName</td>
+          <td>
+            Controls whether to allow a method name to have the same
+            name as the residing class name.  This is not to be confused
+            with a constructor.  An easy mistake is to place a return
+            type on a constructor declaration which turns it into a
+            method. For example:
+            <pre>
+class MyClass {
+    public void MyClass() {} //this is a method
+    public MyClass() {} //this is a constructor
+}
+            </pre>
+          </td>
+          <td><a href="property_types.html#boolean">Boolean</a></td>
+          <td><span class="default">false</span></td>
         </tr>
       </table>
     </section>

@@ -229,6 +229,95 @@ public class MySingleton
       </subsection>
     </section>
 
+    <section name="EqualsAvoidNull">
+      <subsection name="Description">
+        <p>
+          Checks that any combination of String literals with optional
+          assignment is on the left side of an <span
+          class="code">equals()</span> comparison.
+        </p>
+
+        <p>
+          Rationale: Calling the <span class="code">equals()</span>
+          method on String literals will avoid a potential
+          NullPointerException.  Also, it is pretty common to see null
+          check right before equals comparisons which is not necessary
+          in the below example.
+        </p>
+
+        <p>
+          For example:
+        </p>
+        <source>
+String nullString = null;
+nullString.equals(&quot;My_Sweet_String&quot;);
+        </source>
+
+        <p>should be refactored to:</p>
+
+        <source>
+String nullString = null;
+&quot;My_Sweet_String&quot;.equals(nullString);
+        </source>
+
+        <p>
+          Limitations: If the equals method is overridden or a covariant
+          equals method is defined and the implementation is incorrect
+          (where <span class="code">s.equals(t)</span> does not return
+          the same result as <span class="code">t.equals(s)</span>) then
+          rearranging the called on object and parameter may have
+          unexpected results
+        </p>
+
+        <p>
+          Java's Autoboxing feature has an affect on how this check is
+          implemented. Pre Java 5 all IDENT + IDENT object
+          concatenations would not cause a NullPointerException even if
+          null.  Those situations could have been included in this
+          check.  They would simply act as if they surrounded by <span
+          class="code">String.valueof()</span> which would concatenate
+          the String null.
+        </p>
+        <p>
+          The following example will cause a NullPointerException as a
+          result of what autoboxing does.
+        </p>
+
+        <source>
+Integer i = null, j = null;
+String number = "5"
+number.equals(i + j);
+        </source>
+
+        <p>
+          Since, it is difficult to determine what kind of Object is
+          being concatenated all ident concatenation is considered
+          unsafe.
+        </p>
+      </subsection>
+
+      <subsection name="Example">
+        <p>
+          To configure the check:
+        </p>
+        <source>
+&lt;module name=&quot;EqualsAvoidNull&quot;/&gt;
+        </source>
+      </subsection>
+
+      <subsection name="Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.coding
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p>
+          <a href="config.html#treewalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
     <section name="EqualsHashCode">
       <subsection name="Description">
         <p>
@@ -238,7 +327,7 @@ public class MySingleton
 
         <p>
           Rationale: The contract of <span class="code">equals()</span> and
-          <span class="code"> hashCode()</span> requires that equal objects
+          <span class="code">hashCode()</span> requires that equal objects
           have the same hashCode. Hence, whenever you override <span
           class="code">equals()</span> you must override <span class="code">
           hashCode()</span> to ensure that your class can be used in
@@ -1263,6 +1352,162 @@ if (&quot;something&quot;.equals(x))
       </subsection>
     </section>
 
+
+    <section name="NoClone">
+      <subsection name="Description">
+       <p>
+       Checks that the clone method is not overridden from the
+       Object class.
+       </p>
+
+       <p>
+       Rationale: The clone method relies on strange/hard to follow rules that
+       do not work it all situations.  Consequently, it is difficult to
+       override correctly.  Below are some of the rules/reasons why the clone
+       method should be avoided.
+
+       <ul>
+       <li>
+       Classes supporting the clone method should implement the Cloneable
+       interface but the Cloneable interface does not include the clone method.
+       As a result, it doesn't enforce the method override.
+       </li>
+       <li>
+       The Cloneable interface forces the Object's clone method to work
+       correctly. Without implementing it, the Object's clone method will
+       throw a CloneNotSupportedException.
+       </li>
+       <li>
+       Non-final classes must return the object returned from a call to
+       super.clone().
+       </li>
+       <li>
+       Final classes can use a constructor to create a clone which is different
+       from non-final classes.
+       </li>
+       <li>
+       If a super class implements the clone method incorrectly all subclasses
+       calling super.clone() are doomed to failure.
+       </li>
+       <li>
+       If a class has references to mutable objects then those object
+       references must be replaced with copies in the clone method
+       after calling super.clone().
+       </li>
+       <li>
+       The clone method does not work correctly with final mutable object
+       references because final references cannot be reassigned.
+       </li>
+       <li>
+       If a super class overrides the clone method then all subclasses must
+       provide a correct clone implementation.
+       </li>
+       </ul>
+       </p>
+
+       <p>
+       Two alternatives to the clone method, in some cases, is a copy constructor
+       or a static factory method to return copies of an object. Both of these
+       approaches are simpler and do not conflict with final fields. The do not
+       force the calling client to handle a CloneNotSuportException.  They also
+       are typed therefore no casting is necessary. Finally, they are more
+       flexible since they can take interface types rather than concrete classes.
+       </p>
+
+       <p>
+       Sometimes a copy constructor or static factory is not an acceptable
+       alternative to the clone method.  The example below highlights the
+       limitation of a copy constructor (or static factory). Assume
+       Square is a subclass for Shape.
+
+       <pre>
+       Shape s1 = new Square();
+       System.out.println(s1 instanceof Square); //true
+       </pre>
+
+       ...assume at this point the code knows nothing of s1 being a Square
+          that's the beauty of polymorphism but the code wants to copy
+          the Square which is declared as a Shape, its super type...
+
+       <pre>
+       Shape s2 = new Shape(s1); //using the copy constructor
+       System.out.println(s2 instanceof Square); //false
+       </pre>
+
+       The working solution (without knowing about all subclasses and doing many
+       casts) is to do the following (assuming correct clone implementation).
+
+       <pre>
+       Shape s2 = s1.clone();
+       System.out.println(s2 instanceof Square); //true
+       </pre>
+
+       Just keep in mind if this type of polymorphic cloning is required
+       then a properly implemented clone method may be the best choice.
+       </p>
+
+       <p>
+       Much of this information was taken from Effective Java:
+       Programming Language Guide First Edition by Joshua Bloch
+       pages 45-52.  Give Bloch credit for writing an excellent book.
+       </p>
+
+       <p>
+       This check is almost exactly the same as the {@link NoFinalizerCheck}
+       </p>
+      </subsection>
+      <subsection name="Example">
+        <p>
+          To configure the check:
+        </p>
+        <source>
+&lt;module name=&quot;NoClone&quot;/&gt;
+        </source>
+      </subsection>
+
+      <subsection name="Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.coding
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p>
+          <a href="config.html#treewalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
+    <section name="NoFinalizer">
+      <subsection name="Description">
+        <p>
+          Verifies there are no <span class="code">finalize()</span> methods
+          defined in a class.
+        </p>
+      </subsection>
+
+      <subsection name="Example">
+        <p>
+          To configure the check:
+        </p>
+        <source>
+&lt;module name=&quot;NoFinalizer&quot;/&gt;
+        </source>
+      </subsection>
+
+      <subsection name="Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.coding
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p>
+          <a href="config.html#treewalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
     <section name="SuperClone">
       <subsection name="Description">
         <p>
@@ -1272,7 +1517,7 @@ if (&quot;something&quot;.equals(x))
 
         <p>
           Reference: <a
-          href="http://java.sun.com/j2se/1.4.1/docs/api/java/lang/Object.html#clone()">Object.clone()</a>.
+          href="http://java.sun.com/j2se/1.4.2/docs/api/java/lang/Object.html#clone()">Object.clone()</a>.
         </p>
       </subsection>
 
@@ -1889,13 +2134,13 @@ if (&quot;something&quot;.equals(x))
           statement.
         </p>
         <p>
-          The check honores special comments to supress the warning. By 
+          The check honores special comments to supress the warning. By
           default the text "fallthru", "fall through", "fallthrough",
-          "falls through" and "fallsthrough" are recognized (case 
-          sensitive). The comment containing this words must be a 
-          one-liner and must be on the last none-empty line before the 
-          <span class="code">case</span> triggering the warning or on 
-          the same line before the <span class="code">case</span> 
+          "falls through" and "fallsthrough" are recognized (case
+          sensitive). The comment containing this words must be a
+          one-liner and must be on the last none-empty line before the
+          <span class="code">case</span> triggering the warning or on
+          the same line before the <span class="code">case</span>
           (urgly, but possible).
         </p>
         <source>
@@ -2027,12 +2272,12 @@ case 3:
               Annotations or static initializers from the check.
             </td>
             <td>
-              <a href="property_types.html#stringSet">list</a> of 
+              <a href="property_types.html#stringSet">list</a> of
               <a href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">token type</a>
               names
             </td>
             <td>
-              <span class="default">ANNOTATION</span> 
+              <span class="default">ANNOTATION</span>
               (ignore strings inside the context of an annotation)
             </td>
           </tr>
@@ -2062,7 +2307,7 @@ case 3:
         </p>
         <source>
 &lt;module name=&quot;MultipleStringLiterals&quot;&gt;
-    &lt;property name=&quot;allowedDuplicates&quot; value='^((&quot;&quot;)|(&quot;, &quot;))$'/&gt;
+    &lt;property name=&quot;ignoreStringsRegexp&quot; value='^((&quot;&quot;)|(&quot;, &quot;))$'/&gt;
 &lt;/module&gt;
         </source>
 
