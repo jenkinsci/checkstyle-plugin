@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.jvnet.hudson.plugins</groupId>
+    <artifactId>analysis-pom</artifactId>
+    <version>1.2</version>
+    <relativePath>../analysis-pom/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>checkstyle</artifactId>
+  <packaging>hpi</packaging>
+  <name>Checkstyle Plug-in</name>
+  <version>3.4</version>
+  <url>http://wiki.hudson-ci.org/display/HUDSON/Checkstyle+Plugin</url>
+  <description>This plug-in generates the trend report for
+    Checkstyle, an open source static code analysis program.</description>
+
+  <licenses>
+    <license>
+      <name>MIT license</name>
+      <comments>All source code is under the MIT license.</comments>
+    </license>
+    <license>
+      <name>LGPL</name>
+      <comments>All icons are made by Carlitus (Carles Carbonell
+        Bernado) and are under the LGPL.</comments>
+    </license>
+  </licenses>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jvnet.hudson.plugins</groupId>
+      <artifactId>analysis-core</artifactId>
+      <version>1.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jvnet.hudson.plugins</groupId>
+      <artifactId>analysis-test</artifactId>
+      <version>1.3</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.8.1</version>
+    </dependency>
+  </dependencies>
+
+  <scm>
+    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/checkstyle-3.4</connection>
+    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/checkstyle-3.4</developerConnection>
+    <url>https://hudson.dev.java.net/source/browse/hudson/tags/checkstyle-3.4</url>
+  </scm>
+
+</project>
