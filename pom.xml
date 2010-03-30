@@ -11,7 +11,7 @@
   <artifactId>checkstyle</artifactId>
   <packaging>hpi</packaging>
   <name>Checkstyle Plug-in</name>
-  <version>3.5-SNAPSHOT</version>
+  <version>3.4-SNAPSHOT</version>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Checkstyle+Plugin</url>
   <description>This plug-in generates the trend report for
     Checkstyle, an open source static code analysis program.</description>
