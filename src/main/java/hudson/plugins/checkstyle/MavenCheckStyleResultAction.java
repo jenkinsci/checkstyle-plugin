@@ -6,8 +6,8 @@ import hudson.maven.MavenBuild;
 import hudson.maven.MavenModule;
 import hudson.maven.MavenModuleSet;
 import hudson.maven.MavenModuleSetBuild;
-import hudson.model.AbstractBuild;
 import hudson.model.Action;
+import hudson.model.AbstractBuild;
 import hudson.plugins.analysis.core.HealthDescriptor;
 
 import java.util.List;
@@ -21,8 +21,6 @@ import java.util.Map;
  * @author Ulli Hafner
  */
 public class MavenCheckStyleResultAction extends CheckStyleResultAction implements AggregatableAction, MavenAggregatedReport {
-    /** Unique identifier of this class. */
-    private static final long serialVersionUID = 1273798369273225973L;
     /** The default encoding to be used when reading and parsing files. */
     private final String defaultEncoding;
 
@@ -95,6 +93,7 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
 
     /** Backward compatibility. @deprecated */
     @SuppressWarnings("unused")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings("")
     @Deprecated
     private transient String height;
 }
