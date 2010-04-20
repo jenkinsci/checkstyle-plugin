@@ -1,8 +1,8 @@
 package hudson.plugins.checkstyle;
 
+import hudson.model.Action;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
-import hudson.model.Action;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwarePublisher;
@@ -61,16 +61,18 @@ public class CheckStylePublisher extends HealthAwarePublisher {
      *            determines whether the absolute annotations delta or the
      *            actual annotations set difference should be used to evaluate
      *            the build stability
+     * @param canRunOnFailed
+     *            determines whether the plug-in can run for failed builds, too
      */
     // CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveParameterList")
     @DataBoundConstructor
     public CheckStylePublisher(final String pattern, final String threshold, final String newThreshold,
             final String failureThreshold, final String newFailureThreshold,
-            final String healthy, final String unHealthy,
-            final String thresholdLimit, final String defaultEncoding, final boolean useDeltaValues) {
+            final String healthy, final String unHealthy, final String thresholdLimit,
+            final String defaultEncoding, final boolean useDeltaValues, final boolean canRunOnFailed) {
         super(threshold, newThreshold, failureThreshold, newFailureThreshold,
-                healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues, "CHECKSTYLE");
+                healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues, canRunOnFailed, "CHECKSTYLE");
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON

@@ -1,9 +1,9 @@
 package hudson.plugins.checkstyle;
 
-import hudson.maven.MavenBuild;
 import hudson.maven.MavenBuildProxy;
-import hudson.maven.MavenModule;
 import hudson.maven.MojoInfo;
+import hudson.maven.MavenBuild;
+import hudson.maven.MavenModule;
 import hudson.model.Action;
 import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwareMavenReporter;
@@ -32,14 +32,14 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
      * Creates a new instance of <code>CheckStyleReporter</code>.
      *
      * @param threshold
-     *            Annotation threshold to be reached if a build should be considered as
-     *            unstable.
+     *            Annotation threshold to be reached if a build should be
+     *            considered as unstable.
      * @param newThreshold
      *            New annotations threshold to be reached if a build should be
      *            considered as unstable.
      * @param failureThreshold
-     *            Annotation threshold to be reached if a build should be considered as
-     *            failure.
+     *            Annotation threshold to be reached if a build should be
+     *            considered as failure.
      * @param newFailureThreshold
      *            New annotations threshold to be reached if a build should be
      *            considered as failure.
@@ -52,15 +52,17 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
      * @param thresholdLimit
      *            determines which warning priorities should be considered when
      *            evaluating the build stability and health
+     * @param canRunOnFailed
+     *            determines whether the plug-in can run for failed builds, too
      */
     // CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveParameterList")
     @DataBoundConstructor
     public CheckStyleReporter(final String threshold, final String newThreshold,
             final String failureThreshold, final String newFailureThreshold,
-            final String healthy, final String unHealthy, final String thresholdLimit) {
+            final String healthy, final String unHealthy, final String thresholdLimit, final boolean canRunOnFailed) {
         super(threshold, newThreshold, failureThreshold, newFailureThreshold,
-                healthy, unHealthy, thresholdLimit, "CHECKSTYLE");
+                healthy, unHealthy, thresholdLimit, canRunOnFailed, "CHECKSTYLE");
     }
     // CHECKSTYLE:ON
 

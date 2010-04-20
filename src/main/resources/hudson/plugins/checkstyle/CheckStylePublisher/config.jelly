@@ -6,6 +6,7 @@
 		checkUrl="'descriptorByName/CheckStylePublisher/checkPattern?value='+escape(this.value)" />
   </f:entry>
   <f:advanced>
+    <u:failed/>
     <u:thresholds id="checkstyle"/>
     <u:defaultEncoding id="checkstyle"/>
     <u:trend id="checkstyle"/>
