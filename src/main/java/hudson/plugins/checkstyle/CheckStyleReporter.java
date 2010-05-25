@@ -12,6 +12,8 @@ import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.maven.project.MavenProject;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -93,8 +95,8 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
 
     /** {@inheritDoc} */
     @Override
-    public Action getProjectAction(final MavenModule module) {
-        return new CheckStyleProjectAction(module);
+    public List<CheckStyleProjectAction> getProjectActions(final MavenModule module) {
+        return Collections.singletonList(new CheckStyleProjectAction(module));
     }
 
     /** {@inheritDoc} */
