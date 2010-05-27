@@ -63,14 +63,18 @@ public final class CheckStyleRules {
             }
         }
         catch (ParserConfigurationException exception) {
-            Logger.getLogger(CheckStyleRules.class.getName()).log(Level.SEVERE, "Can't initialize checkstyle rules.", exception);
+            log(exception);
         }
         catch (IOException exception) {
-            Logger.getLogger(CheckStyleRules.class.getName()).log(Level.SEVERE, "Can't initialize checkstyle rules.", exception);
+            log(exception);
         }
         catch (SAXException exception) {
-            Logger.getLogger(CheckStyleRules.class.getName()).log(Level.SEVERE, "Can't initialize checkstyle rules.", exception);
+            log(exception);
         }
+    }
+
+    private void log(final Throwable exception) {
+        Logger.getLogger(CheckStyleRules.class.getName()).log(Level.SEVERE, "Can't initialize checkstyle rules.", exception);
     }
 
     /**

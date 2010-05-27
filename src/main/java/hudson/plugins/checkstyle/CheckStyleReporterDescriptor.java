@@ -13,7 +13,7 @@ import org.kohsuke.stapler.StaplerRequest;
  *
  * @author Ulli Hafner
  */
-@Extension(ordinal = 100)
+@Extension(ordinal = 100) // NOCHECKSTYLE
 public class CheckStyleReporterDescriptor extends ReporterDescriptor {
     /**
      * Creates a new instance of <code>CheckStyleReporterDescriptor</code>.
