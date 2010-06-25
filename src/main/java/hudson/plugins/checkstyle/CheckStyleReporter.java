@@ -71,14 +71,14 @@ public class CheckStyleReporter extends HealthAwareMavenReporter {
     /** {@inheritDoc} */
     @Override
     protected boolean acceptGoal(final String goal) {
-        return "checkstyle".equals(goal) || "site".equals(goal);
+        return "checkstyle".equals(goal) || "check".equals(goal) || "site".equals(goal);
     }
 
     /** {@inheritDoc} */
     @Override
     public ParserResult perform(final MavenBuildProxy build, final MavenProject pom,
             final MojoInfo mojo, final PluginLogger logger) throws InterruptedException, IOException {
-        FilesParser checkstyleCollector = new FilesParser(logger, CHECKSTYLE_XML_FILE, 
+        FilesParser checkstyleCollector = new FilesParser(logger, CHECKSTYLE_XML_FILE,
                 new CheckStyleParser(getDefaultEncoding()), getModuleName(pom));
 
         return getTargetPath(pom).act(checkstyleCollector);
