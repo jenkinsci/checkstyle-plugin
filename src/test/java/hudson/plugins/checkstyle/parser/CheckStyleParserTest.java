@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 /**
@@ -27,9 +28,16 @@ public class CheckStyleParserTest {
     public void analyseCheckStyleFile() throws InvocationTargetException {
         CheckStyleRules.getInstance().initialize();
 
-        InputStream inputStream = CheckStyleParserTest.class.getResourceAsStream("checkstyle.xml");
+        Collection<FileAnnotation> annotations;
+        InputStream inputStream = null;
+        try {
+            inputStream = CheckStyleParserTest.class.getResourceAsStream("checkstyle.xml");
 
-        Collection<FileAnnotation> annotations = new CheckStyleParser().parse(inputStream, "empty");
+            annotations = new CheckStyleParser().parse(inputStream, "empty");
+        }
+        finally {
+            IOUtils.closeQuietly(inputStream);
+        }
 
         MavenModule module = new MavenModule();
         module.addAnnotations(annotations);
