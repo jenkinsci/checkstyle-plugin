@@ -1,6 +1,10 @@
 package hudson.plugins.checkstyle;
 
+import hudson.Launcher;
+import hudson.matrix.MatrixAggregator;
+import hudson.matrix.MatrixBuild;
 import hudson.model.Action;
+import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.plugins.analysis.core.BuildResult;
@@ -139,5 +143,11 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     @Override
     public CheckStyleDescriptor getDescriptor() {
         return (CheckStyleDescriptor)super.getDescriptor();
+    }
+
+    /** {@inheritDoc} */
+    public MatrixAggregator createAggregator(final MatrixBuild build, final Launcher launcher,
+            final BuildListener listener) {
+        return new CheckStyleAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding());
     }
 }
