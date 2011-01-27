@@ -8,9 +8,6 @@ import hudson.model.BuildListener;
 import hudson.plugins.analysis.core.AnnotationsAggregator;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.ParserResult;
-import hudson.plugins.analysis.util.model.FileAnnotation;
-
-import java.util.Collection;
 
 /**
  * Aggregates {@link CheckStyleResultAction}s of {@link MatrixRun}s into
@@ -48,10 +45,8 @@ public class CheckStyleAnnotationsAggregator extends AnnotationsAggregator {
 
     /** {@inheritDoc} */
     @Override
-    protected Collection<? extends FileAnnotation> getAnnotations(final MatrixRun run) {
-        CheckStyleResultAction action = run.getAction(CheckStyleResultAction.class);
-
-        return action.getResult().getAnnotations();
+    protected CheckStyleResult getResult(final MatrixRun run) {
+        return run.getAction(CheckStyleResultAction.class).getResult();
     }
 }
 
