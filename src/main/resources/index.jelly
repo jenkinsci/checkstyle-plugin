@@ -1,0 +1,4 @@
+<div>
+  This plug-in collects the <a href="http://checkstyle.sourceforge.net/">Checkstyle</a> analysis
+  results of the project modules and visualizes the found warnings.
+</div>
