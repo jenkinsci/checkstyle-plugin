@@ -43,10 +43,18 @@ public class CheckStyleAnnotationsAggregator extends AnnotationsAggregator {
                 new CheckStyleResult(build, defaultEncoding, aggregatedResult));
     }
 
-    /** {@inheritDoc} */
+    @Override
+    protected boolean hasResult(final MatrixRun run) {
+        return getAction(run) != null;
+    }
+
     @Override
     protected CheckStyleResult getResult(final MatrixRun run) {
-        return run.getAction(CheckStyleResultAction.class).getResult();
+        return getAction(run).getResult();
+    }
+
+    private CheckStyleResultAction getAction(final MatrixRun run) {
+        return run.getAction(CheckStyleResultAction.class);
     }
 }
 
