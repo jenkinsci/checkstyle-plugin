@@ -5,10 +5,6 @@
     <f:textbox/>
   </f:entry>
   <f:advanced>
-    <u:failed/>
-    <u:health id="checkstyle"/>
-    <u:thresholds id="checkstyle"/>
-    <u:defaultEncoding id="checkstyle"/>
-    <u:trend id="checkstyle"/>
+    <u:advanced id="checkstyle"/>
   </f:advanced>
 </j:jelly>
