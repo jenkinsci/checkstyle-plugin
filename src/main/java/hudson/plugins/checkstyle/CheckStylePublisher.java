@@ -85,6 +85,8 @@ public class CheckStylePublisher extends HealthAwarePublisher {
      *            annotation threshold
      * @param canRunOnFailed
      *            determines whether the plug-in can run for failed builds, too
+     * @param shouldDetectModules
+     *            determines whether module names should be derived from Maven POM or Ant build files
      * @param pattern
      *            Ant file-set pattern to scan for Checkstyle files
      */
@@ -97,14 +99,14 @@ public class CheckStylePublisher extends HealthAwarePublisher {
             final String unstableNewAll, final String unstableNewHigh, final String unstableNewNormal, final String unstableNewLow,
             final String failedTotalAll, final String failedTotalHigh, final String failedTotalNormal, final String failedTotalLow,
             final String failedNewAll, final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
-            final boolean canRunOnFailed,
+            final boolean canRunOnFailed, final boolean shouldDetectModules,
             final String pattern) {
         super(healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues,
                 unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                canRunOnFailed, "CHECKSTYLE");
+                canRunOnFailed, shouldDetectModules, "CHECKSTYLE");
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON
@@ -129,9 +131,16 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
         logger.log("Collecting checkstyle analysis files...");
 
-        FilesParser parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
-                new CheckStyleParser(getDefaultEncoding()),
-                isMavenBuild(build), isAntBuild(build));
+        FilesParser parser;
+        if (shouldDetectModules()) {
+            parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
+                    new CheckStyleParser(getDefaultEncoding()),
+                    isMavenBuild(build), isAntBuild(build));
+        }
+        else {
+            parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
+                    new CheckStyleParser(getDefaultEncoding()));
+        }
         ParserResult project = build.getWorkspace().act(parser);
         CheckStyleResult result = new CheckStyleResult(build, getDefaultEncoding(), project);
         build.getActions().add(new CheckStyleResultAction(build, this, result));
