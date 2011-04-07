@@ -135,7 +135,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
         if (shouldDetectModules()) {
             parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
                     new CheckStyleParser(getDefaultEncoding()),
-                    isMavenBuild(build), isAntBuild(build));
+                    isMavenBuild(build));
         }
         else {
             parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
