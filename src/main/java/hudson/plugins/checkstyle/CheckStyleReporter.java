@@ -120,7 +120,7 @@ public class CheckStyleReporter extends HealthAwareReporter<CheckStyleResult> {
 
     @Override
     protected MavenAggregatedReport createMavenAggregatedReport(final MavenBuild build, final CheckStyleResult result) {
-        return new MavenCheckStyleResultAction(build, this, getDefaultEncoding(), result);
+        return new CheckStyleMavenResultAction(build, this, getDefaultEncoding(), result);
     }
 
     @Override
@@ -129,8 +129,8 @@ public class CheckStyleReporter extends HealthAwareReporter<CheckStyleResult> {
     }
 
     @Override
-    protected Class<MavenCheckStyleResultAction> getResultActionClass() {
-        return MavenCheckStyleResultAction.class;
+    protected Class<CheckStyleMavenResultAction> getResultActionClass() {
+        return CheckStyleMavenResultAction.class;
     }
 }
 
