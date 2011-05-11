@@ -19,6 +19,7 @@ import java.util.Map;
  * project.
  *
  * @author Ulli Hafner
+ * @deprecated not used anymore
  */
 @Deprecated
 public class MavenCheckStyleResultAction extends CheckStyleResultAction implements AggregatableAction, MavenAggregatedReport {
