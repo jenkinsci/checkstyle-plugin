@@ -35,7 +35,7 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
      */
     public CheckStyleMavenResultAction(final MavenModuleSetBuild owner, final HealthDescriptor healthDescriptor,
             final String defaultEncoding) {
-        super(new CheckStyleResultAction(owner, healthDescriptor), defaultEncoding);
+        super(new CheckStyleResultAction(owner, healthDescriptor), defaultEncoding, "CHECKSTYLE");
     }
 
     /**
@@ -52,7 +52,7 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
      */
     public CheckStyleMavenResultAction(final MavenBuild owner, final HealthDescriptor healthDescriptor,
             final String defaultEncoding, final CheckStyleResult result) {
-        super(new CheckStyleResultAction(owner, healthDescriptor, result), defaultEncoding);
+        super(new CheckStyleResultAction(owner, healthDescriptor, result), defaultEncoding, "CHECKSTYLE");
     }
 
     /** {@inheritDoc} */
