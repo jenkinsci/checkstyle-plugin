@@ -8,7 +8,6 @@ import hudson.maven.MavenModuleSetBuild;
 import hudson.model.Action;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.MavenResultAction;
-import hudson.plugins.analysis.core.ParserResult;
 
 import java.util.List;
 import java.util.Map;
@@ -71,8 +70,8 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
     }
 
     @Override
-    protected CheckStyleResult createResult(final CheckStyleResult existingResult, final ParserResult aggregatedAnnotations) {
-        return new CheckStyleResult(getOwner(), existingResult.getDefaultEncoding(), aggregatedAnnotations);
+    protected CheckStyleResult createResult(final CheckStyleResult existingResult, final CheckStyleResult additionalResult) {
+        return new CheckStyleResult(getOwner(), existingResult.getDefaultEncoding(), aggregate(existingResult, additionalResult));
     }
 }
 
