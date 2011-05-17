@@ -12,6 +12,8 @@ import hudson.plugins.analysis.core.MavenResultAction;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.CheckForNull;
+
 /**
  * A {@link CheckStyleResultAction} for native Maven jobs. This action
  * additionally provides result aggregation for sub-modules and for the main
@@ -70,8 +72,8 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
     }
 
     @Override
-    protected CheckStyleResult createResult(final CheckStyleResult... results) {
-        return new CheckStyleResult(getOwner(), results[0].getDefaultEncoding(), aggregate(results));
+    protected CheckStyleResult createResult(@CheckForNull final CheckStyleResult existingResult, final CheckStyleResult additionalResult) {
+        return new CheckStyleResult(getOwner(), additionalResult.getDefaultEncoding(), aggregate(existingResult, additionalResult));
     }
 }
 
