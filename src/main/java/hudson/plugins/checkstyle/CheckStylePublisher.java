@@ -12,6 +12,7 @@ import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwarePublisher;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
+import hudson.plugins.analysis.util.StringPluginLogger;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
 
 import java.io.IOException;
@@ -27,6 +28,8 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class CheckStylePublisher extends HealthAwarePublisher {
     /** Unique ID of this class. */
     private static final long serialVersionUID = 6369581633551160418L;
+
+    private static final String PLUGIN_NAME = "CHECKSTYLE";
 
     /** Default Checkstyle pattern. */
     private static final String DEFAULT_PATTERN = "**/checkstyle-result.xml";
@@ -106,7 +109,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                canRunOnFailed, shouldDetectModules, "CHECKSTYLE");
+                canRunOnFailed, shouldDetectModules, PLUGIN_NAME);
         this.pattern = pattern;
     }
     // CHECKSTYLE:ON
@@ -131,17 +134,13 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
         logger.log("Collecting checkstyle analysis files...");
 
-        FilesParser parser;
-        if (shouldDetectModules()) {
-            parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
-                    new CheckStyleParser(getDefaultEncoding()),
-                    isMavenBuild(build));
-        }
-        else {
-            parser = new FilesParser(logger, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
-                    new CheckStyleParser(getDefaultEncoding()));
-        }
+        FilesParser parser = new FilesParser(new StringPluginLogger(PLUGIN_NAME),
+                StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
+                new CheckStyleParser(getDefaultEncoding()),
+                shouldDetectModules(), isMavenBuild(build));
         ParserResult project = build.getWorkspace().act(parser);
+        logger.logLines(project.getLogMessages());
+
         CheckStyleResult result = new CheckStyleResult(build, getDefaultEncoding(), project);
         build.getActions().add(new CheckStyleResultAction(build, this, result));
 

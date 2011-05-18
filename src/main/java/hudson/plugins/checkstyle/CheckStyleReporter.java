@@ -9,6 +9,7 @@ import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwareReporter;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
+import hudson.plugins.analysis.util.StringPluginLogger;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
 
 import java.io.IOException;
@@ -26,6 +27,8 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class CheckStyleReporter extends HealthAwareReporter<CheckStyleResult> {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 2272875032054063496L;
+
+    private static final String PLUGIN_NAME = "CHECKSTYLE";
 
     /** Default Checkstyle pattern. */
     private static final String CHECKSTYLE_XML_FILE = "checkstyle-result.xml";
@@ -95,7 +98,7 @@ public class CheckStyleReporter extends HealthAwareReporter<CheckStyleResult> {
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                canRunOnFailed, "CHECKSTYLE");
+                canRunOnFailed, PLUGIN_NAME);
     }
     // CHECKSTYLE:ON
 
@@ -107,8 +110,8 @@ public class CheckStyleReporter extends HealthAwareReporter<CheckStyleResult> {
     @Override
     public ParserResult perform(final MavenBuildProxy build, final MavenProject pom,
             final MojoInfo mojo, final PluginLogger logger) throws InterruptedException, IOException {
-        FilesParser checkstyleCollector = new FilesParser(logger, CHECKSTYLE_XML_FILE,
-                new CheckStyleParser(getDefaultEncoding()), getModuleName(pom));
+        FilesParser checkstyleCollector = new FilesParser(new StringPluginLogger(PLUGIN_NAME),
+                CHECKSTYLE_XML_FILE, new CheckStyleParser(getDefaultEncoding()), getModuleName(pom));
 
         return getTargetPath(pom).act(checkstyleCollector);
     }
