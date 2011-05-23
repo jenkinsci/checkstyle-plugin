@@ -73,7 +73,7 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
 
     @Override
     protected CheckStyleResult createResult(@CheckForNull final CheckStyleResult existingResult, final CheckStyleResult additionalResult) {
-        return new CheckStyleResult(getOwner(), additionalResult.getDefaultEncoding(), aggregate(existingResult, additionalResult));
+        return new CheckStyleMavenResult(getOwner(), additionalResult.getDefaultEncoding(), aggregate(existingResult, additionalResult));
     }
 }
 

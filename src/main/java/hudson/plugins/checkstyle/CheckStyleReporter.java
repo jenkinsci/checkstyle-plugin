@@ -118,7 +118,7 @@ public class CheckStyleReporter extends HealthAwareReporter<CheckStyleResult> {
 
     @Override
     protected CheckStyleResult createResult(final MavenBuild build, final ParserResult project) {
-        return new CheckStyleResult(build, getDefaultEncoding(), project);
+        return new CheckStyleReporterResult(build, getDefaultEncoding(), project);
     }
 
     @Override
