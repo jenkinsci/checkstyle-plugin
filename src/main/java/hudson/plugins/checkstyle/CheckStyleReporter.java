@@ -128,7 +128,7 @@ public class CheckStyleReporter extends HealthAwareReporter<CheckStyleResult> {
 
     @Override
     public List<CheckStyleProjectAction> getProjectActions(final MavenModule module) {
-        return Collections.singletonList(new CheckStyleProjectAction(module));
+        return Collections.singletonList(new CheckStyleProjectAction(module, getResultActionClass()));
     }
 
     @Override

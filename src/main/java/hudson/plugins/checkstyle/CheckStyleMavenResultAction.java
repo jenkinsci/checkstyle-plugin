@@ -63,7 +63,7 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
 
     /** {@inheritDoc} */
     public Action getProjectAction(final MavenModuleSet moduleSet) {
-        return new CheckStyleProjectAction(moduleSet);
+        return new CheckStyleProjectAction(moduleSet, CheckStyleMavenResultAction.class);
     }
 
     @Override
