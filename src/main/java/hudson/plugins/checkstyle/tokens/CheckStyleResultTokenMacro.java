@@ -2,6 +2,7 @@ package hudson.plugins.checkstyle.tokens;
 
 import hudson.Extension;
 import hudson.plugins.analysis.tokens.AbstractResultTokenMacro;
+import hudson.plugins.checkstyle.CheckStyleMavenResultAction;
 import hudson.plugins.checkstyle.CheckStyleResultAction;
 
 /**
@@ -14,8 +15,9 @@ public class CheckStyleResultTokenMacro extends AbstractResultTokenMacro {
     /**
      * Creates a new instance of {@link CheckStyleResultTokenMacro}.
      */
+    @SuppressWarnings("unchecked")
     public CheckStyleResultTokenMacro() {
-        super(CheckStyleResultAction.class, "CHECKSTYLE_RESULT");
+        super("CHECKSTYLE_RESULT", CheckStyleResultAction.class, CheckStyleMavenResultAction.class);
     }
 }
 
