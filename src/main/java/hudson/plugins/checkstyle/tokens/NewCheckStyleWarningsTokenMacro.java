@@ -11,12 +11,12 @@ import hudson.plugins.checkstyle.CheckStyleResultAction;
  * @author Ulli Hafner
  */
 @Extension(optional = true)
-public class NewCheckStyleWarnningsTokenMacro extends AbstractNewAnnotationsTokenMacro {
+public class NewCheckStyleWarningsTokenMacro extends AbstractNewAnnotationsTokenMacro {
     /**
-     * Creates a new instance of {@link NewCheckStyleWarnningsTokenMacro}.
+     * Creates a new instance of {@link NewCheckStyleWarningsTokenMacro}.
      */
     @SuppressWarnings("unchecked")
-    public NewCheckStyleWarnningsTokenMacro() {
+    public NewCheckStyleWarningsTokenMacro() {
         super("CHECKSTYLE_NEW", CheckStyleResultAction.class, CheckStyleMavenResultAction.class);
     }
 }
