@@ -2,5 +2,9 @@
 	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:u="/util">
   <f:advanced>
     <u:advancedMaven id="checkstyle"/>
+    <f:entry title="${%Show file path}" field="shouldShowPath"
+           description="${%description.shouldShowPathh}">
+        <f:checkbox/>
+    </f:entry>
   </f:advanced>
 </j:jelly>
