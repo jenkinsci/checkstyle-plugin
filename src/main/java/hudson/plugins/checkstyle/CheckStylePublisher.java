@@ -15,6 +15,7 @@ import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.analysis.util.StringPluginLogger;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.lang.StringUtils;
@@ -35,6 +36,8 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     private static final String DEFAULT_PATTERN = "**/checkstyle-result.xml";
     /** Ant file-set pattern of files to work with. */
     private final String pattern;
+    /** Determine whether path have to be displayed in the GUI. */ 
+    private final boolean shouldShowPath;
 
     /**
      * Creates a new instance of <code>CheckstylePublisher</code>.
@@ -92,6 +95,8 @@ public class CheckStylePublisher extends HealthAwarePublisher {
      *            determines whether module names should be derived from Maven POM or Ant build files
      * @param pattern
      *            Ant file-set pattern to scan for Checkstyle files
+     * @param shouldShowPath
+     *            determines whether path have to be displayed in the GUI
      */
     // CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveParameterList")
@@ -103,7 +108,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
             final String failedTotalAll, final String failedTotalHigh, final String failedTotalNormal, final String failedTotalLow,
             final String failedNewAll, final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
             final boolean canRunOnFailed, final boolean shouldDetectModules,
-            final String pattern) {
+            final String pattern, final boolean shouldShowPath) {
         super(healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues,
                 unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
@@ -111,6 +116,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
                 canRunOnFailed, shouldDetectModules, PLUGIN_NAME);
         this.pattern = pattern;
+        this.shouldShowPath = shouldShowPath;
     }
     // CHECKSTYLE:ON
 
@@ -121,6 +127,24 @@ public class CheckStylePublisher extends HealthAwarePublisher {
      */
     public String getPattern() {
         return pattern;
+    }
+
+    /**
+     * Returns whether path have to be displayed in the GUI.
+     *
+     * @return whether path have to be displayed in the GUI
+     */
+    public boolean getShouldShowPath() {
+        return shouldShowPath;
+    }
+    
+    /**
+     * Returns whether path have to be displayed in the GUI.
+     *
+     * @return whether path have to be displayed in the GUI
+     */
+    public boolean shouldShowPath() {
+        return shouldShowPath;
     }
 
     /** {@inheritDoc} */
@@ -136,7 +160,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
 
         FilesParser parser = new FilesParser(new StringPluginLogger(PLUGIN_NAME),
                 StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
-                new CheckStyleParser(getDefaultEncoding()),
+                new CheckStyleParser(getDefaultEncoding(), shouldShowPath(), build.getProject().getRootDir().getPath() + File.separator + build.getWorkspace().getName()),
                 shouldDetectModules(), isMavenBuild(build));
         ParserResult project = build.getWorkspace().act(parser);
         logger.logLines(project.getLogMessages());

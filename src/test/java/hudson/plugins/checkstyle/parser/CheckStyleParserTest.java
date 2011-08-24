@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 /**
@@ -33,7 +34,8 @@ public class CheckStyleParserTest {
         try {
             inputStream = CheckStyleParserTest.class.getResourceAsStream("checkstyle.xml");
 
-            annotations = new CheckStyleParser().parse(inputStream, "empty");
+            annotations = new CheckStyleParser(StringUtils.EMPTY, true, "X:\\Build\\Results\\jobs\\Maven\\workspace")
+                    .parse(inputStream, "empty");
         }
         finally {
             IOUtils.closeQuietly(inputStream);
