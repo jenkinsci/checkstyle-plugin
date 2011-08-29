@@ -1,7 +1,7 @@
 package hudson.plugins.checkstyle.parser;
 
 import hudson.plugins.analysis.core.AbstractAnnotationParser;
-import hudson.plugins.analysis.util.JavaPackageDetector;
+import hudson.plugins.analysis.util.PackageDetectors;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
 
@@ -94,7 +94,7 @@ public class CheckStyleParser extends AbstractAnnotationParser {
 
         for (hudson.plugins.checkstyle.parser.File file : collection.getFiles()) {
             if (isValidWarning(file)) {
-                String packageName = new JavaPackageDetector().detectPackageName(file.getName());
+                String packageName = PackageDetectors.detectPackageName(file.getName());
                 for (Error error : file.getErrors()) {
                     Priority priority;
                     if ("error".equalsIgnoreCase(error.getSeverity())) {
