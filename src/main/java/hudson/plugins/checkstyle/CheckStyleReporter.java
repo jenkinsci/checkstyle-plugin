@@ -9,7 +9,6 @@ import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwareReporter;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
-import hudson.plugins.analysis.util.StringPluginLogger;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
 
 import java.io.IOException;
@@ -110,7 +109,7 @@ public class CheckStyleReporter extends HealthAwareReporter<CheckStyleResult> {
     @Override
     public ParserResult perform(final MavenBuildProxy build, final MavenProject pom,
             final MojoInfo mojo, final PluginLogger logger) throws InterruptedException, IOException {
-        FilesParser checkstyleCollector = new FilesParser(new StringPluginLogger(PLUGIN_NAME),
+        FilesParser checkstyleCollector = new FilesParser(PLUGIN_NAME,
                 CHECKSTYLE_XML_FILE, new CheckStyleParser(getDefaultEncoding()), getModuleName(pom));
 
         return getTargetPath(pom).act(checkstyleCollector);
