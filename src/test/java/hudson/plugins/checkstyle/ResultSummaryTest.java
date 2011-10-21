@@ -11,11 +11,11 @@ import org.junit.Test;
  */
 public class ResultSummaryTest extends AbstractEnglishLocaleTest {
     /**
-     * Checks the text for no warnings from 0 files.
+     * Checks the text for no warnings from 0 analyses.
      */
     @Test
     public void test0WarningsIn0File() {
-        checkSummaryText(0, 0, "Checkstyle: 0 warnings from 0 Checkstyle files.");
+        checkSummaryText(0, 0, "Checkstyle: 0 warnings from 0 Checkstyle analyses.");
     }
 
     /**
@@ -23,23 +23,23 @@ public class ResultSummaryTest extends AbstractEnglishLocaleTest {
      */
     @Test
     public void test0WarningsIn1File() {
-        checkSummaryText(0, 1, "Checkstyle: 0 warnings from one Checkstyle file.");
+        checkSummaryText(0, 1, "Checkstyle: 0 warnings from one Checkstyle analysis.");
     }
 
     /**
-     * Checks the text for no warnings from 5 files.
+     * Checks the text for no warnings from 5 analyses.
      */
     @Test
-    public void test0WarningsIn5Files() {
-        checkSummaryText(0, 5, "Checkstyle: 0 warnings from 5 Checkstyle files.");
+    public void test0WarningsIn5analyses() {
+        checkSummaryText(0, 5, "Checkstyle: 0 warnings from 5 Checkstyle analyses.");
     }
 
     /**
-     * Checks the text for 1 warning from 2 files.
+     * Checks the text for 1 warning from 2 analyses.
      */
     @Test
-    public void test1WarningIn2Files() {
-        checkSummaryText(1, 2, "Checkstyle: <a href=\"checkstyleResult\">1 warning</a> from 2 Checkstyle files.");
+    public void test1WarningIn2analyses() {
+        checkSummaryText(1, 2, "Checkstyle: <a href=\"checkstyleResult\">1 warning</a> from 2 Checkstyle analyses.");
     }
 
     /**
@@ -47,24 +47,24 @@ public class ResultSummaryTest extends AbstractEnglishLocaleTest {
      */
     @Test
     public void test5WarningsIn1File() {
-        checkSummaryText(5, 1, "Checkstyle: <a href=\"checkstyleResult\">5 warnings</a> from one Checkstyle file.");
+        checkSummaryText(5, 1, "Checkstyle: <a href=\"checkstyleResult\">5 warnings</a> from one Checkstyle analysis.");
     }
 
     /**
      * Parameterized test case to check the message text for the specified
-     * number of warnings and files.
+     * number of warnings and analyses.
      *
      * @param numberOfWarnings
      *            the number of warnings
-     * @param numberOfFiles
-     *            the number of files
+     * @param numberOfanalyses
+     *            the number of analyses
      * @param expectedMessage
      *            the expected message
      */
-    private void checkSummaryText(final int numberOfWarnings, final int numberOfFiles, final String expectedMessage) {
+    private void checkSummaryText(final int numberOfWarnings, final int numberOfanalyses, final String expectedMessage) {
         CheckStyleResult result = mock(CheckStyleResult.class);
         when(result.getNumberOfAnnotations()).thenReturn(numberOfWarnings);
-        when(result.getNumberOfModules()).thenReturn(numberOfFiles);
+        when(result.getNumberOfModules()).thenReturn(numberOfanalyses);
 
         Assert.assertEquals("Wrong summary message created.", expectedMessage, ResultSummary.createSummary(result));
     }
@@ -151,7 +151,7 @@ public class ResultSummaryTest extends AbstractEnglishLocaleTest {
 
     /**
      * Parameterized test case to check the message text for the specified
-     * number of warnings and files.
+     * number of warnings and analyses.
      *
      * @param numberOfFixedWarnings
      *            the number of fixed warnings
