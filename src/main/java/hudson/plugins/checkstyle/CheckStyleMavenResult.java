@@ -32,6 +32,7 @@ public class CheckStyleMavenResult extends CheckStyleResult {
     }
 
     /** {@inheritDoc} */
+    @SuppressWarnings("deprecation")
     @Override
     protected Class<? extends ResultAction<? extends BuildResult>> getResultActionType() {
         return MavenCheckStyleResultAction.class;
