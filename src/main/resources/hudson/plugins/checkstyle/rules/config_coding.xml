@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<document>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
   <properties>
     <title>Coding</title>
@@ -53,7 +55,7 @@ return new int[] { 0 };
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -91,7 +93,7 @@ String b = (a==null || a.length&lt;1) ? null : a.substring(1);
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -99,16 +101,12 @@ String b = (a==null || a.length&lt;1) ? null : a.substring(1);
     <section name="CovariantEquals">
       <subsection name="Description">
         <p>
-          Checks that classes that define a covariant <span
-          class="code">equals()</span> method also override method <span
-          class="code">equals(java.lang.Object)</span>.  Inspired by <a
+          Checks that classes that define a covariant <code>equals()</code> method also override method <code>equals(java.lang.Object)</code>.  Inspired by <a
           href="http://www.cs.umd.edu/~pugh/java/bugs/docs/findbugsPaper.pdf">findbugs</a>.
         </p>
 
         <p>
-          Rationale: Mistakenly defining a covariant <span
-          class="code">equals()</span> method without overriding method <span
-          class="code">equals(java.lang.Object)</span> can produce unexpected
+          Rationale: Mistakenly defining a covariant <code>equals()</code> method without overriding method <code>equals(java.lang.Object)</code> can produce unexpected
           runtime behaviour.
         </p>
       </subsection>
@@ -130,7 +128,7 @@ String b = (a==null || a.length&lt;1) ? null : a.substring(1);
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -195,7 +193,7 @@ public class MySingleton
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -224,7 +222,7 @@ public class MySingleton
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -233,12 +231,13 @@ public class MySingleton
       <subsection name="Description">
         <p>
           Checks that any combination of String literals with optional
-          assignment is on the left side of an <span
-          class="code">equals()</span> comparison.
+          assignment is on the left side of an <code>equals()</code> comparison.
+          The check also processes <code>String.equalsIgnoreCase()</code>
+          invocations (which can be suppressed).
         </p>
 
         <p>
-          Rationale: Calling the <span class="code">equals()</span>
+          Rationale: Calling the <code>equals()</code>
           method on String literals will avoid a potential
           NullPointerException.  Also, it is pretty common to see null
           check right before equals comparisons which is not necessary
@@ -263,8 +262,8 @@ String nullString = null;
         <p>
           Limitations: If the equals method is overridden or a covariant
           equals method is defined and the implementation is incorrect
-          (where <span class="code">s.equals(t)</span> does not return
-          the same result as <span class="code">t.equals(s)</span>) then
+          (where <code>s.equals(t)</code> does not return
+          the same result as <code>t.equals(s)</code>) then
           rearranging the called on object and parameter may have
           unexpected results
         </p>
@@ -274,8 +273,7 @@ String nullString = null;
           implemented. Pre Java 5 all IDENT + IDENT object
           concatenations would not cause a NullPointerException even if
           null.  Those situations could have been included in this
-          check.  They would simply act as if they surrounded by <span
-          class="code">String.valueof()</span> which would concatenate
+          check.  They would simply act as if they surrounded by <code>String.valueof()</code> which would concatenate
           the String null.
         </p>
         <p>
@@ -296,6 +294,23 @@ number.equals(i + j);
         </p>
       </subsection>
 
+      <subsection name="Properties">
+        <table>
+          <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>type</th>
+            <th>default value</th>
+          </tr>
+          <tr>
+            <td>ignoreEqualsIgnoreCase</td>
+            <td>whether to ignore <code>String.equalsIgnoreCase()</code> invocations</td>
+            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td>false</td>
+          </tr>
+        </table>
+      </subsection>
+
       <subsection name="Example">
         <p>
           To configure the check:
@@ -313,7 +328,7 @@ number.equals(i + j);
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -321,16 +336,15 @@ number.equals(i + j);
     <section name="EqualsHashCode">
       <subsection name="Description">
         <p>
-          Checks that classes that override <span class="code">equals()</span>
-          also override <span class="code">hashCode()</span>.
+          Checks that classes that override <code>equals()</code>
+          also override <code>hashCode()</code>.
         </p>
 
         <p>
-          Rationale: The contract of <span class="code">equals()</span> and
-          <span class="code">hashCode()</span> requires that equal objects
-          have the same hashCode. Hence, whenever you override <span
-          class="code">equals()</span> you must override <span class="code">
-          hashCode()</span> to ensure that your class can be used in
+          Rationale: The contract of <code>equals()</code> and
+          <code>hashCode()</code> requires that equal objects
+          have the same hashCode. Hence, whenever you override <code>equals()</code> you must override <code>
+          hashCode()</code> to ensure that your class can be used in
           collections that are hash based.
         </p>
       </subsection>
@@ -352,7 +366,7 @@ number.equals(i + j);
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -386,13 +400,13 @@ number.equals(i + j);
             <td>tokens to check</td>
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
             </td>
             <td>
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
             </td>
           </tr>
         </table>
@@ -425,7 +439,7 @@ number.equals(i + j);
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -451,16 +465,16 @@ number.equals(i + j);
             <td>tokens to check</td>
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
             </td>
 
             <td>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>,
                <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
             </td>
           </tr>
 
@@ -475,7 +489,7 @@ number.equals(i + j);
             <td>ignoreConstructorParameter</td>
             <td>Controls whether to ignore constructor parameters.</td>
             <td><a href="property_types.html#boolean">Boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
 
           <tr>
@@ -484,17 +498,17 @@ number.equals(i + j);
               Controls whether to ignore the parameter of a property setter
               method, where the property setter method for field
               &quot;xyz&quot; has name &quot;setXyz&quot;, one parameter named
-              &quot;xyz&quot;, and return type <span class="code">void</span>.
+              &quot;xyz&quot;, and return type <code>void</code>.
             </td>
             <td><a href="property_types.html#boolean">Boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
 
           <tr>
             <td>ignoreAbstractMethods</td>
             <td>Controls whether to ignore parameters of abstract methods.</td>
             <td><a href="property_types.html#boolean">Boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
 
         </table>
@@ -556,7 +570,7 @@ number.equals(i + j);
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -575,11 +589,11 @@ number.equals(i + j);
         </p>
 
         <p>
-          A simple example is the <span class="code">java.lang.Boolean</span>
+          A simple example is the <code>java.lang.Boolean</code>
           class. In order to save memory and CPU cycles, it is preferable to
-          use the predefined constants <span class="code"> TRUE</span> and
-          <span class="code">FALSE</span>. Constructor invocations should be
-          replaced by calls to <span class="code">Boolean.valueOf()</span>.
+          use the predefined constants <code> TRUE</code> and
+          <code>FALSE</code>. Constructor invocations should be
+          replaced by calls to <code>Boolean.valueOf()</code>.
         </p>
 
         <p>
@@ -632,7 +646,7 @@ number.equals(i + j);
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -664,15 +678,15 @@ number.equals(i + j);
             <td>tokens to check</td>
             <td>
               subset of <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a>,
             </td>
             <td>
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_SWITCH">LITERAL_SWITCH</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_SWITCH">LITERAL_SWITCH</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#POST_INC">POST_INC</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#POST_INC">POST_INC</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#POST_DEC">POST_DEC</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#POST_DEC">POST_DEC</a>
             </td>
           </tr>
         </table>
@@ -697,7 +711,7 @@ number.equals(i + j);
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -721,7 +735,7 @@ number.equals(i + j);
             <td>tokens</td>
             <td>tokens to check</td>
             <td>subset of <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a>
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a>
             </td>
             <td>empty</td>
           </tr>
@@ -729,28 +743,27 @@ number.equals(i + j);
             <td>format</td>
             <td>illegal pattern</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">^$</span> (empty)</td>
+            <td><code>^$</code> (empty)</td>
           </tr>
           <tr>
             <td>ignoreCase</td>
             <td>Controls whether to ignore case when matching.</td>
             <td><a href="property_types.html#boolean">Boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>message</td>
             <td>Message which is used to notify about violations;
             if empty then the default message is used.</td>
-            <td><a href="property_types.html#String">String</a></td>
-            <td><span class="default">&quot;&quot;</span>(empty)</td>
+            <td><a href="property_types.html#string">String</a></td>
+            <td><code>&quot;&quot;</code>(empty)</td>
           </tr>
         </table>
       </subsection>
 
       <subsection name="Examples">
         <p>
-          To configure the check to forbid String literals containing <span
-          class="code">&quot;a href&quot;</span>:
+          To configure the check to forbid String literals containing <code>&quot;a href&quot;</code>:
         </p>
         <source>
 &lt;module name=&quot;IllegalTokenText&quot;&gt;
@@ -780,7 +793,7 @@ number.equals(i + j);
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -788,12 +801,11 @@ number.equals(i + j);
     <section name="InnerAssignment">
       <subsection name="Description">
         <p>
-          Checks for assignments in subexpressions, such as in <span
-          class="code">String s = Integer.toString(i = 2);</span>.
+          Checks for assignments in subexpressions, such as in <code>String s = Integer.toString(i = 2);</code>.
         </p>
 
         <p>
-          Rationale: With the exception of <span class="code">for</span>
+          Rationale: With the exception of <code>for</code>
           iterators, all assignments should occur in their own toplevel
           statement to increase readability.  With inner assignments like the
           above it is difficult to see all places where a variable is set.
@@ -812,29 +824,29 @@ number.equals(i + j);
             <td>tokens</td>
             <td>assignments to check</td>
             <td>subset of tokens <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ASSIGN">ASSIGN</a>,
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ASSIGN">ASSIGN</a>,
             <a
-             href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND_ASSIGN">BAND_ASSIGN</a>,
+             href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND_ASSIGN">BAND_ASSIGN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR_ASSIGN">BOR_ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR_ASSIGN">BOR_ASSIGN</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR_ASSIGN">BSR_ASSIGN</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR_ASSIGN">BSR_ASSIGN</a>,
                <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR_ASSIGN">BXOR_ASSIGN</a>,
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR_ASSIGN">BXOR_ASSIGN</a>,
                 <a
-                 href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV_ASSIGN">DIV_ASSIGN</a>,
+                 href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV_ASSIGN">DIV_ASSIGN</a>,
                  <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS_ASSIGN">MINUS_ASSIGN</a>,
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS_ASSIGN">MINUS_ASSIGN</a>,
                   <a
-                   href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD_ASSIGN">MOD_ASSIGN</a>,
+                   href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD_ASSIGN">MOD_ASSIGN</a>,
                    <a
-                    href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS_ASSIGN">PLUS_ASSIGN</a>,
+                    href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS_ASSIGN">PLUS_ASSIGN</a>,
                     <a
-                     href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL_ASSIGN">SL_ASSIGN</a>,
+                     href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL_ASSIGN">SL_ASSIGN</a>,
                      <a
-                      href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR_ASSIGN">SR_ASSIGN</a>,
+                      href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR_ASSIGN">SR_ASSIGN</a>,
                       <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR_ASSIGN">STAR_ASSIGN</a></td>
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR_ASSIGN">STAR_ASSIGN</a></td>
             <td>all tokens</td>
           </tr>
         </table>
@@ -849,8 +861,7 @@ number.equals(i + j);
         </source>
 
         <p>
-          To configure the check for only <span class="code">=</span>, <span
-          class="code"> +=</span>, and <span class="code">-=</span> operators:
+          To configure the check for only <code>=</code>, <code> +=</code>, and <code>-=</code> operators:
         </p>
         <source>
 &lt;module name=&quot;InnerAssignment&quot;&gt;
@@ -867,7 +878,7 @@ number.equals(i + j);
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -901,6 +912,18 @@ number.equals(i + j);
             <td>list of numbers</td>
             <td>-1, 0, 1, 2</td>
           </tr>
+          <tr>
+            <td>ignoreHashCodeMethod</td>
+            <td>ignore magic numbers in hashCode methods</td>
+            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><span class="default">false</span></td>
+          </tr>
+          <tr>
+            <td>ignoreAnnotation</td>
+            <td>ignore magic numbers in annotation declarations.</td>
+            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><span class="default">false</span></td>
+          </tr>
         </table>
       </subsection>
 
@@ -932,7 +955,7 @@ number.equals(i + j);
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -970,7 +993,7 @@ number.equals(i + j);
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1012,7 +1035,7 @@ for (int i = 0; i &lt; 1; i++) {
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1038,28 +1061,29 @@ for (int i = 0; i &lt; 1; i++) {
             <td>allowUnchecked</td>
             <td>whether unchecked exceptions in throws are allowed or not</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowSubclasses</td>
             <td> whether subclass of another declared exception
             is allowed in throws clause </td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>logLoadErrors</td>
             <td>This check may need to load exception classes mentioned in
             the @throws tag to check whether they are RuntimeExceptions.
             If loading the class fails, this property allows to control
-            checkstyle's error handling. If set to false (the default) a
+            checkstyle's error handling. If set to <code>false</code> a
             classpath configuration problem is assumed and the TreeWalker
             stops operating on the class completely.
-            If set to true, checkstyle assumes a typo or refactoring problem in the
+            If set to <code>true</code> (the default), checkstyle assumes a
+            typo or refactoring problem in the
             javadoc and logs the problem in the normal checkstyle report
             (potentially masking a configuration error).</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>true</code></td>
           </tr>
           <tr>
             <td>suppressLoadErrors</td>
@@ -1071,7 +1095,7 @@ for (int i = 0; i &lt; 1; i++) {
             violations in the checkstyle report.
             </td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
         </table>
       </subsection>
@@ -1110,7 +1134,7 @@ for (int i = 0; i &lt; 1; i++) {
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1119,8 +1143,7 @@ for (int i = 0; i &lt; 1; i++) {
       <subsection name="Description">
         <p>
           Checks for overly complicated boolean expressions. Currently finds
-          code like <span class="code"> if (b == true)</span>, <span
-          class="code">b || true</span>, <span class="code">!false</span>,
+          code like <code> if (b == true)</code>, <code>b || true</code>, <code>!false</code>,
           etc.
         </p>
 
@@ -1147,7 +1170,7 @@ for (int i = 0; i &lt; 1; i++) {
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1195,7 +1218,7 @@ return !valid();
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1237,7 +1260,63 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
+    <section name="NestedForDepth">
+      <subsection name="Description">
+        <p>
+          Restricts nested <code>for</code> blocks to a specified depth
+          (default = 1).
+        </p>
+      </subsection>
+
+      <subsection name="Properties">
+        <table>
+          <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>type</th>
+            <th>default value</th>
+          </tr>
+          <tr>
+            <td>max</td>
+            <td>allowed nesting depth</td>
+            <td><a href="property_types.html#integer">Integer</a></td>
+            <td><span class="default">1</span></td>
+          </tr>
+        </table>
+      </subsection>
+
+      <subsection name="Example">
+        <p>
+          To configure the check:
+        </p>
+        <source>
+&lt;module name=&quot;NestedForDepth&quot;/&gt;
+        </source>
+
+        <p>
+          To configure the check to allow nesting depth 3:
+        </p>
+        <source>
+&lt;module name=&quot;NestedForDepth&quot;&gt;
+    &lt;property name=&quot;max&quot; value=&quot;3&quot;/&gt;
+&lt;/module&gt;
+        </source>
+      </subsection>
+
+      <subsection name="Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.coding
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1261,7 +1340,7 @@ if (&quot;something&quot;.equals(x))
             <td>max</td>
             <td>allowed nesting depth</td>
             <td><a href="property_types.html#integer">Integer</a></td>
-            <td><span class="default">1</span></td>
+            <td><code>1</code></td>
           </tr>
         </table>
       </subsection>
@@ -1292,7 +1371,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1316,7 +1395,7 @@ if (&quot;something&quot;.equals(x))
             <td>max</td>
             <td>allowed nesting depth</td>
             <td><a href="property_types.html#integer">Integer</a></td>
-            <td><span class="default">1</span></td>
+            <td><code>1</code></td>
           </tr>
         </table>
       </subsection>
@@ -1347,7 +1426,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1365,6 +1444,7 @@ if (&quot;something&quot;.equals(x))
        do not work it all situations.  Consequently, it is difficult to
        override correctly.  Below are some of the rules/reasons why the clone
        method should be avoided.
+       </p>
 
        <ul>
        <li>
@@ -1403,7 +1483,6 @@ if (&quot;something&quot;.equals(x))
        provide a correct clone implementation.
        </li>
        </ul>
-       </p>
 
        <p>
        Two alternatives to the clone method, in some cases, is a copy constructor
@@ -1419,29 +1498,35 @@ if (&quot;something&quot;.equals(x))
        alternative to the clone method.  The example below highlights the
        limitation of a copy constructor (or static factory). Assume
        Square is a subclass for Shape.
+       </p>
 
-       <pre>
+       <source>
        Shape s1 = new Square();
        System.out.println(s1 instanceof Square); //true
-       </pre>
+       </source>
 
+       <p>
        ...assume at this point the code knows nothing of s1 being a Square
           that's the beauty of polymorphism but the code wants to copy
           the Square which is declared as a Shape, its super type...
+       </p>
 
-       <pre>
+       <source>
        Shape s2 = new Shape(s1); //using the copy constructor
        System.out.println(s2 instanceof Square); //false
-       </pre>
+       </source>
 
+       <p>
        The working solution (without knowing about all subclasses and doing many
        casts) is to do the following (assuming correct clone implementation).
+       </p>
 
-       <pre>
+       <source>
        Shape s2 = s1.clone();
        System.out.println(s2 instanceof Square); //true
-       </pre>
+       </source>
 
+       <p>
        Just keep in mind if this type of polymorphic cloning is required
        then a properly implemented clone method may be the best choice.
        </p>
@@ -1473,7 +1558,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1481,7 +1566,7 @@ if (&quot;something&quot;.equals(x))
     <section name="NoFinalizer">
       <subsection name="Description">
         <p>
-          Verifies there are no <span class="code">finalize()</span> methods
+          Verifies there are no <code>finalize()</code> methods
           defined in a class.
         </p>
       </subsection>
@@ -1503,7 +1588,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1511,8 +1596,8 @@ if (&quot;something&quot;.equals(x))
     <section name="SuperClone">
       <subsection name="Description">
         <p>
-          Checks that an overriding <span class="code">clone()</span> method
-          invokes <span class="code">super.clone()</span>.
+          Checks that an overriding <code>clone()</code> method
+          invokes <code>super.clone()</code>.
         </p>
 
         <p>
@@ -1538,7 +1623,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1546,8 +1631,8 @@ if (&quot;something&quot;.equals(x))
     <section name="SuperFinalize">
       <subsection name="Description">
         <p>
-          Checks that an overriding <span class="code">finalize()</span>
-          method invokes <span class="code">super.finalize()</span>.
+          Checks that an overriding <code>finalize()</code>
+          method invokes <code>super.finalize()</code>.
         </p>
 
         <p>
@@ -1574,7 +1659,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1605,8 +1690,8 @@ if (&quot;something&quot;.equals(x))
             <td>illegalClassNames</td>
             <td>exception class names to reject</td>
             <td><a href="property_types.html#stringSet">list of strings</a></td>
-            <td><span class="default">&quot;java.lang.Exception,
-            java.lang.Throwable, java.lang.RuntimeException&quot;</span></td>
+            <td><code>&quot;java.lang.Exception,
+            java.lang.Throwable, java.lang.RuntimeException&quot;</code></td>
           </tr>
         </table>
       </subsection>
@@ -1628,7 +1713,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1655,9 +1740,15 @@ if (&quot;something&quot;.equals(x))
             <td>throw class names to reject</td>
             <td><a href="property_types.html#stringSet">list of strings</a></td>
             <td>
-              <span class="default">&quot;java.lang.Throwable,
-              java.lang.Error, java.lang.RuntimeException&quot;</span>
+              <code>&quot;java.lang.Throwable,
+              java.lang.Error, java.lang.RuntimeException&quot;</code>
             </td>
+          </tr>
+          <tr>
+            <td>ignoredMethodNames</td>
+            <td>names of methods to ignore</td>
+            <td><a href="property_types.html#stringSet">list of strings</a></td>
+            <td><code>finalize</code></td>
           </tr>
         </table>
       </subsection>
@@ -1679,7 +1770,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1687,7 +1778,8 @@ if (&quot;something&quot;.equals(x))
     <section name="PackageDeclaration">
       <subsection name="Description">
         <p>
-          Ensure a class is has a package declaration.
+          Ensure a class is has a package declaration, and (optionally) whether
+          the package name matches the directory name for the source file.
         </p>
 
         <p>
@@ -1695,6 +1787,27 @@ if (&quot;something&quot;.equals(x))
           imported. Many novice developers are not aware of this.
         </p>
       </subsection>
+
+      <subsection name="Properties">
+        <table>
+          <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>type</th>
+            <th>default value</th>
+          </tr>
+          <tr>
+            <td>ignoreDirectoryName</td>
+            <td>
+              whether to ignore checking that the package declaration matches
+              the source directory name
+            </td>
+            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><code>false</code></td>
+          </tr>
+        </table>
+      </subsection>
+
 
       <subsection name="Examples">
         <p>
@@ -1713,7 +1826,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1754,7 +1867,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1763,7 +1876,7 @@ if (&quot;something&quot;.equals(x))
       <subsection name="Description">
         <p>
           Restricts the number of return statements. Default = 2.  Ignores
-          specified methods (<span class="code">equals()</span> by default).
+          specified methods (<code>equals()</code> by default).
         </p>
 
         <p>
@@ -1784,13 +1897,13 @@ if (&quot;something&quot;.equals(x))
             <td>max</td>
             <td>maximum allowed number of return statments</td>
             <td><a href="property_types.html#integer">Integer</a></td>
-            <td><span class="default">2</span></td>
+            <td><code>2</code></td>
           </tr>
           <tr>
             <td>format</td>
             <td>method names to ingone</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">^equals$</span> (empty)</td>
+            <td><code>^equals$</code> (empty)</td>
           </tr>
         </table>
       </subsection>
@@ -1798,7 +1911,7 @@ if (&quot;something&quot;.equals(x))
       <subsection name="Examples">
         <p>
           To configure the check so that it doesn't allow more than three
-          return statements per method (<span class="code">equals()</span>
+          return statements per method (<code>equals()</code>
           method ignored):
         </p>
         <source>
@@ -1827,7 +1940,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1860,18 +1973,18 @@ if (&quot;something&quot;.equals(x))
             <td>tokens to check</td>
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
-              <a href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>
             </td>
 
             <td>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>,
                <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
-               <a href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
+               <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>
             </td>
           </tr>
           <tr>
@@ -1901,7 +2014,7 @@ if (&quot;something&quot;.equals(x))
             <td>format</td>
             <td>pattern for illegal class name</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">^(.*[\\.])?Abstract.*$</span></td>
+            <td><code>^(.*[\\.])?Abstract.*$</code></td>
           </tr>
         </table>
       </subsection>
@@ -1925,7 +2038,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -1956,6 +2069,35 @@ if (&quot;something&quot;.equals(x))
         </ol>
       </subsection>
 
+      <subsection name="Properties">
+        <table>
+          <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>type</th>
+            <th>default value</th>
+          </tr>
+          <tr>
+            <td>ignoreConstructors</td>
+            <td>whether to ignore constructors</td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
+            <td><code>false</code></td>
+          </tr>
+          <tr>
+            <td>ignoreMethods</td>
+            <td>whether to ignore methods</td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
+            <td><code>false</code></td>
+          </tr>
+          <tr>
+            <td>ignoreModifiers</td>
+            <td>whether to ignore modifiers</td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
+            <td><code>false</code></td>
+          </tr>
+        </table>
+      </subsection>
+
       <subsection name="Examples">
         <p>
           To configure the check:
@@ -1973,7 +2115,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -2006,7 +2148,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -2015,10 +2157,9 @@ if (&quot;something&quot;.equals(x))
       <subsection name="Description">
         <p>
           Checks if any class or object member explicitly initialized to
-          default for its type value (<span class="code">null</span> for
-          object references, zero for numeric types and <span
-          class="code">char</span> and <span class="code">false</span> for
-          <span class="code">boolean</span>.
+          default for its type value (<code>null</code> for
+          object references, zero for numeric types and <code>char</code> and <code>false</code> for
+          <code>boolean</code>.
         </p>
 
         <p>
@@ -2050,7 +2191,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -2058,16 +2199,14 @@ if (&quot;something&quot;.equals(x))
     <section name="DefaultComesLast">
       <subsection name="Description">
         <p>
-          Check that the <span class="code">default</span> is after all the
-          <span class="code">case</span>s in a <span
-          class="code">switch</span> statement.
+          Check that the <code>default</code> is after all the
+          <code>case</code>s in a <code>switch</code> statement.
         </p>
 
         <p>
-          Rationale: Java allows <span class="code">default</span> anywhere
-          within the <span class="code">switch</span> statement. But it is
-          more readable if it comes after the last <span
-          class="code">case</span>.
+          Rationale: Java allows <code>default</code> anywhere
+          within the <code>switch</code> statement. But it is
+          more readable if it comes after the last <code>case</code>.
         </p>
       </subsection>
 
@@ -2088,7 +2227,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -2118,7 +2257,7 @@ if (&quot;something&quot;.equals(x))
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -2126,11 +2265,9 @@ if (&quot;something&quot;.equals(x))
     <section name="FallThrough">
       <subsection name="Description">
         <p>
-          Checks for fall through in <span class="code">switch</span>
-          statements Finds locations where a <span class="code">case</span>
-          contains Java code - but lacks a <span
-          class="code">break</span>, <span class="code">return</span>, <span
-          class="code">throw</span> or <span class="code">continue</span>
+          Checks for fall through in <code>switch</code>
+          statements Finds locations where a <code>case</code>
+          contains Java code - but lacks a <code>break</code>, <code>return</code>, <code>throw</code> or <code>continue</code>
           statement.
         </p>
         <p>
@@ -2139,8 +2276,8 @@ if (&quot;something&quot;.equals(x))
           "falls through" and "fallsthrough" are recognized (case
           sensitive). The comment containing this words must be a
           one-liner and must be on the last none-empty line before the
-          <span class="code">case</span> triggering the warning or on
-          the same line before the <span class="code">case</span>
+          <code>case</code> triggering the warning or on
+          the same line before the <code>case</code>
           (urgly, but possible).
         </p>
         <source>
@@ -2164,7 +2301,7 @@ case 3:
         </source>
         <p>
           Note: the check works in assumption that there is no unreachable
-          code in the <span class="code">case</span>.
+          code in the <code>case</code>.
         </p>
       </subsection>
 
@@ -2182,7 +2319,7 @@ case 3:
               Whether we need to check last case group or not.
             </td>
             <td><a href="property_types.html#boolean">Boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>reliefPattern</td>
@@ -2191,7 +2328,7 @@ case 3:
               the warning about a fall through.
             </td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">fallthru|falls? ?through</span></td>
+            <td><code>fallthru|falls? ?through</code></td>
           </tr>
         </table>
       </subsection>
@@ -2221,7 +2358,7 @@ case 3:
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -2262,7 +2399,7 @@ case 3:
               regexp pattern for ignored strings (with quotation marks)
             </td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">^""$</span> (ignore empty strings)</td>
+            <td><code>^""$</code> (ignore empty strings)</td>
           </tr>
           <tr>
             <td>ignoreOccurrenceContext</td>
@@ -2273,11 +2410,11 @@ case 3:
             </td>
             <td>
               <a href="property_types.html#stringSet">list</a> of
-              <a href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">token type</a>
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">token type</a>
               names
             </td>
             <td>
-              <span class="default">ANNOTATION</span>
+              <code>ANNOTATION</code>
               (ignore strings inside the context of an annotation)
             </td>
           </tr>
@@ -2314,7 +2451,7 @@ case 3:
         <p>
           To configure the check so that it flags duplicate strings in all
           syntactical contexts, even in annotations like
-          <span class="default">@SuppressWarnings("unchecked")</span>:
+          <code>@SuppressWarnings("unchecked")</code>:
         </p>
         <source>
 &lt;module name=&quot;MultipleStringLiterals&quot;&gt;
@@ -2331,7 +2468,7 @@ case 3:
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -2368,7 +2505,7 @@ case 3:
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -2395,13 +2532,13 @@ case 3:
             <td>checkFields</td>
             <td>whether we should check fields usage or not</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">true</span></td>
+            <td><code>true</code></td>
           </tr>
           <tr>
             <td>checkMethods</td>
             <td>whether we should check methods usage or not</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">true</span></td>
+            <td><code>true</code></td>
           </tr>
         </table>
       </subsection>
@@ -2432,7 +2569,7 @@ case 3:
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -2461,9 +2598,42 @@ case 3:
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
+
+    <section name="OneStatementPerLine">
+      <subsection name="Description">
+        <p>
+          Checks there is only one statement per line. The following line
+          will be flagged as an error:
+        </p>
+
+        <source>    x = 1; y = 2; // Two statments on a single line.</source>
+      </subsection>
+
+      <subsection name="Examples">
+        <p>
+          To configure the check:
+        </p>
+        <source>
+&lt;module name=&quot;OneStatementPerLine&quot;/&gt;
+        </source>
+      </subsection>
+
+      <subsection name="Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.coding
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p>
+          <a href="config.html#TreeWalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
   </body>
 </document>

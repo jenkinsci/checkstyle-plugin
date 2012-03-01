@@ -49,8 +49,9 @@ public final class CheckStyleRules {
      */
     public void initialize() {
         try {
-            String[] ruleFiles = new String[] {"annotation", "coding", "design", "duplicates", "header",
-                    "imports", "javadoc", "metrics", "misc", "modifier", "naming", "regexp", "sizes", "whitespace"};
+            String[] ruleFiles = new String[] {"annotation", "blocks", "coding", "design", "duplicates", "header",
+                    "imports", "javadoc", "metrics", "misc", "modifier", "naming", "regexp", "reporting",
+                    "sizes", "whitespace"};
             for (int i = 0; i < ruleFiles.length; i++) {
                 InputStream inputStream = CheckStyleRules.class.getResourceAsStream("config_" + ruleFiles[i] + ".xml");
                 Digester digester = createDigester();

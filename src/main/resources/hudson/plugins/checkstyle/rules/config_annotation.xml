@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<document>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
   <properties>
     <title>Annotations</title>
@@ -32,7 +34,7 @@
               <a href="property_types.html#elementStyle">element style</a>
             </td>
             <td>
-              <span class="default">compact_no_array</span>
+              <code>compact_no_array</code>
             </td>
           </tr>
           <tr>
@@ -44,7 +46,7 @@
               <a href="property_types.html#closingParens">closing parens</a>
             </td>
             <td>
-              <span class="default">never</span>
+              <code>never</code>
             </td>
           </tr>
           <tr>
@@ -56,7 +58,7 @@
               <a href="property_types.html#trailingArrayComma">trailing comma</a>
             </td>
             <td>
-              <span class="default">never</span>
+              <code>never</code>
             </td>
           </tr>
         </table>
@@ -68,8 +70,8 @@
 
         <p>
           To configure the check to enforce an
-          <span class="code">expanded</span> style, with a
-          trailing array comma set to <span class="code">never</span>
+          <code>expanded</code> style, with a
+          trailing array comma set to <code>never</code>
           and always including the closing
           parenthesis.
         </p>
@@ -90,7 +92,7 @@
       </subsection>
 
       <subsection name="Parent Module">
-        <p> <a href="config.html#treewalker">TreeWalker</a> </p>
+        <p> <a href="config.html#TreeWalker">TreeWalker</a> </p>
       </subsection>
     </section>
 
@@ -112,7 +114,7 @@
       </subsection>
 
       <subsection name="Parent Module">
-        <p> <a href="config.html#treewalker">TreeWalker</a> </p>
+        <p> <a href="config.html#TreeWalker">TreeWalker</a> </p>
       </subsection>
     </section>
 
@@ -144,7 +146,7 @@
               <a href="property_types.html#boolean">boolean</a>
             </td>
             <td>
-              <span class="default">false</span>
+              <code>false</code>
             </td>
           </tr>
         </table>
@@ -155,7 +157,7 @@
         </source>
 
         <p>
-          To configure the check for the <span class="code">javaFiveCompatibility</span>
+          To configure the check for the <code>javaFiveCompatibility</code>
           mode:
         </p>
         <source>
@@ -171,7 +173,7 @@
       </subsection>
 
       <subsection name="Parent Module">
-        <p> <a href="config.html#treewalker">TreeWalker</a> </p>
+        <p> <a href="config.html#TreeWalker">TreeWalker</a> </p>
       </subsection>
     </section>
 
@@ -206,7 +208,7 @@
       </subsection>
 
       <subsection name="Parent Module">
-        <p> <a href="config.html#treewalker">TreeWalker</a> </p>
+        <p> <a href="config.html#TreeWalker">TreeWalker</a> </p>
       </subsection>
     </section>
 
@@ -245,7 +247,7 @@
               <a href="property_types.html#regexp">regexp</a>
             </td>
             <td>
-              <span class="default">^$|^\s+$</span>
+              <code>^$|^\s+$</code>
             </td>
           </tr>
 
@@ -256,48 +258,48 @@
             <td>
               subset of tokens
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">ENUM_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">ENUM_DEF</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">ANNOTATION_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">ANNOTATION_DEF</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">ANNOTATION_FIELD_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">ANNOTATION_FIELD_DEF</a>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">ENUM_CONSTANT_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">ENUM_CONSTANT_DEF</a>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
             </td>
 
             <td>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">ENUM_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">ENUM_DEF</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">ANNOTATION_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">ANNOTATION_DEF</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">ANNOTATION_FIELD_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">ANNOTATION_FIELD_DEF</a>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">ENUM_CONSTANT_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">ENUM_CONSTANT_DEF</a>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">PARAMETER_DEF</a>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
             </td>
           </tr>
 
@@ -332,7 +334,7 @@
       </subsection>
 
       <subsection name="Parent Module">
-        <p> <a href="config.html#treewalker">TreeWalker</a> </p>
+        <p> <a href="config.html#TreeWalker">TreeWalker</a> </p>
       </subsection>
     </section>
   </body>

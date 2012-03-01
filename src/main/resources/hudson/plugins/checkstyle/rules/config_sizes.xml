@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<document>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
   <properties>
     <title>Size Violations</title>
@@ -28,20 +30,20 @@
             <td>max</td>
             <td>the maximum threshold allowed</td>
             <td><a href="property_types.html#integer">integer</a></td>
-            <td><span class="default">30</span></td>
+            <td><code>30</code></td>
           </tr>
           <tr>
             <td>tokens</td>
             <td>members to check</td>
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
                <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INSTANCE_INIT">INSTANCE_INIT</a>,
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INSTANCE_INIT">INSTANCE_INIT</a>,
                 <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STATIC_INIT">STATIC_INIT</a>
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STATIC_INIT">STATIC_INIT</a>
             </td>
             <td>all tokens</td>
           </tr>
@@ -76,7 +78,7 @@
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -112,7 +114,7 @@
             <td>fileExtensions</td>
             <td>file type extension of files to process</td>
             <td><a href="property_types.html#stringSet">String Set</a></td>
-            <td><span class="default">{}</span></td>
+            <td><code>{}</code></td>
           </tr>
         </table>
       </subsection>
@@ -203,21 +205,15 @@
         <ul>
           <li>
             The calculation of the length of a line takes into account the
-            number of expanded spaces for a tab character (<span
-            class="code">'\t'</span>). The default number of spaces is <span
-            class="code">8</span>.  To specify a different number of spaces,
-            the user can set <a href="config.html#treewalker"><span
-            class="code">TreeWalker</span></a> property <span
-            class="code">tabWidth</span> which applies to all Checks,
-            including <span class="code">LineLength</span>; or can set
-            property <span class="code">tabWidth</span> for <span
-            class="code">LineLength</span> alone.
+            number of expanded spaces for a tab character (<code>'\t'</code>). The default number of spaces is <code>8</code>.  To specify a different number of spaces,
+            the user can set <a href="config.html#TreeWalker"><code>TreeWalker</code></a> property <code>tabWidth</code> which applies to all Checks,
+            including <code>LineLength</code>; or can set
+            property <code>tabWidth</code> for <code>LineLength</code> alone.
           </li>
           <li>
             Support for the special handling of imports in CheckStyle Version
             2 has been dropped as it is a special case of regexp: The user can
-            set property <span class="code">ignorePattern</span> to <span
-            class="code">^import</span> and achieve the same effect.
+            set property <code>ignorePattern</code> to <code>^import</code> and achieve the same effect.
           </li>
         </ul>
       </subsection>
@@ -230,7 +226,7 @@
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -266,10 +262,10 @@
             <td>countEmpty</td>
             <td>
               whether to count empty lines and single line comments of the
-              form <span class="code">//</span>
+              form <code>//</code>
             </td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">true</span></td>
+            <td><code>true</code></td>
           </tr>
           <tr>
             <td>tokens</td>
@@ -277,16 +273,16 @@
 
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
             </td>
 
             <td>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
                <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
             </td>
           </tr>
         </table>
@@ -332,7 +328,7 @@
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -388,7 +384,7 @@
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -420,16 +416,16 @@
 
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
             </td>
 
             <td>
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
             </td>
           </tr>
         </table>
@@ -462,7 +458,7 @@
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -524,7 +520,90 @@
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
+    <section name="MethodCount">
+      <subsection name="Description">
+        <p>
+          Checks the number of methods declared in each type. This
+          includes the number of each scope (<code>private</code>,
+          <code>package</code>, <code>protected</code> and
+          <code>public</code>) as well as an overall total.
+        </p>
+      </subsection>
+
+      <subsection name="Properties">
+        <table>
+          <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>type</th>
+            <th>default value</th>
+          </tr>
+          <tr>
+            <td>maxTotal</td>
+            <td>maximum allowable number of methods at all scope levels</td>
+            <td><a href="property_types.html#integer">integer</a></td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>maxPrivate</td>
+            <td>maximum allowable number of <code>private</code> methods</td>
+            <td><a href="property_types.html#integer">integer</a></td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>maxPackage</td>
+            <td>maximum allowable number of <code>package</code> methods</td>
+            <td><a href="property_types.html#integer">integer</a></td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>maxProtected</td>
+            <td>maximum allowable number of <code>protected</code> methods</td>
+            <td><a href="property_types.html#integer">integer</a></td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>maxPublic</td>
+            <td>maximum allowable number of <code>public</code> methods</td>
+            <td><a href="property_types.html#integer">integer</a></td>
+            <td>100</td>
+          </tr>
+        </table>
+      </subsection>
+
+      <subsection name="Examples">
+        <p>
+          To configure the check with defaults:
+        </p>
+        <source>
+&lt;module name="MethodCount"/&gt;
+        </source>
+
+        <p>
+          To configure the check to allow at most 30 methods per type:
+        </p>
+        <source>
+&lt;module name="MethodCount"&gt;
+      &lt;property name="maxTotal" value="30"/&gt;
+&lt;/module&gt;
+        </source>
+
+      </subsection>
+
+      <subsection name="Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.sizes
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>

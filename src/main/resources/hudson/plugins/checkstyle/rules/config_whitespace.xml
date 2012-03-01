@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<document>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
   <properties>
     <title>Whitespace</title>
     <author>Checkstyle Development Team</author>
@@ -57,7 +60,7 @@ List &lt; List &lt; Integer &gt; &gt; y = new ArrayList &lt; List &lt; Integer &
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -89,7 +92,7 @@ for (
             <td>option</td>
             <td>policy on how to pad an empty for iterator</td>
             <td><a href="property_types.html#parenPad">pad policy</a></td>
-            <td><span class="default">nospace</span></td>
+            <td><code>nospace</code></td>
           </tr>
         </table>
       </subsection>
@@ -121,7 +124,7 @@ for (
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -153,7 +156,7 @@ for (Iterator foo = very.long.line.iterator();
             <td>option</td>
             <td>policy on how to pad an empty for iterator</td>
             <td><a href="property_types.html#parenPad">pad policy</a></td>
-            <td><span class="default">nospace</span></td>
+            <td><code>nospace</code></td>
           </tr>
         </table>
       </subsection>
@@ -185,7 +188,7 @@ for (Iterator foo = very.long.line.iterator();
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -200,9 +203,8 @@ for (Iterator foo = very.long.line.iterator();
           a space is required immediately after the identifier or such a space
           is forbidden.  If they are not on the same line, reports an error,
           unless configured to allow line breaks.  To allow linebreaks after
-          the identifier, set property <span
-          class="code">allowLineBreaks</span> to <span class="code">
-          true</span>.
+          the identifier, set property <code>allowLineBreaks</code> to <code>
+          true</code>.
         </p>
       </subsection>
 
@@ -221,7 +223,7 @@ for (Iterator foo = very.long.line.iterator();
               is allowed
             </td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>option</td>
@@ -229,7 +231,7 @@ for (Iterator foo = very.long.line.iterator();
             <td>
               <a href="property_types.html#parenPad">pad policy</a>
             </td>
-            <td><span class="default">nospace</span></td>
+            <td><code>nospace</code></td>
           </tr>
           <tr>
             <td>tokens</td>
@@ -237,28 +239,28 @@ for (Iterator foo = very.long.line.iterator();
 
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NEW">LITERAL_NEW</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NEW">LITERAL_NEW</a>,
                <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">METHOD_CALL</a>,
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">METHOD_CALL</a>,
                 <a
-                 href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+                 href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
                  <a
-                 href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SUPER_CTOR_CALL">SUPER_CTOR_CALL</a>
+                 href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SUPER_CTOR_CALL">SUPER_CTOR_CALL</a>
             </td>
 
             <td>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
                <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NEW">LITERAL_NEW</a>,
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NEW">LITERAL_NEW</a>,
                 <a
-                 href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">METHOD_CALL</a>,
+                 href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">METHOD_CALL</a>,
                  <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
                   <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SUPER_CTOR_CALL">SUPER_CTOR_CALL</a>
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SUPER_CTOR_CALL">SUPER_CTOR_CALL</a>
             </td>
           </tr>
         </table>
@@ -294,7 +296,7 @@ for (Iterator foo = very.long.line.iterator();
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -305,9 +307,8 @@ for (Iterator foo = very.long.line.iterator();
           Checks that there is no whitespace after a token. More specifically,
           it checks that it is not followed by whitespace, or (if linebreaks
           are allowed) all characters on the line after are whitespace. To
-          forbid linebreaks after a token, set property <span
-          class="code">allowLineBreaks</span> to <span class="code">
-          false</span>.
+          forbid linebreaks after a token, set property <code>allowLineBreaks</code> to <code>
+          false</code>.
         </p>
       </subsection>
 
@@ -325,7 +326,7 @@ for (Iterator foo = very.long.line.iterator();
               whether whitespace is allowed if the token is at a linebreak
             </td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">true</span></td>
+            <td><code>true</code></td>
           </tr>
           <tr>
             <td>tokens</td>
@@ -333,42 +334,42 @@ for (Iterator foo = very.long.line.iterator();
 
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ARRAY_INIT">ARRAY_INIT</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ARRAY_INIT">ARRAY_INIT</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BNOT">BNOT</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BNOT">BNOT</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DEC">DEC</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DEC">DEC</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DOT">DOT</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DOT">DOT</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INC">INC</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INC">INC</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LNOT">LNOT</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LNOT">LNOT</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#UNARY_MINUS">UNARY_MINUS</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#UNARY_MINUS">UNARY_MINUS</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#UNARY_PLUS">UNARY_PLUS</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#UNARY_PLUS">UNARY_PLUS</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">TYPECAST</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">TYPECAST</a>
             </td>
 
             <td>
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ARRAY_INIT">ARRAY_INIT</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ARRAY_INIT">ARRAY_INIT</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BNOT">BNOT</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BNOT">BNOT</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DEC">DEC</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DEC">DEC</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DOT">DOT</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DOT">DOT</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INC">INC</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INC">INC</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LNOT">LNOT</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LNOT">LNOT</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#UNARY_MINUS">UNARY_MINUS</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#UNARY_MINUS">UNARY_MINUS</a>,
               <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#UNARY_PLUS">UNARY_PLUS</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#UNARY_PLUS">UNARY_PLUS</a>
             </td>
           </tr>
         </table>
@@ -401,7 +402,7 @@ for (Iterator foo = very.long.line.iterator();
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -412,9 +413,8 @@ for (Iterator foo = very.long.line.iterator();
           Checks that there is no whitespace before a token. More
           specifically, it checks that it is not preceded with whitespace, or
           (if linebreaks are allowed) all characters on the line before are
-          whitespace. To allow linebreaks before a token, set property <span
-          class="code">allowLineBreaks</span> to <span class="code">
-          true</span>.
+          whitespace. To allow linebreaks before a token, set property <code>allowLineBreaks</code> to <code>
+          true</code>.
         </p>
       </subsection>
 
@@ -432,7 +432,7 @@ for (Iterator foo = very.long.line.iterator();
               whether whitespace is allowed if the token is at a linebreak
             </td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>tokens</td>
@@ -440,22 +440,22 @@ for (Iterator foo = very.long.line.iterator();
 
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SEMI">SEMI</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SEMI">SEMI</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DOT">DOT</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DOT">DOT</a>,
                <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#POST_DEC">POST_DEC</a>,
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#POST_DEC">POST_DEC</a>,
                 <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#POST_INC">POST_INC</a>
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#POST_INC">POST_INC</a>
             </td>
 
             <td>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SEMI">SEMI</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SEMI">SEMI</a>,
                <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#POST_DEC">POST_DEC</a>,
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#POST_DEC">POST_DEC</a>,
                 <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#POST_INC">POST_INC</a>
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#POST_INC">POST_INC</a>
             </td>
           </tr>
         </table>
@@ -488,7 +488,7 @@ for (Iterator foo = very.long.line.iterator();
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -514,7 +514,7 @@ for (Iterator foo = very.long.line.iterator();
             <td>
               <a href="property_types.html#wrapOp">wrap operator policy</a>
             </td>
-            <td><span class="default">nl</span></td>
+            <td><code>nl</code></td>
           </tr>
           <tr>
             <td>tokens</td>
@@ -522,120 +522,120 @@ for (Iterator foo = very.long.line.iterator();
 
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ASSIGN">ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ASSIGN">ASSIGN</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND">BAND</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND">BAND</a>,
                <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND_ASSIGN">BAND_ASSIGN</a>,
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND_ASSIGN">BAND_ASSIGN</a>,
                 <a
-                 href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR">BOR</a>,
+                 href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR">BOR</a>,
                  <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR_ASSIGN">BOR_ASSIGN</a>,
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR_ASSIGN">BOR_ASSIGN</a>,
                   <a
-                   href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR">BSR</a>,
+                   href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR">BSR</a>,
                    <a
-                    href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR_ASSIGN">BSR_ASSIGN</a>,
+                    href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR_ASSIGN">BSR_ASSIGN</a>,
                     <a
-                     href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR">BXOR</a>,
+                     href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR">BXOR</a>,
                      <a
-                      href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR_ASSIGN">BXOR_ASSIGN</a>,
+                      href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR_ASSIGN">BXOR_ASSIGN</a>,
                       <a
-                       href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COLON">COLON</a>,
+                       href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COLON">COLON</a>,
                        <a
-                        href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV">DIV</a>,
+                        href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV">DIV</a>,
                         <a
-                         href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV_ASSIGN">DIV_ASSIGN</a>,
+                         href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV_ASSIGN">DIV_ASSIGN</a>,
                          <a
-                          href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#EQUAL">EQUAL</a>,
+                          href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#EQUAL">EQUAL</a>,
                           <a
-                           href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GE">GE</a>,
+                           href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GE">GE</a>,
                            <a
-                            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GT">GT</a>,
+                            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GT">GT</a>,
                             <a
-                             href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAND">LAND</a>,
+                             href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAND">LAND</a>,
                              <a
-                              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LE">LE</a>,
+                              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LE">LE</a>,
                               <a
-                               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_INSTANCEOF">LITERAL_INSTANCEOF</a>,
+                               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_INSTANCEOF">LITERAL_INSTANCEOF</a>,
                                <a
-                                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LOR">LOR</a>,
+                                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LOR">LOR</a>,
                                 <a
-                                 href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LT">LT</a>,
+                                 href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LT">LT</a>,
                                  <a
-                                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS">MINUS</a>,
+                                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS">MINUS</a>,
                                   <a
-                                   href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS_ASSIGN">MINUS_ASSIGN</a>,
+                                   href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS_ASSIGN">MINUS_ASSIGN</a>,
                                    <a
-                                    href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD">MOD</a>,
+                                    href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD">MOD</a>,
                                     <a
-                                     href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD_ASSIGN">MOD_ASSIGN</a>,
+                                     href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD_ASSIGN">MOD_ASSIGN</a>,
                                      <a
-                                      href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NOT_EQUAL">NOT_EQUAL</a>,
+                                      href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NOT_EQUAL">NOT_EQUAL</a>,
                                       <a
-                                       href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS">PLUS</a>,
+                                       href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS">PLUS</a>,
                                        <a
-                                        href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS_ASSIGN">PLUS_ASSIGN</a>,
+                                        href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS_ASSIGN">PLUS_ASSIGN</a>,
                                         <a
-                                         href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#QUESTION">QUESTION</a>,
+                                         href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#QUESTION">QUESTION</a>,
                                          <a
-                                          href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL">SL</a>,
+                                          href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL">SL</a>,
                                           <a
-                                           href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL_ASSIGN">SL_ASSIGN</a>,
+                                           href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL_ASSIGN">SL_ASSIGN</a>,
                                            <a
-                                            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR">SR</a>,
+                                            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR">SR</a>,
                                             <a
-                                             href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR_ASSIGN">SR_ASSIGN</a>,
+                                             href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR_ASSIGN">SR_ASSIGN</a>,
                                              <a
-                                              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR">STAR</a>,
+                                              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR">STAR</a>,
                                               <a
-                                              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR_ASSIGN">STAR_ASSIGN</a>
+                                              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR_ASSIGN">STAR_ASSIGN</a>
             </td>
 
             <td>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND">BAND</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND">BAND</a>,
                <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR">BOR</a>,
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR">BOR</a>,
                 <a
-                 href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR">BSR</a>,
+                 href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR">BSR</a>,
                  <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR">BXOR</a>,
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR">BXOR</a>,
                   <a
-                   href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COLON">COLON</a>,
+                   href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COLON">COLON</a>,
                    <a
-                    href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV">DIV</a>,
+                    href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV">DIV</a>,
                     <a
-                     href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#EQUAL">EQUAL</a>,
+                     href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#EQUAL">EQUAL</a>,
                      <a
-                      href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GE">GE</a>,
+                      href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GE">GE</a>,
                       <a
-                       href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GT">GT</a>,
+                       href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GT">GT</a>,
                        <a
-                        href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAND">LAND</a>,
+                        href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAND">LAND</a>,
                         <a
-                         href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LE">LE</a>,
+                         href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LE">LE</a>,
                          <a
-                          href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_INSTANCEOF">LITERAL_INSTANCEOF</a>,
+                          href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_INSTANCEOF">LITERAL_INSTANCEOF</a>,
                           <a
-                           href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LOR">LOR</a>,
+                           href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LOR">LOR</a>,
                            <a
-                            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LT">LT</a>,
+                            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LT">LT</a>,
                             <a
-                             href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS">MINUS</a>,
+                             href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS">MINUS</a>,
                              <a
-                              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD">MOD</a>,
+                              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD">MOD</a>,
                               <a
-                               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NOT_EQUAL">NOT_EQUAL</a>,
+                               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NOT_EQUAL">NOT_EQUAL</a>,
                                <a
-                                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS">PLUS</a>,
+                                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS">PLUS</a>,
                                 <a
-                                 href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#QUESTION">QUESTION</a>,
+                                 href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#QUESTION">QUESTION</a>,
                                  <a
-                                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL">SL</a>,
+                                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL">SL</a>,
                                   <a
-                                   href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR">SR</a>,
+                                   href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR">SR</a>,
                                    <a
-                                   href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR">STAR</a>
+                                   href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR">STAR</a>
             (all tokens except assignment operators)
             </td>
           </tr>
@@ -651,8 +651,7 @@ for (Iterator foo = very.long.line.iterator();
         </source>
 
         <p>
-          To configure the check for the assignment operator, <span
-          class="code">=</span>, at the end of a line:
+          To configure the check for the assignment operator, <code>=</code>, at the end of a line:
         </p>
         <source>
 &lt;module name=&quot;OperatorWrap&quot;&gt;
@@ -670,7 +669,7 @@ for (Iterator foo = very.long.line.iterator();
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -696,7 +695,7 @@ for (Iterator foo = very.long.line.iterator();
             <td>option</td>
             <td>policy on how to pad parentheses</td>
             <td><a href="property_types.html#parenPad">pad policy</a></td>
-            <td><span class="default">nospace</span></td>
+            <td><code>nospace</code></td>
           </tr>
           <tr>
             <td>tokens</td>
@@ -704,28 +703,28 @@ for (Iterator foo = very.long.line.iterator();
 
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_CALL">CTOR_CALL</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_CALL">CTOR_CALL</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LPAREN">LPAREN</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LPAREN">LPAREN</a>,
                <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">METHOD_CALL</a>,
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">METHOD_CALL</a>,
                 <a
-                 href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RPAREN">RPAREN</a>,
+                 href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RPAREN">RPAREN</a>,
                  <a
-                 href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SUPER_CTOR_CALL">SUPER_CTOR_CALL</a>
+                 href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SUPER_CTOR_CALL">SUPER_CTOR_CALL</a>
             </td>
 
             <td>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_CALL">CTOR_CALL</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_CALL">CTOR_CALL</a>,
                <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LPAREN">LPAREN</a>,
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LPAREN">LPAREN</a>,
                 <a
-                 href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">METHOD_CALL</a>,
+                 href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">METHOD_CALL</a>,
                  <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RPAREN">RPAREN</a>,
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RPAREN">RPAREN</a>,
                   <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SUPER_CTOR_CALL">SUPER_CTOR_CALL</a>
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SUPER_CTOR_CALL">SUPER_CTOR_CALL</a>
             </td>
           </tr>
         </table>
@@ -760,7 +759,7 @@ for (Iterator foo = very.long.line.iterator();
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -786,7 +785,7 @@ for (Iterator foo = very.long.line.iterator();
             <td>option</td>
             <td>policy on how to pad parentheses</td>
             <td><a href="property_types.html#parenPad">pad policy</a></td>
-            <td><span class="default">nospace</span></td>
+            <td><code>nospace</code></td>
           </tr>
           <tr>
             <td>tokens</td>
@@ -795,16 +794,16 @@ for (Iterator foo = very.long.line.iterator();
             <td>
               Must have tokens
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">TYPECAST</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">TYPECAST</a>,
                <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RPAREN">RPAREN</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RPAREN">RPAREN</a>
             </td>
 
             <td>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">TYPECAST</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">TYPECAST</a>,
                <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RPAREN">RPAREN</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RPAREN">RPAREN</a>
             </td>
           </tr>
         </table>
@@ -836,7 +835,7 @@ for (Iterator foo = very.long.line.iterator();
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -844,8 +843,7 @@ for (Iterator foo = very.long.line.iterator();
     <section name="FileTabCharacter">
       <subsection name="Description">
         <p>
-          Checks that there are no tab characters (<span
-          class="code">'\t'</span>) in the source code.
+          Checks that there are no tab characters (<code>'\t'</code>) in the source code.
         </p>
 
         <p>
@@ -878,13 +876,13 @@ for (Iterator foo = very.long.line.iterator();
             <td>eachLine</td>
             <td>whether to report on each line containing a tab, or just the first instance</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>fileExtensions</td>
             <td>file type extension of files to process</td>
             <td><a href="property_types.html#stringSet">String Set</a></td>
-            <td><span class="default">{}</span></td>
+            <td><code>{}</code></td>
           </tr>
         </table>
       </subsection>
@@ -901,9 +899,9 @@ for (Iterator foo = very.long.line.iterator();
           To configure the check to report on each line in each file:
         </p>
         <source>
-&lt;module name=&quot;FileTabCharacter&quot;/&gt;
+&lt;module name=&quot;FileTabCharacter&quot;&gt;
     &lt;property name=&quot;eachLine&quot; value=&quot;true&quot;/&gt;
-&lt;module/&gt;
+&lt;/module&gt;
         </source>
       </subsection>
 
@@ -941,20 +939,20 @@ for (Iterator foo = very.long.line.iterator();
 
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMMA">COMMA</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMMA">COMMA</a>,
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SEMI">SEMI</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SEMI">SEMI</a>,
                <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">TYPECAST</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">TYPECAST</a>
             </td>
 
             <td>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMMA">COMMA</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMMA">COMMA</a>,
                <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SEMI">SEMI</a>,
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SEMI">SEMI</a>,
                 <a
-                href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">TYPECAST</a>
+                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">TYPECAST</a>
             </td>
           </tr>
         </table>
@@ -987,7 +985,7 @@ for (Iterator foo = very.long.line.iterator();
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -998,14 +996,14 @@ for (Iterator foo = very.long.line.iterator();
         Checks that a token is surrounded by whitespace.  Empty constructor and
         method bodies (blocks) of the form
         </p>
+
+        <source>public MyClass() {}      // empty constructor
+public void func() {}    // empty method</source>
+
         <p>
-        <pre>public MyClass() {}      // empty constructor
-public void func() {}    // empty method</pre>
-        </p>
-        <p>
-        may optionally be exempted from the policy using the <span class="code">
-        allowEmptyMethods</span> and <span class="code">allowEmptyConstructors
-        </span> properties.
+        may optionally be exempted from the policy using the <code>
+        allowEmptyMethods</code> and <code>allowEmptyConstructors
+        </code> properties.
         </p>
       </subsection>
 
@@ -1023,101 +1021,101 @@ public void func() {}    // empty method</pre>
 
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ASSIGN">ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ASSIGN">ASSIGN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND">BAND</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND">BAND</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND_ASSIGN">BAND_ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND_ASSIGN">BAND_ASSIGN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR">BOR</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR">BOR</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR_ASSIGN">BOR_ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR_ASSIGN">BOR_ASSIGN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR">BSR</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR">BSR</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR_ASSIGN">BSR_ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR_ASSIGN">BSR_ASSIGN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR">BXOR</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR">BXOR</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR_ASSIGN">BXOR_ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR_ASSIGN">BXOR_ASSIGN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COLON">COLON</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COLON">COLON</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV">DIV</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV">DIV</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV_ASSIGN">DIV_ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV_ASSIGN">DIV_ASSIGN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#EQUAL">EQUAL</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#EQUAL">EQUAL</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GE">GE</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GE">GE</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GT">GT</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#GT">GT</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAND">LAND</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAND">LAND</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LCURLY">LCURLY</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LCURLY">LCURLY</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LE">LE</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LE">LE</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_ASSERT">LITERAL_ASSERT</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_ASSERT">LITERAL_ASSERT</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_CATCH">LITERAL_CATCH</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_CATCH">LITERAL_CATCH</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_DO">LITERAL_DO</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_DO">LITERAL_DO</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_ELSE">LITERAL_ELSE</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_ELSE">LITERAL_ELSE</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_FINALLY">LITERAL_FINALLY</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_FINALLY">LITERAL_FINALLY</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_FOR">LITERAL_FOR</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_FOR">LITERAL_FOR</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_IF">LITERAL_IF</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_IF">LITERAL_IF</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_RETURN">LITERAL_RETURN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_RETURN">LITERAL_RETURN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_SYNCHRONIZED">LITERAL_SYNCHRONIZED</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_SYNCHRONIZED">LITERAL_SYNCHRONIZED</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_TRY">LITERAL_TRY</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_TRY">LITERAL_TRY</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_WHILE">LITERAL_WHILE</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_WHILE">LITERAL_WHILE</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LOR">LOR</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LOR">LOR</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LT">LT</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LT">LT</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS">MINUS</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS">MINUS</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS_ASSIGN">MINUS_ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS_ASSIGN">MINUS_ASSIGN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD">MOD</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD">MOD</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD_ASSIGN">MOD_ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD_ASSIGN">MOD_ASSIGN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NOT_EQUAL">NOT_EQUAL</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NOT_EQUAL">NOT_EQUAL</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS">PLUS</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS">PLUS</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS_ASSIGN">PLUS_ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS_ASSIGN">PLUS_ASSIGN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#QUESTION">QUESTION</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#QUESTION">QUESTION</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RCURLY">RCURLY</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RCURLY">RCURLY</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL">SL</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL">SL</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SLIST">SLIST</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SLIST">SLIST</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL_ASSIGN">SL_ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL_ASSIGN">SL_ASSIGN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR">SR</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR">SR</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR_ASSIGN">SR_ASSIGN</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR_ASSIGN">SR_ASSIGN</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR">STAR</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR">STAR</a>,
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR_ASSIGN">STAR_ASSIGN</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR_ASSIGN">STAR_ASSIGN</a>
              <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPE_EXTENSION_AND">TYPE_EXTENSION_AND</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPE_EXTENSION_AND">TYPE_EXTENSION_AND</a>
             </td>
             <td>all tokens</td>
           </tr>
@@ -1125,13 +1123,13 @@ public void func() {}    // empty method</pre>
             <td>allowEmptyConstructors</td>
             <td>allow empty constructor bodies</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowEmptyMethods</td>
             <td>allow empty method bodies</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
         </table>
       </subsection>
@@ -1146,7 +1144,7 @@ public void func() {}    // empty method</pre>
 
         <p>
           To configure the check for whitespace around the assignment
-          operator, <span class="code">=</span>:
+          operator, <code>=</code>:
         </p>
         <source>
 &lt;module name=&quot;WhitespaceAround&quot;&gt;
@@ -1163,7 +1161,7 @@ public void func() {}    // empty method</pre>
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>

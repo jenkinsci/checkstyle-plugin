@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<document>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
   <properties>
     <title>Miscellaneous</title>
@@ -93,7 +95,7 @@
     <section name="TodoComment">
       <subsection name="Description">
         <p>
-          A check for <span class="code">TODO:</span> comments. Actually
+          A check for <code>TODO:</code> comments. Actually
           it is a generic <a
           href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/regex/Pattern.html">regular
           expression</a> matcher on Java comments. To check for other
@@ -113,14 +115,14 @@
             <td>format</td>
             <td>pattern to check</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">TODO:</span></td>
+            <td><code>TODO:</code></td>
           </tr>
         </table>
       </subsection>
 
       <subsection name="Notes">
         <p>
-          Using <span class="code">TODO:</span> comments is a great way
+          Using <code>TODO:</code> comments is a great way
           to keep track of tasks that need to be done. Having them
           reported by Checkstyle makes it very hard to forget about
           them.
@@ -136,8 +138,7 @@
         </source>
 
         <p>
-          To configure the check for comments that contain <span
-          class="code">WARNING</span>:
+          To configure the check for comments that contain <code>WARNING</code>:
         </p>
         <source>
 &lt;module name=&quot;TodoComment&quot;&gt;
@@ -154,7 +155,7 @@
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -162,7 +163,7 @@
     <section name="Translation">
       <subsection name="Description">
         <p>
-          A <a href="config.html#overview">FileSetCheck</a> that ensures
+          A <a href="config.html#Overview">FileSetCheck</a> that ensures
           the correct translation of code by checking property files for
           consistency regarding their keys. Two property files
           describing one and the same context are consistent if they
@@ -209,11 +210,10 @@ messages.properties: Key 'ok' missing.
               file type extension to identify translation files. Setting
               this property is typically only required if your
               translation files are preprocessed and the original files
-              do not have the extension <span
-              class="code">.properties</span>
+              do not have the extension <code>.properties</code>
             </td>
             <td><a href="property_types.html#stringSet">String Set</a></td>
-            <td><span class="default">properties</span></td>
+            <td><code>properties</code></td>
           </tr>
         </table>
       </subsection>
@@ -269,7 +269,7 @@ messages.properties: Key 'ok' missing.
             <td>pattern for qualified names of classes which are allowed
             to have a main method.</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">^$</span></td>
+            <td><code>^$</code></td>
           </tr>
         </table>
       </subsection>
@@ -301,7 +301,7 @@ messages.properties: Key 'ok' missing.
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -310,15 +310,14 @@ messages.properties: Key 'ok' missing.
       <subsection name="Description">
         <p>
           Checks that long constants are defined with an upper ell. That
-          is <span class="code">' L'</span> and not <span
-          class="code">'l'</span>. This is in accordance to the Java
+          is <code>' L'</code> and not <code>'l'</code>. This is in accordance to the Java
           Language Specification, <a
           href="http://java.sun.com/docs/books/jls/second_edition/html/lexical.doc.html#48282">
           Section 3.10.1</a>.
         </p>
 
         <p>
-          looks a lot like <span class="code">1</span>.
+          looks a lot like <code>1</code>.
         </p>
       </subsection>
 
@@ -339,7 +338,7 @@ messages.properties: Key 'ok' missing.
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -367,7 +366,7 @@ messages.properties: Key 'ok' missing.
               Controls whether to enforce Java style (true) or C style (false).
             </td>
             <td><a href="property_types.html#boolean">Boolean</a></td>
-            <td><span class="default">true</span></td>
+            <td><code>true</code></td>
           </tr>
         </table>
       </subsection>
@@ -398,7 +397,7 @@ messages.properties: Key 'ok' missing.
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -433,16 +432,16 @@ messages.properties: Key 'ok' missing.
             <td>blocks to check</td>
 
             <td>subset of tokens <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
             <a
-             href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
+             href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
              <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_CATCH">LITERAL_CATCH</a></td>
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_CATCH">LITERAL_CATCH</a></td>
 
             <td><a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
             <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a></td>
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a></td>
 
           </tr>
         </table>
@@ -476,7 +475,7 @@ messages.properties: Key 'ok' missing.
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -509,14 +508,14 @@ messages.properties: Key 'ok' missing.
             <td>tokens</td>
             <td>token types to check</td>
             <td>subset of tokens declared in <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a></td>
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a></td>
             <td>empty set</td>
           </tr>
           <tr>
             <td>limitedTokens</td>
             <td>set of tokens with limited occurances as descendants</td>
             <td>subset of tokens declared in <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a></td>
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a></td>
             <td>empty set</td>
           </tr>
           <tr>
@@ -550,18 +549,18 @@ messages.properties: Key 'ok' missing.
               from the sum of the individual token counts
             </td>
             <td><a href="property_types.html#boolean">Boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>minimumMessage</td>
             <td>error message when minimum count not reached</td>
-            <td><a href="property_types.html#String">String</a></td>
+            <td><a href="property_types.html#string">String</a></td>
             <td>&quot;descendant.token.min&quot;</td>
           </tr>
           <tr>
             <td>maximumMessage</td>
             <td>error message when maximum count exceeded</td>
-            <td><a href="property_types.html#String">String</a></td>
+            <td><a href="property_types.html#string">String</a></td>
             <td>&quot;descendant.token.max&quot;</td>
           </tr>
         </table>
@@ -569,9 +568,8 @@ messages.properties: Key 'ok' missing.
 
       <subsection name="Examples">
         <p>
-          Comparing <span class="code">this</span> with <span
-          class="code">null</span> (i.e. <span class="code">this ==
-          null</span> and <span class="code">this != null</span>):
+          Comparing <code>this</code> with <code>null</code> (i.e. <code>this ==
+          null</code> and <code>this != null</code>):
         </p>
         <source>
 &lt;module name="DescendantToken"&gt;
@@ -758,7 +756,7 @@ messages.properties: Key 'ok' missing.
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -836,7 +834,7 @@ messages.properties: Key 'ok' missing.
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -917,7 +915,7 @@ d = e / f;        // Another comment for this line
             <td>format</td>
             <td>pattern for string allowed before comment.</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">^[\\s\\}\\);]*$</span></td>
+            <td><code>^[\\s\\}\\);]*$</code></td>
           </tr>
           <tr>
             <td>legalComment</td>
@@ -956,7 +954,7 @@ d = e / f;        // Another comment for this line
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -986,16 +984,14 @@ d = e / f;        // Another comment for this line
           <b>Note:</b> Because of the different mode of operation there may be
           some changes in the regular expressions used to achieve a particular end.
         </p>
-        <p>
-          In multiline mode...
-          <ul>
+        <p>In multiline mode...</p>
+        <ul>
           <li> ^ means beginning of a line, as oposed to beginning of input.</li>
           <li> For beginning of input use \A.</li>
           <li> $ means end of a line, as oposed to end of input.</li>
           <li> For end of input use \Z.</li>
           <li> Each line in the file is terminated with a newline character.</li>
-          </ul>
-        </p>
+        </ul>
         <p>
           <b>Note:</b> Not all regexp engines are created equal. Some provide extra
           functions that others do not and some elements of the syntax may vary.
@@ -1025,20 +1021,20 @@ d = e / f;        // Another comment for this line
             <td>format</td>
             <td>pattern</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">$^</span> (empty)</td>
+            <td><code>$^</code> (empty)</td>
           </tr>
           <tr>
             <td>message</td>
             <td>message which is used to notify about violations,
             if empty then default(hard-coded) message is used.</td>
-            <td><a href="property_types.html#String">String</a></td>
-            <td><span class="default">&quot;&quot;</span>(empty)</td>
+            <td><a href="property_types.html#string">String</a></td>
+            <td><code>&quot;&quot;</code>(empty)</td>
           </tr>
           <tr>
             <td>illegalPattern</td>
             <td>Controls whether the pattern is required or illegal.</td>
             <td><a href="property_types.html#boolean">Boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>duplicateLimit</td>
@@ -1047,19 +1043,19 @@ d = e / f;        // Another comment for this line
             value is used as the maximum number of allowed duplicates, if the
             limit is exceeded errors will be logged.</td>
             <td><a href="property_types.html#integer">Integer</a></td>
-            <td><span class="default">-1</span></td>
+            <td><code>-1</code></td>
           </tr>
           <tr>
             <td>errorLimit</td>
             <td>Controls the maximum number of errors before the check will abort.</td>
             <td><a href="property_types.html#integer">Integer</a></td>
-            <td><span class="default">100</span></td>
+            <td><code>100</code></td>
           </tr>
           <tr>
             <td>ignoreComments</td>
             <td>Controls whether to ignore matches found within comments.</td>
             <td><a href="property_types.html#boolean">Boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
         </table>
       </subsection>
@@ -1129,7 +1125,7 @@ d = e / f;        // Another comment for this line
         </p>
         <p>
           An example of how to configure the check to make sure there are no
-          calls to <span class="code">System.out.println</span>:
+          calls to <code>System.out.println</code>:
         </p>
         <source>
 &lt;module name=&quot;Regexp&quot;&gt;
@@ -1201,13 +1197,12 @@ d = e / f;        // Another comment for this line
           To configure the check to verify that each file starts with the
           following multiline header.
         </p>
-        <p>
-          Note the following:
-          <ul>
-            <li>\A means the start of the file.</li>
-            <li>The date can be any 4 digit number.</li>
-          </ul>
-        </p>
+        <p>Note the following:</p>
+        <ul>
+          <li>\A means the start of the file.</li>
+          <li>The date can be any 4 digit number.</li>
+        </ul>
+
         <source>
 // Copyright (C) 2004 MyCompany
 // All rights reserved
@@ -1325,14 +1320,13 @@ public class PID extends StateMachine implements WebObject.Constants {
         <p>
           This checks for the presence of the header, the first 16 lines.
         </p>
-        <p>
-          Note the following:
-          <ul>
-            <li>Line 2 and 13 contain the file name. These are checked to
-            make sure they are the same, and that they match the class name.</li>
-            <li>The date can be any 4 digit number.</li>
-          </ul>
-        </p>
+        <p>Note the following:</p>
+        <ul>
+          <li>Line 2 and 13 contain the file name. These are checked to
+          make sure they are the same, and that they match the class name.</li>
+          <li>The date can be any 4 digit number.</li>
+        </ul>
+
         <source>
 &lt;module name=&quot;Regexp&quot;&gt;
         &lt;property
@@ -1400,7 +1394,42 @@ public class PID extends StateMachine implements WebObject.Constants {
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
+    <section name="OuterTypeFilename">
+      <subsection name="Description">
+        <p>
+          Checks that the outer type name and the file name match. For example,
+          the class <code>Foo</code> must be in a file named
+          <code>Foo.java</code>.
+        </p>
+      </subsection>
+
+      <subsection name="Properties">
+        <p>None.</p>
+      </subsection>
+
+      <subsection name="Examples">
+        <p>
+          To configure the check:
+        </p>
+        <source>
+&lt;module name=&quot;OuterTypeFilename&quot;/&gt;
+        </source>
+      </subsection>
+
+      <subsection name="Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>

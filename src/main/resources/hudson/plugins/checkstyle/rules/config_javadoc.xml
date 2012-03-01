@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<document>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
   <properties>
     <title>Javadoc Comments</title>
@@ -12,9 +14,8 @@
       <subsection name="Description">
         <p>
           Checks that each Java package has a Javadoc file used for
-          commenting.  By default it only allows a <span
-          class="code">package-info.java</span> file, but can be
-          configured to allow a <span class="code">package.html</span>
+          commenting.  By default it only allows a <code>package-info.java</code> file, but can be
+          configured to allow a <code>package.html</code>
           file.
         </p>
         <p>
@@ -35,10 +36,10 @@
             <td>allowLegacy</td>
             <td>
               If set then allow the use of a
-              <span class="code">package.html</span> file.
+              <code>package.html</code> file.
             </td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
         </table>
       </subsection>
@@ -98,53 +99,53 @@
             <td>scope</td>
             <td>visibility scope where Javadoc comments are checked</td>
             <td><a href="property_types.html#scope">scope</a></td>
-            <td><span class="default">private</span></td>
+            <td><code>private</code></td>
           </tr>
           <tr>
             <td>excludeScope</td>
             <td>visibility scope where Javadoc comments are not checked</td>
             <td><a href="property_types.html#scope">scope</a></td>
-            <td><span class="default">null</span></td>
+            <td><code>null</code></td>
           </tr>
           <tr>
             <td>authorFormat</td>
             <td>pattern for @author tag</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">null</span> (tag not required)</td>
+            <td><code>null</code> (tag not required)</td>
           </tr>
           <tr>
             <td>versionFormat</td>
             <td>pattern for @version tag</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">null</span> (tag not required)</td>
+            <td><code>null</code> (tag not required)</td>
           </tr>
           <tr>
             <td>allowMissingParamTags</td>
             <td>whether to ignore errors when a class has type parameters
                 but does not have matching param tags in the javadoc.</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowUnknownTags</td>
             <td>whether to ignore errors when a Javadoc tag is not recognised.</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>tokens</td>
             <td>definitions to check</td>
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
               <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>
             </td>
             <td>
               <a
-               href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
                <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
             </td>
           </tr>
         </table>
@@ -159,7 +160,7 @@
         </source>
 
         <p>
-          To configure the check for <span class="default">public</span> scope:
+          To configure the check for <code>public</code> scope:
         </p>
         <source>
 &lt;module name="JavadocType"&gt;
@@ -186,8 +187,7 @@
         </source>
 
         <p>
-          To configure the check for <span
-          class="default">private</span> classes only:
+          To configure the check for <code>private</code> classes only:
         </p>
         <source>
 &lt;module name="JavadocType"&gt;
@@ -205,7 +205,7 @@
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -238,17 +238,17 @@
 
         <p>
           Javadoc is not required on a method that is tagged with the
-          <span class="code">@Override</span> annotation. However under
+          <code>@Override</code> annotation. However under
           Java 5 it is not possible to mark a method required for an
           interface (this was <i>corrected</i> under Java 6). Hence
           Checkstyle supports using the convention of using a single
-          <span class="code">{@inheritDoc}</span> tag instead of all the
+          <code>{@inheritDoc}</code> tag instead of all the
           other tags.
         </p>
 
         <p>
           Note that only inheritable items will allow the
-          <span class="code">{@inheritDoc}</span> tag to be used in place
+          <code>{@inheritDoc}</code> tag to be used in place
           of comments.  Static methods at all visibilities, private non-static
           methods and constructors are not inheritable.
         </p>
@@ -284,35 +284,34 @@ public int checkReturnTag(final int aTagIndex,
             <td>scope</td>
             <td>visibility scope where Javadoc comments are checked</td>
             <td><a href="property_types.html#scope">scope</a></td>
-            <td><span class="default">private</span></td>
+            <td><code>private</code></td>
           </tr>
           <tr>
             <td>excludeScope</td>
             <td>visibility scope where Javadoc comments are not checked</td>
             <td><a href="property_types.html#scope">scope</a></td>
-            <td><span class="default">null</span></td>
+            <td><code>null</code></td>
           </tr>
           <tr>
             <td>allowUndeclaredRTE</td>
             <td>whether to allow documented exceptions that
-            are not declared if they are a subclass of <span
-            class="code">java.lang.RuntimeException</span></td>
+            are not declared if they are a subclass of <code>java.lang.RuntimeException</code></td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowThrowsTagsForSubclasses</td>
             <td>whether to allow documented exceptions that
             are subclass of one of declared exception.</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowMissingParamTags</td>
             <td>whether to ignore errors when a method has parameters
             but does not have matching param tags in the javadoc.</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowMissingThrowsTags</td>
@@ -320,21 +319,21 @@ public int checkReturnTag(final int aTagIndex,
             that it throws exceptions but does have matching throws tags
             in the javadoc.</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowMissingReturnTag</td>
             <td>whether to ignore errors when a method returns
             non-void type does have a return tag in the javadoc.</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
 
           <tr>
             <td>allowMissingJavadoc</td>
             <td>whether to ignore errors when a method javadoc is missed.</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
 
           <tr>
@@ -362,21 +361,22 @@ public boolean isSomething()
               </pre>
             </td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>logLoadErrors</td>
             <td>This check may need to load exception classes mentioned in
             the @throws tag to check whether they are RuntimeExceptions.
             If loading the class fails, this property allows to control
-            checkstyle's error handling. If set to false (the default) a
+            checkstyle's error handling. If set to <code>false</code> a
             classpath configuration problem is assumed and the TreeWalker
             stops operating on the class completely.
-            If set to true, checkstyle assumes a typo or refactoring problem in the
+            If set to <code>true</code> (the default) , checkstyle assumes a
+            typo or refactoring problem in the
             javadoc and logs the problem in the normal checkstyle report
             (potentially masking a configuration error).</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>true</code></td>
           </tr>
           <tr>
             <td>suppressLoadErrors</td>
@@ -388,21 +388,21 @@ public boolean isSomething()
             violations in the checkstyle report.
             </td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>tokens</td>
             <td>definitions to check</td>
 
             <td>subset of tokens <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
             <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a></td>
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a></td>
 
             <td><a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
             <a
-            href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a></td>
+            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a></td>
 
           </tr>
         </table>
@@ -417,7 +417,7 @@ public boolean isSomething()
         </source>
 
         <p>
-          To configure the check for <span class="default">public</span>
+          To configure the check for <code>public</code>
           scope and to allow documentation of undeclared
           RuntimeExceptions:
         </p>
@@ -429,7 +429,7 @@ public boolean isSomething()
         </source>
 
         <p>
-          To configure the check for for <span class="default">public</span>
+          To configure the check for for <code>public</code>
           scope, to allow documentation of undeclared RuntimeExceptions,
           while ignoring any missing param tags is:
         </p>
@@ -443,9 +443,7 @@ public boolean isSomething()
         </source>
 
         <p>
-          To configure the check for methods which are in <span
-          class="default">private</span> , but not in <span
-          class="default">protected</span> scope:
+          To configure the check for methods which are in <code>private</code> , but not in <code>protected</code> scope:
         </p>
         <source>
 &lt;module name="JavadocMethod"&gt;
@@ -463,7 +461,7 @@ public boolean isSomething()
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -487,13 +485,13 @@ public boolean isSomething()
             <td>scope</td>
             <td>visibility scope where Javadoc comments are checked</td>
             <td><a href="property_types.html#scope">scope</a></td>
-            <td><span class="default">private</span></td>
+            <td><code>private</code></td>
           </tr>
           <tr>
             <td>excludeScope</td>
             <td>visibility scope where Javadoc comments are not checked</td>
             <td><a href="property_types.html#scope">scope</a></td>
-            <td><span class="default">null</span></td>
+            <td><code>null</code></td>
           </tr>
         </table>
       </subsection>
@@ -507,7 +505,7 @@ public boolean isSomething()
         </source>
 
         <p>
-          To configure the check for <span class="default">public</span>
+          To configure the check for <code>public</code>
           scope:
         </p>
 
@@ -518,9 +516,7 @@ public boolean isSomething()
         </source>
 
         <p>
-          To configure the check for members which are in <span
-          class="default">private</span>, but not in <span
-          class="default">protected</span> scope:
+          To configure the check for members which are in <code>private</code>, but not in <code>protected</code> scope:
         </p>
 
         <source>
@@ -539,7 +535,7 @@ public boolean isSomething()
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -558,7 +554,7 @@ public boolean isSomething()
             Javadoc automatically places the first sentence in the
             method summary table and index.  With out proper punctuation
             the Javadoc may be malformed.  All items eligible for the
-            <span class="code">{@inheritDoc}</span> tag are exempt from this
+            <code>{@inheritDoc}</code> tag are exempt from this
             requirement.
           </li>
 
@@ -611,13 +607,13 @@ public boolean isSomething()
             <td>scope</td>
             <td>visibility scope where Javadoc comments are checked</td>
             <td><a href="property_types.html#scope">scope</a></td>
-            <td><span class="default">private</span></td>
+            <td><code>private</code></td>
           </tr>
           <tr>
             <td>excludeScope</td>
             <td>visibility scope where Javadoc comments are not checked</td>
             <td><a href="property_types.html#scope">scope</a></td>
-            <td><span class="default">null</span></td>
+            <td><code>null</code></td>
           </tr>
           <tr>
             <td>checkFirstSentence</td>
@@ -625,7 +621,7 @@ public boolean isSomething()
               Whether to check the first sentence for proper end of sentence.
             </td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">true</span></td>
+            <td><code>true</code></td>
           </tr>
           <tr>
             <td>endOfSentenceFormat</td>
@@ -633,7 +629,7 @@ public boolean isSomething()
               Format for matching the end of a sentence.
             </td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">([.?!][ \t\n\r\f&lt;])|([.?!]$)</span></td>
+            <td><code>([.?!][ \t\n\r\f&lt;])|([.?!]$)</code></td>
           </tr>
           <tr>
             <td>checkEmptyJavadoc</td>
@@ -641,13 +637,13 @@ public boolean isSomething()
               Whether to check if the Javadoc is missing a describing text.
             </td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">false</span></td>
+            <td><code>false</code></td>
           </tr>
           <tr>
             <td>checkHtml</td>
             <td>Whether to check for incomplete html tags.</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><span class="default">true</span></td>
+            <td><code>true</code></td>
           </tr>
           <tr>
             <td>tokens</td>
@@ -655,28 +651,28 @@ public boolean isSomething()
 
             <td>
               subset of tokens <a
-              href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
               <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
               <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
               <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
               <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
             </td>
 
             <td>
               <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
               <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
               <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
               <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
               <a
-                  href="api/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
+                  href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>
             </td>
           </tr>
         </table>
@@ -692,7 +688,7 @@ public boolean isSomething()
         </source>
 
         <p>
-          To configure the check for <span class="default">public</span>
+          To configure the check for <code>public</code>
           scope:
         </p>
 
@@ -703,9 +699,7 @@ public boolean isSomething()
         </source>
 
         <p>
-          To configure the check for javadoc which is in <span
-          class="default">private</span>, but not in <span
-          class="default">package</span> scope:
+          To configure the check for javadoc which is in <code>private</code>, but not in <code>package</code> scope:
         </p>
 
         <source>
@@ -734,7 +728,7 @@ public boolean isSomething()
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
@@ -764,19 +758,19 @@ public boolean isSomething()
             <td>tag</td>
             <td>Name of tag</td>
             <td><a href="property_types.html#string">String</a></td>
-           <td><span class="default">null</span></td>
+           <td><code>null</code></td>
           </tr>
           <tr>
             <td>tagFormat</td>
             <td>Format of tag</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><span class="default">null</span></td>
+            <td><code>null</code></td>
           </tr>
           <tr>
             <td>tagSeverity</td>
             <td>Severity level when tag is found and printed</td>
             <td><a href="property_types.html#severity">severity</a></td>
-            <td><span class="default">info</span></td>
+            <td><code>info</code></td>
           </tr>
         </table>
       </subsection>
@@ -816,7 +810,7 @@ public boolean isSomething()
 
       <subsection name="Parent Module">
         <p>
-          <a href="config.html#treewalker">TreeWalker</a>
+          <a href="config.html#TreeWalker">TreeWalker</a>
         </p>
       </subsection>
     </section>
