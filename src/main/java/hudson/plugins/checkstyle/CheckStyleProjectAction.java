@@ -31,18 +31,8 @@ public class CheckStyleProjectAction extends AbstractProjectAction<ResultAction<
      */
     public CheckStyleProjectAction(final AbstractProject<?, ?> project,
             final Class<? extends ResultAction<CheckStyleResult>> type) {
-        super(project, type, new CheckStyleDescriptor());
-    }
-
-    /** {@inheritDoc} */
-    public String getDisplayName() {
-        return Messages.Checkstyle_ProjectAction_Name();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getTrendName() {
-        return Messages.Checkstyle_Trend_Name();
+        super(project, type, Messages._Checkstyle_ProjectAction_Name(), Messages._Checkstyle_Trend_Name(),
+                CheckStyleDescriptor.PLUGIN_ID, CheckStyleDescriptor.ICON_URL, CheckStyleDescriptor.RESULT_URL);
     }
 }
 

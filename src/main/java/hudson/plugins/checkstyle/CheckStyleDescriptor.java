@@ -10,10 +10,12 @@ import hudson.plugins.analysis.core.PluginDescriptor;
  */
 @Extension(ordinal = 100) // NOCHECKSTYLE
 public final class CheckStyleDescriptor extends PluginDescriptor {
-    /** Plug-in name. */
-    private static final String PLUGIN_NAME = "checkstyle";
+    /** The ID of this plug-in is used as URL. */
+    static final String PLUGIN_ID = "checkstyle";
+    /** The URL of the result action. */
+    static final String RESULT_URL = PluginDescriptor.createResultUrlName(PLUGIN_ID);
     /** Icon to use for the result and project action. */
-    private static final String ACTION_ICON = "/plugin/checkstyle/icons/checkstyle-24x24.png";
+    static final String ICON_URL = "/plugin/checkstyle/icons/checkstyle-24x24.png";
 
     /**
      * Instantiates a new find bugs descriptor.
@@ -31,12 +33,12 @@ public final class CheckStyleDescriptor extends PluginDescriptor {
     /** {@inheritDoc} */
     @Override
     public String getPluginName() {
-        return PLUGIN_NAME;
+        return PLUGIN_ID;
     }
 
     /** {@inheritDoc} */
     @Override
     public String getIconUrl() {
-        return ACTION_ICON;
+        return ICON_URL;
     }
 }
