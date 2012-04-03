@@ -1,9 +1,9 @@
 package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
+import hudson.plugins.analysis.core.BuildResult;
 
 /**
  * Represents the aggregated results of the Checkstyle analysis in m2 jobs.
@@ -23,8 +23,7 @@ public class CheckStyleReporterResult extends CheckStyleResult {
      * @param result
      *            the parsed result with all annotations
      */
-    public CheckStyleReporterResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
-            final ParserResult result) {
+    public CheckStyleReporterResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
         super(build, defaultEncoding, result);
     }
 
@@ -33,4 +32,3 @@ public class CheckStyleReporterResult extends CheckStyleResult {
         return CheckStyleMavenResultAction.class;
     }
 }
-
