@@ -33,12 +33,6 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
         return CheckStyleProjectAction.class;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    protected String getPluginName() {
-        return "checkstyle";
-    }
-
     /**
      * Extension point registration.
      *
