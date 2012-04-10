@@ -12,7 +12,6 @@ import java.util.HashSet;
  * Tests the {@link AnnotationDifferencer} for warnings.
  */
 public class WarningsDifferencerTest extends AnnotationDifferencerTest {
-    /** {@inheritDoc} */
     @Override
     public FileAnnotation createAnnotation(final String fileName, final Priority priority, final String message, final String category,
             final String type, final int start, final int end) {

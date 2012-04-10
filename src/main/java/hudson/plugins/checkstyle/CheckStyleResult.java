@@ -81,7 +81,6 @@ public class CheckStyleResult extends BuildResult {
         return Messages.Checkstyle_ProjectAction_Name();
     }
 
-    /** {@inheritDoc} */
     @Override
     protected Class<? extends ResultAction<? extends BuildResult>> getResultActionType() {
         return CheckStyleResultAction.class;

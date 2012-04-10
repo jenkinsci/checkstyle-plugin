@@ -33,7 +33,6 @@ public class TopicRule extends NodeCreateRule {
         super(Node.ELEMENT_NODE);
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public void end() throws Exception {

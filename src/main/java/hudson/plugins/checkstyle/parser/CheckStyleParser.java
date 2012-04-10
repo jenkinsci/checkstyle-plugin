@@ -42,7 +42,6 @@ public class CheckStyleParser extends AbstractAnnotationParser {
         super(defaultEncoding);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Collection<FileAnnotation> parse(final InputStream file, final String moduleName) throws InvocationTargetException {
         try {

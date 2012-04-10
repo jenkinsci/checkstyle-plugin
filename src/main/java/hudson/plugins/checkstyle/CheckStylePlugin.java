@@ -9,7 +9,6 @@ import hudson.plugins.checkstyle.rules.CheckStyleRules;
  * @author Ulli Hafner
  */
 public class CheckStylePlugin extends Plugin {
-    /** {@inheritDoc} */
     @Override
     public void start() {
         CheckStyleRules.getInstance().initialize();

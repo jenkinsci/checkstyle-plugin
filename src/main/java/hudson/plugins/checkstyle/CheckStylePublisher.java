@@ -122,7 +122,6 @@ public class CheckStylePublisher extends HealthAwarePublisher {
         return pattern;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final AbstractProject<?, ?> project) {
         return new CheckStyleProjectAction(project);
@@ -144,7 +143,6 @@ public class CheckStylePublisher extends HealthAwarePublisher {
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public CheckStyleDescriptor getDescriptor() {
         return (CheckStyleDescriptor)super.getDescriptor();

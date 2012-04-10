@@ -37,7 +37,6 @@ public class CheckStyleHealthDescriptorTest extends AbstractHealthDescriptorTest
         assertEquals(WRONG_DESCRIPTION, Messages.Checkstyle_ResultAction_HealthReportMultipleItem(2), description.toString());
     }
 
-    /** {@inheritDoc} */
     @Override
     protected AbstractHealthDescriptor createHealthDescriptor(final HealthDescriptor healthDescriptor) {
         return new CheckStyleHealthDescriptor(healthDescriptor);

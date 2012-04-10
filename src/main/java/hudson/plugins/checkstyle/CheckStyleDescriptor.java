@@ -24,19 +24,16 @@ public final class CheckStyleDescriptor extends PluginDescriptor {
         super(CheckStylePublisher.class);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getDisplayName() {
         return Messages.Checkstyle_Publisher_Name();
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getPluginName() {
         return PLUGIN_ID;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getIconUrl() {
         return ICON_URL;

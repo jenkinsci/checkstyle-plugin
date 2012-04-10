@@ -36,7 +36,6 @@ public class CheckStyleAnnotationsAggregator extends AnnotationsAggregator {
         super(build, launcher, listener, healthDescriptor, defaultEncoding);
     }
 
-    /** {@inheritDoc} */
     @Override
     protected Action createAction(final HealthDescriptor healthDescriptor, final String defaultEncoding, final ParserResult aggregatedResult) {
         return new CheckStyleResultAction(build, healthDescriptor, new CheckStyleResult(build, defaultEncoding, aggregatedResult));
