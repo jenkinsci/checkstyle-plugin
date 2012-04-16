@@ -1,7 +1,6 @@
 package hudson.plugins.checkstyle;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
 import hudson.plugins.analysis.core.BuildResult;
@@ -30,7 +29,7 @@ public class CheckStyleMavenResult extends CheckStyleResult {
     @SuppressWarnings("deprecation")
     public CheckStyleMavenResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
             final ParserResult result) {
-        super(build, new BuildHistory(build, MavenCheckStyleResultAction.class), result, defaultEncoding, true);
+        super(build, defaultEncoding, result, MavenCheckStyleResultAction.class);
     }
 
     /** {@inheritDoc} */

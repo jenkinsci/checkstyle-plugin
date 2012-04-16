@@ -24,7 +24,7 @@ public class CheckStyleReporterResult extends CheckStyleResult {
      *            the parsed result with all annotations
      */
     public CheckStyleReporterResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
-        super(build, defaultEncoding, result);
+        super(build, defaultEncoding, result, CheckStyleMavenResultAction.class);
     }
 
     @Override
