@@ -68,19 +68,14 @@ public class CheckStyleResult extends BuildResult {
         xstream.alias("warning", Warning.class);
     }
 
-    /**
-     * Returns a summary message for the summary.jelly file.
-     *
-     * @return the summary message
-     */
     @Override
     public String getSummary() {
-        return ResultSummary.createSummary(this);
+        return "Checkstyle: " + createDefaultSummary(CheckStyleDescriptor.RESULT_URL, getNumberOfAnnotations(), getNumberOfModules());
     }
 
     @Override
     protected String createDeltaMessage() {
-        return ResultSummary.createDeltaMessage(this);
+        return createDefaultDeltaMessage(CheckStyleDescriptor.RESULT_URL, getNumberOfNewWarnings(), getNumberOfFixedWarnings());
     }
 
     /**
