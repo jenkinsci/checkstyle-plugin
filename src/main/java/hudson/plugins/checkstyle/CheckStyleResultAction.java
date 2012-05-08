@@ -52,14 +52,4 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
     protected PluginDescriptor getDescriptor() {
         return new CheckStyleDescriptor();
     }
-
-    @Override
-    public String getMultipleItemsTooltip(final int numberOfItems) {
-        return Messages.Checkstyle_ResultAction_MultipleWarnings(numberOfItems);
-    }
-
-    @Override
-    public String getSingleItemTooltip() {
-        return Messages.Checkstyle_ResultAction_OneWarning();
-    }
 }
