@@ -14,8 +14,10 @@ public final class CheckStyleDescriptor extends PluginDescriptor {
     static final String PLUGIN_ID = "checkstyle";
     /** The URL of the result action. */
     static final String RESULT_URL = PluginDescriptor.createResultUrlName(PLUGIN_ID);
+    /** Icons prefix. */
+    static final String ICON_URL_PREFIX = "/plugin/checkstyle/icons/";
     /** Icon to use for the result and project action. */
-    static final String ICON_URL = "/plugin/checkstyle/icons/checkstyle-24x24.png";
+    static final String ICON_URL = ICON_URL_PREFIX + "checkstyle-24x24.png";
 
     /**
      * Instantiates a new find bugs descriptor.
@@ -37,5 +39,10 @@ public final class CheckStyleDescriptor extends PluginDescriptor {
     @Override
     public String getIconUrl() {
         return ICON_URL;
+    }
+
+    @Override
+    public String getSummaryIconUrl() {
+        return ICON_URL_PREFIX + "checkstyle-48x48.png";
     }
 }
