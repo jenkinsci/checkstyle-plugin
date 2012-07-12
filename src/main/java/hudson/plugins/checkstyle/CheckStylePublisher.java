@@ -89,6 +89,9 @@ public class CheckStylePublisher extends HealthAwarePublisher {
      *            determines whether the plug-in can run for failed builds, too
      * @param shouldDetectModules
      *            determines whether module names should be derived from Maven POM or Ant build files
+     * @param canComputeNew
+     *            determines whether new warnings should be computed (with
+     *            respect to baseline)
      * @param pattern
      *            Ant file-set pattern to scan for Checkstyle files
      */
