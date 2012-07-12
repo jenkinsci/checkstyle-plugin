@@ -92,7 +92,7 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
     }
 
     /** Backward compatibility. @deprecated */
-    @SuppressWarnings("unused")
+    @SuppressWarnings("PMD")
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("")
     @Deprecated
     private transient String height;
