@@ -8,6 +8,8 @@ import hudson.plugins.analysis.util.model.Priority;
 
 import java.util.HashSet;
 
+import org.junit.Test;
+
 /**
  * Tests the {@link AnnotationDifferencer} for warnings.
  */
@@ -23,6 +25,7 @@ public class WarningsDifferencerTest extends AnnotationDifferencerTest {
     /**
      * Verifies that 2 identical warnings are equal.
      */
+    @Test
     public void issue5344() {
         Warning first = createWarning();
         Warning second = createWarning();
