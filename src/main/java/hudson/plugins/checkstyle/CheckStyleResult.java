@@ -27,9 +27,46 @@ public class CheckStyleResult extends BuildResult {
      *            the default encoding to be used when reading and parsing files
      * @param result
      *            the parsed result with all annotations
+     * @param useStableBuildAsReference
+     *            determines whether only stable builds should be used as
+     *            reference builds or not
      */
+    public CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
+            final boolean useStableBuildAsReference) {
+        this(build, defaultEncoding, result, useStableBuildAsReference, CheckStyleResultAction.class);
+    }
+
+    /**
+     * Creates a new instance of {@link CheckStyleResult}.
+     *
+     * @param build
+     *            the current build as owner of this action
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param result
+     *            the parsed result with all annotations
+     */
+    @Deprecated
     public CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
-        this(build, defaultEncoding, result, CheckStyleResultAction.class);
+        this(build, defaultEncoding, result, false, CheckStyleResultAction.class);
+    }
+
+    /**
+     * Creates a new instance of {@link CheckStyleResult}.
+     *
+     * @param build
+     *            the current build as owner of this action
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param result
+     *            the parsed result with all annotations
+     * @param useStableBuildAsReference FIXME
+     * @param actionType
+     *            the type of the result action
+     */
+    protected CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
+            final boolean useStableBuildAsReference, final Class<? extends ResultAction<CheckStyleResult>> actionType) {
+        this(build, new BuildHistory(build, actionType, useStableBuildAsReference), result, defaultEncoding, true);
     }
 
     /**
@@ -44,9 +81,10 @@ public class CheckStyleResult extends BuildResult {
      * @param actionType
      *            the type of the result action
      */
+    @Deprecated
     protected CheckStyleResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
             final Class<? extends ResultAction<CheckStyleResult>> actionType) {
-        this(build, new BuildHistory(build, actionType), result, defaultEncoding, true);
+        this(build, new BuildHistory(build, actionType, false), result, defaultEncoding, true);
     }
 
     CheckStyleResult(final AbstractBuild<?, ?> build, final BuildHistory history,
