@@ -22,9 +22,13 @@ public class CheckStyleReporterResult extends CheckStyleResult {
      *            the default encoding to be used when reading and parsing files
      * @param result
      *            the parsed result with all annotations
+     * @param useStableBuildAsReference
+     *            determines whether only stable builds should be used as
+     *            reference builds or not
      */
-    public CheckStyleReporterResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
-        super(build, defaultEncoding, result, CheckStyleMavenResultAction.class);
+    public CheckStyleReporterResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
+            final boolean useStableBuildAsReference) {
+        super(build, defaultEncoding, result, useStableBuildAsReference, CheckStyleMavenResultAction.class);
     }
 
     @Override

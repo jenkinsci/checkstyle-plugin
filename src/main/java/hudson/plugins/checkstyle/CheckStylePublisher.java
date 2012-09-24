@@ -157,6 +157,6 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     /** {@inheritDoc} */
     public MatrixAggregator createAggregator(final MatrixBuild build, final Launcher launcher,
             final BuildListener listener) {
-        return new CheckStyleAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding());
+        return new CheckStyleAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding(), useOnlyStableBuildsAsReference());
     }
 }

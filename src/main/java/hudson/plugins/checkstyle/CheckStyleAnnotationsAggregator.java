@@ -15,7 +15,6 @@ import hudson.plugins.analysis.core.ParserResult;
  *
  * @author Ulli Hafner
  */
-
 public class CheckStyleAnnotationsAggregator extends AnnotationsAggregator {
     /**
      * Creates a new instance of {@link CheckStyleAnnotationsAggregator}.
@@ -30,15 +29,20 @@ public class CheckStyleAnnotationsAggregator extends AnnotationsAggregator {
      *            health descriptor
      * @param defaultEncoding
      *            the default encoding to be used when reading and parsing files
+     * @param useStableBuildAsReference
+     *            determines whether only stable builds should be used as
+     *            reference builds or not
      */
     public CheckStyleAnnotationsAggregator(final MatrixBuild build, final Launcher launcher,
-            final BuildListener listener, final HealthDescriptor healthDescriptor, final String defaultEncoding) {
-        super(build, launcher, listener, healthDescriptor, defaultEncoding);
+            final BuildListener listener, final HealthDescriptor healthDescriptor, final String defaultEncoding,
+            final boolean useStableBuildAsReference) {
+        super(build, launcher, listener, healthDescriptor, defaultEncoding, useStableBuildAsReference);
     }
 
     @Override
     protected Action createAction(final HealthDescriptor healthDescriptor, final String defaultEncoding, final ParserResult aggregatedResult) {
-        return new CheckStyleResultAction(build, healthDescriptor, new CheckStyleResult(build, defaultEncoding, aggregatedResult));
+        return new CheckStyleResultAction(build, healthDescriptor,
+                new CheckStyleResult(build, defaultEncoding, aggregatedResult, useOnlyStableBuildsAsReference()));
     }
 
     @Override
