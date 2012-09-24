@@ -31,18 +31,6 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
         super(owner, new CheckStyleHealthDescriptor(healthDescriptor), result);
     }
 
-    /**
-     * Creates a new instance of <code>CheckStyleResultAction</code>.
-     *
-     * @param owner
-     *            the associated build of this action
-     * @param healthDescriptor
-     *            health descriptor
-     */
-    public CheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor) {
-        super(owner, new CheckStyleHealthDescriptor(healthDescriptor));
-    }
-
     /** {@inheritDoc} */
     public String getDisplayName() {
         return Messages.Checkstyle_ProjectAction_Name();
