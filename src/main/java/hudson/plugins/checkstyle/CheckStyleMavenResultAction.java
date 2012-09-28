@@ -14,8 +14,6 @@ import hudson.plugins.analysis.core.ParserResult;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.CheckForNull;
-
 /**
  * A {@link CheckStyleResultAction} for native Maven jobs. This action
  * additionally provides result aggregation for sub-modules and for the main
