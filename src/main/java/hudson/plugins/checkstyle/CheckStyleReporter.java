@@ -1,5 +1,6 @@
 package hudson.plugins.checkstyle;
 
+import hudson.FilePath;
 import hudson.maven.MavenAggregatedReport;
 import hudson.maven.MavenBuildProxy;
 import hudson.maven.MojoInfo;
@@ -10,12 +11,14 @@ import hudson.plugins.analysis.core.HealthAwareReporter;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
+import hudson.remoting.VirtualChannel;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.component.configurator.ComponentConfigurationException;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
@@ -115,9 +118,18 @@ public class CheckStyleReporter extends HealthAwareReporter<CheckStyleResult> {
     public ParserResult perform(final MavenBuildProxy build, final MavenProject pom,
             final MojoInfo mojo, final PluginLogger logger) throws InterruptedException, IOException {
         FilesParser checkstyleCollector = new FilesParser(PLUGIN_NAME,
-                CHECKSTYLE_XML_FILE, new CheckStyleParser(getDefaultEncoding()), getModuleName(pom));
+                new CheckStyleParser(getDefaultEncoding()), getModuleName(pom));
 
-        return getTargetPath(pom).act(checkstyleCollector);
+        return getFileName(mojo, pom).act(checkstyleCollector);
+    }
+
+    private FilePath getFileName(final MojoInfo mojo, final MavenProject pom) {
+        try {
+            return new FilePath((VirtualChannel)null, mojo.getConfigurationValue("outputFile", String.class));
+        }
+        catch (ComponentConfigurationException exception) {
+            return getTargetPath(pom).child(CHECKSTYLE_XML_FILE);
+        }
     }
 
     @Override
