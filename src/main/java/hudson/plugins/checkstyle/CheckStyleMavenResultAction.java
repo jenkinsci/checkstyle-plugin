@@ -8,8 +8,8 @@ import hudson.maven.MavenModuleSetBuild;
 import hudson.model.Action;
 import hudson.model.AbstractBuild;
 import hudson.plugins.analysis.core.HealthDescriptor;
-import hudson.plugins.analysis.core.MavenResultAction;
 import hudson.plugins.analysis.core.ParserResult;
+import hudson.plugins.analysis.core.MavenResultAction;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +41,7 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
 
     /** {@inheritDoc} */
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
-        return new CheckStyleMavenResultAction(build, getHealthDescriptor(), getDisplayName(),
+        return new CheckStyleMavenResultAction(build, getHealthDescriptor(), getDefaultEncoding(),
                 new CheckStyleResult(build, getDefaultEncoding(), new ParserResult(), false));
     }
 
