@@ -1,11 +1,6 @@
 package hudson.plugins.checkstyle.parser;
 
 import static org.junit.Assert.*;
-import hudson.plugins.analysis.util.model.FileAnnotation;
-import hudson.plugins.analysis.util.model.MavenModule;
-import hudson.plugins.analysis.util.model.Priority;
-import hudson.plugins.analysis.util.model.WorkspaceFile;
-import hudson.plugins.checkstyle.rules.CheckStyleRules;
 
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -15,10 +10,30 @@ import java.util.Iterator;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
+import hudson.plugins.analysis.util.model.FileAnnotation;
+import hudson.plugins.analysis.util.model.MavenModule;
+import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.WorkspaceFile;
+import hudson.plugins.checkstyle.rules.CheckStyleRules;
+
 /**
  *  Tests the extraction of Checkstyle analysis results.
  */
 public class CheckStyleParserTest {
+    /**
+     * Tests parsing of file with Scala style warnings.
+     *
+     * @throws InvocationTargetException Signals that an I/O exception has occurred
+     * @see <a href="http://www.scalastyle.org">Scala Style Homepage</a>
+     * @see <a href="http://issues.jenkins-ci.org/browse/JENKINS-17287">Issue 17287</a>
+     */
+    @Test
+    public void testParsingOfScalaStyleFormat() throws InvocationTargetException {
+        Collection<FileAnnotation> annotations = parse("scalastyle-output.xml");
+
+        assertEquals("Wrong number of annotations detected.", 2, annotations.size());
+    }
+
     /**
      * Tests parsing of a simple Checkstyle file.
      *
@@ -28,16 +43,7 @@ public class CheckStyleParserTest {
     public void analyseCheckStyleFile() throws InvocationTargetException {
         CheckStyleRules.getInstance().initialize();
 
-        Collection<FileAnnotation> annotations;
-        InputStream inputStream = null;
-        try {
-            inputStream = CheckStyleParserTest.class.getResourceAsStream("checkstyle.xml");
-
-            annotations = new CheckStyleParser().parse(inputStream, "empty");
-        }
-        finally {
-            IOUtils.closeQuietly(inputStream);
-        }
+        Collection<FileAnnotation> annotations = parse("checkstyle.xml");
 
         MavenModule module = new MavenModule();
         module.addAnnotations(annotations);
@@ -72,7 +78,18 @@ public class CheckStyleParserTest {
         }
         assertTrue("Warning is not in checkstyle.xml file.", hasChecked);
     }
+
+    private Collection<FileAnnotation> parse(final String fileName) throws InvocationTargetException {
+        Collection<FileAnnotation> annotations;
+        InputStream inputStream = null;
+        try {
+            inputStream = CheckStyleParserTest.class.getResourceAsStream(fileName);
+
+            annotations = new CheckStyleParser().parse(inputStream, "empty");
+        }
+        finally {
+            IOUtils.closeQuietly(inputStream);
+        }
+        return annotations;
+    }
 }
-
-
-/* Copyright (c) Avaloq Evolution AG */
