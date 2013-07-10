@@ -8,7 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.beanutils.MethodUtils;
-import org.apache.commons.digester.NodeCreateRule;
+import org.apache.commons.digester3.NodeCreateRule;
 import org.apache.commons.lang.StringUtils;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
@@ -33,13 +33,14 @@ public class TopicRule extends NodeCreateRule {
         super(Node.ELEMENT_NODE);
     }
 
+    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
-    public void end() throws Exception {
-        Element subsection = (Element)super.digester.pop();
+    public void end(final String namespace, final String name) throws Exception {
+        Element subsection = (Element)getDigester().pop();
         String description = extractNoteContent(subsection);
 
-        MethodUtils.invokeExactMethod(digester.peek(), "setValue", description);
+        MethodUtils.invokeExactMethod(getDigester().peek(), "setValue", description);
     }
 
     /**
