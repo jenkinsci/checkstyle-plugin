@@ -1,10 +1,5 @@
 package hudson.plugins.checkstyle.parser;
 
-import hudson.plugins.analysis.core.AbstractAnnotationParser;
-import hudson.plugins.analysis.util.PackageDetectors;
-import hudson.plugins.analysis.util.model.FileAnnotation;
-import hudson.plugins.analysis.util.model.Priority;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,6 +10,11 @@ import java.util.Collection;
 import org.apache.commons.digester3.Digester;
 import org.apache.commons.lang.StringUtils;
 import org.xml.sax.SAXException;
+
+import hudson.plugins.analysis.core.AbstractAnnotationParser;
+import hudson.plugins.analysis.util.PackageDetectors;
+import hudson.plugins.analysis.util.model.FileAnnotation;
+import hudson.plugins.analysis.util.model.Priority;
 
 /**
  * A parser for Checkstyle XML files.
@@ -117,6 +117,7 @@ public class CheckStyleParser extends AbstractAnnotationParser {
                     warning.setModuleName(moduleName);
                     warning.setFileName(file.getName());
                     warning.setPackageName(packageName);
+                    warning.setColumnPosition(error.getColumn());
 
                     try {
                         warning.setContextHashCode(createContextHashCode(file.getName(), error.getLine()));

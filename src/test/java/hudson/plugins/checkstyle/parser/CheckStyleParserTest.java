@@ -8,8 +8,10 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.junit.Test;
 
+import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.MavenModule;
 import hudson.plugins.analysis.util.model.Priority;
@@ -21,7 +23,23 @@ import hudson.plugins.checkstyle.rules.CheckStyleRules;
  */
 public class CheckStyleParserTest {
     /**
-     * Tests parsing of file with Scala style warnings.
+     * Tests parsing of file with some warnings that are in the same line but different column.
+     *
+     * @throws InvocationTargetException Signals that an I/O exception has occurred
+     * @see <a href="http://issues.jenkins-ci.org/browse/JENKINS-19122">Issue 19122</a>
+     */
+    @Test
+    public void testColumnPositions() throws InvocationTargetException {
+        Collection<FileAnnotation> annotations = parse("issue19122.xml");
+
+        assertEquals("Wrong number of annotations detected.", 58, annotations.size());
+
+        ParserResult withoutDuplicates = new ParserResult(annotations);
+        assertEquals("Wrong number of annotations detected.", 58, withoutDuplicates.getNumberOfAnnotations());
+    }
+
+    /**
+     * Tests parsing of a file with Scala style warnings.
      *
      * @throws InvocationTargetException Signals that an I/O exception has occurred
      * @see <a href="http://www.scalastyle.org">Scala Style Homepage</a>
@@ -71,7 +89,7 @@ public class CheckStyleParserTest {
                         "Checks that classes are designed for extension."));
                 assertEquals(
                         "Wrong message detected.",
-                        "Die Methode 'detectPackageName' ist nicht fr Vererbung entworfen - muss abstract, final oder leer sein.",
+                        StringEscapeUtils.escapeXml("Die Methode 'detectPackageName' ist nicht fr Vererbung entworfen - muss abstract, final oder leer sein."),
                         warning.getMessage());
                 hasChecked = true;
             }
