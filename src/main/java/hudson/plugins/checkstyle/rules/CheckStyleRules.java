@@ -75,7 +75,7 @@ public final class CheckStyleRules {
     }
 
     private void log(final Throwable exception) {
-        Logger.getLogger(CheckStyleRules.class.getName()).log(Level.SEVERE, "Can't initialize checkstyle rules.", exception);
+        Logger.getLogger(CheckStyleRules.class.getName()).log(Level.SEVERE, "Can't initialize CheckStyle rules.", exception);
     }
 
     /**
