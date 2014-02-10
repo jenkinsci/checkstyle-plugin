@@ -1,5 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.jvnet.hudson.plugins</groupId>
@@ -8,69 +9,71 @@
         <relativePath>../analysis-pom/pom.xml</relativePath>
     </parent>
 
-  <artifactId>checkstyle</artifactId>
-  <packaging>hpi</packaging>
-  <name>Checkstyle Plug-in</name>
-  <version>3.39-SNAPSHOT</version>
-  <url>http://wiki.jenkins-ci.org/x/GYCGAQ</url>
-  <description>This plug-in generates the trend report for
-    Checkstyle, an open source static code analysis program.</description>
+    <artifactId>checkstyle</artifactId>
+    <packaging>hpi</packaging>
+    <name>Checkstyle Plug-in</name>
+    <version>3.39-SNAPSHOT</version>
+    <url>http://wiki.jenkins-ci.org/x/GYCGAQ</url>
+    <description>This plug-in generates the trend report for
+        Checkstyle, an open source static code analysis program.
+    </description>
 
-  <licenses>
-    <license>
-      <name>MIT license</name>
-      <comments>All source code is under the MIT license.</comments>
-    </license>
-    <license>
-      <name>LGPL</name>
-      <comments>All icons are made by Carlitus (Carles Carbonell
-        Bernado) and are under the LGPL.</comments>
-    </license>
-  </licenses>
+    <licenses>
+        <license>
+            <name>MIT license</name>
+            <comments>All source code is under the MIT license.</comments>
+        </license>
+        <license>
+            <name>LGPL</name>
+            <comments>All icons are made by Carlitus (Carles Carbonell
+                Bernado) and are under the LGPL.
+            </comments>
+        </license>
+    </licenses>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.jvnet.hudson.plugins</groupId>
-      <artifactId>analysis-core</artifactId>
-      <version>1.55-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-digester3</artifactId>
-      <version>3.2</version>
-    </dependency>
-    <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xercesImpl</artifactId>
-      <version>2.11.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jvnet.hudson.plugins</groupId>
-      <artifactId>analysis-test</artifactId>
-      <version>1.9</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.jvnet.hudson.plugins</groupId>
+            <artifactId>analysis-core</artifactId>
+            <version>1.55</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-digester3</artifactId>
+            <version>3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jvnet.hudson.plugins</groupId>
+            <artifactId>analysis-test</artifactId>
+            <version>1.9</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-  <scm>
-    <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
-    <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-  </scm>
+    <scm>
+        <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
+    </scm>
 
-  <repositories>
-    <repository>
-      <id>repo.jenkins-ci.org</id>
-      <url>http://repo.jenkins-ci.org/public/</url>
-    </repository>
-  </repositories>
+    <repositories>
+        <repository>
+            <id>repo.jenkins-ci.org</id>
+            <url>http://repo.jenkins-ci.org/public/</url>
+        </repository>
+    </repositories>
 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>repo.jenkins-ci.org</id>
-      <url>http://repo.jenkins-ci.org/public/</url>
-    </pluginRepository>
-  </pluginRepositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repo.jenkins-ci.org</id>
+            <url>http://repo.jenkins-ci.org/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
 
