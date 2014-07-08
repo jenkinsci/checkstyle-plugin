@@ -39,13 +39,13 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
         super(new CheckStyleResultAction(owner, healthDescriptor, result), defaultEncoding, "CHECKSTYLE");
     }
 
-    /** {@inheritDoc} */
+    @Override
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
         return new CheckStyleMavenResultAction(build, getHealthDescriptor(), getDefaultEncoding(),
                 new CheckStyleResult(build, getDefaultEncoding(), new ParserResult(), false));
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Action getProjectAction(final MavenModuleSet moduleSet) {
         return new CheckStyleProjectAction(moduleSet, CheckStyleMavenResultAction.class);
     }

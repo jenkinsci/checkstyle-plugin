@@ -61,17 +61,17 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
         this.defaultEncoding = defaultEncoding;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
         return new MavenCheckStyleResultAction(build, getHealthDescriptor(), defaultEncoding);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Action getProjectAction(final MavenModuleSet moduleSet) {
         return new CheckStyleProjectAction(moduleSet);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Class<? extends AggregatableAction> getIndividualActionType() {
         return getClass();
     }
@@ -88,6 +88,7 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
      * @param newBuild
      *            Newly completed build.
      */
+    @Override
     public void update(final Map<MavenModule, List<MavenBuild>> moduleBuilds, final MavenBuild newBuild) {
         // not used anymore
     }

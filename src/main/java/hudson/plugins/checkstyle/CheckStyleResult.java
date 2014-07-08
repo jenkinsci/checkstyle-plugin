@@ -95,7 +95,7 @@ public class CheckStyleResult extends BuildResult {
         return "checkstyle-warnings.xml";
     }
 
-    /** {@inheritDoc} */
+    @Override
     public String getDisplayName() {
         return Messages.Checkstyle_ProjectAction_Name();
     }

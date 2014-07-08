@@ -31,7 +31,7 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
         super(owner, new CheckStyleHealthDescriptor(healthDescriptor), result);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public String getDisplayName() {
         return Messages.Checkstyle_ProjectAction_Name();
     }

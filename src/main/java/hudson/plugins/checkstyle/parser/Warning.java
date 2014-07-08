@@ -60,7 +60,7 @@ public class Warning extends AbstractAnnotation {
         this(priority, message, category, type, lineNumber, lineNumber);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public String getToolTip() {
         return CheckStyleRules.getInstance().getDescription(getType());
     }
