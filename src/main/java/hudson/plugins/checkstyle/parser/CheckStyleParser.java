@@ -120,7 +120,8 @@ public class CheckStyleParser extends AbstractAnnotationParser {
                     warning.setColumnPosition(error.getColumn());
 
                     try {
-                        warning.setContextHashCode(createContextHashCode(file.getName(), error.getLine()));
+                        warning.setContextHashCode(createContextHashCode(file.getName(), error.getLine()) * 31
+                                + type.hashCode());
                     }
                     catch (IOException exception) {
                         // ignore and continue
