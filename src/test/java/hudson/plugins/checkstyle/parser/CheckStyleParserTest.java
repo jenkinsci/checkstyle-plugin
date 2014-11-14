@@ -1,7 +1,6 @@
 package hudson.plugins.checkstyle.parser;
 
-import static org.junit.Assert.*;
-
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
@@ -11,6 +10,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.MavenModule;
@@ -19,9 +20,32 @@ import hudson.plugins.analysis.util.model.WorkspaceFile;
 import hudson.plugins.checkstyle.rules.CheckStyleRules;
 
 /**
- *  Tests the extraction of Checkstyle analysis results.
+ * Tests the extraction of CheckStyle analysis results.
  */
 public class CheckStyleParserTest {
+    /**
+     * Parses a file with one fatal error.
+     *
+     * @throws IOException if the file could not be read
+     * @see <a href="http://issues.jenkins-ci.org/browse/JENKINS-25511">Issue 25511</a>
+     */
+    @Test
+    public void issue25511() throws InvocationTargetException {
+        Collection<FileAnnotation> annotations = parse("issue25511.xml");
+
+        assertEquals("Wrong number of annotations detected.", 2, annotations.size());
+
+        Iterator<FileAnnotation> iterator = annotations.iterator();
+
+        FileAnnotation annotation = iterator.next();
+        assertEquals("Wrong message text", annotation.getMessage(),
+                "&apos;,&apos; is not followed by whitespace.");
+
+        annotation = iterator.next();
+        assertEquals("Wrong message text", annotation.getMessage(),
+                "Type hint &quot;kEvent&quot; missing for $event at position 1");
+    }
+
     /**
      * Tests parsing of file with some warnings that are in the same line but different column.
      *
@@ -79,7 +103,7 @@ public class CheckStyleParserTest {
         while (iterator.hasNext()) {
             FileAnnotation annotation = iterator.next();
             assertTrue("Annotations is of wrong type.", annotation instanceof Warning);
-            Warning warning = (Warning)annotation;
+            Warning warning = (Warning) annotation;
             assertEquals("Wrong number of line ranges detected.", 1, warning.getLineRanges().size());
             if (warning.getPrimaryLineNumber() == 22) {
                 assertEquals("Wrong category detected.", "Design", warning.getCategory());
