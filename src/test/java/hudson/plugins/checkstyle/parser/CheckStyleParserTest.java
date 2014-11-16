@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -38,12 +37,11 @@ public class CheckStyleParserTest {
         Iterator<FileAnnotation> iterator = annotations.iterator();
 
         FileAnnotation annotation = iterator.next();
-        assertEquals("Wrong message text", annotation.getMessage(),
-                "&apos;,&apos; is not followed by whitespace.");
+        assertEquals("Wrong message text", "',' is not followed by whitespace.",
+                annotation.getMessage());
 
         annotation = iterator.next();
-        assertEquals("Wrong message text", annotation.getMessage(),
-                "Type hint &quot;kEvent&quot; missing for $event at position 1");
+        assertEquals("Wrong message text", "Type hint \"kEvent\" missing for $event at position 1", annotation.getMessage());
     }
 
     /**
@@ -113,7 +111,7 @@ public class CheckStyleParserTest {
                         "Checks that classes are designed for extension."));
                 assertEquals(
                         "Wrong message detected.",
-                        StringEscapeUtils.escapeXml("Die Methode 'detectPackageName' ist nicht fr Vererbung entworfen - muss abstract, final oder leer sein."),
+                        "Die Methode 'detectPackageName' ist nicht fr Vererbung entworfen - muss abstract, final oder leer sein.",
                         warning.getMessage());
                 hasChecked = true;
             }
