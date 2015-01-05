@@ -29,7 +29,7 @@ public class CheckStyleMavenResult extends CheckStyleResult {
     @SuppressWarnings("deprecation")
     public CheckStyleMavenResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
             final ParserResult result) {
-        super(build, defaultEncoding, result, false, MavenCheckStyleResultAction.class);
+        super(build, defaultEncoding, result, false, false, MavenCheckStyleResultAction.class);
     }
 
     @SuppressWarnings("deprecation")

@@ -1,18 +1,18 @@
 package hudson.plugins.checkstyle;
 
+import java.util.List;
+import java.util.Map;
+
 import hudson.maven.AggregatableAction;
 import hudson.maven.MavenAggregatedReport;
 import hudson.maven.MavenBuild;
 import hudson.maven.MavenModule;
 import hudson.maven.MavenModuleSet;
 import hudson.maven.MavenModuleSetBuild;
-import hudson.model.Action;
 import hudson.model.AbstractBuild;
+import hudson.model.Action;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.ParserResult;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * A {@link CheckStyleResultAction} for native maven jobs. This action
@@ -39,7 +39,7 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
      */
     public MavenCheckStyleResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor,
             final String defaultEncoding) {
-        super(owner, healthDescriptor, new CheckStyleResult(owner, defaultEncoding, new ParserResult(), false));
+        super(owner, healthDescriptor, new CheckStyleResult(owner, defaultEncoding, new ParserResult(), false, false));
         this.defaultEncoding = defaultEncoding;
     }
 

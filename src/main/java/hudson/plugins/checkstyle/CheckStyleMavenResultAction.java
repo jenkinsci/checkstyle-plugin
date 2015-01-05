@@ -1,18 +1,18 @@
 package hudson.plugins.checkstyle;
 
+import java.util.List;
+import java.util.Map;
+
 import hudson.maven.MavenAggregatedReport;
 import hudson.maven.MavenBuild;
 import hudson.maven.MavenModule;
 import hudson.maven.MavenModuleSet;
 import hudson.maven.MavenModuleSetBuild;
-import hudson.model.Action;
 import hudson.model.AbstractBuild;
+import hudson.model.Action;
 import hudson.plugins.analysis.core.HealthDescriptor;
-import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.MavenResultAction;
-
-import java.util.List;
-import java.util.Map;
+import hudson.plugins.analysis.core.ParserResult;
 
 /**
  * A {@link CheckStyleResultAction} for native Maven jobs. This action
@@ -42,7 +42,7 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
     @Override
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
         return new CheckStyleMavenResultAction(build, getHealthDescriptor(), getDefaultEncoding(),
-                new CheckStyleResult(build, getDefaultEncoding(), new ParserResult(), false));
+                new CheckStyleResult(build, getDefaultEncoding(), new ParserResult(), false, false));
     }
 
     @Override
@@ -58,7 +58,9 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
     @Override
     protected CheckStyleResult createResult(final CheckStyleResult existingResult, final CheckStyleResult additionalResult) {
         return new CheckStyleReporterResult(getOwner(), additionalResult.getDefaultEncoding(),
-                aggregate(existingResult, additionalResult), existingResult.useOnlyStableBuildsAsReference());
+                aggregate(existingResult, additionalResult),
+                existingResult.usePreviousBuildAsStable(),
+                existingResult.useOnlyStableBuildsAsReference());
     }
 }
 

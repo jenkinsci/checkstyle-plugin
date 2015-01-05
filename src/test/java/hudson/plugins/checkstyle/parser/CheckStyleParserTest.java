@@ -5,13 +5,20 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
+import com.google.common.collect.Sets;
+
 import static org.junit.Assert.*;
 
+import hudson.model.Result;
+import hudson.plugins.analysis.core.AnnotationDifferencer;
+import hudson.plugins.analysis.core.BuildResultEvaluator;
 import hudson.plugins.analysis.core.ParserResult;
+import hudson.plugins.analysis.core.Thresholds;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.MavenModule;
 import hudson.plugins.analysis.util.model.Priority;
@@ -22,6 +29,52 @@ import hudson.plugins.checkstyle.rules.CheckStyleRules;
  * Tests the extraction of CheckStyle analysis results.
  */
 public class CheckStyleParserTest {
+    /**
+     * Parses a sequence of files
+     *
+     * @throws InvocationTargetException if the file could not be read
+     */
+    @Test
+    public void shouldComputeDeltas() throws InvocationTargetException {
+        BuildResultEvaluator evaluator = new BuildResultEvaluator("url");
+        StringBuilder logger = new StringBuilder();
+        Thresholds t = new Thresholds();
+        t.unstableNewAll = "0";
+
+        Collection<FileAnnotation> first = parse("checkstyle-result-build1.xml");
+        assertEquals("Wrong number of annotations detected.", 1, first.size());
+
+        Result result = evaluator.evaluateBuildResult(logger, t, first);
+        assertEquals("Wrong plug-in result: ", Result.SUCCESS, result);
+
+        Collection<FileAnnotation> second = parse("checkstyle-result-build2.xml");
+        assertEquals("Wrong number of annotations detected.", 3, second.size());
+
+        Set<FileAnnotation> newAnnotations = AnnotationDifferencer.getNewAnnotations(Sets.newHashSet(second), Sets.newHashSet(first));
+        assertEquals("Wrong number of annotations detected.", 2, newAnnotations.size());
+
+        result = evaluator.evaluateBuildResult(logger, t, first, newAnnotations);
+        assertEquals("Wrong plug-in result: ", Result.UNSTABLE, result);
+
+        Collection<FileAnnotation> third = parse("checkstyle-result-build3.xml");
+        assertEquals("Wrong number of annotations detected.", 1, third.size());
+
+        Set<FileAnnotation> newAnnotationsInThird = AnnotationDifferencer.getNewAnnotations(Sets.newHashSet(third), Sets.newHashSet(first));
+        assertEquals("Wrong number of annotations detected.", 1, newAnnotationsInThird.size());
+
+        result = evaluator.evaluateBuildResult(logger, t, first, newAnnotationsInThird);
+        assertEquals("Wrong plug-in result: ", Result.UNSTABLE, result);
+
+        Collection<FileAnnotation> fourth = parse("checkstyle-result-build4.xml");
+        assertEquals("Wrong number of annotations detected.", 0, fourth.size());
+
+        Set<FileAnnotation> newAnnotationsInFourth = AnnotationDifferencer.getNewAnnotations(Sets.newHashSet(fourth), Sets.newHashSet(first));
+        assertEquals("Wrong number of annotations detected.", 0, newAnnotationsInFourth.size());
+
+        result = evaluator.evaluateBuildResult(logger, t, first, newAnnotationsInFourth);
+        assertEquals("Wrong plug-in result: ", Result.SUCCESS, result);
+    }
+
     /**
      * Parses a file with one fatal error.
      *
