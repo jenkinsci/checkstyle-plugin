@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <document xmlns="http://maven.apache.org/XDOC/2.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -136,7 +136,7 @@ line 5: ////////////////////////////////////////////////////////////////////
         <p>
           Checks the header of a source file against a header that contains a
           <a
-          href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/regex/Pattern.html">regular
+          href="https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html">regular
           expression</a> for each line of the source header.
         </p>
 
@@ -196,7 +196,7 @@ line 6: ^\W*$
 
         <p>
           Lines 1 and 2 leave room for technical header lines, e.g. the
-          "#!/bin/sh" line in Unix shell scripts, or the xml file header
+          "#!/bin/sh" line in Unix shell scripts, or the XML file header
           of XML files.  Set the multiline property to "1, 2" so these
           lines can be ignored for file types where they do no apply.
           Lines 3 through 6 define the actual header content. Note how

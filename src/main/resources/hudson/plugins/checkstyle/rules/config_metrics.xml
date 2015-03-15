@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <document xmlns="http://maven.apache.org/XDOC/2.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -28,8 +28,14 @@
           Note that the operators <code>&#x26;</code> and
           <code>|</code> are not only integer bitwise operators, they are also the
           <a href="http://java.sun.com/docs/books/jls/third_edition/html/expressions.html#15.22.2">
-          non-shortcut versions</a> of the boolean operators
+          non-shortcut versions</a> of the boolean operators.
           <code>&#x26;&#x26;</code> and <code>||</code>.
+        </p>
+        <p>
+          Note that <code>&#x26;</code>, <code>|</code> and <code>^</code> are not checked
+          if they are part of constructor or method call
+          because they can be applied to non boolean variables and
+          Checkstyle does not know types of methods from different classes.
         </p>
       </subsection>
 
@@ -144,6 +150,23 @@
             <td><a href="property_types.html#integer">integer</a></td>
             <td><code>7</code></td>
           </tr>
+          <tr>
+            <td>excludedClasses</td>
+            <td>User-configured class names to ignore</td>
+            <td><a href="property_types.html#stringSet">String Set</a></td>
+            <td>boolean, byte, char, double, float, int,
+                long, short, void, Boolean, Byte, Character, Double, Float,
+                Integer, Long, Short, Void,
+                Object, Class, String, StringBuffer, StringBuilder,
+                ArrayIndexOutOfBoundsException, Exception,
+                RuntimeException, IllegalArgumentException,
+                IllegalStateException, IndexOutOfBoundsException,
+                NullPointerException, Throwable, SecurityException,
+                UnsupportedOperationException,
+                List, ArrayList, Deque, Queue, LinkedList,
+                Set, HashSet, SortedSet, TreeSet,
+                Map, HashMap, SortedMap, TreeMap</td>
+          </tr>
         </table>
       </subsection>
 
@@ -183,7 +206,7 @@
         <p>
           The number of other classes a given class relies on. Also the
           square of this has been shown to indicate the amount of
-          maintenence required in functional programs (on a file basis)
+          maintenance required in functional programs (on a file basis)
           at least.
         </p>
       </subsection>
@@ -201,6 +224,23 @@
             <td>the maximum threshold allowed</td>
             <td><a href="property_types.html#integer">integer</a></td>
             <td><code>20</code></td>
+          </tr>
+          <tr>
+            <td>excludedClasses</td>
+            <td>User-configured class names to ignore</td>
+            <td><a href="property_types.html#stringSet">String Set</a></td>
+            <td>boolean, byte, char, double, float, int,
+                long, short, void, Boolean, Byte, Character, Double, Float,
+                Integer, Long, Short, Void,
+                Object, Class, String, StringBuffer, StringBuilder,
+                ArrayIndexOutOfBoundsException, Exception,
+                RuntimeException, IllegalArgumentException,
+                IllegalStateException, IndexOutOfBoundsException,
+                NullPointerException, Throwable, SecurityException,
+                UnsupportedOperationException,
+                List, ArrayList, Deque, Queue, LinkedList,
+                Set, HashSet, SortedSet, TreeSet,
+                Map, HashMap, SortedMap, TreeMap</td>
           </tr>
         </table>
       </subsection>
@@ -245,7 +285,7 @@
           constructor, method, static initializer, or instance
           initializer.  It is a measure of the minimum number of
           possible paths through the source and therefore the number of
-          required tests. Generally 1-4 is considered good, 5-7 ok, 8-10
+          required tests. Generally 1-4 is considered good, 5-7 OK, 8-10
           consider re-factoring, and 11+ re-factor now!
         </p>
       </subsection>
@@ -373,7 +413,7 @@
           specification</a> for the
           <a href="http://www.kclee.de/clemens/java/javancss/">JavaNCSS-Tool</a>
           written by <b>Chr. Clemens Lee</b>.<br/>
-          Rougly said the NCSS metric is calculated by
+          Roughly said the NCSS metric is calculated by
           counting the source lines which are not comments, (nearly)
           equivalent to counting the semicolons and opening curly
           braces.<br/> The NCSS for a class is summarized from the NCSS
@@ -386,7 +426,7 @@
         <p>
           Rationale: Too large methods and classes are hard to read and
           costly to maintain. A large NCSS number often means that a
-          method or class has too many responsabilities and/or
+          method or class has too many responsibilities and/or
           functionalities which should be decomposed into smaller units.
         </p>
       </subsection>

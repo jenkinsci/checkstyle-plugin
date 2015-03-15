@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <document xmlns="http://maven.apache.org/XDOC/2.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -86,7 +86,7 @@
 
         <p>
           To configure the check to find trailing whitespace at the end
-          of a line, with some <i>slack</i> of allowing two occurances
+          of a line, with some <i>slack</i> of allowing two occurrences
           per file:
         </p>
         <source>
@@ -114,7 +114,7 @@
 
       <subsection name="Package">
         <p>
-          com.puppycrawl.tools.checkstyle.checks
+          com.puppycrawl.tools.checkstyle.checks.regexp
         </p>
       </subsection>
 
@@ -201,7 +201,7 @@
 
       <subsection name="Package">
         <p>
-          com.puppycrawl.tools.checkstyle.checks
+          com.puppycrawl.tools.checkstyle.checks.regexp
         </p>
       </subsection>
 
@@ -218,8 +218,7 @@
         <p>
           This class is variation on <a
           href="#RegexpSingleline">RegexpSingleline</a> for detecting
-          single lines that match a supplied regular expression in Java
-          files. It supports suppressing matches in Java comments.
+          single lines that match a supplied regular expression in Java files. It supports suppressing matches in Java comments.
         </p>
       </subsection>
 
@@ -298,7 +297,7 @@
 
       <subsection name="Package">
         <p>
-          com.puppycrawl.tools.checkstyle.checks
+          com.puppycrawl.tools.checkstyle.checks.regexp
         </p>
       </subsection>
 

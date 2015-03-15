@@ -1,7 +1,7 @@
 package hudson.plugins.checkstyle.rules;
-import static org.junit.Assert.*;
-
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests the class {@link CheckStyleRules}.
@@ -17,7 +17,7 @@ public class CheckStyleRulesTest {
         CheckStyleRules reader = CheckStyleRules.getInstance();
         reader.initialize();
 
-        assertEquals("Wrong number of rules detected.", 129, reader.getRules().size());
+        assertEquals("Wrong number of rules detected.", 145, reader.getRules().size());
         assertNotNull("No EmptyBlock rule found.", reader.getRule("EmptyBlock"));
         assertEquals("Description for EmptyBlock found.", "<p> Checks for empty blocks. </p>", reader.getRule("EmptyBlock").getDescription());
         assertNotSame("No description for AnnotationUseStyle found.", Rule.UNDEFINED_DESCRIPTION, reader.getRule("AnnotationUseStyle").getDescription());

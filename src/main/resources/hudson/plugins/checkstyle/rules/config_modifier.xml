@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <document xmlns="http://maven.apache.org/XDOC/2.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -86,13 +86,18 @@
           <li>the final modifier on methods of final classes, and </li>
           <li>
             inner <code>interface</code> declarations that are declared
-            as <code>static</code>
+            as <code>static</code>.
           </li>
         </ol>
         <p>
           Rationale: The Java Language Specification strongly
-          discourages the usage of "public" and "abstract" for method
+          discourages the usage of <code>public</code> and <code>abstract</code> for method
           declarations in interface definitions as a matter of style.
+        </p>
+
+        <p>
+          Interfaces by definition are abstract so the <code>abstract</code>
+          modifier on the interface is redundant.
         </p>
 
         <p>
@@ -108,7 +113,7 @@
         </p>
 
         <p>
-          Final classes by definition can not be extended so the final
+          Final classes by definition cannot be extended so the <code>final</code>
           modifier on the method of a final class is redundant.
         </p>
       </subsection>

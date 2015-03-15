@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <document xmlns="http://maven.apache.org/XDOC/2.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -25,7 +25,7 @@ int[] a = new int[]
         </source>
 
         <p>
-          The check allows to not add a comma if both left and right curlys
+          The check allows leaving out the comma at the end if both the left and right curly brackets
           are on the same line.
         </p>
         <source>
@@ -63,7 +63,7 @@ return new int[] { 0 };
     <section name="AvoidInlineConditionals">
       <subsection name="Description">
         <p>
-          Detects inline conditionals. An example inline conditional is this:
+          Detects inline conditionals. Here is one example of an inline conditional:
         </p>
         <source>
 String a = getParameter("a");
@@ -72,7 +72,7 @@ String b = (a==null || a.length&lt;1) ? null : a.substring(1);
 
         <p>
           Rationale: Some developers find inline conditionals hard to read, so
-          their company's coding standards forbids them.
+          their employer's coding standards forbid them.
         </p>
       </subsection>
 
@@ -102,7 +102,7 @@ String b = (a==null || a.length&lt;1) ? null : a.substring(1);
       <subsection name="Description">
         <p>
           Checks that classes that define a covariant <code>equals()</code> method also override method <code>equals(java.lang.Object)</code>.  Inspired by <a
-          href="http://www.cs.umd.edu/~pugh/java/bugs/docs/findbugsPaper.pdf">findbugs</a>.
+          href="http://www.cs.nyu.edu/~lharris/papers/findbugsPaper.pdf">findbugs</a>.
         </p>
 
         <p>
@@ -133,75 +133,10 @@ String b = (a==null || a.length&lt;1) ? null : a.substring(1);
       </subsection>
     </section>
 
-    <section name="DoubleCheckedLocking">
-      <subsection name="Description">
-        <p>
-          The &quot;double-checked locking&quot; idiom (DCL) tries to avoid
-          the runtime cost of synchronization. An example that uses the DCL
-          idiom is this:
-        </p>
-        <source>
-public class MySingleton
-{
-    private static theInstance = null;
-
-    private MySingleton() {}
-
-    public MySingleton getInstance() {
-        if ( theInstance == null ) { // synchronize only if necessary
-            synchronized( MySingleton.class ) {
-                if ( theInstance == null ) {
-                    theInstance = new MySingleton();
-                }
-            }
-        }
-    }
-}
-        </source>
-
-        <p>
-          The problem with the DCL idiom in Java is that it just does not work
-          correctly.  Using it introduces bugs that are extremely hard to
-          track down and reproduce.  The <a
-          href="http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html">
-          &quot;Double-Checked Locking is Broken&quot; Declaration</a> has an
-          in depth explanation of the exact problem which has to do with the
-          semantics of the Java memory model.
-        </p>
-
-        <p>
-          The DoubleCheckedLocking check will find source code where a test is
-          wrapped in a synchronized block that is wrapped in the same test,
-          like in the example above.
-        </p>
-      </subsection>
-
-      <subsection name="Examples">
-        <p>
-          To configure the check:
-        </p>
-        <source>
-&lt;module name=&quot;DoubleCheckedLocking&quot;/&gt;
-        </source>
-      </subsection>
-
-      <subsection name="Package">
-        <p>
-          com.puppycrawl.tools.checkstyle.checks.coding
-        </p>
-      </subsection>
-
-      <subsection name="Parent Module">
-        <p>
-          <a href="config.html#TreeWalker">TreeWalker</a>
-        </p>
-      </subsection>
-    </section>
-
     <section name="EmptyStatement">
       <subsection name="Description">
         <p>
-          Detects empty statements (standalone ;).
+          Detects empty statements (standalone ";" semicolon).
         </p>
       </subsection>
 
@@ -240,12 +175,12 @@ public class MySingleton
           Rationale: Calling the <code>equals()</code>
           method on String literals will avoid a potential
           NullPointerException.  Also, it is pretty common to see null
-          check right before equals comparisons which is not necessary
-          in the below example.
+          checks right before equals comparisons, which is not necessary
+          in the example below.
         </p>
 
         <p>
-          For example:
+          For example, this code:
         </p>
         <source>
 String nullString = null;
@@ -265,15 +200,15 @@ String nullString = null;
           (where <code>s.equals(t)</code> does not return
           the same result as <code>t.equals(s)</code>) then
           rearranging the called on object and parameter may have
-          unexpected results
+          unexpected results.
         </p>
 
         <p>
-          Java's Autoboxing feature has an affect on how this check is
-          implemented. Pre Java 5 all IDENT + IDENT object
-          concatenations would not cause a NullPointerException even if
-          null.  Those situations could have been included in this
-          check.  They would simply act as if they surrounded by <code>String.valueof()</code> which would concatenate
+          Java's autoboxing feature affects how this check is
+          implemented. Before Java 5, concatenations of two objects by name would not cause a NullPointerException
+          even if either object is null.  Those situations could have been included in this
+          check.  They would simply act as if they were surrounded by <code>String.valueOf()</code>
+          which would concatenate
           the String null.
         </p>
         <p>
@@ -288,8 +223,8 @@ number.equals(i + j);
         </source>
 
         <p>
-          Since, it is difficult to determine what kind of Object is
-          being concatenated all ident concatenation is considered
+          Since it is difficult to determine what kind of Object is
+          being concatenated, all concatenations of two objects by name are considered
           unsafe.
         </p>
       </subsection>
@@ -343,9 +278,9 @@ number.equals(i + j);
         <p>
           Rationale: The contract of <code>equals()</code> and
           <code>hashCode()</code> requires that equal objects
-          have the same hashCode. Hence, whenever you override <code>equals()</code> you must override <code>
+          have the same hashCode. Therefore, whenever you override <code>equals()</code> you must override <code>
           hashCode()</code> to ensure that your class can be used in
-          collections that are hash based.
+          hash-based collections.
         </p>
       </subsection>
 
@@ -480,7 +415,7 @@ number.equals(i + j);
 
           <tr>
             <td>ignoreFormat</td>
-            <td>pattern for names to ignore</td>
+            <td>pattern for names of variables and parameters to ignore</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
             <td>(not applied)</td>
           </tr>
@@ -498,7 +433,33 @@ number.equals(i + j);
               Controls whether to ignore the parameter of a property setter
               method, where the property setter method for field
               &quot;xyz&quot; has name &quot;setXyz&quot;, one parameter named
-              &quot;xyz&quot;, and return type <code>void</code>.
+              &quot;xyz&quot; and return type of <code>void</code>
+              ( default behavior) or class in which method is declared (only
+              if property <code>setterCanReturnItsClass</code> is set
+              to <code>true</code>).
+            </td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
+            <td><code>false</code></td>
+          </tr>
+
+          <tr>
+            <td>setterCanReturnItsClass</td>
+            <td>
+              Used in conjunction with <code>ignoreSetter</code> property it
+              controls rule that recognizes method as a setter. By default
+              setter is a method with signature of type
+              <pre>
+                void setXyz(${someType} xyz)
+              </pre>
+              By setting this property (<code>setterCanReturnItsClass</code>)
+              to <code>true</code> we expand definition of setter to also
+              include returning class in which setter is defined. For example
+              <pre>
+                class Foo {
+                    int prop;
+                    Foo setProp(int prop) { this.prop = prop; }
+                }
+              </pre>
             </td>
             <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
@@ -533,13 +494,31 @@ number.equals(i + j);
         </source>
 
         <p>
-          To configure the check so that it ignores the name
-          &quot;rcsid&quot;:
+          To configure the check so that it ignores the variables and parameters named
+          &quot;test&quot;:
         </p>
         <source>
 &lt;module name=&quot;HiddenField&quot;&gt;
-    &lt;property name=&quot;ignoreFormat&quot; value=&quot;^rcsid$&quot;/&gt;
+    &lt;property name=&quot;ignoreFormat&quot; value=&quot;^test$&quot;/&gt;
 &lt;/module&gt;
+        </source>
+
+        <source>
+class SomeClass
+{
+    private List&lt;String&gt; test;
+
+    private void addTest(List&lt;String&gt; test) // no violation
+    {
+        this.test.addAll(test);
+    }
+
+    private void foo()
+    {
+        final List&lt;String&gt; test = new ArrayList&lt;&gt;(); // no violation
+        ...
+    }
+}
         </source>
 
         <p>
@@ -558,6 +537,18 @@ number.equals(i + j);
         <source>
 &lt;module name=&quot;HiddenField&quot;&gt;
     &lt;property name=&quot;ignoreSetter&quot; value=&quot;true&quot;/&gt;
+&lt;/module&gt;
+        </source>
+
+        <p>
+          To configure the check so that it ignores the parameter of setter
+          methods recognizing setter as returning either <code>void</code> or
+              a class in which it is declared:
+        </p>
+        <source>
+&lt;module name=&quot;HiddenField&quot;&gt;
+    &lt;property name=&quot;ignoreSetter&quot; value=&quot;true&quot;/&gt;
+    &lt;property name=&quot;setterCanReturnItsClass&quot; value=&quot;true&quot;/&gt;
 &lt;/module&gt;
         </source>
       </subsection>
@@ -590,7 +581,7 @@ number.equals(i + j);
 
         <p>
           A simple example is the <code>java.lang.Boolean</code>
-          class. In order to save memory and CPU cycles, it is preferable to
+          class. For performance reasons, it is preferable to
           use the predefined constants <code> TRUE</code> and
           <code>FALSE</code>. Constructor invocations should be
           replaced by calls to <code>Boolean.valueOf()</code>.
@@ -658,10 +649,10 @@ number.equals(i + j);
         </p>
 
         <p>
-          Rational: Certain language features often lead to hard to maintain
-          code or are non-obvious to novice developers. Other features may be
+          Rational: Certain language features often lead to hard-to-maintain
+          code or are not obvious to novice developers. Other features may be
           discouraged in certain frameworks, such as not having native methods
-          in EJB components.
+          in Enterprise JavaBeans components.
         </p>
       </subsection>
 
@@ -806,9 +797,9 @@ number.equals(i + j);
 
         <p>
           Rationale: With the exception of <code>for</code>
-          iterators, all assignments should occur in their own toplevel
+          iterators, all assignments should occur in their own top-level
           statement to increase readability.  With inner assignments like the
-          above it is difficult to see all places where a variable is set.
+          one given above, it is difficult to see all places where a variable is set.
         </p>
       </subsection>
 
@@ -937,7 +928,7 @@ number.equals(i + j);
 
         <p>
           To configure the check so that it checks floating-point numbers
-          that are neither 0, 0.5, nor 1:
+          that are not 0, 0.5, or 1:
         </p>
         <source>
 &lt;module name=&quot;MagicNumber&quot;&gt;
@@ -963,7 +954,7 @@ number.equals(i + j);
     <section name="MissingSwitchDefault">
       <subsection name="Description">
         <p>
-          Checks that switch statement has &quot;default&quot; clause.
+          Checks that switch statement has a &quot;default&quot; clause.
         </p>
 
         <p>
@@ -971,7 +962,7 @@ number.equals(i + j);
           every switch statement. Even if the developer is sure that all
           currently possible cases are covered, this should be expressed in
           the default branch, e.g. by using an assertion. This way the code is
-          protected aginst later changes, e.g. introduction of new types in an
+          protected against later changes, e.g. introduction of new types in an
           enumeration type.
         </p>
       </subsection>
@@ -1040,109 +1031,10 @@ for (int i = 0; i &lt; 1; i++) {
       </subsection>
     </section>
 
-    <section name="RedundantThrows">
-      <subsection name="Description">
-        <p>
-          Checks for redundant exceptions declared in throws clause such as
-          duplicates, unchecked exceptions or subclasses of another declared
-          exception.
-        </p>
-      </subsection>
-
-      <subsection name="Properties">
-        <table>
-          <tr>
-            <th>name</th>
-            <th>description</th>
-            <th>type</th>
-            <th>default value</th>
-          </tr>
-          <tr>
-            <td>allowUnchecked</td>
-            <td>whether unchecked exceptions in throws are allowed or not</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><code>false</code></td>
-          </tr>
-          <tr>
-            <td>allowSubclasses</td>
-            <td> whether subclass of another declared exception
-            is allowed in throws clause </td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><code>false</code></td>
-          </tr>
-          <tr>
-            <td>logLoadErrors</td>
-            <td>This check may need to load exception classes mentioned in
-            the @throws tag to check whether they are RuntimeExceptions.
-            If loading the class fails, this property allows to control
-            checkstyle's error handling. If set to <code>false</code> a
-            classpath configuration problem is assumed and the TreeWalker
-            stops operating on the class completely.
-            If set to <code>true</code> (the default), checkstyle assumes a
-            typo or refactoring problem in the
-            javadoc and logs the problem in the normal checkstyle report
-            (potentially masking a configuration error).</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><code>true</code></td>
-          </tr>
-          <tr>
-            <td>suppressLoadErrors</td>
-            <td>When logLoadErrors is set to true, the TreeWalker completely
-            processes a class and displays any problems with loading exceptions
-            as checkstyle violations.
-            When this property is set to true, the violations generated when
-            logLoadErrors is set true are suppressed from being reported as
-            violations in the checkstyle report.
-            </td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><code>false</code></td>
-          </tr>
-        </table>
-      </subsection>
-
-      <subsection name="Examples">
-        <p>
-          To configure the default check:
-        </p>
-        <source>
-&lt;module name=&quot;RedundantThrows&quot;/&gt;
-        </source>
-
-        <p>
-          To configure the check to allow unchecked exception in throws clause
-        </p>
-        <source>
-&lt;module name="RedundantThrows"&gt;
-    &lt;property name=&quot;allowUnchecked&quot; value=&quot;true&quot;/&gt;
-&lt;/module&gt;
-        </source>
-      </subsection>
-
-      <subsection name="Note">
-        <p>
-          The classpath should be configured to locate the class
-          information. The classpath configuration is dependent on the
-          mechanism used to invoke Checkstyle.
-        </p>
-      </subsection>
-
-      <subsection name="Package">
-        <p>
-          com.puppycrawl.tools.checkstyle.checks.coding
-        </p>
-      </subsection>
-
-      <subsection name="Parent Module">
-        <p>
-          <a href="config.html#TreeWalker">TreeWalker</a>
-        </p>
-      </subsection>
-    </section>
-
     <section name="SimplifyBooleanExpression">
       <subsection name="Description">
         <p>
-          Checks for overly complicated boolean expressions. Currently finds
+          Checks for over-complicated boolean expressions. Currently finds
           code like <code> if (b == true)</code>, <code>b || true</code>, <code>!false</code>,
           etc.
         </p>
@@ -1178,7 +1070,7 @@ for (int i = 0; i &lt; 1; i++) {
     <section name="SimplifyBooleanReturn">
       <subsection name="Description">
         <p>
-          Checks for overly complicated boolean return statements. For example
+          Checks for over-complicated boolean return statements. For example
           the following code
         </p>
         <source>
@@ -1196,7 +1088,7 @@ return !valid();
         </source>
 
         <p>
-          The Idea for this Check has been shamelessly stolen from the
+          The idea for this Check has been shamelessly stolen from the
           equivalent <a href="http://pmd.sourceforge.net">PMD</a> rule.
         </p>
       </subsection>
@@ -1440,101 +1332,14 @@ if (&quot;something&quot;.equals(x))
        </p>
 
        <p>
-       Rationale: The clone method relies on strange/hard to follow rules that
-       do not work it all situations.  Consequently, it is difficult to
-       override correctly.  Below are some of the rules/reasons why the clone
-       method should be avoided.
-       </p>
-
-       <ul>
-       <li>
-       Classes supporting the clone method should implement the Cloneable
-       interface but the Cloneable interface does not include the clone method.
-       As a result, it doesn't enforce the method override.
-       </li>
-       <li>
-       The Cloneable interface forces the Object's clone method to work
-       correctly. Without implementing it, the Object's clone method will
-       throw a CloneNotSupportedException.
-       </li>
-       <li>
-       Non-final classes must return the object returned from a call to
-       super.clone().
-       </li>
-       <li>
-       Final classes can use a constructor to create a clone which is different
-       from non-final classes.
-       </li>
-       <li>
-       If a super class implements the clone method incorrectly all subclasses
-       calling super.clone() are doomed to failure.
-       </li>
-       <li>
-       If a class has references to mutable objects then those object
-       references must be replaced with copies in the clone method
-       after calling super.clone().
-       </li>
-       <li>
-       The clone method does not work correctly with final mutable object
-       references because final references cannot be reassigned.
-       </li>
-       <li>
-       If a super class overrides the clone method then all subclasses must
-       provide a correct clone implementation.
-       </li>
-       </ul>
-
-       <p>
-       Two alternatives to the clone method, in some cases, is a copy constructor
-       or a static factory method to return copies of an object. Both of these
-       approaches are simpler and do not conflict with final fields. The do not
-       force the calling client to handle a CloneNotSuportException.  They also
-       are typed therefore no casting is necessary. Finally, they are more
-       flexible since they can take interface types rather than concrete classes.
-       </p>
-
-       <p>
-       Sometimes a copy constructor or static factory is not an acceptable
-       alternative to the clone method.  The example below highlights the
-       limitation of a copy constructor (or static factory). Assume
-       Square is a subclass for Shape.
-       </p>
-
-       <source>
-       Shape s1 = new Square();
-       System.out.println(s1 instanceof Square); //true
-       </source>
-
-       <p>
-       ...assume at this point the code knows nothing of s1 being a Square
-          that's the beauty of polymorphism but the code wants to copy
-          the Square which is declared as a Shape, its super type...
-       </p>
-
-       <source>
-       Shape s2 = new Shape(s1); //using the copy constructor
-       System.out.println(s2 instanceof Square); //false
-       </source>
-
-       <p>
-       The working solution (without knowing about all subclasses and doing many
-       casts) is to do the following (assuming correct clone implementation).
-       </p>
-
-       <source>
-       Shape s2 = s1.clone();
-       System.out.println(s2 instanceof Square); //true
-       </source>
-
-       <p>
-       Just keep in mind if this type of polymorphic cloning is required
-       then a properly implemented clone method may be the best choice.
-       </p>
-
-       <p>
-       Much of this information was taken from Effective Java:
+       Rationale: The clone method relies on strange, hard to follow rules that
+       are difficult to get right and do not work in all situations.
+       In some cases, either a copy constructor
+       or a static factory method can be used instead of the clone method
+       to return copies of an object.
+       For more information on rules for the clone method and its issues, see Effective Java:
        Programming Language Guide First Edition by Joshua Bloch
-       pages 45-52.  Give Bloch credit for writing an excellent book.
+       pages 45-52.
        </p>
 
        <p>
@@ -1602,7 +1407,7 @@ if (&quot;something&quot;.equals(x))
 
         <p>
           Reference: <a
-          href="http://java.sun.com/j2se/1.4.2/docs/api/java/lang/Object.html#clone()">Object.clone()</a>.
+          href="https://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#clone%28%29">Object.clone()</a>.
         </p>
       </subsection>
 
@@ -1637,8 +1442,8 @@ if (&quot;something&quot;.equals(x))
 
         <p>
           Reference: <a
-          href="http://java.sun.com/docs/books/tutorial/java/data/garbagecollection.html">Cleaning
-          Up Unused Objects</a>.
+          href="http://www.oracle.com/technetwork/java/javamail/finalization-137655.html">
+          Use Finalization Only When You Must</a>.
         </p>
       </subsection>
 
@@ -1667,14 +1472,16 @@ if (&quot;something&quot;.equals(x))
     <section name="IllegalCatch">
       <subsection name="Description">
         <p>
-          Catching java.lang.Exception, java.lang.Error or
-          java.lang.RuntimeException is almost never acceptable.
+        Checks that certain exception types do not appear in a <code>catch</code> statement.
         </p>
 
         <p>
-          Rationale: Junior developers often simply catch Exception in an
+          Rationale:
+          Catching java.lang.Exception, java.lang.Error or
+          java.lang.RuntimeException is almost never acceptable.
+          Novice developers often simply catch Exception in an
           attempt to handle multiple exception classes. This unfortunately
-          leads to code that inadvertantly catchs NPE, OutOfMemoryErrors, etc.
+          leads to code that inadvertently catches NullPointerException, OutOfMemoryError, etc.
         </p>
       </subsection>
 
@@ -1722,7 +1529,7 @@ if (&quot;something&quot;.equals(x))
       <subsection name="Description">
         <p>
           This check can be used to ensure that types are not declared
-          to be thrown. Declaring to throw java.lang.Error or
+          to be thrown. Declaring that a method throws java.lang.Error or
           java.lang.RuntimeException is almost never acceptable.
         </p>
       </subsection>
@@ -1750,6 +1557,13 @@ if (&quot;something&quot;.equals(x))
             <td><a href="property_types.html#stringSet">list of strings</a></td>
             <td><code>finalize</code></td>
           </tr>
+          <tr>
+            <td>ignoreOverriddenMethods</td>
+            <td>ignore checking overridden methods (marked with Override or java.lang.Override
+             annotation).</td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
+            <td><code>true</code></td>
+          </tr>
         </table>
       </subsection>
 
@@ -1759,6 +1573,30 @@ if (&quot;something&quot;.equals(x))
         </p>
         <source>
 &lt;module name=&quot;IllegalThrows&quot;/&gt;
+        </source>
+        <p>
+          To configure the check rejecting throws NullPointerException from methods:
+        </p>
+        <source>
+&lt;module name=&quot;IllegalThrows&quot;&gt;
+    &lt;property name=&quot;illegalClassNames&quot; value=&quot;NullPointerException&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>
+          To configure the check ignoring method named &quot;foo()&quot;:
+        </p>
+        <source>
+&lt;module name=&quot;IllegalThrows&quot;&gt;
+    &lt;property name=&quot;ignoredMethodNames&quot; value=&quot;foo&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>
+          To configure the check to warn on overridden methods:
+        </p>
+        <source>
+&lt;module name=&quot;IllegalThrows&quot;&gt;
+    &lt;property name=&quot;ignoreOverriddenMethods&quot; value=&quot;false&quot;/&gt;
+&lt;/module&gt;
         </source>
       </subsection>
 
@@ -1778,7 +1616,7 @@ if (&quot;something&quot;.equals(x))
     <section name="PackageDeclaration">
       <subsection name="Description">
         <p>
-          Ensure a class is has a package declaration, and (optionally) whether
+          Ensures that a class has a package declaration, and (optionally) whether
           the package name matches the directory name for the source file.
         </p>
 
@@ -1787,27 +1625,6 @@ if (&quot;something&quot;.equals(x))
           imported. Many novice developers are not aware of this.
         </p>
       </subsection>
-
-      <subsection name="Properties">
-        <table>
-          <tr>
-            <th>name</th>
-            <th>description</th>
-            <th>type</th>
-            <th>default value</th>
-          </tr>
-          <tr>
-            <td>ignoreDirectoryName</td>
-            <td>
-              whether to ignore checking that the package declaration matches
-              the source directory name
-            </td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
-            <td><code>false</code></td>
-          </tr>
-        </table>
-      </subsection>
-
 
       <subsection name="Examples">
         <p>
@@ -1831,56 +1648,15 @@ if (&quot;something&quot;.equals(x))
       </subsection>
     </section>
 
-    <section name="JUnitTestCase">
-      <subsection name="Description">
-        <p>
-          Ensures that the setUp(), tearDown()methods are named correctly,
-          have no arguments, return void and are either public or
-          protected.
-        </p>
-
-        <p>
-          Also ensures that suite() is named correctly, have no arguments,
-          return junit.framewotk.Test, public and static.
-        </p>
-
-        <p>
-          Rationale: often times developers will misname one or more of these
-          methods and not realise that the method is not being called.
-        </p>
-      </subsection>
-
-      <subsection name="Examples">
-        <p>
-          To configure the check:
-        </p>
-        <source>
-&lt;module name=&quot;JUnitTestCase&quot;/&gt;
-        </source>
-      </subsection>
-
-      <subsection name="Package">
-        <p>
-          com.puppycrawl.tools.checkstyle.checks.coding
-        </p>
-      </subsection>
-
-      <subsection name="Parent Module">
-        <p>
-          <a href="config.html#TreeWalker">TreeWalker</a>
-        </p>
-      </subsection>
-    </section>
-
     <section name="ReturnCount">
       <subsection name="Description">
         <p>
-          Restricts the number of return statements. Default = 2.  Ignores
+          Restricts the number of return statements (2 by default).  Ignores
           specified methods (<code>equals()</code> by default).
         </p>
 
         <p>
-          Rationale: Too many return points can be indication that code is
+          Rationale: Too many return points can mean that code is
           attempting to do too much or may be difficult to understand.
         </p>
       </subsection>
@@ -1895,13 +1671,13 @@ if (&quot;something&quot;.equals(x))
           </tr>
           <tr>
             <td>max</td>
-            <td>maximum allowed number of return statments</td>
+            <td>maximum allowed number of return statements</td>
             <td><a href="property_types.html#integer">Integer</a></td>
             <td><code>2</code></td>
           </tr>
           <tr>
             <td>format</td>
-            <td>method names to ingone</td>
+            <td>method names to ignore</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
             <td><code>^equals$</code> (empty)</td>
           </tr>
@@ -1911,8 +1687,8 @@ if (&quot;something&quot;.equals(x))
       <subsection name="Examples">
         <p>
           To configure the check so that it doesn't allow more than three
-          return statements per method (<code>equals()</code>
-          method ignored):
+          return statements per method (ignoring the <code>equals()</code>
+          method):
         </p>
         <source>
 &lt;module name=&quot;ReturnCount&quot;&gt;
@@ -1948,15 +1724,15 @@ if (&quot;something&quot;.equals(x))
     <section name="IllegalType">
       <subsection name="Description">
         <p>
-          Checks that particular class are never used as types in variable
+          Checks that particular classes are never used as types in variable
           declarations, return values or parameters. Includes a pattern check
           that by default disallows abstract classes.
         </p>
 
         <p>
           Rationale: Helps reduce coupling on concrete classes. In addition
-          abstract classes should be thought of a convenience base class
-          implementations of interfaces and as such are not types themselves.
+          abstract classes should be thought of as convenient base class
+          implementations of interfaces, and as such, are not types themselves.
         </p>
       </subsection>
 
@@ -1989,43 +1765,57 @@ if (&quot;something&quot;.equals(x))
           </tr>
           <tr>
             <td>illegalClassNames</td>
-            <td>classes that should not be used as types in variable
-            declarations, return values or parameters. </td>
+            <td>Classes that should not be used as types in variable
+            declarations, return values or parameters</td>
             <td><a href="property_types.html#stringSet">String Set</a></td>
-            <td>&quot;java.util.GregorianCalendar, java.util.Hashtable,
-            java.util.HashSet, java.util.HashMap, java.util.ArrayList,
-            java.util.LinkedList, java.util.LinkedHashMap,
+            <td>&quot;java.util.HashSet, java.util.HashMap, java.util.LinkedHashMap,
             java.util.LinkedHashSet, java.util.TreeSet,
-            java.util.TreeMap, java.util.Vector&quot;</td>
+            java.util.TreeMap&quot;</td>
           </tr>
           <tr>
           <td>legalAbstractClassNames</td>
-          <td>abstract classes that may be used as types. </td>
+          <td>Abstract classes that may be used as types. </td>
           <td><a href="property_types.html#stringSet">String Set</a></td>
           <td></td>
         </tr>
         <tr>
             <td>ignoredMethodNames</td>
-            <td>methods that should not be checked</td>
+            <td>Methods that should not be checked.</td>
             <td><a href="property_types.html#stringSet">String Set</a></td>
             <td>&quot;getInitialContext, getEnvironment&quot; </td>
           </tr>
           <tr>
             <td>format</td>
-            <td>pattern for illegal class name</td>
+            <td>Pattern for illegal class names.</td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
             <td><code>^(.*[\\.])?Abstract.*$</code></td>
+          </tr>
+          <tr>
+            <td>memberModifiers</td>
+            <td>Check methods and fields with only corresponding modifiers.</td>
+            <td><a href="property_types.html#stringSet">List of tokens</a></td>
+            <td><code>null</code></td>
           </tr>
         </table>
       </subsection>
 
       <subsection name="Examples">
         <p>
-          To configure the check so that it ignore getInstance() method:
+          To configure the check so that it ignores getInstance() methods:
         </p>
         <source>
 &lt;module name=&quot;IllegalType&quot;&gt;
     &lt;property name=&quot;ignoredMethodNames&quot; value=&quot;getInstance&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>
+          To configure the Check so that it verifies only public, protected and static
+           methods and fields:
+        </p>
+        <source>
+&lt;module name=&quot;IllegalType&quot;&gt;
+    &lt;property name=&quot;memberModifiers&quot; value=&quot;LITERAL_PUBLIC,
+     LITERAL_PROTECTED, LITERAL_STATIC&quot;/&gt;
 &lt;/module&gt;
         </source>
       </subsection>
@@ -2047,7 +1837,7 @@ if (&quot;something&quot;.equals(x))
       <subsection name="Description">
         <p>
           According to <a
-          href="http://java.sun.com/docs/codeconv/html/CodeConventions.doc2.html#1852">
+          href="http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-141855.html#1852">
           Code Conventions for the Java Programming Language</a> , the parts
           of a class or interface declaration should appear in the following
           order:
@@ -2056,12 +1846,12 @@ if (&quot;something&quot;.equals(x))
         <ol>
           <li>
             Class (static) variables. First the public class variables, then
-            the protected, then package level (no access modifier), and then
-            the private.
+             protected, then package level (no access modifier), and then
+             private.
           </li>
           <li>
-            Instance variables. First the public class variables, then the
-            protected, then package level (no access modifier), and then the
+            Instance variables. First the public class variables, then
+            protected, then package level (no access modifier), and then
             private.
           </li>
           <li> Constructors </li>
@@ -2122,7 +1912,7 @@ if (&quot;something&quot;.equals(x))
 
     <section name="ParameterAssignment">
       <subsection name="Description">
-        <p> Disallow assignment of parameters.</p>
+        <p> Disallows assignment of parameters.</p>
         <p>
           Rationale: Parameter assignment is often considered poor programming
           practice. Forcing developers to declare parameters as final is often
@@ -2156,20 +1946,20 @@ if (&quot;something&quot;.equals(x))
     <section name="ExplicitInitialization">
       <subsection name="Description">
         <p>
-          Checks if any class or object member explicitly initialized to
+          Checks if any class or object member is explicitly initialized to
           default for its type value (<code>null</code> for
           object references, zero for numeric types and <code>char</code> and <code>false</code> for
           <code>boolean</code>.
         </p>
 
         <p>
-          Rationale: each instance variable gets initialized twice, to the
+          Rationale: Each instance variable gets initialized twice, to the
           same value.  Java initializes each instance variable to its default
           value (0 or null) before performing any initialization specified in
           the code.  So in this case, x gets initialized to 0 twice, and bar
           gets initialized to null twice.  So there is a minor inefficiency.
-          This style of coding is a hold-over from C/C++ style coding, and it
-          shows that the developer isn't really confident that Java really
+          This style of coding is a holdover from C/C++ style coding, and it
+          shows that the developer isn't really confident that Java
           initializes instance variables to default values.
         </p>
       </subsection>
@@ -2235,7 +2025,7 @@ if (&quot;something&quot;.equals(x))
     <section name="MissingCtor">
       <subsection name="Description">
         <p>
-          Checks that classes (except abtract one) define a ctor and don't
+          Checks that classes (except abstract ones) define a constructor and don't
           rely on the default one.
         </p>
       </subsection>
@@ -2265,20 +2055,21 @@ if (&quot;something&quot;.equals(x))
     <section name="FallThrough">
       <subsection name="Description">
         <p>
-          Checks for fall through in <code>switch</code>
-          statements Finds locations where a <code>case</code>
-          contains Java code - but lacks a <code>break</code>, <code>return</code>, <code>throw</code> or <code>continue</code>
+          Checks for fall-through in <code>switch</code>
+          statements. Finds locations where a <code>case</code>
+          contains Java code but lacks a <code>break</code>, <code>return</code>,
+          <code>throw</code> or <code>continue</code>
           statement.
         </p>
         <p>
-          The check honores special comments to supress the warning. By
+          The check honors special comments to suppress the warning. By
           default the text "fallthru", "fall through", "fallthrough",
           "falls through" and "fallsthrough" are recognized (case
-          sensitive). The comment containing this words must be a
-          one-liner and must be on the last none-empty line before the
+          sensitive). The comment containing these words must be all on one line, and must
+          be on the last non-empty line before the
           <code>case</code> triggering the warning or on
           the same line before the <code>case</code>
-          (urgly, but possible).
+          (ugly, but possible).
         </p>
         <source>
 switch (i){
@@ -2300,7 +2091,7 @@ case 3:
 }
         </source>
         <p>
-          Note: the check works in assumption that there is no unreachable
+          Note: The check assumes that there is no unreachable
           code in the <code>case</code>.
         </p>
       </subsection>
@@ -2316,7 +2107,7 @@ case 3:
           <tr>
             <td>checkLastCaseGroup</td>
             <td>
-              Whether we need to check last case group or not.
+              Whether the last case group must be checked.
             </td>
             <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
@@ -2324,7 +2115,7 @@ case 3:
           <tr>
             <td>reliefPattern</td>
             <td>
-              Regulare expression to match the relief comment that supresses
+              Regular expression to match the relief comment that suppresses
               the warning about a fall through.
             </td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
@@ -2387,7 +2178,7 @@ case 3:
           <tr>
             <td>allowedDuplicates</td>
             <td>
-              The maximum number of occurences to allow without generating a
+              The maximum number of occurrences to allow without generating a
               warning
             </td>
             <td><a href="property_types.html#integer">Integer</a></td>
@@ -2396,7 +2187,7 @@ case 3:
           <tr>
             <td>ignoreStringsRegexp</td>
             <td>
-              regexp pattern for ignored strings (with quotation marks)
+              Regular expression pattern for ignored strings (with quotation marks)
             </td>
             <td><a href="property_types.html#regexp">regular expression</a></td>
             <td><code>^""$</code> (ignore empty strings)</td>
@@ -2406,7 +2197,7 @@ case 3:
             <td>
               Token type names where duplicate strings are ignored even if they don't match
               ignoredStringsRegexp. This allows you to exclude syntactical contexts like
-              Annotations or static initializers from the check.
+              annotations or static initializers from the check.
             </td>
             <td>
               <a href="property_types.html#stringSet">list</a> of
@@ -2483,7 +2274,7 @@ case 3:
         <p>
           Rationale: <a
           href="http://java.sun.com/docs/codeconv/html/CodeConventions.doc5.html#2991">
-          the SUN Code conventions chapter 6.1</a> recommends that
+          the Java code conventions chapter 6.1</a> recommends that
           declarations should be one per line/statement.
         </p>
       </subsection>
@@ -2513,10 +2304,10 @@ case 3:
     <section name="RequireThis">
       <subsection name="Description">
         <p>
-          Checks that code doesn't rely on the &quot;this.&quot; default,
-          i.e. references to instance variables and methods of the present
+          Checks that references to instance variables and methods of the present
           object are explicitly of the form &quot;this.varName&quot; or
-          &quot;this.methodName(args)&quot;.
+          &quot;this.methodName(args)&quot; and that those references don't
+          rely on the default behavior when &quot;this.&quot; is absent.
         </p>
       </subsection>
 
@@ -2530,13 +2321,13 @@ case 3:
           </tr>
           <tr>
             <td>checkFields</td>
-            <td>whether we should check fields usage or not</td>
+            <td>Whether to check references to fields.</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
             <td><code>true</code></td>
           </tr>
           <tr>
             <td>checkMethods</td>
-            <td>whether we should check methods usage or not</td>
+            <td>Whether to check references to methods.</td>
             <td><a href="property_types.html#boolean">boolean</a></td>
             <td><code>true</code></td>
           </tr>
@@ -2552,7 +2343,7 @@ case 3:
         </source>
 
         <p>
-          To configure to check <code>this</code> qualifier for fields only:
+          To configure to check the <code>this</code> qualifier for fields only:
         </p>
         <source>
 &lt;module name="RequireThis"&gt;
@@ -2606,11 +2397,11 @@ case 3:
     <section name="OneStatementPerLine">
       <subsection name="Description">
         <p>
-          Checks there is only one statement per line. The following line
+          Checks that there is only one statement per line. The following line
           will be flagged as an error:
         </p>
 
-        <source>    x = 1; y = 2; // Two statments on a single line.</source>
+        <source>    x = 1; y = 2; // Two statements on a single line.</source>
       </subsection>
 
       <subsection name="Examples">
@@ -2621,6 +2412,235 @@ case 3:
 &lt;module name=&quot;OneStatementPerLine&quot;/&gt;
         </source>
       </subsection>
+
+      <subsection name="Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.coding
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p>
+          <a href="config.html#TreeWalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
+    <section name="VariableDeclarationUsageDistance">
+      <subsection name="Description">
+        <p>
+          Checks the distance between declaration of variable and its first usage.
+        </p>
+      </subsection>
+
+      <subsection name="Properties">
+        <table>
+          <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>type</th>
+            <th>default value</th>
+          </tr>
+
+          <tr>
+            <td>allowedDistance</td>
+            <td>A distance between declaration of variable and its first usage</td>
+            <td><a href="property_types.html#integer">integer</a></td>
+            <td>3</td>
+          </tr>
+
+          <tr>
+            <td>ignoreVariablePattern</td>
+            <td>pattern for ignoring the distance calculation</td>
+            <td><a href="property_types.html#regexp">regular expression</a></td>
+            <td>(not applied)</td>
+          </tr>
+
+          <tr>
+            <td>validateBetweenScopes</td>
+            <td>Allows to calculate the distance between declaration of variable and its first usage in the different scopes.</td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
+            <td><code>false</code></td>
+          </tr>
+
+          <tr>
+            <td>ignoreFinal</td>
+            <td>Allows to ignore variables with a 'final' modifier.</td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
+            <td><code>true</code></td>
+          </tr>
+        </table>
+      </subsection>
+
+      <subsection name="Examples">
+        <p>
+          Example #1:
+        </p>
+        <source>
+int count;
+a = a + b;
+b = a + a;
+count = b; // DECLARATION OF VARIABLE 'count'
+           // SHOULD BE HERE (distance = 3)
+        </source>
+        <p>
+          Example #2:
+        </p>
+        <source>
+int count;
+{
+     a = a + b;
+     count = b; // DECLARATION OF VARIABLE 'count'
+                // SHOULD BE HERE (distance = 2)
+}
+        </source>
+        <p>
+          Check can detect a block of initialization methods. If a variable is used in
+          such a block and there is no other statements after this variable then distance=1.
+        </p>
+        <p>
+          Case #1:
+        </p>
+        <source>
+int minutes = 5;
+Calendar cal = Calendar.getInstance();
+cal.setTimeInMillis(timeNow);
+cal.set(Calendar.SECOND, 0);
+cal.set(Calendar.MILLISECOND, 0);
+cal.set(Calendar.HOUR_OF_DAY, hh);
+cal.set(Calendar.MINUTE, minutes);
+        </source>
+        <p>
+          The distance for the variable minutes is 1 even
+          though this variable is used in the fifth method's call.
+        </p>
+        <p>
+          Case #2:
+        </p>
+        <source>
+int minutes = 5;
+Calendar cal = Calendar.getInstance();
+cal.setTimeInMillis(timeNow);
+cal.set(Calendar.SECOND, 0);
+cal.set(Calendar.MILLISECOND, 0);
+System.out.println(cal);
+cal.set(Calendar.HOUR_OF_DAY, hh);
+cal.set(Calendar.MINUTE, minutes);
+         </source>
+         <p>
+           The distance for the variable minutes is 6 because there is one more expression
+           (except the initialization block) between the declaration of this variable and its usage.
+         </p>
+         <p>
+           An example how to configure this Check:
+         </p>
+         <source>
+&lt;module name="VariableDeclarationUsageDistance"/&gt;
+         </source>
+         <p>
+           An example of how to configure this Check:
+            - to set the allowed distance to 4;
+            - to ignore variables with prefix '^temp';
+            - to force the validation between scopes;
+            - to check the final variables;
+         </p>
+         <source>
+&lt;module name="VariableDeclarationUsageDistance"&gt;
+    &lt;property name="allowedDistance" value="4"&gt;
+    &lt;property name="ignoreVariablePattern" value="^temp.*"&gt;
+    &lt;property name="validateBetweenScopes" value="true"&gt;
+    &lt;property name="mIgnoreFinal" value="false"&gt;
+&lt;/module&gt;
+         </source>
+      </subsection>
+      <subsection name="Note">
+        <p>
+          ATTENTION!! (Not supported cases)
+        </p>
+        <source>
+ Case #1:
+ {
+ int c;
+ int a = 3;
+ int b = 2;
+     {
+     a = a + b;
+     c = b;
+     }
+ }
+        </source>
+        <p>
+          Distance for variable 'a' = 1;
+          Distance for variable 'b' = 1;
+          Distance for variable 'c' = 2.
+         </p>
+         <p>
+           As distance by default is 1 the Check doesn't raise warning for
+           variables 'a' and 'b' to move them into the block.
+         </p>
+         <p>
+           Case #2:
+         </p>
+         <source>
+ int sum = 0;
+ for (int i = 0; i &lt; 20; i++) {
+     a++;
+     b--;
+     sum++;
+     if (sum > 10) {
+         res = true;
+     }
+ }
+         </source>
+         <p>
+           Distance for variable 'sum' = 3.
+         </p>
+         <p>
+           As the distance is more then the default one, the Check
+           raises warning for variable 'sum' to move it into the 'for(...)' block.
+           But there is situation when variable 'sum' hasn't to be 0 within each iteration.
+           So, to avoid such warnings you can use Suppression Filter, provided by
+           Checkstyle, for the whole class.
+         </p>
+      </subsection>
+
+      <subsection name="Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.coding
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p>
+          <a href="config.html#TreeWalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
+        <section name="OverloadMethodsDeclarationOrder">
+      <subsection name="Description">
+        <p>
+          Checks that overload methods are grouped together.
+        </p>
+      </subsection>
+
+      <subsection name="Examples">
+        <p>
+          Example of incorrect grouping overload methods:
+        </p>
+        <source>
+public void foo(int i) {}
+public void foo(String s) {}
+public void notFoo() {} // Have to be after foo(int i, String s)
+public void foo(int i, String s) {}
+        </source>
+        <p>
+          An example of how to configure the check is:
+        </p>
+        <source>
+&lt;module name="OverloadMethodsDeclarationOrder"/&gt;
+        </source>
+        </subsection>
 
       <subsection name="Package">
         <p>
