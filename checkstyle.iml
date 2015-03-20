@@ -23,16 +23,14 @@
     <orderEntry type="module" module-name="analysis-core" />
     <orderEntry type="library" name="Maven: de.java2html:java2html:5.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.3.2" level="project" />
-    <orderEntry type="library" name="Maven: com.puppycrawl.tools:checkstyle:6.4.1" level="project" />
-    <orderEntry type="library" name="Maven: org.antlr:antlr4-runtime:4.3" level="project" />
-    <orderEntry type="library" name="Maven: org.abego.treelayout:org.abego.treelayout.core:1.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.antlr:antlr4-annotations:4.3" level="project" />
+    <orderEntry type="library" name="Maven: com.puppycrawl.tools:checkstyle:5.8" level="project" />
     <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils-core:1.8.3" level="project" />
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.2" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava-jdk5:14.0.1" level="project" />
     <orderEntry type="module-library">
-      <library name="Maven: com.sun:tools:1.7.0">
+      <library name="Maven: com.sun:tools:1.5.0">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/com/sun/tools/1.7.0/tools-1.7.0.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/com/sun/tools/1.5.0/tools-1.5.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

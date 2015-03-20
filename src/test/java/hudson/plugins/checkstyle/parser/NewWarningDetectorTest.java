@@ -1,5 +1,6 @@
 package hudson.plugins.checkstyle.parser;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -9,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -95,10 +97,28 @@ public class NewWarningDetectorTest {
     private int createHashCode(final String fileName, final int line) {
         try {
             ContextHashCode hashCode = new ContextHashCode();
-            return hashCode.create(fileName, line, "UTF-8");
+            return hashCode.create(getTempFileName(fileName), line, "UTF-8");
         }
         catch (IOException e) {
             throw new RuntimeException("Can't read Java file " + fileName, e);
+        }
+    }
+
+    private String getTempFileName(final String fileName) {
+        File warnings = createCopyInTemp(fileName);
+        return warnings.getAbsolutePath();
+    }
+
+    private File createCopyInTemp(final String fileName) {
+        try {
+            File warnings = File.createTempFile("warnings", ".java");
+            warnings.deleteOnExit();
+
+            FileUtils.copyInputStreamToFile(NewWarningDetectorTest.class.getResourceAsStream(fileName), warnings);
+            return warnings;
+        }
+        catch (IOException cause) {
+            throw new IllegalArgumentException(cause);
         }
     }
 
@@ -661,7 +681,8 @@ public class NewWarningDetectorTest {
 
     /**
      * Shows that a previous file has less warnings than the current file, if the current files have additional
-     * warnings. The difference in set theory is (current-warnings minus previous warnings), which are the new warnings.
+     * warnings. The difference in set theory is (current-warnings minus previous warnings), which are the new
+     * warnings.
      */
     @Test
     public void testCurrentHasMoreWarningsThanPrevious() {
@@ -761,10 +782,8 @@ public class NewWarningDetectorTest {
      * Use this method for calculating the hashcode, if the filename (inclusive file extension) before is equal after,
      * except that the after-filename has only(!) a postfix of the refactoring.
      *
-     * @param warningType
-     *            the warningType
-     * @param refactoring
-     *            the refactoring
+     * @param warningType the warningType
+     * @param refactoring the refactoring
      */
     private void checkThatHashesMatching(final String warningType, final String refactoring) {
         checkThatHashesMatching(warningType, warningType, warningType, refactoring, true);
@@ -778,16 +797,11 @@ public class NewWarningDetectorTest {
      * Use this method for calculating the hashcode, if the filename before is different as after, disregarded that the
      * after-filename has a postfix of the refactoring.
      *
-     * @param warningType
-     *            the warningType
-     * @param beforeClass
-     *            the name of the class before
-     * @param afterClass
-     *            the name of the class after
-     * @param refactoring
-     *            the refactoring
-     * @param expectedEqualHashcode
-     *            <code>true</code>, if the expected hashcode is equal, otherwise <code>false</code>.
+     * @param warningType           the warningType
+     * @param beforeClass           the name of the class before
+     * @param afterClass            the name of the class after
+     * @param refactoring           the refactoring
+     * @param expectedEqualHashcode <code>true</code>, if the expected hashcode is equal, otherwise <code>false</code>.
      */
     private void checkThatHashesMatching(final String warningType, final String beforeClass, final String afterClass,
             final String refactoring, final boolean expectedEqualHashcode) {
@@ -845,25 +859,13 @@ public class NewWarningDetectorTest {
     }
 
     private Ast getAst(final String javaFile, final String xmlFile, final String foldername, final boolean before) {
-        return AstFactory.getInstance(getPath(javaFile, foldername, before),
+        return AstFactory.getInstance(getTempFileName(calcCorrectPath(javaFile, foldername, before)),
                 readWarning(calcCorrectPath(xmlFile, foldername, before)));
     }
 
     private Ast getAst(final String javaFile, final FileAnnotation fileAnnotation, final String foldername,
             final boolean before) {
-        return AstFactory.getInstance(getPath(javaFile, foldername, before), fileAnnotation);
-    }
-
-    private String getPath(final String javaFile, final String foldername, final boolean before) {
-
-        String workspace = System.getProperty("user.dir");
-
-        @SuppressWarnings("PMD.InsufficientStringBufferDeclaration")
-        StringBuilder stringBuilderJavafile = new StringBuilder();
-        stringBuilderJavafile.append(workspace).append("/src/test/resources/hudson/plugins/checkstyle/parser/");
-        stringBuilderJavafile.append(calcCorrectPath(javaFile, foldername, before));
-
-        return stringBuilderJavafile.toString();
+        return AstFactory.getInstance(getTempFileName(calcCorrectPath(javaFile, foldername, before)), fileAnnotation);
     }
 
     private String calcCorrectPath(final String nameOfFile, final String foldername, final boolean before) {
