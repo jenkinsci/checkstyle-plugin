@@ -23,7 +23,6 @@ import hudson.plugins.analysis.util.ContextHashCode;
 import hudson.plugins.analysis.util.Singleton;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.ast.factory.Ast;
-import hudson.plugins.checkstyle.CheckStyleAstFactory;
 
 /**
  * Test cases for the new warnings detector.

@@ -17,7 +17,6 @@ import hudson.plugins.analysis.util.PackageDetectors;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
 import hudson.plugins.ast.factory.Ast;
-import hudson.plugins.checkstyle.CheckStyleAstFactory;
 
 /**
  * A parser for Checkstyle XML files.
