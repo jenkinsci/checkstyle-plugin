@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.commons.digester3.Digester;
 import org.apache.commons.lang.StringUtils;
@@ -89,7 +90,7 @@ public class CheckStyleParser extends AbstractAnnotationParser {
      * @return a maven module of the annotations API
      */
     private Collection<FileAnnotation> convert(final CheckStyle collection, final String moduleName) {
-        ArrayList<FileAnnotation> annotations = new ArrayList<FileAnnotation>();
+        List<FileAnnotation> annotations = new ArrayList<FileAnnotation>();
 
         for (hudson.plugins.checkstyle.parser.File file : collection.getFiles()) {
             if (isValidWarning(file)) {

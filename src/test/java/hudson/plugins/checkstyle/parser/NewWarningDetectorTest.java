@@ -23,7 +23,7 @@ import hudson.plugins.analysis.util.ContextHashCode;
 import hudson.plugins.analysis.util.Singleton;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.ast.factory.Ast;
-import hudson.plugins.ast.factory.AstFactory;
+import hudson.plugins.checkstyle.CheckStyleAstFactory;
 
 /**
  * Test cases for the new warnings detector.
@@ -753,25 +753,25 @@ public class NewWarningDetectorTest {
 
     private String matchWarningTypeToFoldername(final String warningType) {
         String ordnerName = "";
-        if (Arrays.asList(AstFactory.getClassAst()).contains(warningType)) {
+        if (Arrays.asList(CheckStyleAstFactory.getClassAst()).contains(warningType)) {
             ordnerName = CLASS_AST_FOLDERNAME;
         }
-        else if (Arrays.asList(AstFactory.getEnvironmentAst()).contains(warningType)) {
+        else if (Arrays.asList(CheckStyleAstFactory.getEnvironmentAst()).contains(warningType)) {
             ordnerName = ENVIRONMENT_AST_FOLDERNAME;
         }
-        else if (Arrays.asList(AstFactory.getFileAst()).contains(warningType)) {
+        else if (Arrays.asList(CheckStyleAstFactory.getFileAst()).contains(warningType)) {
             ordnerName = FILE_AST_FOLDERNAME;
         }
-        else if (Arrays.asList(AstFactory.getInstancevariableAst()).contains(warningType)) {
+        else if (Arrays.asList(CheckStyleAstFactory.getInstancevariableAst()).contains(warningType)) {
             ordnerName = INSTANCEVARIABLE_AST_FOLDERNAME;
         }
-        else if (Arrays.asList(AstFactory.getMethodAst()).contains(warningType)) {
+        else if (Arrays.asList(CheckStyleAstFactory.getMethodAst()).contains(warningType)) {
             ordnerName = METHOD_AST_FOLDERNAME;
         }
-        else if (Arrays.asList(AstFactory.getMethodOrClassAst()).contains(warningType)) {
+        else if (Arrays.asList(CheckStyleAstFactory.getMethodOrClassAst()).contains(warningType)) {
             ordnerName = METHOD_OR_CLASS_AST_FOLDERNAME;
         }
-        else if (Arrays.asList(AstFactory.getNamePackageAst()).contains(warningType)) {
+        else if (Arrays.asList(CheckStyleAstFactory.getNamePackageAst()).contains(warningType)) {
             ordnerName = NAME_PACKAGE_AST_FOLDERNAME;
         }
 
@@ -847,25 +847,18 @@ public class NewWarningDetectorTest {
 
     private String calcHashcode(final String javaFile, final String foldername, final String xmlFile,
             final boolean before) {
-        Ast ast;
-        if (before) {
-            ast = getAst(javaFile, xmlFile, foldername, true);
-        }
-        else {
-            ast = getAst(javaFile, xmlFile, foldername, false);
-        }
-
+        Ast ast = getAst(javaFile, xmlFile, foldername, before);
         return ast.calcSha(ast.chooseArea());
     }
 
     private Ast getAst(final String javaFile, final String xmlFile, final String foldername, final boolean before) {
-        return AstFactory.getInstance(getTempFileName(calcCorrectPath(javaFile, foldername, before)),
+        return CheckStyleAstFactory.getInstance(getTempFileName(calcCorrectPath(javaFile, foldername, before)),
                 readWarning(calcCorrectPath(xmlFile, foldername, before)));
     }
 
     private Ast getAst(final String javaFile, final FileAnnotation fileAnnotation, final String foldername,
             final boolean before) {
-        return AstFactory.getInstance(getTempFileName(calcCorrectPath(javaFile, foldername, before)), fileAnnotation);
+        return CheckStyleAstFactory.getInstance(getTempFileName(calcCorrectPath(javaFile, foldername, before)), fileAnnotation);
     }
 
     private String calcCorrectPath(final String nameOfFile, final String foldername, final boolean before) {
