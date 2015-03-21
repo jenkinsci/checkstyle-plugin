@@ -36,8 +36,7 @@ public class CheckStyleParser extends AbstractAnnotationParser {
     /**
      * Creates a new instance of {@link CheckStyleParser}.
      *
-     * @param defaultEncoding
-     *            the default encoding to be used when reading and parsing files
+     * @param defaultEncoding the default encoding to be used when reading and parsing files
      */
     public CheckStyleParser(final String defaultEncoding) {
         super(defaultEncoding);
@@ -65,7 +64,7 @@ public class CheckStyleParser extends AbstractAnnotationParser {
             digester.addSetNext(bugXPath, "addError", Error.class.getName());
 
             CheckStyle module;
-            module = (CheckStyle)digester.parse(new InputStreamReader(file, "UTF-8"));
+            module = (CheckStyle) digester.parse(new InputStreamReader(file, "UTF-8"));
             if (module == null) {
                 throw new SAXException("Input stream is not a Checkstyle file.");
             }
@@ -83,10 +82,8 @@ public class CheckStyleParser extends AbstractAnnotationParser {
     /**
      * Converts the internal structure to the annotations API.
      *
-     * @param collection
-     *            the internal maven module
-     * @param moduleName
-     *            name of the maven module
+     * @param collection the internal maven module
+     * @param moduleName name of the maven module
      * @return a maven module of the annotations API
      */
     private Collection<FileAnnotation> convert(final CheckStyle collection, final String moduleName) {
@@ -128,8 +125,8 @@ public class CheckStyleParser extends AbstractAnnotationParser {
     }
 
     /**
-     * Returns <code>true</code> if this warning is valid or <code>false</code>
-     * if the warning can't be processed by the checkstyle plug-in.
+     * Returns <code>true</code> if this warning is valid or <code>false</code> if the warning can't be processed by the
+     * checkstyle plug-in.
      *
      * @param file the file to check
      * @return <code>true</code> if this warning is valid

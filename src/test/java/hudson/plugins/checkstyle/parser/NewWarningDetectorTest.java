@@ -724,7 +724,7 @@ public class NewWarningDetectorTest {
         String hash;
         for (int i = 0; i < annotations.size(); i++) {
             ast = getAst(fileWithJavaExtension, Iterables.get(annotations, i), "", before);
-            hash = ast.calcSha(ast.chooseArea());
+            hash = ast.createContextHashCode();
             hashSet.add(hash);
         }
 
@@ -848,17 +848,19 @@ public class NewWarningDetectorTest {
     private String calcHashcode(final String javaFile, final String foldername, final String xmlFile,
             final boolean before) {
         Ast ast = getAst(javaFile, xmlFile, foldername, before);
-        return ast.calcSha(ast.chooseArea());
+        return ast.createContextHashCode();
     }
 
     private Ast getAst(final String javaFile, final String xmlFile, final String foldername, final boolean before) {
+        FileAnnotation warning = readWarning(calcCorrectPath(xmlFile, foldername, before));
         return CheckStyleAstFactory.getInstance(getTempFileName(calcCorrectPath(javaFile, foldername, before)),
-                readWarning(calcCorrectPath(xmlFile, foldername, before)).getType(), readWarning(calcCorrectPath(xmlFile, foldername, before)).getPrimaryLineNumber());
+                warning.getType(), warning.getPrimaryLineNumber());
     }
 
-    private Ast getAst(final String javaFile, final FileAnnotation fileAnnotation, final String foldername,
+    private Ast getAst(final String javaFile, final FileAnnotation warning, final String foldername,
             final boolean before) {
-        return CheckStyleAstFactory.getInstance(getTempFileName(calcCorrectPath(javaFile, foldername, before)), fileAnnotation.getType(), fileAnnotation.getPrimaryLineNumber());
+        return CheckStyleAstFactory.getInstance(getTempFileName(calcCorrectPath(javaFile, foldername, before)),
+                warning.getType(), warning.getPrimaryLineNumber());
     }
 
     private String calcCorrectPath(final String nameOfFile, final String foldername, final boolean before) {
