@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type FinalClass3Subclass_PushDownMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class FinalClass3Subclass_PushDownMethod extends FinalClass3Superclass_PushDownMethod {
 	private int x;

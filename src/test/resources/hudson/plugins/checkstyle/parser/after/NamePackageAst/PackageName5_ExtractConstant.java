@@ -3,7 +3,7 @@ package Edu.hm.hafner;
 /**
  * Document type PackageName5_ExtractConstant.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageName5_ExtractConstant {
 private static final String HALLO = "Hallo Christian";

@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type PackageName1Subclass_PullUpMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageName1Subclass_PullUpMethod extends PackageName1Superclass_PullUpMethod {
 	private Date date;

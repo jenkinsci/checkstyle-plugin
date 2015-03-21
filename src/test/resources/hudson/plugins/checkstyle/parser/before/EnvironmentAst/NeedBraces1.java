@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Useless class - only for test-cases.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class NeedBraces1 {
     private final Date date;

@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type MethodName1SubclassA_PullUpMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class MethodName1SubclassA_PullUpMethod extends MethodName1Superclass_PullUpMethod {
 

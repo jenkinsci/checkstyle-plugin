@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type FinalClass2Superclass_PullUpMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class FinalClass2Superclass_PullUpMethod {
 	/**

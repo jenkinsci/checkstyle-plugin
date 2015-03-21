@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type FinalClass4.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class FinalClass4 {
 	private int x;

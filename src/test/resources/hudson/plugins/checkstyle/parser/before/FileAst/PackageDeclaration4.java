@@ -3,7 +3,7 @@ import java.util.Date;
 /**
  * Document type PackageDeclaration4.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageDeclaration4 {
 	private Date date;

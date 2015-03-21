@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type PackageName3Subclass.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageName3Subclass extends PackageName3Superclass {
 	

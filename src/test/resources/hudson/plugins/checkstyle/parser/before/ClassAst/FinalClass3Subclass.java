@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type FinalClass3Subclass.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class FinalClass3Subclass extends FinalClass3Superclass {
 	private int x;

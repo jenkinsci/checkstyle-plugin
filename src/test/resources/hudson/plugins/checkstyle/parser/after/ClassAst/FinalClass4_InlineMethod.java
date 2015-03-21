@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type FinalClass4_InlineMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class FinalClass4_InlineMethod {
 	private int x;

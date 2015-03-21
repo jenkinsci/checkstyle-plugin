@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type ExplicitInitialization5.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class ExplicitInitialization5 {
 	private Date date;

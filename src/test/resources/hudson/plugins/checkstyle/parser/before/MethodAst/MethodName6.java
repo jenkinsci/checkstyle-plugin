@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type MethodName6.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class MethodName6 {
 	private MethodName6() {

@@ -3,7 +3,7 @@ package Edu.hm.hafner;
 /**
  * Document type PackageName5.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageName5 {
 	

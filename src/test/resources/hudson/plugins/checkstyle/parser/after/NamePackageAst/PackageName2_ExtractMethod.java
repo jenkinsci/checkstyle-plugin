@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type PackageName2_ExtractMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageName2_ExtractMethod {
 	private Date date; 

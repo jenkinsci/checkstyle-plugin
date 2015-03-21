@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type NeedBraces3Subclass_PullUpMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class NeedBraces3Subclass_PullUpMethod extends NeedBraces3Superclass_PullUpMethod {
 	private final Date date;

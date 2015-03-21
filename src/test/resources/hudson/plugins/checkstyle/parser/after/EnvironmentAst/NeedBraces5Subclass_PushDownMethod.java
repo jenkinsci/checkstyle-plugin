@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type NeedBraces5Subclass_PushDownMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class NeedBraces5Subclass_PushDownMethod extends NeedBraces5Superclass_PushDownMethod {
 	private final Date date;

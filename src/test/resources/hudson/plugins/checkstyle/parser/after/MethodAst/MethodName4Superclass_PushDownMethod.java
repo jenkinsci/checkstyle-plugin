@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type MethodName4Superclass_PushDownMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class MethodName4Superclass_PushDownMethod {
 	

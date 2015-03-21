@@ -3,7 +3,7 @@ import java.util.Date;
 /**
  * Document type PackageDeclaration1_ExtractMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageDeclaration1_ExtractMethod {
 	private Date date;

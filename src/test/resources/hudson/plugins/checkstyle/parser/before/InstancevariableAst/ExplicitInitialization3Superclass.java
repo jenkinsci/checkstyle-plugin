@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type ExplicitInitialization3Superclass.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class ExplicitInitialization3Superclass {
 	/**

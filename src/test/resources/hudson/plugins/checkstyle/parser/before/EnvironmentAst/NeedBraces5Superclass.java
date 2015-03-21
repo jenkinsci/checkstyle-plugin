@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type NeedBraces5Superclass.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class NeedBraces5Superclass {
 	/**

@@ -3,7 +3,7 @@ import java.util.Date;
 /**
  * Document type PackageDeclaration2Subclass_PushDownMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageDeclaration2Subclass_PushDownMethod extends PackageDeclaration2Superclass_PushDownMethod {
     private Date date; 

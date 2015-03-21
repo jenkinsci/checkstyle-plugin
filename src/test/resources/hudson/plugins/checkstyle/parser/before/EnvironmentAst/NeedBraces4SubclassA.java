@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type NeedBraces4SubclassA.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class NeedBraces4SubclassA extends NeedBraces4Superclass {
 	private final Date date;

@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type PackageName3Subclass_PushDownMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageName3Subclass_PushDownMethod extends PackageName3Superclass_PushDownMethod {
 	

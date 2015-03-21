@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
 
-import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.ast.factory.Ast;
 import hudson.plugins.ast.specific.ClassAst;
 import hudson.plugins.ast.specific.DefaultAst;
@@ -55,37 +54,35 @@ public final class CheckStyleAstFactory {
     // private static final String[] QUESTION = new String[]{"FileContentsHolder", "PackageAnnotation"};
 
     /**
-     * Creates an instance of a specific {@link Ast}.
+     * Returns an instance of an {@link Ast} specific for the specified warning type.
      *
-     * @param filename
-     *            the file
-     * @param fileAnnotation
-     *            the {@link FileAnnotation}
-     * @return the specific ast.
+     * @param filename    the file name of the Java class that contains the warning
+     * @param warningType the type of the warning
+     * @param lineNumber  the primary line number of the warning
+     * @return the specific ast
      */
     @SuppressWarnings("PMD.CyclomaticComplexity")
-    public static Ast getInstance(final String filename, final FileAnnotation fileAnnotation) {
-        String type = fileAnnotation.getType();
+    public static Ast getInstance(final String filename, final String warningType, final int lineNumber) {
         Ast ast;
-        String checkstyleModulName = StringUtils.removeEnd(type, "Check");
+        String checkstyleModulName = StringUtils.removeEnd(warningType, "Check");
 
         if (Arrays.asList(METHOD_AST).contains(checkstyleModulName)) {
-            ast = new MethodAst(filename, fileAnnotation);
+            ast = new MethodAst(filename, lineNumber);
         }
         else if (Arrays.asList(ENVIRONMENT_AST).contains(checkstyleModulName)) {
-            ast = new EnvironmentAst(filename, fileAnnotation, 3);
+            ast = new EnvironmentAst(filename, 3, lineNumber);
         }
         else if (Arrays.asList(FILE_AST).contains(checkstyleModulName)) {
-            ast = new FileAst(filename, fileAnnotation);
+            ast = new FileAst(filename, lineNumber);
         }
         else if (Arrays.asList(CLASS_AST).contains(checkstyleModulName)) {
-            ast = new ClassAst(filename, fileAnnotation);
+            ast = new ClassAst(filename, lineNumber);
         }
         else if (Arrays.asList(METHOD_OR_CLASS_AST).contains(checkstyleModulName)) {
-            ast = new MethodOrClassAst(filename, fileAnnotation);
+            ast = new MethodOrClassAst(filename, lineNumber);
         }
         else if (Arrays.asList(INSTANCEVARIABLE_AST).contains(checkstyleModulName)) {
-            ast = new InstancevariableAst(filename, fileAnnotation);
+            ast = new InstancevariableAst(filename, lineNumber);
         }
         // else if (Arrays.asList(NAME_ENVIRONMENT_AST).contains(checkstyleModulName)) {
         // ast = new NameEnvironmentAst(filename, fileAnnotation, 3);
@@ -100,10 +97,10 @@ public final class CheckStyleAstFactory {
         // ast = new NameClassAst(filename, fileAnnotation);
         // }
         else if (Arrays.asList(NAME_PACKAGE_AST).contains(checkstyleModulName)) {
-            ast = new NamePackageAst(filename, fileAnnotation);
+            ast = new NamePackageAst(filename, lineNumber);
         }
         else {
-            ast = new DefaultAst(filename, fileAnnotation);
+            ast = new DefaultAst(filename, lineNumber);
         }
 
         return ast;

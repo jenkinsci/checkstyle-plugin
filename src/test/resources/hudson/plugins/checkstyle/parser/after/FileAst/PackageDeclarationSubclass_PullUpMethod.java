@@ -3,7 +3,7 @@ import java.util.Date;
 /**
  * Document type PackageDeclarationSubclass_PullUpMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageDeclarationSubclass_PullUpMethod extends PackageDeclarationSuperclass_PullUpMethod {
 	 private Date date; 

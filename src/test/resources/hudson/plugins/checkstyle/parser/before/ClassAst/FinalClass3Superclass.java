@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type FinalClass3Superclass.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class FinalClass3Superclass {
 	/**

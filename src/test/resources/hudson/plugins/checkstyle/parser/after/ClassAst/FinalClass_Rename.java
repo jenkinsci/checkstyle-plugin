@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Useless class - only for test-cases.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class FinalClass_Rename {
 

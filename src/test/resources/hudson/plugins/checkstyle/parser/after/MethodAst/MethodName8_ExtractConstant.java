@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type MethodName8_ExtractMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class MethodName8_ExtractConstant {
 	

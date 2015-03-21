@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type NeedBraces4Superclass_PullUpMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class NeedBraces4Superclass_PullUpMethod {
 	/**

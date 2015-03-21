@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type PackageName1Subclass.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageName1Subclass extends PackageName1Superclass {
 	private Date date;

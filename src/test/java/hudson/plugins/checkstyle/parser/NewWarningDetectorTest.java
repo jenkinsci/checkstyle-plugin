@@ -853,12 +853,12 @@ public class NewWarningDetectorTest {
 
     private Ast getAst(final String javaFile, final String xmlFile, final String foldername, final boolean before) {
         return CheckStyleAstFactory.getInstance(getTempFileName(calcCorrectPath(javaFile, foldername, before)),
-                readWarning(calcCorrectPath(xmlFile, foldername, before)));
+                readWarning(calcCorrectPath(xmlFile, foldername, before)).getType(), readWarning(calcCorrectPath(xmlFile, foldername, before)).getPrimaryLineNumber());
     }
 
     private Ast getAst(final String javaFile, final FileAnnotation fileAnnotation, final String foldername,
             final boolean before) {
-        return CheckStyleAstFactory.getInstance(getTempFileName(calcCorrectPath(javaFile, foldername, before)), fileAnnotation);
+        return CheckStyleAstFactory.getInstance(getTempFileName(calcCorrectPath(javaFile, foldername, before)), fileAnnotation.getType(), fileAnnotation.getPrimaryLineNumber());
     }
 
     private String calcCorrectPath(final String nameOfFile, final String foldername, final boolean before) {

@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type FinalClass5_ExtractConstant.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class FinalClass5_ExtractConstant {
 

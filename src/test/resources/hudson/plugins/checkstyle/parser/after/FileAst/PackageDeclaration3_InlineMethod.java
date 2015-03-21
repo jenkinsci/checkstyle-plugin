@@ -3,7 +3,7 @@ import java.util.Date;
 /**
  * Document type PackageDeclaration3_InlineMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageDeclaration3_InlineMethod {
 	private Date date;

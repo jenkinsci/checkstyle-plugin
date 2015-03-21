@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type ExplicitInitialization1Subclass.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class ExplicitInitialization1Subclass extends ExplicitInitialization1Superclass {
 	private Date date;

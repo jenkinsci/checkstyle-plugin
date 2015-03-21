@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type FinalClass1_ExtractMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class FinalClass1_ExtractMethod {
 	private int x;

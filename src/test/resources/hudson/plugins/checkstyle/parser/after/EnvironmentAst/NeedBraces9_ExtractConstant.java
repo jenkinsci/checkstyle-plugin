@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type NeedBraces9_ExtractConstant.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class NeedBraces9_ExtractConstant {
 	/**

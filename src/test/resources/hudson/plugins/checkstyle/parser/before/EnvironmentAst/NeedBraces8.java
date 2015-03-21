@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type NeedBraces8.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class NeedBraces8 {
 	private final Date date;

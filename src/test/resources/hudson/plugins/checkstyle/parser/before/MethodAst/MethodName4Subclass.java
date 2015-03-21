@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type MethodName4Subclass.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class MethodName4Subclass extends MethodName4Superclass {
     /**

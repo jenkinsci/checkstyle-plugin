@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type PackageName4.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageName4 {
 	private Date date; 

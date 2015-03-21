@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type MoreWarningsInClass_Refactored.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class MoreWarningsInClass_Refactored {
 private int width = 0;

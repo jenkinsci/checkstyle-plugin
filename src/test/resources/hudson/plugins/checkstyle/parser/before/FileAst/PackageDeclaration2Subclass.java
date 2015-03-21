@@ -3,7 +3,7 @@ import java.util.Date;
 /**
  * Document type PackageDeclaration2Subclass.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageDeclaration2Subclass extends PackageDeclaration2Superclass {
 	private Date date;

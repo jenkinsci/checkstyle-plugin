@@ -3,7 +3,7 @@ package edu.hm.hafner;
 /**
  * Document type MethodName6_InlineMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class MethodName6_InlineMethod {
 	private MethodName6_InlineMethod() {

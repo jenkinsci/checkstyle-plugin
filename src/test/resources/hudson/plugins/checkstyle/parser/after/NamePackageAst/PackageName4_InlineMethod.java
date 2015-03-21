@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Document type PackageName4_InlineMethod.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class PackageName4_InlineMethod {
 	private Date date;
