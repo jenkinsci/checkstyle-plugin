@@ -724,7 +724,7 @@ public class NewWarningDetectorTest {
         String hash;
         for (int i = 0; i < annotations.size(); i++) {
             ast = getAst(fileWithJavaExtension, Iterables.get(annotations, i), "", before);
-            hash = ast.createContextHashCode();
+            hash = ast.getDigest();
             hashSet.add(hash);
         }
 
@@ -806,8 +806,8 @@ public class NewWarningDetectorTest {
     private void checkThatHashesMatching(final String warningType, final String beforeClass, final String afterClass,
             final String refactoring, final boolean expectedEqualHashcode) {
         String foldername = matchWarningTypeToFoldername(warningType);
-        String hashBefore = calcHashcode(beforeClass, foldername, true);
-        String hashAfter = calcHashcode(afterClass + refactoring, foldername, false);
+        long hashBefore = calcHashcode(beforeClass, foldername, true);
+        long hashAfter = calcHashcode(afterClass + refactoring, foldername, false);
 
         if (expectedEqualHashcode) {
             compareHashcode(hashBefore, hashAfter);
@@ -822,22 +822,22 @@ public class NewWarningDetectorTest {
         checkThatHashesMatching(warningType, fileName, fileName, refactoring, expectedEqualHashcode);
     }
 
-    private String calcHashcode(final String filename, final String foldername, final boolean beforeRefactoring) {
+    private long calcHashcode(final String filename, final String foldername, final boolean beforeRefactoring) {
         String javaFile = filename.concat(".java");
         String xmlFile = filename.concat(".xml");
 
         return calcHashcode(javaFile, foldername, xmlFile, beforeRefactoring);
     }
 
-    private void compareHashcode(final String hashBefore, final String hashAfter) {
+    private void compareHashcode(final long hashBefore, final long hashAfter) {
         assertNotNull("Hash code isn't not null", hashBefore);
         assertEquals("Hash codes don't match: ", hashBefore, hashAfter);
     }
 
-    private void compareHashcodeOnNonEquality(final String hashBefore, final String hashAfter) {
+    private void compareHashcodeOnNonEquality(final long hashBefore, final long hashAfter) {
         assertNotNull("Hash code isn't not null", hashBefore);
         assertNotNull("Hash code isn't not null", hashAfter);
-        assertNotEquals("Hash codes aren't differnt: ", hashBefore, hashAfter);
+        assertNotEquals("Hash codes aren't different: ", hashBefore, hashAfter);
     }
 
     private void compareString(final String first, final String second) {
@@ -845,10 +845,10 @@ public class NewWarningDetectorTest {
         assertEquals("Strings don't match: ", first, second);
     }
 
-    private String calcHashcode(final String javaFile, final String foldername, final String xmlFile,
+    private long calcHashcode(final String javaFile, final String foldername, final String xmlFile,
             final boolean before) {
         Ast ast = getAst(javaFile, xmlFile, foldername, before);
-        return ast.createContextHashCode();
+        return ast.getContextHashCode();
     }
 
     private Ast getAst(final String javaFile, final String xmlFile, final String foldername, final boolean before) {
