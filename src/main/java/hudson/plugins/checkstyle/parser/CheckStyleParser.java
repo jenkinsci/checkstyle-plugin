@@ -16,6 +16,8 @@ import hudson.plugins.analysis.core.AbstractAnnotationParser;
 import hudson.plugins.analysis.util.PackageDetectors;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.ast.factory.Ast;
+import hudson.plugins.checkstyle.CheckStyleAstFactory;
 
 /**
  * A parser for Checkstyle XML files.
@@ -116,12 +118,22 @@ public class CheckStyleParser extends AbstractAnnotationParser {
                     warning.setFileName(file.getName());
                     warning.setPackageName(packageName);
                     warning.setColumnPosition(error.getColumn());
-                    warning.setContextHashCode(createContextHashCode(file.getName(), error.getLine(), type));
+                    warning.setContextHashCode(createDigest(file.getName(), type, error.getLine()));
                     annotations.add(warning);
                 }
             }
         }
         return annotations;
+    }
+
+    private long createDigest(final String fileName, final String type, final int lineNumber) {
+        try {
+            Ast ast = CheckStyleAstFactory.getInstance(fileName, type, lineNumber);
+            return ast.getContextHashCode() + 17 * type.hashCode();
+        }
+        catch (IllegalArgumentException exception) {
+            return createContextHashCode(fileName, lineNumber, type);
+        }
     }
 
     /**
