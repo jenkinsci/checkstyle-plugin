@@ -45,6 +45,9 @@ public class CheckStyleParser extends AbstractAnnotationParser {
 
     @Override
     public Collection<FileAnnotation> parse(final InputStream file, final String moduleName) throws InvocationTargetException {
+        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+        Thread.currentThread().setContextClassLoader(CheckStyleParser.class.getClassLoader());
+
         try {
             Digester digester = new Digester();
             digester.setValidating(false);
@@ -77,6 +80,9 @@ public class CheckStyleParser extends AbstractAnnotationParser {
         }
         catch (SAXException exception) {
             throw new InvocationTargetException(exception);
+        }
+        finally {
+            Thread.currentThread().setContextClassLoader(contextClassLoader);
         }
     }
 
