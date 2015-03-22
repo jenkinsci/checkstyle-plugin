@@ -755,13 +755,13 @@ public class NewWarningDetectorTest {
         if (Arrays.asList(CheckStyleAstFactory.getClassAst()).contains(warningType)) {
             ordnerName = CLASS_AST_FOLDERNAME;
         }
-        else if (Arrays.asList(CheckStyleAstFactory.getEnvironmentAst()).contains(warningType)) {
+        else if (Arrays.asList(CheckStyleAstFactory.getSurroundingElementsAst()).contains(warningType)) {
             ordnerName = ENVIRONMENT_AST_FOLDERNAME;
         }
         else if (Arrays.asList(CheckStyleAstFactory.getFileAst()).contains(warningType)) {
             ordnerName = FILE_AST_FOLDERNAME;
         }
-        else if (Arrays.asList(CheckStyleAstFactory.getInstancevariableAst()).contains(warningType)) {
+        else if (Arrays.asList(CheckStyleAstFactory.getFieldsAst()).contains(warningType)) {
             ordnerName = INSTANCEVARIABLE_AST_FOLDERNAME;
         }
         else if (Arrays.asList(CheckStyleAstFactory.getMethodAst()).contains(warningType)) {

@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import hudson.plugins.ast.factory.Ast;
 import hudson.plugins.ast.specific.ClassAst;
 import hudson.plugins.ast.specific.FileAst;
-import hudson.plugins.ast.specific.InstanceVariableAst;
+import hudson.plugins.ast.specific.FieldsAst;
 import hudson.plugins.ast.specific.MethodAst;
 import hudson.plugins.ast.specific.MethodOrClassAst;
 import hudson.plugins.ast.specific.NamePackageAst;
@@ -24,7 +24,7 @@ public final class CheckStyleAstFactory {
             "EqualsHashCode", "HiddenField", "JavadocMethod", "MethodLength", "MethodName", "MethodParamPad",
             "MethodTypeParameterName", "ParameterAssignment", "ParameterName", "ParameterNumber", "SuperClone",
             "SuperFinalize", "ThrowsCount"};
-    private static final String[] ENVIRONMENT_AST = new String[]{"ArrayTypeStyle", "AvoidNestedBlocks",
+    private static final String[] SURROUNDING_ELEMENTS_AST = new String[]{"ArrayTypeStyle", "AvoidNestedBlocks",
             "BooleanExpressionComplexity", "DefaultComesLast", "EmptyBlock", "EmptyForIteratorPad", "EmptyStatement",
             "FallThrough", "GenericWhitespace", "IllegalCatch", "IllegalThrows", "InnerAssignment", "JavaNCSS",
             "LeftCurly", "LocalFinalVariableName", "LocalVariableName", "MissingSwitchDefault",
@@ -40,7 +40,7 @@ public final class CheckStyleAstFactory {
             "MutableException", "TypeName"};
     private static final String[] METHOD_OR_CLASS_AST = new String[]{"AnnotationUseStyle", "FileTabCharacter",
             "JavadocStyle", "MissingDeprecated", "ModifierOrder", "RedundantModifier", "VisibilityModifier"};
-    private static final String[] INSTANCEVARIABLE_AST = new String[]{"ConstantName", "ExplicitInitialization",
+    private static final String[] FIELDS_AST = new String[]{"ConstantName", "ExplicitInitialization",
             "JavadocVariable", "MemberName", "StaticVariableName"};
     private static final String[] NAME_PACKAGE_AST = new String[]{"PackageName"};
 
@@ -60,7 +60,7 @@ public final class CheckStyleAstFactory {
         if (Arrays.asList(METHOD_AST).contains(checkstyleModuleName)) {
             ast = new MethodAst(filename, lineNumber);
         }
-        else if (Arrays.asList(ENVIRONMENT_AST).contains(checkstyleModuleName)) {
+        else if (Arrays.asList(SURROUNDING_ELEMENTS_AST).contains(checkstyleModuleName)) {
             ast = new SurroundingElementsAst(filename, lineNumber, 3);
         }
         else if (Arrays.asList(FILE_AST).contains(checkstyleModuleName)) {
@@ -72,8 +72,8 @@ public final class CheckStyleAstFactory {
         else if (Arrays.asList(METHOD_OR_CLASS_AST).contains(checkstyleModuleName)) {
             ast = new MethodOrClassAst(filename, lineNumber);
         }
-        else if (Arrays.asList(INSTANCEVARIABLE_AST).contains(checkstyleModuleName)) {
-            ast = new InstanceVariableAst(filename, lineNumber);
+        else if (Arrays.asList(FIELDS_AST).contains(checkstyleModuleName)) {
+            ast = new FieldsAst(filename, lineNumber);
         }
         else if (Arrays.asList(NAME_PACKAGE_AST).contains(checkstyleModuleName)) {
             ast = new NamePackageAst(filename, lineNumber);
@@ -85,67 +85,32 @@ public final class CheckStyleAstFactory {
         return ast;
     }
 
-    /**
-     * Returns the methodAst.
-     *
-     * @return the methodAst
-     */
-    public static String[] getMethodAst() {
+    static String[] getMethodAst() {
         return METHOD_AST;
     }
 
-    /**
-     * Returns the environmentAst.
-     *
-     * @return the environmentAst
-     */
-    public static String[] getEnvironmentAst() {
-        return ENVIRONMENT_AST;
+    static String[] getSurroundingElementsAst() {
+        return SURROUNDING_ELEMENTS_AST;
     }
 
-    /**
-     * Returns the fileAst.
-     *
-     * @return the fileAst
-     */
-    public static String[] getFileAst() {
+    static String[] getFileAst() {
         return FILE_AST;
     }
 
-    /**
-     * Returns the classAst.
-     *
-     * @return the classAst
-     */
-    public static String[] getClassAst() {
+    static String[] getClassAst() {
         return CLASS_AST;
     }
 
-    /**
-     * Returns the methodOrClassAst.
-     *
-     * @return the methodOrClassAst
-     */
-    public static String[] getMethodOrClassAst() {
+    static String[] getMethodOrClassAst() {
         return METHOD_OR_CLASS_AST;
     }
 
-    /**
-     * Returns the namePackageAst.
-     *
-     * @return the namePackageAst
-     */
-    public static String[] getNamePackageAst() {
+    static String[] getNamePackageAst() {
         return NAME_PACKAGE_AST;
     }
 
-    /**
-     * Returns the instancevariableAst.
-     *
-     * @return the instancevariableAst
-     */
-    public static String[] getInstancevariableAst() {
-        return INSTANCEVARIABLE_AST;
+    static String[] getFieldsAst() {
+        return FIELDS_AST;
     }
 
     private CheckStyleAstFactory() {
