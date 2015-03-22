@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
 
-import hudson.plugins.ast.factory.Ast;
-import hudson.plugins.ast.specific.ClassAst;
-import hudson.plugins.ast.specific.FileAst;
-import hudson.plugins.ast.specific.FieldsAst;
-import hudson.plugins.ast.specific.MethodAst;
-import hudson.plugins.ast.specific.MethodOrClassAst;
-import hudson.plugins.ast.specific.NamePackageAst;
-import hudson.plugins.ast.specific.SurroundingElementsAst;
+import hudson.plugins.analysis.ast.Ast;
+import hudson.plugins.analysis.ast.ClassAst;
+import hudson.plugins.analysis.ast.FileAst;
+import hudson.plugins.analysis.ast.FieldsAst;
+import hudson.plugins.analysis.ast.MethodAst;
+import hudson.plugins.analysis.ast.MethodOrClassAst;
+import hudson.plugins.analysis.ast.NamePackageAst;
+import hudson.plugins.analysis.ast.SurroundingElementsAst;
 
 /**
  * Factory to pick the best AST implementation based on the type of the CheckStyle warning.

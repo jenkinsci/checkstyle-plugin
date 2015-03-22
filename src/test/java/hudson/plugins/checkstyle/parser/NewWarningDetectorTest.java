@@ -22,13 +22,13 @@ import static org.junit.Assert.*;
 import hudson.plugins.analysis.util.ContextHashCode;
 import hudson.plugins.analysis.util.Singleton;
 import hudson.plugins.analysis.util.model.FileAnnotation;
-import hudson.plugins.ast.factory.Ast;
+import hudson.plugins.analysis.ast.Ast;
 
 /**
  * Test cases for the new warnings detector.
  *
  * @author Ullrich Hafner
- * @author Christian Möstl
+ * @author Christian Mï¿½stl
  */
 @SuppressWarnings("PMD.ExcessivePublicCount")
 public class NewWarningDetectorTest {
