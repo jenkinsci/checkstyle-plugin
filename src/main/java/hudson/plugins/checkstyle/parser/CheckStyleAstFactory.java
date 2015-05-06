@@ -20,29 +20,29 @@ import hudson.plugins.analysis.ast.SurroundingElementsAst;
  */
 // CHECKSTYLE:COUPLING-OFF
 public final class CheckStyleAstFactory {
-    private static final String[] METHOD_AST = new String[]{"AnonInnerLength", "CovariantEquals", "EqualsAvoidNull",
+    private static final String[] METHOD_AST = {"CovariantEquals", "EqualsAvoidNull",
             "EqualsHashCode", "HiddenField", "JavadocMethod", "MethodLength", "MethodName", "MethodParamPad",
             "MethodTypeParameterName", "ParameterAssignment", "ParameterName", "ParameterNumber", "SuperClone",
             "SuperFinalize", "ThrowsCount"};
-    private static final String[] SURROUNDING_ELEMENTS_AST = new String[]{"ArrayTypeStyle", "AvoidNestedBlocks",
+    private static final String[] SURROUNDING_ELEMENTS_AST = {"AnonInnerLength", "ArrayTypeStyle", "AvoidNestedBlocks",
             "BooleanExpressionComplexity", "DefaultComesLast", "EmptyBlock", "EmptyForIteratorPad", "EmptyStatement",
-            "FallThrough", "GenericWhitespace", "IllegalCatch", "IllegalThrows", "InnerAssignment", "JavaNCSS",
+            "FallThrough", "FileTabCharacter", "GenericWhitespace", "IllegalCatch", "IllegalThrows", "InnerAssignment", "JavaNCSS",
             "LeftCurly", "LocalFinalVariableName", "LocalVariableName", "MissingSwitchDefault",
             "ModifiedControlVariable", "MultipleVariableDeclarations", "NeedBraces", "NestedForDepth", "NestedIfDepth",
             "NestedTryDepth", "NoWhitespaceAfter", "NoWhitespaceBefore", "NPathComplexity", "OneStatementPerLine",
             "OperatorWrap", "ParenPad", "RightCurly", "SimplifyBooleanExpression", "SimplifyBooleanReturn",
             "StringLiteralEquality", "TypecastParenPad", "UnnecessaryParentheses", "UpperEll", "WhitespaceAfter",
             "WhitespaceAround"};
-    private static final String[] FILE_AST = new String[]{"ClassDataAbstractionCoupling", "ClassFanOutComplexity",
+    private static final String[] FILE_AST = {"ClassDataAbstractionCoupling", "ClassFanOutComplexity",
             "FileLength", "IllegalImport", "InterfaceIsType", "OuterTypeFilename", "PackageDeclaration"};
-    private static final String[] CLASS_AST = new String[]{"ClassTypeParameterName", "FinalClass",
+    private static final String[] CLASS_AST = {"ClassTypeParameterName", "FinalClass",
             "HideUtilityClassConstructor", "InnerTypeLast", "JavadocType", "JUnitTestCase", "MultipleStringLiterals",
             "MutableException", "TypeName"};
-    private static final String[] METHOD_OR_CLASS_AST = new String[]{"AnnotationUseStyle", "FileTabCharacter",
+    private static final String[] METHOD_OR_CLASS_AST = {"AnnotationUseStyle",
             "JavadocStyle", "MissingDeprecated", "ModifierOrder", "RedundantModifier", "VisibilityModifier"};
-    private static final String[] FIELDS_AST = new String[]{"ConstantName", "ExplicitInitialization",
+    private static final String[] FIELDS_AST = {"ConstantName", "ExplicitInitialization",
             "JavadocVariable", "MemberName", "StaticVariableName"};
-    private static final String[] NAME_PACKAGE_AST = new String[]{"PackageName"};
+    private static final String[] NAME_PACKAGE_AST = {"PackageName"};
 
     /**
      * Returns an instance of an {@link Ast} specific for the specified warning type.

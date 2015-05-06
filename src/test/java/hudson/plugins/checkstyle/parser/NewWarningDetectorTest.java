@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,16 +14,17 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.Iterables;
 
 import static org.junit.Assert.*;
 
+import hudson.plugins.analysis.ast.Ast;
 import hudson.plugins.analysis.util.ContextHashCode;
 import hudson.plugins.analysis.util.Singleton;
 import hudson.plugins.analysis.util.model.FileAnnotation;
-import hudson.plugins.analysis.ast.Ast;
 
 /**
  * Test cases for the new warnings detector.
@@ -57,6 +59,56 @@ public class NewWarningDetectorTest {
     private static final String REFACTORING_PULL_UP_METHOD = "_PullUpMethod";
     private static final String REFACTORING_PUSH_DOWN_METHOD = "_PushDownMethod";
     private static final String REFACTORING_EXTRACT_CONSTANT = "_ExtractConstant";
+
+    /**
+     * FIXME: In the end this should report no new warnings...
+     */
+    @Test @Ignore("Identifies the problematic ast creation...")
+    public void shouldIdentifyTabWarnings() {
+        String file = "Cobertura";
+        String affectedClass = "MavenCoberturaPublisher";
+
+        Set<FileAnnotation> affectedPrevious = parse("before/", file, affectedClass);
+        assertEquals("Wrong Number of annotations found: ", 329, affectedPrevious.size());
+
+        Set<FileAnnotation> affectedCurrent = parse("after/", file, affectedClass);
+        assertEquals("Wrong Number of annotations found: ", 331, affectedCurrent.size());
+
+        affectedCurrent.removeAll(affectedPrevious);
+        assertEquals("Wrong Number of annotations found: ", 123, affectedCurrent.size());
+
+        Set<String> hashes = new HashSet<String>();
+        HashMap<String, FileAnnotation> map = new HashMap<String, FileAnnotation>();
+        for (FileAnnotation warning : affectedCurrent) {
+            Ast ast = getAst(file + ".java", warning, "", false);
+            String key = ast.getDigest() + warning.getType();
+            if (!hashes.add(key)) {
+                System.out.println("-----------------------");
+                System.out.println("Old: " + map.get(key));
+                System.out.println("-----------------------");
+                System.out.println("Now: " + warning);
+                System.out.println("-----------------------");
+                String digest = ast.getDigest();
+                System.out.println(digest);
+
+                ast = getAst(file + ".java", map.get(key), "", false);
+                digest = ast.getDigest();
+                System.out.println(digest);
+            }
+            map.put(key, warning);
+        }
+        assertEquals("Wrong Number of hashes found: ", 123, hashes.size());
+    }
+
+    private Set<FileAnnotation> parse(final String folder, final String file, final String affectedClass) {
+        Set<FileAnnotation> affected = new HashSet<FileAnnotation>();
+        for (FileAnnotation warning : parse(folder + file + ".xml")) {
+            if (warning.getFileName().contains(affectedClass)) {
+                affected.add(warning);
+            }
+        }
+        return affected;
+    }
 
     /**
      * Verifies that the insertion of a new line above the warning does produce a different hashCode.
@@ -563,104 +615,6 @@ public class NewWarningDetectorTest {
     }
 
     /**
-     * Verifies that the ClassAst works right.
-     */
-    @Test
-    public void testClassAst() {
-        String expectedResult = "PACKAGE_DEF ANNOTATIONS DOT DOT IDENT IDENT IDENT SEMI CLASS_DEF MODIFIERS LITERAL_PUBLIC LITERAL_CLASS IDENT OBJBLOCK LCURLY VARIABLE_DEF MODIFIERS LITERAL_PRIVATE TYPE LITERAL_INT IDENT SEMI CTOR_DEF MODIFIERS LITERAL_PRIVATE IDENT LPAREN PARAMETERS RPAREN SLIST RCURLY RCURLY ";
-
-        Ast ast = getAst("FinalClass_Newline.java", "FinalClass_Newline.xml", CLASS_AST_FOLDERNAME, false);
-
-        checkAst(expectedResult, ast);
-    }
-
-    /**
-     * Verifies that the EnvironmentAst works right.
-     */
-    @Test
-    public void testEnvironmentAst() {
-        String expectedResult = "LITERAL_IF LPAREN EXPR GE IDENT NUM_INT RPAREN METHOD_DEF MODIFIERS LITERAL_PUBLIC TYPE LITERAL_INT IDENT LPAREN PARAMETERS PARAMETER_DEF MODIFIERS FINAL TYPE LITERAL_INT IDENT RPAREN SLIST RCURLY EXPR ASSIGN DOT LITERAL_THIS IDENT IDENT SEMI LITERAL_RETURN EXPR IDENT SEMI LITERAL_ELSE SLIST LITERAL_RETURN EXPR UNARY_MINUS IDENT SEMI ";
-
-        Ast ast = getAst("NeedBraces_Newline.java", "NeedBraces_Newline.xml", ENVIRONMENT_AST_FOLDERNAME, false);
-
-        checkAst(expectedResult, ast);
-    }
-
-    /**
-     * Verifies that the FileAst works right.
-     */
-    @Test
-    public void testFileAst() {
-        String expectedResult = "PACKAGE_DEF ANNOTATIONS DOT DOT IDENT IDENT IDENT SEMI IMPORT DOT DOT IDENT IDENT IDENT SEMI INTERFACE_DEF MODIFIERS LITERAL_PUBLIC LITERAL_INTERFACE IDENT OBJBLOCK LCURLY VARIABLE_DEF MODIFIERS TYPE LITERAL_INT IDENT ASSIGN EXPR NUM_INT SEMI VARIABLE_DEF MODIFIERS TYPE IDENT IDENT ASSIGN EXPR STRING_LITERAL SEMI VARIABLE_DEF MODIFIERS TYPE IDENT IDENT ASSIGN EXPR LITERAL_NEW IDENT LPAREN ELIST EXPR NUM_INT RPAREN SEMI RCURLY ";
-
-        Ast ast = getAst("InterfaceIsType_Newline.java", "InterfaceIsType_Newline.xml", FILE_AST_FOLDERNAME, false);
-
-        checkAst(expectedResult, ast);
-    }
-
-    /**
-     * Verifies that the InstancevariableAst works right.
-     */
-    @Test
-    public void testInstancevariableAst() {
-        String expectedResult = "OBJBLOCK VARIABLE_DEF MODIFIERS LITERAL_PRIVATE TYPE IDENT IDENT SEMI VARIABLE_DEF MODIFIERS LITERAL_PRIVATE TYPE LITERAL_INT IDENT ASSIGN EXPR NUM_INT SEMI VARIABLE_DEF MODIFIERS LITERAL_PRIVATE FINAL TYPE IDENT IDENT SEMI ";
-
-        Ast ast = getAst("ExplicitInitialization_Newline.java", "ExplicitInitialization_Newline.xml",
-                INSTANCEVARIABLE_AST_FOLDERNAME, false);
-
-        checkAst(expectedResult, ast);
-    }
-
-    /**
-     * Verifies that the MethodAst works right.
-     */
-    @Test
-    public void testMethodAst() {
-        String expectedResult = "METHOD_DEF MODIFIERS LITERAL_PUBLIC LITERAL_STATIC TYPE LITERAL_VOID IDENT LPAREN PARAMETERS RPAREN SLIST EXPR METHOD_CALL DOT DOT IDENT IDENT IDENT ELIST EXPR STRING_LITERAL RPAREN SEMI RCURLY ";
-
-        Ast ast = getAst("MethodName_Newline.java", "MethodName_Newline.xml", METHOD_AST_FOLDERNAME, false);
-
-        checkAst(expectedResult, ast);
-    }
-
-    /**
-     * Verifies that the MethodOrClassAst works right.
-     */
-    @Test
-    public void testMethodOrClassAstInMethodlevel() {
-        String expectedResult = "METHOD_DEF MODIFIERS LITERAL_PUBLIC TYPE LITERAL_INT IDENT LPAREN PARAMETERS PARAMETER_DEF MODIFIERS TYPE LITERAL_INT IDENT COMMA PARAMETER_DEF MODIFIERS TYPE LITERAL_INT IDENT RPAREN SEMI ";
-
-        Ast ast = getAst("RedundantModifier_Newline.java", "RedundantModifier_Newline.xml",
-                METHOD_OR_CLASS_AST_FOLDERNAME, false);
-
-        checkAst(expectedResult, ast);
-    }
-
-    /**
-     * Verifies that the MethodOrClassAst works right.
-     */
-    @Test
-    public void testMethodOrClassAstInClasslevel() {
-        String expectedResult = "PACKAGE_DEF ANNOTATIONS DOT DOT IDENT IDENT IDENT SEMI CLASS_DEF MODIFIERS LITERAL_PUBLIC LITERAL_CLASS IDENT OBJBLOCK LCURLY CTOR_DEF MODIFIERS LITERAL_PUBLIC IDENT LPAREN PARAMETERS RPAREN SLIST RCURLY RCURLY ";
-
-        Ast ast = getAst("JavadocStyle_Newline.java", "JavadocStyle_Newline.xml", METHOD_OR_CLASS_AST_FOLDERNAME, false);
-
-        checkAst(expectedResult, ast);
-    }
-
-    /**
-     * Verifies that the NamePackageAst works right.
-     */
-    @Test
-    public void testNamePackageAst() {
-        String expectedResult = "PACKAGE_DEF ANNOTATIONS DOT DOT IDENT IDENT IDENT SEMI ";
-
-        Ast ast = getAst("PackageName_Newline.java", "PackageName_Newline.xml", NAME_PACKAGE_AST_FOLDERNAME, false);
-
-        checkAst(expectedResult, ast);
-    }
-
-    /**
      * Shows that a previous file has the same warnings like the current file, if refactorings were realised. It means
      * that the same hashcode is calculated. (The warnings wasn't changed!)
      */
@@ -690,22 +644,17 @@ public class NewWarningDetectorTest {
 
     private void evaluateHashes(final String fileBefore, final String fileAfter, final int expectedPrev,
             final int expectedCur, final int intersection) {
-        try {
-            Set<String> hashSetPevious = calculateHashes(fileBefore, true);
-            Set<String> hashSetCurrent = calculateHashes(fileAfter, false);
+        Set<String> hashSetPevious = calculateHashes(fileBefore, true);
+        Set<String> hashSetCurrent = calculateHashes(fileAfter, false);
 
-            Collection<String> intersections = CollectionUtils.intersection(hashSetCurrent, hashSetPevious);
+        Collection<String> intersections = CollectionUtils.intersection(hashSetCurrent, hashSetPevious);
 
-            assertEquals("Not expected count of previous warnings", expectedPrev, hashSetPevious.size());
-            assertEquals("Not expected count of current warnings", expectedCur, hashSetCurrent.size());
-            assertEquals("The warnings aren't equal.", intersection, intersections.size());
-        }
-        catch (InvocationTargetException exception) {
-            exception.printStackTrace();
-        }
+        assertEquals("Not expected count of previous warnings", expectedPrev, hashSetPevious.size());
+        assertEquals("Not expected count of current warnings", expectedCur, hashSetCurrent.size());
+        assertEquals("The warnings aren't equal.", intersection, intersections.size());
     }
 
-    private Set<String> calculateHashes(final String file, final boolean before) throws InvocationTargetException {
+    private Set<String> calculateHashes(final String file, final boolean before) {
         Collection<FileAnnotation> annotations;
         String fileWithXmlExtension = file + ".xml";
         String fileWithJavaExtension = file + ".java";
@@ -730,24 +679,19 @@ public class NewWarningDetectorTest {
         return hashSet;
     }
 
-    private Collection<FileAnnotation> parse(final String fileName) throws InvocationTargetException {
-        Collection<FileAnnotation> annotations;
+    private Collection<FileAnnotation> parse(final String fileName) {
         InputStream inputStream = null;
         try {
             inputStream = NewWarningDetectorTest.class.getResourceAsStream(fileName);
 
-            annotations = new CheckStyleParser().parse(inputStream, "empty");
+            return new CheckStyleParser().parse(inputStream, "empty");
+        }
+        catch (InvocationTargetException exception) {
+            throw new RuntimeException(exception);
         }
         finally {
             IOUtils.closeQuietly(inputStream);
         }
-        return annotations;
-    }
-
-    private void checkAst(final String expectedResult, final Ast ast) {
-        String realResult = ast.chosenAreaAsString(' ');
-
-        compareString(expectedResult, realResult);
     }
 
     private String matchWarningTypeToFoldername(final String warningType) {
@@ -837,11 +781,6 @@ public class NewWarningDetectorTest {
         assertNotNull("Hash code isn't not null", hashBefore);
         assertNotNull("Hash code isn't not null", hashAfter);
         assertNotEquals("Hash codes aren't different: ", hashBefore, hashAfter);
-    }
-
-    private void compareString(final String first, final String second) {
-        assertNotNull("String isn't not null", first);
-        assertEquals("Strings don't match: ", first, second);
     }
 
     private long calcHashcode(final String javaFile, final String foldername, final String xmlFile,
