@@ -2,25 +2,29 @@ package hudson.plugins.checkstyle;
 
 import java.io.IOException;
 
+import hudson.FilePath;
+import hudson.model.AbstractProject;
+import hudson.model.Action;
+import hudson.model.BuildListener;
+import hudson.model.Run;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import hudson.Launcher;
 import hudson.matrix.MatrixAggregator;
 import hudson.matrix.MatrixBuild;
-import hudson.model.AbstractBuild;
-import hudson.model.AbstractProject;
-import hudson.model.Action;
-import hudson.model.BuildListener;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwarePublisher;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
+import org.kohsuke.stapler.DataBoundSetter;
+import org.kohsuke.stapler.StaplerRequest;
 
 /**
- * Publishes the results of the Checkstyle analysis  (freestyle project type).
+ * Publishes the results of the Checkstyle analysis (freestyle project type).
  *
  * @author Ulli Hafner
  */
@@ -33,7 +37,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     /** Default Checkstyle pattern. */
     private static final String DEFAULT_PATTERN = "**/checkstyle-result.xml";
     /** Ant file-set pattern of files to work with. */
-    private final String pattern;
+    private String pattern;
 
     /**
      * Creates a new instance of <code>CheckstylePublisher</code>.
@@ -98,10 +102,12 @@ public class CheckStylePublisher extends HealthAwarePublisher {
      *            respect to baseline)
      * @param pattern
      *            Ant file-set pattern to scan for Checkstyle files
+     *
+     * @deprecated see {@link #CheckStylePublisher()}
      */
     // CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveParameterList")
-    @DataBoundConstructor
+    @Deprecated
     public CheckStylePublisher(final String healthy, final String unHealthy, final String thresholdLimit,
             final String defaultEncoding, final boolean useDeltaValues,
             final String unstableTotalAll, final String unstableTotalHigh, final String unstableTotalNormal, final String unstableTotalLow,
@@ -121,6 +127,16 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     }
     // CHECKSTYLE:ON
 
+
+    /**
+     * Constructor used from methods like {@link StaplerRequest#bindJSON(Class, JSONObject)} and
+     * {@link StaplerRequest#bindParameters(Class, String)}.
+     */
+    @DataBoundConstructor
+    public CheckStylePublisher() {
+        super(PLUGIN_NAME);
+    }
+
     /**
      * Returns the Ant file-set pattern of files to work with.
      *
@@ -130,19 +146,29 @@ public class CheckStylePublisher extends HealthAwarePublisher {
         return pattern;
     }
 
+    /**
+     * Sets the Ant file-set pattern of files to work with.
+     */
+    @DataBoundSetter
+    public void setPattern(final String pattern) {
+        this.pattern = pattern;
+    }
+
     @Override
     public Action getProjectAction(final AbstractProject<?, ?> project) {
         return new CheckStyleProjectAction(project);
     }
 
     @Override
-    public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
+    public BuildResult perform(final Run<?, ?> build, final FilePath workspace, final PluginLogger logger) throws
+            InterruptedException, IOException {
         logger.log("Collecting checkstyle analysis files...");
 
         FilesParser parser = new FilesParser(PLUGIN_NAME, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
                 new CheckStyleParser(getDefaultEncoding()),
                 shouldDetectModules(), isMavenBuild(build));
-        ParserResult project = build.getWorkspace().act(parser);
+
+        ParserResult project = workspace.act(parser);
         logger.logLines(project.getLogMessages());
 
         CheckStyleResult result = new CheckStyleResult(build, getDefaultEncoding(), project,
