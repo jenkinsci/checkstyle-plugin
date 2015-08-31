@@ -31,8 +31,7 @@
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: xerces:xercesImpl:2.11.0" level="project" />
     <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.4.01" level="project" />
-    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:matrix-project:1.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.jvnet.hudson.plugins:analysis-test:1.12" level="project" />
+    <orderEntry type="module" module-name="analysis-test" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins.workflow:workflow-job:1.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins.workflow:workflow-support:1.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins:durable-task:1.0" level="project" />
@@ -42,13 +41,14 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins.workflow:workflow-step-api:1.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins.workflow:workflow-api:1.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins.workflow:workflow-scm-step:1.4" level="project" />
-    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:script-security:1.13" level="project" />
-    <orderEntry type="library" name="Maven: org.kohsuke:groovy-sandbox:1.8" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.cloudbees:groovy-cps:1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins.workflow:workflow-basic-steps:1.4" level="project" />
-    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:mailer:1.13" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:matrix-project:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:script-security:1.13" level="project" />
+    <orderEntry type="library" name="Maven: org.kohsuke:groovy-sandbox:1.8" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.main:maven-plugin:2.9" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:javadoc:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:mailer:1.7" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.main.maven:maven-agent:1.6" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.main.maven:maven-interceptor:1.6" level="project" />
     <orderEntry type="library" name="Maven: org.jvnet.hudson:maven2.1-interceptor:1.2" level="project" />

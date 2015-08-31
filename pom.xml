@@ -5,6 +5,7 @@
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>analysis-pom</artifactId>
     <version>1.63</version>
+    <relativePath>../analysis-pom</relativePath>
   </parent>
 
   <artifactId>checkstyle</artifactId>
@@ -15,10 +16,6 @@
   <description>This plug-in generates the trend report for
     Checkstyle, an open source static code analysis program.
   </description>
-
-  <properties>
-    <workflow-jenkins-plugin.version>1.4</workflow-jenkins-plugin.version>
-  </properties>
 
   <licenses>
     <license>
@@ -50,32 +47,9 @@
       <version>2.11.0</version>
     </dependency>
     <dependency>
-      <groupId>org.jenkins-ci.plugins</groupId>
-      <artifactId>matrix-project</artifactId>
-      <version>1.4</version>
-    </dependency>
-    <dependency>
       <groupId>org.jvnet.hudson.plugins</groupId>
       <artifactId>analysis-test</artifactId>
-      <version>1.12</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jenkins-ci.plugins.workflow</groupId>
-      <artifactId>workflow-job</artifactId>
-      <version>${workflow-jenkins-plugin.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jenkins-ci.plugins.workflow</groupId>
-      <artifactId>workflow-cps</artifactId>
-      <version>${workflow-jenkins-plugin.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jenkins-ci.plugins.workflow</groupId>
-      <artifactId>workflow-basic-steps</artifactId>
-      <version>${workflow-jenkins-plugin.version}</version>
+      <version>1.13-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
