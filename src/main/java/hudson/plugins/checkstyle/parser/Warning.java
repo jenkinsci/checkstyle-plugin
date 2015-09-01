@@ -67,7 +67,7 @@ public class Warning extends AbstractAnnotation {
 
     /** Not used anymore. @deprecated */
     @SuppressWarnings("all")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("")
     @Deprecated
     private final transient String tooltip = StringUtils.EMPTY; // backward compatibility NOPMD
 }
