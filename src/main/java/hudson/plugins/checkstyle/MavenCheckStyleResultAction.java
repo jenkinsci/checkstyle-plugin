@@ -3,6 +3,8 @@ package hudson.plugins.checkstyle;
 import java.util.List;
 import java.util.Map;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import hudson.maven.AggregatableAction;
 import hudson.maven.MavenAggregatedReport;
 import hudson.maven.MavenBuild;
@@ -96,7 +98,7 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
 
     /** Backward compatibility. @deprecated */
     @SuppressWarnings("PMD")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("")
+    @SuppressFBWarnings("")
     @Deprecated
     private transient String height;
 }
