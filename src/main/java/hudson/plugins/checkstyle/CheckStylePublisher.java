@@ -17,6 +17,7 @@ import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.BuildListener;
 import hudson.model.Run;
+import hudson.model.TaskListener;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwarePublisher;
@@ -76,7 +77,8 @@ public class CheckStylePublisher extends HealthAwarePublisher {
             InterruptedException, IOException {
         logger.log("Collecting checkstyle analysis files...");
 
-        FilesParser parser = new FilesParser(PLUGIN_NAME, StringUtils.defaultIfEmpty(getPattern(), DEFAULT_PATTERN),
+        FilesParser parser = new FilesParser(PLUGIN_NAME,
+                StringUtils.defaultIfEmpty(expandFilePattern(getPattern(), build.getEnvironment(TaskListener.NULL)), DEFAULT_PATTERN),
                 new CheckStyleParser(getDefaultEncoding()),
                 shouldDetectModules(), isMavenBuild(build));
 
