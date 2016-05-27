@@ -17,7 +17,7 @@ public class CheckStyleRulesTest {
         CheckStyleRules reader = CheckStyleRules.getInstance();
         reader.initialize();
 
-        assertEquals("Wrong number of rules detected.", 145, reader.getRules().size());
+        assertEquals("Wrong number of rules detected.", 163, reader.getRules().size());
         assertNotNull("No EmptyBlock rule found.", reader.getRule("EmptyBlock"));
         assertEquals("Description for EmptyBlock found.", "<p> Checks for empty blocks. </p>", reader.getRule("EmptyBlock").getDescription());
         assertNotSame("No description for AnnotationUseStyle found.", Rule.UNDEFINED_DESCRIPTION, reader.getRule("AnnotationUseStyle").getDescription());

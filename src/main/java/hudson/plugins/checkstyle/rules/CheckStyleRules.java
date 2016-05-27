@@ -1,5 +1,6 @@
 package hudson.plugins.checkstyle.rules;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.digester3.Digester;
 import org.apache.commons.lang.StringUtils;
@@ -49,7 +48,7 @@ public final class CheckStyleRules {
      */
     public void initialize() {
         try {
-            String[] ruleFiles = new String[] {"annotation", "blocks", "coding", "design", "duplicates", "header",
+            String[] ruleFiles = new String[] {"annotation", "blocks", "coding", "design", "filters", "header",
                     "imports", "javadoc", "metrics", "misc", "modifier", "naming", "regexp", "reporting",
                     "sizes", "whitespace"};
             for (int i = 0; i < ruleFiles.length; i++) {

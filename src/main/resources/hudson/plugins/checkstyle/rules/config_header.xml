@@ -4,12 +4,23 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
-  <properties>
+  <head>
     <title>Headers</title>
-    <author>Checkstyle Development Team</author>
-  </properties>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>
+    <script type="text/javascript" src="js/anchors.js"/>
+    <script type="text/javascript" src="js/google-analytics.js"/>
+    <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/ico" />
+  </head>
 
   <body>
+    <section name="Content">
+      <macro name="toc">
+        <param name="fromDepth" value="1"/>
+        <param name="toDepth" value="1"/>
+      </macro>
+    </section>
+
     <section name="Header">
       <subsection name="Description">
         <p>
@@ -87,14 +98,22 @@ line 5: ////////////////////////////////////////////////////////////////////
         </table>
       </subsection>
 
-      <subsection name="Example">
+      <subsection name="Examples">
+          <p>
+              In default configuration the check does not rise any violations. Default values of properties are used.
+          </p>
+
+          <source>
+&lt;module name=&quot;Header&quot;/&gt;
+          </source>
+
         <p>
-          To configure the check to use header file <code>&quot;java.header&quot;</code> and ignore lines <code>2</code>, <code>3</code>, and <code> 4</code> and only process Java files:
+          To configure the check to use header file <code>&quot;config/java.header&quot;</code> and ignore lines <code>2</code>, <code>3</code>, and <code> 4</code> and only process Java files:
         </p>
 
         <source>
 &lt;module name=&quot;Header&quot;&gt;
-    &lt;property name=&quot;headerFile&quot; value=&quot;java.header&quot;/&gt;
+    &lt;property name=&quot;headerFile&quot; value=&quot;config/java.header&quot;/&gt;
     &lt;property name=&quot;ignoreLines&quot; value=&quot;2, 3, 4&quot;/&gt;
     &lt;property name=&quot;fileExtensions&quot; value=&quot;java&quot;/&gt;
 &lt;/module&gt;
@@ -118,6 +137,32 @@ line 5: ////////////////////////////////////////////////////////////////////
               value=&quot;// Copyright (C) 2004 MyCompany\n// All rights reserved&quot;/&gt;
 &lt;/module&gt;
         </source>
+      </subsection>
+
+      <subsection name="Example of Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+Header">
+            Checkstyle Style</a>
+          </li>
+        </ul>
+      </subsection>
+
+      <subsection name="Error Messages">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fheader+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22header.mismatch%22">
+            header.mismatch</a>
+          </li>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fheader+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22header.missing%22">
+            header.missing</a>
+          </li>
+        </ul>
+        <p>
+          All messages can be customized if the default message doesn't suite you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
+        </p>
       </subsection>
 
       <subsection name="Package">
@@ -252,13 +297,20 @@ line 6: ^\W*$
         </table>
       </subsection>
 
-      <subsection name="Example">
+      <subsection name="Examples">
+          <p>
+              In default configuration the check does not rise any violations. Default values of properties are used.
+          </p>
+          <source>
+&lt;module name=&quot;RegexpHeader&quot;/&gt;
+          </source>
+
         <p>
-          To configure the check to use header file <code>&quot;java.header&quot;</code> and <code>10</code> and <code>13</code> muli-lines:
+          To configure the check to use header file <code>&quot;config/java.header&quot;</code> and <code>10</code> and <code>13</code> muli-lines:
         </p>
         <source>
 &lt;module name=&quot;RegexpHeader&quot;&gt;
-    &lt;property name=&quot;headerFile&quot; value=&quot;java.header&quot;/&gt;
+    &lt;property name=&quot;headerFile&quot; value=&quot;config/java.header&quot;/&gt;
     &lt;property name=&quot;multiLines&quot; value=&quot;10, 13&quot;/&gt;
 &lt;/module&gt;
         </source>
@@ -287,6 +339,32 @@ line 6: ^\W*$
           <u>Note</u>: <code>ignoreLines</code> property has been
           removed from this check to simplify it.  To make some line optional
           use &quot;^.*$&quot; regexp for this line.
+        </p>
+      </subsection>
+
+      <subsection name="Example of Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+RegexpHeader">
+            Checkstyle Style</a>
+          </li>
+        </ul>
+      </subsection>
+
+      <subsection name="Error Messages">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fheader+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22header.mismatch%22">
+            header.mismatch</a>
+          </li>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fheader+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22header.missing%22">
+            header.missing</a>
+          </li>
+        </ul>
+        <p>
+          All messages can be customized if the default message doesn't suite you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
         </p>
       </subsection>
 

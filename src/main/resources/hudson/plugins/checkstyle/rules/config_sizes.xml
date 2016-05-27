@@ -4,12 +4,100 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
-  <properties>
+  <head>
     <title>Size Violations</title>
-    <author>Checkstyle Development Team</author>
-  </properties>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>
+    <script type="text/javascript" src="js/anchors.js"/>
+    <script type="text/javascript" src="js/google-analytics.js"/>
+    <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/ico" />
+  </head>
 
   <body>
+    <section name="Content">
+      <macro name="toc">
+        <param name="fromDepth" value="1"/>
+        <param name="toDepth" value="1"/>
+      </macro>
+    </section>
+
+    <section name="AnonInnerLength">
+      <subsection name="Description">
+        <p>
+          Checks for long anonymous inner classes.
+        </p>
+
+        <p>
+          Rationale: If an anonymous inner class becomes very long it is hard
+          to understand and to see the flow of the method where the class is
+          defined. Therefore long anonymous inner classes should usually be
+          refactored into a named inner class.  See also Bloch, Effective
+          Java, p. 93.
+        </p>
+      </subsection>
+
+      <subsection name="Properties">
+        <table>
+          <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>type</th>
+            <th>default value</th>
+          </tr>
+          <tr>
+            <td>max</td>
+            <td>maximum allowable number of lines</td>
+            <td><a href="property_types.html#integer">integer</a></td>
+            <td>20</td>
+          </tr>
+        </table>
+      </subsection>
+
+      <subsection name="Examples">
+        <p>
+          To configure the check to accept files with up to 60 lines:
+        </p>
+        <source>
+&lt;module name="AnonInnerLength"&gt;
+      &lt;property name="max" value="60"/&gt;
+&lt;/module&gt;
+        </source>
+      </subsection>
+
+      <subsection name="Example of Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+AnonInnerLength">
+            Checkstyle Style</a>
+          </li>
+        </ul>
+      </subsection>
+
+      <subsection name="Error Messages">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22maxLen.anonInner%22">
+            maxLen.anonInner</a>
+          </li>
+        </ul>
+        <p>
+          All messages can be customized if the default message doesn't suite you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
+        </p>
+      </subsection>
+
+      <subsection name="Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.sizes
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p>
+          <a href="config.html#TreeWalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
 
     <section name="ExecutableStatementCount">
       <subsection name="Description">
@@ -34,18 +122,20 @@
           </tr>
           <tr>
             <td>tokens</td>
-            <td>members to check</td>
+            <td>tokens to check</td>
             <td>
-              subset of tokens <a
-              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
-              <a
-               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
-               <a
-                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INSTANCE_INIT">INSTANCE_INIT</a>,
-                <a
-                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STATIC_INIT">STATIC_INIT</a>
+              subset of tokens
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INSTANCE_INIT">INSTANCE_INIT</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STATIC_INIT">STATIC_INIT</a>.
             </td>
-            <td>all tokens</td>
+            <td>
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INSTANCE_INIT">INSTANCE_INIT</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STATIC_INIT">STATIC_INIT</a>.
+            </td>
           </tr>
         </table>
       </subsection>
@@ -68,6 +158,28 @@
     &lt;property name=&quot;tokens&quot; value=&quot;CTOR_DEF,METHOD_DEF&quot;/&gt;
 &lt;/module&gt;
         </source>
+      </subsection>
+
+      <subsection name="Example of Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+ExecutableStatementCount">
+            Checkstyle Style</a>
+          </li>
+        </ul>
+      </subsection>
+
+      <subsection name="Error Messages">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22executableStatementCount%22">
+            executableStatementCount</a>
+          </li>
+        </ul>
+        <p>
+          All messages can be customized if the default message doesn't suite you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
+        </p>
       </subsection>
 
       <subsection name="Package">
@@ -128,6 +240,32 @@
       &lt;property name="max" value="1500"/&gt;
 &lt;/module&gt;
         </source>
+      </subsection>
+
+      <subsection name="Example of Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources+filename%3Asun_checks.xml+repo%3Acheckstyle%2Fcheckstyle+FileLength">
+            Sun Style</a>
+          </li>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+FileLength">
+            Checkstyle Style</a>
+          </li>
+        </ul>
+      </subsection>
+
+      <subsection name="Error Messages">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22maxLen.file%22">
+            maxLen.file</a>
+          </li>
+        </ul>
+        <p>
+          All messages can be customized if the default message doesn't suite you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
+        </p>
       </subsection>
 
       <subsection name="Package">
@@ -211,11 +349,181 @@
             property <code>tabWidth</code> for <code>LineLength</code> alone.
           </li>
           <li>
-            Support for the special handling of imports in CheckStyle Version
-            2 has been dropped as it is a special case of regexp: The user can
-            set property <code>ignorePattern</code> to <code>^import</code> and achieve the same effect.
+            Package and import statements (lines matching pattern <code>^(package|import) .*</code>) are not verified by
+            this check.
           </li>
         </ul>
+      </subsection>
+
+      <subsection name="Example of Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources+filename%3Agoogle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+LineLength">
+            Google Style</a>
+          </li>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources+filename%3Asun_checks.xml+repo%3Acheckstyle%2Fcheckstyle+LineLength">
+            Sun Style</a>
+          </li>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+LineLength">
+            Checkstyle Style</a>
+          </li>
+        </ul>
+      </subsection>
+
+      <subsection name="Error Messages">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22maxLineLen%22">
+            maxLineLen</a>
+          </li>
+        </ul>
+        <p>
+          All messages can be customized if the default message doesn't suite you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
+        </p>
+      </subsection>
+
+      <subsection name="Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.sizes
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module">
+        <p>
+          <a href="config.html#TreeWalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
+    <section name="MethodCount">
+      <subsection name="Description">
+        <p>
+          Checks the number of methods declared in each type. This
+          includes the number of each scope (<code>private</code>,
+          <code>package</code>, <code>protected</code> and
+          <code>public</code>) as well as an overall total.
+        </p>
+      </subsection>
+
+      <subsection name="Properties">
+        <table>
+          <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>type</th>
+            <th>default value</th>
+          </tr>
+          <tr>
+            <td>maxTotal</td>
+            <td>maximum allowable number of methods at all scope levels</td>
+            <td><a href="property_types.html#integer">integer</a></td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>maxPrivate</td>
+            <td>maximum allowable number of <code>private</code> methods</td>
+            <td><a href="property_types.html#integer">integer</a></td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>maxPackage</td>
+            <td>maximum allowable number of <code>package</code> methods</td>
+            <td><a href="property_types.html#integer">integer</a></td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>maxProtected</td>
+            <td>maximum allowable number of <code>protected</code> methods</td>
+            <td><a href="property_types.html#integer">integer</a></td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>maxPublic</td>
+            <td>maximum allowable number of <code>public</code> methods</td>
+            <td><a href="property_types.html#integer">integer</a></td>
+            <td>100</td>
+          </tr>
+
+          <tr>
+            <td>tokens</td>
+            <td>tokens to check</td>
+
+            <td>
+              subset of tokens
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">ENUM_CONSTANT_DEF</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">ENUM_DEF</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>.
+            </td>
+
+            <td>
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">ENUM_CONSTANT_DEF</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">ENUM_DEF</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>.
+            </td>
+          </tr>
+        </table>
+      </subsection>
+
+      <subsection name="Examples">
+        <p>
+          To configure the check with defaults:
+        </p>
+        <source>
+&lt;module name="MethodCount"/&gt;
+        </source>
+
+        <p>
+          To configure the check to allow at most 30 methods per type:
+        </p>
+        <source>
+&lt;module name="MethodCount"&gt;
+      &lt;property name="maxTotal" value="30"/&gt;
+&lt;/module&gt;
+        </source>
+
+      </subsection>
+
+      <subsection name="Example of Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+MethodCount">
+            Checkstyle Style</a>
+          </li>
+        </ul>
+      </subsection>
+
+      <subsection name="Error Messages">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22too.many.methods%22">
+            too.many.methods</a>
+          </li>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22too.many.packageMethods%22">
+            too.many.packageMethods</a>
+          </li>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22too.many.privateMethods%22">
+            too.many.privateMethods</a>
+          </li>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22too.many.protectedMethods%22">
+            too.many.protectedMethods</a>
+          </li>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22too.many.publicMethods%22">
+            too.many.publicMethods</a>
+          </li>
+        </ul>
+        <p>
+          All messages can be customized if the default message doesn't suite you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
+        </p>
       </subsection>
 
       <subsection name="Package">
@@ -269,20 +577,20 @@
           </tr>
           <tr>
             <td>tokens</td>
-            <td>blocks to check</td>
+            <td>tokens to check</td>
 
             <td>
               subset of tokens <a
               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
               <a
-              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>.
             </td>
 
             <td>
               <a
                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
                <a
-               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
+               href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>.
             </td>
           </tr>
         </table>
@@ -320,162 +628,30 @@
         </source>
       </subsection>
 
-      <subsection name="Package">
-        <p>
-          com.puppycrawl.tools.checkstyle.checks.sizes
-        </p>
+      <subsection name="Example of Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources+filename%3Asun_checks.xml+repo%3Acheckstyle%2Fcheckstyle+MethodLength">
+            Sun Style</a>
+          </li>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+MethodLength">
+            Checkstyle Style</a>
+          </li>
+        </ul>
       </subsection>
 
-      <subsection name="Parent Module">
+      <subsection name="Error Messages">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22maxLen.method%22">
+            maxLen.method</a>
+          </li>
+        </ul>
         <p>
-          <a href="config.html#TreeWalker">TreeWalker</a>
+          All messages can be customized if the default message doesn't suite you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
         </p>
-      </subsection>
-    </section>
-
-    <section name="AnonInnerLength">
-      <subsection name="Description">
-        <p>
-          Checks for long anonymous inner classes.
-        </p>
-
-        <p>
-          Rationale: If an anonymous inner class becomes very long it is hard
-          to understand and to see the flow of the method where the class is
-          defined. Therefore long anonymous inner classes should usually be
-          refactored into a named inner class.  See also Bloch, Effective
-          Java, p. 93.
-        </p>
-      </subsection>
-
-      <subsection name="Properties">
-        <table>
-          <tr>
-            <th>name</th>
-            <th>description</th>
-            <th>type</th>
-            <th>default value</th>
-          </tr>
-          <tr>
-            <td>max</td>
-            <td>maximum allowable number of lines</td>
-            <td><a href="property_types.html#integer">integer</a></td>
-            <td>20</td>
-          </tr>
-        </table>
-      </subsection>
-
-      <subsection name="Examples">
-        <p>
-          To configure the check to accept files with up to 60 lines:
-        </p>
-        <source>
-&lt;module name="AnonInnerLength"&gt;
-      &lt;property name="max" value="60"/&gt;
-&lt;/module&gt;
-        </source>
-      </subsection>
-
-      <subsection name="Package">
-        <p>
-          com.puppycrawl.tools.checkstyle.checks.sizes
-        </p>
-      </subsection>
-
-      <subsection name="Parent Module">
-        <p>
-          <a href="config.html#TreeWalker">TreeWalker</a>
-        </p>
-      </subsection>
-    </section>
-
-    <section name="ParameterNumber">
-      <subsection name="Description">
-        <p>
-          Checks the number of parameters of a method or constructor.
-        </p>
-      </subsection>
-
-      <subsection name="Properties">
-        <table>
-          <tr>
-            <th>name</th>
-            <th>description</th>
-            <th>type</th>
-            <th>default value</th>
-          </tr>
-          <tr>
-            <td>max</td>
-            <td>maximum allowable number of parameters</td>
-            <td><a href="property_types.html#integer">integer</a></td>
-            <td>7</td>
-          </tr>
-          <tr>
-            <td>ignoreOverriddenMethods</td>
-            <td>Ignore number of parameters for methods with @Override annotation</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
-            <td>false</td>
-          </tr>
-          <tr>
-            <td>tokens</td>
-            <td>declarations to check</td>
-
-            <td>
-              subset of tokens <a
-              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
-              <a
-              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
-            </td>
-
-            <td>
-              <a
-              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
-              <a
-              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>
-            </td>
-          </tr>
-        </table>
-      </subsection>
-
-      <subsection name="Examples">
-        <p>
-          To configure the check:
-        </p>
-        <source>
-&lt;module name="ParameterNumber"/&gt;
-        </source>
-
-        <p>
-          To configure the check to allow 10 parameters for a method:
-        </p>
-        <source>
-&lt;module name="ParameterNumber"&gt;
-   &lt;property name="max" value="10"/&gt;
-   &lt;property name="tokens" value="METHOD_DEF"/&gt;
-&lt;/module&gt;
-        </source>
-          <p>
-              To configure the check to ignore number of parameters for methods with @Override or @java.lang.Override annotation.
-          </p>
-          <p>
-              Rationale: developer may need to override method with many parameters from 3-rd party library.
-              In this case developer has no control over number of parameters.
-          </p>
-          <source>
-&lt;module name="ParameterNumber"&gt;
-    &lt;property name="ignoreOverriddenMethods" value="true"/&gt;
-    &lt;property name="tokens" value="METHOD_DEF"/&gt;
-&lt;/module&gt;
-          </source>
-          <p>
-              Java code example
-          </p>
-          <source>
-@Override
-public void needsLotsOfParameters(int a, int b, int c, int d, int e, int f, int g, int h) {
-    ...
-}
-          </source>
       </subsection>
 
       <subsection name="Package">
@@ -540,6 +716,28 @@ public void needsLotsOfParameters(int a, int b, int c, int d, int e, int f, int 
 
       </subsection>
 
+      <subsection name="Example of Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+OuterTypeNumber">
+            Checkstyle Style</a>
+          </li>
+        </ul>
+      </subsection>
+
+      <subsection name="Error Messages">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22maxOuterTypes%22">
+            maxOuterTypes</a>
+          </li>
+        </ul>
+        <p>
+          All messages can be customized if the default message doesn't suite you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
+        </p>
+      </subsection>
+
       <subsection name="Package">
         <p>
           com.puppycrawl.tools.checkstyle.checks.sizes
@@ -553,13 +751,10 @@ public void needsLotsOfParameters(int a, int b, int c, int d, int e, int f, int 
       </subsection>
     </section>
 
-    <section name="MethodCount">
+    <section name="ParameterNumber">
       <subsection name="Description">
         <p>
-          Checks the number of methods declared in each type. This
-          includes the number of each scope (<code>private</code>,
-          <code>package</code>, <code>protected</code> and
-          <code>public</code>) as well as an overall total.
+          Checks the number of parameters of a method or constructor.
         </p>
       </subsection>
 
@@ -572,55 +767,103 @@ public void needsLotsOfParameters(int a, int b, int c, int d, int e, int f, int 
             <th>default value</th>
           </tr>
           <tr>
-            <td>maxTotal</td>
-            <td>maximum allowable number of methods at all scope levels</td>
+            <td>max</td>
+            <td>maximum allowable number of parameters</td>
             <td><a href="property_types.html#integer">integer</a></td>
-            <td>100</td>
+            <td>7</td>
           </tr>
           <tr>
-            <td>maxPrivate</td>
-            <td>maximum allowable number of <code>private</code> methods</td>
-            <td><a href="property_types.html#integer">integer</a></td>
-            <td>100</td>
+            <td>ignoreOverriddenMethods</td>
+            <td>Ignore number of parameters for methods with @Override annotation</td>
+            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td>false</td>
           </tr>
           <tr>
-            <td>maxPackage</td>
-            <td>maximum allowable number of <code>package</code> methods</td>
-            <td><a href="property_types.html#integer">integer</a></td>
-            <td>100</td>
-          </tr>
-          <tr>
-            <td>maxProtected</td>
-            <td>maximum allowable number of <code>protected</code> methods</td>
-            <td><a href="property_types.html#integer">integer</a></td>
-            <td>100</td>
-          </tr>
-          <tr>
-            <td>maxPublic</td>
-            <td>maximum allowable number of <code>public</code> methods</td>
-            <td><a href="property_types.html#integer">integer</a></td>
-            <td>100</td>
+            <td>tokens</td>
+            <td>tokens to check</td>
+
+            <td>
+              subset of tokens <a
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+              <a
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>.
+            </td>
+
+            <td>
+              <a
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
+              <a
+              href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>.
+            </td>
           </tr>
         </table>
       </subsection>
 
       <subsection name="Examples">
         <p>
-          To configure the check with defaults:
+          To configure the check:
         </p>
         <source>
-&lt;module name="MethodCount"/&gt;
+&lt;module name="ParameterNumber"/&gt;
         </source>
 
         <p>
-          To configure the check to allow at most 30 methods per type:
+          To configure the check to allow 10 parameters for a method:
         </p>
         <source>
-&lt;module name="MethodCount"&gt;
-      &lt;property name="maxTotal" value="30"/&gt;
+&lt;module name="ParameterNumber"&gt;
+   &lt;property name="max" value="10"/&gt;
+   &lt;property name="tokens" value="METHOD_DEF"/&gt;
 &lt;/module&gt;
         </source>
+          <p>
+              To configure the check to ignore number of parameters for methods with @Override or @java.lang.Override annotation.
+          </p>
+          <p>
+              Rationale: developer may need to override method with many parameters from 3-rd party library.
+              In this case developer has no control over number of parameters.
+          </p>
+          <source>
+&lt;module name="ParameterNumber"&gt;
+    &lt;property name="ignoreOverriddenMethods" value="true"/&gt;
+    &lt;property name="tokens" value="METHOD_DEF"/&gt;
+&lt;/module&gt;
+          </source>
+          <p>
+              Java code example
+          </p>
+          <source>
+@Override
+public void needsLotsOfParameters(int a, int b, int c, int d, int e, int f, int g, int h) {
+    ...
+}
+          </source>
+      </subsection>
 
+      <subsection name="Example of Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources+filename%3Asun_checks.xml+repo%3Acheckstyle%2Fcheckstyle+ParameterNumber">
+            Sun Style</a>
+          </li>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+ParameterNumber">
+            Checkstyle Style</a>
+          </li>
+        </ul>
+      </subsection>
+
+      <subsection name="Error Messages">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fsizes+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22maxParam%22">
+            maxParam</a>
+          </li>
+        </ul>
+        <p>
+          All messages can be customized if the default message doesn't suite you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
+        </p>
       </subsection>
 
       <subsection name="Package">
