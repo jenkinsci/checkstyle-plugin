@@ -161,7 +161,7 @@ public class CheckStyleParserTest {
                 assertEquals("Wrong type detected.", "DesignForExtensionCheck", warning.getType());
                 assertEquals("Wrong priority detected.", Priority.HIGH, warning.getPriority());
                 assertTrue("Wrong description detected.", warning.getToolTip().contains(
-                        "Checks that classes are designed for extension."));
+                        "finds classes that are designed for extension"));
                 assertEquals(
                         "Wrong message detected.",
                         "Die Methode 'detectPackageName' ist nicht fr Vererbung entworfen - muss abstract, final oder leer sein.",
