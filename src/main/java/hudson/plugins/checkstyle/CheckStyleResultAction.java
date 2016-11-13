@@ -1,5 +1,8 @@
 package hudson.plugins.checkstyle;
 
+import java.util.Collection;
+
+import hudson.model.Action;
 import hudson.model.Run;
 import hudson.plugins.analysis.core.AbstractResultAction;
 import hudson.plugins.analysis.core.HealthDescriptor;
@@ -21,7 +24,7 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
      * Creates a new instance of <code>CheckStyleResultAction</code>.
      *
      * @param owner
-     *            the associated build of this action
+     *            the associated run of this action
      * @param healthDescriptor
      *            health descriptor
      * @param result
@@ -40,5 +43,10 @@ public class CheckStyleResultAction extends AbstractResultAction<CheckStyleResul
     @Override
     protected PluginDescriptor getDescriptor() {
         return new CheckStyleDescriptor();
+    }
+
+    @Override
+    public Collection<? extends Action> getProjectActions() {
+        return asSet(new CheckStyleProjectAction(getJob()));
     }
 }

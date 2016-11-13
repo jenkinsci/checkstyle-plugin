@@ -13,8 +13,6 @@ import hudson.FilePath;
 import hudson.Launcher;
 import hudson.matrix.MatrixAggregator;
 import hudson.matrix.MatrixBuild;
-import hudson.model.AbstractProject;
-import hudson.model.Action;
 import hudson.model.BuildListener;
 import hudson.model.Run;
 import hudson.model.TaskListener;
@@ -65,11 +63,6 @@ public class CheckStylePublisher extends HealthAwarePublisher {
     @DataBoundSetter
     public void setPattern(final String pattern) {
         this.pattern = pattern;
-    }
-
-    @Override
-    public Action getProjectAction(final AbstractProject<?, ?> project) {
-        return new CheckStyleProjectAction(project);
     }
 
     @Override

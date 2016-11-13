@@ -32,9 +32,14 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>git</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.jvnet.hudson.plugins</groupId>
       <artifactId>analysis-core</artifactId>
-      <version>1.77</version>
+      <version>1.80-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
