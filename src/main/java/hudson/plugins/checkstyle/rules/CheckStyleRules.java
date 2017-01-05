@@ -52,13 +52,19 @@ public final class CheckStyleRules {
                     "imports", "javadoc", "metrics", "misc", "modifier", "naming", "regexp", "reporting",
                     "sizes", "whitespace"};
             for (int i = 0; i < ruleFiles.length; i++) {
-                InputStream inputStream = CheckStyleRules.class.getResourceAsStream("config_" + ruleFiles[i] + ".xml");
+                String ruleFile = ruleFiles[i];
+                InputStream inputStream = CheckStyleRules.class.getResourceAsStream("config_" + ruleFile + ".xml");
                 Digester digester = createDigester();
                 List<Rule> rules = new ArrayList<Rule>();
                 digester.push(rules);
                 digester.parse(inputStream);
                 for (Rule rule : rules) {
-                    rulesByName.put(rule.getName(), rule);
+                    if (StringUtils.isNotBlank(rule.getDescription())) {
+                        rulesByName.put(rule.getName(), rule);
+                    }
+                    else {
+                        System.out.printf("%s: %s\n", ruleFile, rule.getName());
+                    }
                 }
             }
         }
