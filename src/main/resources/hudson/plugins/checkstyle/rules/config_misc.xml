@@ -539,8 +539,10 @@ String unitAbbrev = "\u03bc\u03bc\u03bc";
           <tr>
             <td>limitedTokens</td>
             <td>set of tokens with limited occurrences as descendants</td>
-            <td>subset of tokens declared in <a
-            href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a></td>
+            <td>
+             subset of tokens
+             <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a>
+            </td>
             <td>empty set</td>
           </tr>
           <tr>
@@ -1006,19 +1008,19 @@ String unitAbbrev = "\u03bc\u03bc\u03bc";
           </tr>
           <tr>
             <td>basicOffset</td>
-            <td>how many spaces to use for new indentation level</td>
+            <td>how far new indentation level should be indented when on the next line</td>
             <td><a href="property_types.html#integer">Integer</a></td>
             <td>4</td>
           </tr>
           <tr>
             <td>braceAdjustment</td>
-            <td>how far braces should be indented when on the next line</td>
+            <td>how far a braces should be indented when on the next line</td>
             <td><a href="property_types.html#integer">Integer</a></td>
             <td>0</td>
           </tr>
           <tr>
             <td>caseIndent</td>
-            <td>how much to indent a case label</td>
+            <td>how far a case label should be indented when on next line</td>
             <td><a href="property_types.html#integer">Integer</a></td>
             <td>4</td>
           </tr>
@@ -1030,7 +1032,7 @@ String unitAbbrev = "\u03bc\u03bc\u03bc";
           </tr>
           <tr>
             <td>arrayInitIndent</td>
-            <td>how much to indent an array initialisation when on next line</td>
+            <td>how far an array initialisation should be indented when on next line</td>
             <td><a href="property_types.html#integer">Integer</a></td>
             <td>4</td>
           </tr>
@@ -1042,8 +1044,8 @@ String unitAbbrev = "\u03bc\u03bc\u03bc";
           </tr>
           <tr>
             <td>forceStrictCondition</td>
-            <td>force strict condition in line wrapping case. If value is true, line wrap indent
-                have to be same as lineWrappingIndentation parameter</td>
+            <td>force strict indent level in line wrapping case. If value is true, line wrap indent
+                have to be same as lineWrappingIndentation parameter. If value is false, line wrap indent could be bigger on any value user would like.</td>
             <td><a href="property_types.html#boolean">Boolean</a></td>
             <td>false</td>
           </tr>
@@ -1341,8 +1343,8 @@ void foo(String aFooString,
           <tr>
             <td>format</td>
             <td>Pattern to match comments against</td>
-            <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><code>TODO:</code></td>
+            <td><a href="property_types.html#regexp">Regular Expression</a></td>
+            <td><code>"TODO:"</code></td>
           </tr>
         </table>
       </subsection>
@@ -1488,16 +1490,16 @@ d = e / f;        // Another comment for this line
           <tr>
             <td>format</td>
             <td>pattern for strings allowed before the comment</td>
-            <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><code>^[\\s\\}\\);]*$</code></td>
+            <td><a href="property_types.html#regexp">Regular Expression</a></td>
+            <td><code>"^[\s\});]*$"</code></td>
           </tr>
           <tr>
             <td>legalComment</td>
             <td>pattern for text allowed in trailing comments. (This
                 pattern will not be applied to multiline comments and the text of the
                 comment will be trimmed before matching.)</td>
-            <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td>(not set)</td>
+            <td><a href="property_types.html#regexp">Regular Expression</a></td>
+            <td><code>null</code></td>
           </tr>
         </table>
       </subsection>
@@ -1590,6 +1592,12 @@ messages_de.properties: Key 'cancel' missing.
 messages.properties: Key 'hell' missing.
 messages.properties: Key 'ok' missing.
         </source>
+        <p>
+          <font color="red">Attention:</font> this Check could produce false-positives if it is used with
+          <a href="config.html#Checker">Checker</a> that use cache (property "cacheFile")
+          This is known design problem, will be addrerssed at
+          <a href="https://github.com/checkstyle/checkstyle/issues/3539">issue</a>.
+        </p>
       </subsection>
 
       <subsection name="Properties">
@@ -1616,8 +1624,8 @@ messages.properties: Key 'ok' missing.
             <td><a href="https://docs.oracle.com/javase/7/docs/api/java/util/ResourceBundle.html">
               Base name</a> of resource bundles which contain message resources. It helps
               the check to distinguish config and localization resources.</td>
-            <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><code>^messages.*$</code></td>
+            <td><a href="property_types.html#regexp">Regular Expression</a></td>
+            <td><code>"^messages.*$"</code></td>
           </tr>
           <tr>
             <td>requiredTranslations</td>
@@ -1770,8 +1778,8 @@ messages_home_fr_CA_UNIX.properties
             <td>excludedClasses</td>
             <td>Pattern for qualified names of classes which are allowed
             to have a main method.</td>
-            <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><code>^$</code></td>
+            <td><a href="property_types.html#regexp">Regular Expression</a></td>
+            <td><code>"^$"</code></td>
           </tr>
         </table>
       </subsection>

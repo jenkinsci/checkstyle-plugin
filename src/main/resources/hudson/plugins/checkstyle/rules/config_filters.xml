@@ -40,7 +40,7 @@
           <tr>
             <td>severity</td>
             <td>the severity level of this filter</td>
-            <td><a href="property_types.html#severity">severity</a></td>
+            <td><a href="property_types.html#severity">Severity</a></td>
             <td><code>error</code></td>
           </tr>
           <tr>
@@ -54,7 +54,7 @@
                accepts an audit event if and only if there is not a match
                between the event's severity level and property severity.
             </td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>true</code></td>
           </tr>
         </table>
@@ -108,7 +108,8 @@
             Usage: This filter only works in conjunction with a <code>FileContentsHolder</code>, since that check makes
             the suppression comments in the Java files available. A configuration that includes this filter must
             configure <code>FileContentsHolder</code> as a
-            child module of <code>TreeWalker</code>.
+            child module of <code>TreeWalker</code>. Note that the suppression comment should be put
+            before the violation. You can use more than one suppression comment each on separate line.
           </p>
       </subsection>
       <subsection name="Properties">
@@ -122,37 +123,37 @@
               <tr>
                   <td>offCommentFormat</td>
                   <td>comment pattern to trigger filter to begin suppression</td>
-                  <td><a href="property_types.html#regexp">regular expression</a></td>
-                  <td><code>CHECKSTYLE\:OFF</code></td>
+                  <td><a href="property_types.html#regexp">Regular Expression</a></td>
+                  <td><code>"CHECKSTYLE:OFF"</code></td>
               </tr>
               <tr>
                   <td>onCommentFormat</td>
                   <td>comment pattern to trigger filter to end suppression</td>
-                  <td><a href="property_types.html#regexp">regular expression</a></td>
-                  <td><code>CHECKSTYLE\:ON</code></td>
+                  <td><a href="property_types.html#regexp">Regular Expression</a></td>
+                  <td><code>"CHECKSTYLE:ON"</code></td>
               </tr>
               <tr>
                   <td>checkFormat</td>
                   <td>check pattern to suppress</td>
-                  <td><a href="property_types.html#regexp">regular expression</a></td>
-                  <td><code>.*</code> (all checks)</td>
+                  <td><a href="property_types.html#regexp">Regular Expression</a></td>
+                  <td><code>".*"</code></td>
               </tr>
               <tr>
                   <td>messageFormat</td>
                   <td>message pattern to suppress</td>
-                  <td><a href="property_types.html#regexp">regular expression</a></td>
-                  <td>none</td>
+                  <td><a href="property_types.html#regexp">Regular Expression</a></td>
+                  <td><code>null</code></td>
               </tr>
               <tr>
                   <td>checkCPP</td>
                   <td>whether to check C++ style comments (<code>//</code>)</td>
-                  <td><a href="property_types.html#boolean">boolean</a></td>
+                  <td><a href="property_types.html#boolean">Boolean</a></td>
                   <td><code>true</code></td>
               </tr>
               <tr>
                   <td>checkC</td>
                   <td>whether to check C style comments (<code>/* ... */</code>)</td>
-                  <td><a href="property_types.html#boolean">boolean</a></td>
+                  <td><a href="property_types.html#boolean">Boolean</a></td>
                   <td><code>true</code></td>
               </tr>
           </table>
@@ -364,6 +365,24 @@ public static void foo() {
 }
 // CSON systemout
           </source>
+          <p>
+            Example of how to configure the check to suppress more than one checks.
+          </p>
+          <source>
+&lt;module name="SuppressionCommentFilter&quot;&gt;
+  &lt;property name="offCommentFormat" value="@cs-\: ([\w\|]+)"/&gt;
+  &lt;property name="checkFormat" value="$1"/&gt;
+&lt;/module&gt;
+          </source>
+          <source>
+// @cs-: ClassDataAbstractionCoupling
+// @cs-: MagicNumber
+@Service // no violations from ClassDataAbstractionCoupling here
+@Transactional
+public class UserService {
+  private int value = 10022; // no violations from MagicNumber here
+}
+          </source>
       </subsection>
       <subsection name="Example of Usage">
         <ul>
@@ -431,7 +450,7 @@ public static void foo() {
                    true and file is not found, the filter accept all
                    audit events.
                </td>
-               <td><a href="property_types.html#boolean">boolean</a></td>
+               <td><a href="property_types.html#boolean">Boolean</a></td>
                <td><code>false</code></td>
              </tr>
           </table>
@@ -459,13 +478,13 @@ public static void foo() {
           <ul>
               <li>
                   <code>files</code> -
-                  a <a href="property_types.html#regexp">regular expression</a>
+                  a <a href="property_types.html#regexp">Regular Expression</a>
                   matched against the file name associated with an audit
                   event. It is mandatory.
               </li>
               <li>
                   <code>checks</code> -
-                  a <a href="property_types.html#regexp">regular expression</a>
+                  a <a href="property_types.html#regexp">Regular Expression</a>
                   matched against the name of the check associated with an audit
                   event. Optional if <code>id</code> is specified.
               </li>
@@ -749,38 +768,38 @@ public static void foo() {
                 <tr>
                     <td>commentFormat</td>
                     <td>comment pattern to trigger filter to begin suppression</td>
-                    <td><a href="property_types.html#regexp">regular expression</a></td>
-                    <td><code>SUPPRESS CHECKSTYLE (\w+)</code></td>
+                    <td><a href="property_types.html#regexp">Regular Expression</a></td>
+                    <td><code>"SUPPRESS CHECKSTYLE (\w+)"</code></td>
                 </tr>
                 <tr>
                     <td>checkFormat</td>
                     <td>check pattern to suppress</td>
-                    <td><a href="property_types.html#regexp">regular expression</a></td>
-                    <td><code>.*</code></td>
+                    <td><a href="property_types.html#regexp">Regular Expression</a></td>
+                    <td><code>".*"</code></td>
                 </tr>
                 <tr>
                     <td>messageFormat</td>
                     <td>message pattern to suppress</td>
-                    <td><a href="property_types.html#regexp">regular expression</a></td>
-                    <td>none</td>
+                    <td><a href="property_types.html#regexp">Regular Expression</a></td>
+                    <td><code>null</code></td>
                 </tr>
                 <tr>
                     <td>influenceFormat</td>
                     <td>a negative/zero/positive value that defines the number of
                         lines preceding/at/following the suppression comment</td>
-                    <td><a href="property_types.html#regexp">regular expression</a></td>
-                    <td><code>0</code> (the line containing the comment)</td>
+                    <td><a href="property_types.html#regexp">Regular Expression</a></td>
+                    <td><code>"0"</code></td>
                 </tr>
                 <tr>
                     <td>checkCPP</td>
                     <td>whether to check C++ style comments (<code>//</code>)</td>
-                    <td><a href="property_types.html#boolean">boolean</a></td>
+                    <td><a href="property_types.html#boolean">Boolean</a></td>
                     <td><code>true</code></td>
                 </tr>
                 <tr>
                     <td>checkC</td>
                     <td>whether to check C style comments (<code>/* ... */</code>)</td>
-                    <td><a href="property_types.html#boolean">boolean</a></td>
+                    <td><a href="property_types.html#boolean">Boolean</a></td>
                     <td><code>true</code></td>
                 </tr>
             </table>
@@ -932,6 +951,26 @@ public void testMethod() { }
 
 public static void foo() {
   System.out.println("Debug info."); // @cs-: systemout (should not fail RegexpSinglelineJava)
+}
+            </source>
+            <p>
+              Example of how to configure the check to suppress more than one checks.
+              The influence format format is specified in the second regexp group.
+            </p>
+            <source>
+&lt;module name="SuppressWithNearbyCommentFilter&quot;&gt;
+  &lt;property name="commentFormat" value="@cs-\: ([\w\|]+) influence (\d+)"/&gt;
+  &lt;property name="checkFormat" value="$1"/&gt;
+  &lt;property name="influenceFormat" value="$2"/&gt;
+  &lt;/module&gt;
+            </source>
+            <source>
+// @cs-: ClassDataAbstractionCoupling influence 2
+// @cs-: MagicNumber influence 4
+@Service // no violations from ClassDataAbstractionCoupling here
+@Transactional
+public class UserService {
+  private int value = 10022; // no violations from MagicNumber here
 }
             </source>
         </subsection>

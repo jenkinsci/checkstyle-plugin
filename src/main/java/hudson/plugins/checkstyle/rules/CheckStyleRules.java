@@ -62,9 +62,6 @@ public final class CheckStyleRules {
                     if (StringUtils.isNotBlank(rule.getDescription())) {
                         rulesByName.put(rule.getName(), rule);
                     }
-                    else {
-                        System.out.printf("%s: %s\n", ruleFile, rule.getName());
-                    }
                 }
             }
         }

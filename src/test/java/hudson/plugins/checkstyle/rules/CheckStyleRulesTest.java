@@ -9,6 +9,8 @@ import static org.junit.Assert.*;
  * @author Ulli Hafner
  */
 public class CheckStyleRulesTest {
+    private static final int NUMBER_OF_AVAILABLE_CHECKSTYLE_RULES = 159;
+
     /**
      * Test whether we could parse the Checkstyle rule meta data.
      */
@@ -17,7 +19,7 @@ public class CheckStyleRulesTest {
         CheckStyleRules reader = CheckStyleRules.getInstance();
         reader.initialize();
 
-        assertEquals("Wrong number of rules detected.", 158, reader.getRules().size());
+        assertEquals("Wrong number of rules detected.", NUMBER_OF_AVAILABLE_CHECKSTYLE_RULES, reader.getRules().size());
         assertNotNull("No EmptyBlock rule found.", reader.getRule("EmptyBlock"));
         assertEquals("Description for EmptyBlock found.", "<p> Checks for empty blocks. </p>", reader.getRule("EmptyBlock").getDescription());
         assertNotSame("No description for AnnotationUseStyle found.", Rule.UNDEFINED_DESCRIPTION, reader.getRule("AnnotationUseStyle").getDescription());

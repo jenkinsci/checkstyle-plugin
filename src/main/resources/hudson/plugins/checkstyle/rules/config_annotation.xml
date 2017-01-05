@@ -29,6 +29,12 @@
           after documentation block and before target element, annotation should be located on separate line from target element.
         </p>
         <p>
+          Attention: Annotations among modifiers are ignored (looks like false-negative)
+          as there might be a problem with annotations for return types <source>public @Nullable Long getStartTimeOrNull() { ... }</source>
+          Such annotations are better to keep close to type.
+          Due to limitations Checkstyle can not examin target of annotation.
+        </p>
+        <p>
           Example:
         </p>
         <source>
@@ -48,20 +54,20 @@ public String getNameIfPresent() { ... }
           </tr>
           <tr>
             <td>allowSamelineMultipleAnnotations</td>
-            <td>To allow annotation to be located on the same line as target element.</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td>To allow annotation(s) to be located on the same line as target element.</td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
            <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowSamelineSingleParameterlessAnnotation</td>
             <td>To allow single prameterless annotation to be located on the same line as target element.</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>true</code></td>
           </tr>
           <tr>
             <td>allowSamelineParameterizedAnnotation</td>
-            <td>To allow parameterized annotation to be located on the same line as target element.</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td>To allow one and only parameterized annotation to be located on the same line as target element.</td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
@@ -98,10 +104,27 @@ public String getNameIfPresent() { ... }
 
       <subsection name="Examples">
         <p>
-          Example to allow single parameterless annotation on the same line
+          Example to allow multiple annotations on the same line
         </p>
         <source>
-@Override public int hashCode() { ... }
+@SuppressWarnings("deprecation") @Mock DataLoader loader; // no violations
+        </source>
+        <p>
+          Use following configuration:
+        </p>
+        <source>
+&lt;module name=&quot;AnnotationLocation&quot;&gt;
+    &lt;property name=&quot;allowSamelineMultipleAnnotations&quot; value=&quot;true&quot;/&gt;
+    &lt;property name=&quot;allowSamelineSingleParameterlessAnnotation&quot; value=&quot;false&quot;/&gt;
+    &lt;property name=&quot;allowSamelineParameterizedAnnotation&quot; value=&quot;false&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>
+          Example to allow one single parameterless annotation on the same line
+        </p>
+        <source>
+@Override public int hashCode() { ... } // no violations
+@SuppressWarnings("deprecation") public int foo() { ... } // violation
         </source>
         <p>
           Use following configuration:
@@ -114,37 +137,50 @@ public String getNameIfPresent() { ... }
 &lt;/module&gt;
         </source>
         <p>
-          Example to allow multiple parameterized annotations on the same line
+          Example to allow only one and only pametrized annotation on the same line
         </p>
         <source>
-@SuppressWarnings("deprecation") @Mock DataLoader loader;
+@SuppressWarnings("deprecation") DataLoader loader; // no violations
+@Mock DataLoader loader; // violation
         </source>
         <p>
           Use following configuration:
         </p>
         <source>
 &lt;module name=&quot;AnnotationLocation&quot;&gt;
-    &lt;property name=&quot;allowSamelineMultipleAnnotations&quot; value=&quot;true&quot;/&gt;
-    &lt;property name=&quot;allowSamelineSingleParameterlessAnnotation&quot; value=&quot;true&quot;/&gt;
+    &lt;property name=&quot;allowSamelineMultipleAnnotations&quot; value=&quot;false&quot;/&gt;
+    &lt;property name=&quot;allowSamelineSingleParameterlessAnnotation&quot; value=&quot;false&quot;/&gt;
     &lt;property name=&quot;allowSamelineParameterizedAnnotation&quot; value=&quot;true&quot;/&gt;
 &lt;/module&gt;
         </source>
-        <p>
-          Example to allow multiple parameterless annotations on the same line
-        </p>
-        <source>
-@Partial @Mock DataLoader loader;
-        </source>
-        <p>
-          Use following configuration:
-        </p>
-        <source>
+       <p>
+         The following example demonstrates how the check validates annotations of method parameters,
+         catch parameters, foreach, for-loop variable definitions.
+       </p>
+       <p>Configuration:</p>
+       <source>
 &lt;module name=&quot;AnnotationLocation&quot;&gt;
-    &lt;property name=&quot;allowSamelineMultipleAnnotations&quot; value=&quot;true&quot;/&gt;
-    &lt;property name=&quot;allowSamelineSingleParameterlessAnnotation&quot; value=&quot;true&quot;/&gt;
+    &lt;property name=&quot;allowSamelineMultipleAnnotations&quot; value=&quot;false&quot;/&gt;
+    &lt;property name=&quot;allowSamelineSingleParameterlessAnnotation&quot; value=&quot;false&quot;/&gt;
     &lt;property name=&quot;allowSamelineParameterizedAnnotation&quot; value=&quot;false&quot;/&gt;
-&lt;/module&gt;
-        </source>
+    &lt;property name=&quot;tokens&quot; value=&quot;VARIABLE_DEF, PARAMETER_DEF&quot;/&gt;
+ &lt;/module&gt;
+       </source>
+       <p>Code example:</p>
+       <source>
+public void test(&#64;MyAnnotation String s) { // OK
+  ...
+  for (&#64;MyAnnotation char c : s.toCharArray()) { ... }  // OK
+  ...
+  try { ... }
+  catch (&#64;MyAnnotation Exception ex) { ... } // OK
+  ...
+  for (&#64;MyAnnotation int i = 0; i &lt; 10; i++) { ... } // OK
+  ...
+  MathOperation c = (&#64;MyAnnotation int a, &#64;MyAnnotation int b) -&gt; a + b; // OK
+  ...
+}
+       </source>
       </subsection>
 
       <subsection name="Example of Usage">
@@ -328,7 +364,7 @@ public String getNameIfPresent() { ... }
             present but either @deprecated is missing from JavaDoc or
             @deprecated is missing from the element.
             </td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td>false</td>
           </tr>
         </table>
@@ -419,7 +455,7 @@ public static final int COUNTER = 10; // violation as javadoc exists
                 check. It is recommended to only use it on Java 5 source </b>
             </td>
             <td>
-              <a href="property_types.html#boolean">boolean</a>
+              <a href="property_types.html#boolean">Boolean</a>
             </td>
             <td>
               <code>false</code>
@@ -573,10 +609,10 @@ public static final int COUNTER = 10; // violation as javadoc exists
                being suppressed matching this pattern will be flagged.
             </td>
             <td>
-              <a href="property_types.html#regexp">regexp</a>
+              <a href="property_types.html#regexp">Regular Expression</a>
             </td>
             <td>
-              <code>^$|^\s+$</code>
+              <code>"^$|^\s+$"</code>
             </td>
           </tr>
 
@@ -692,7 +728,7 @@ public static final int COUNTER = 10; // violation as javadoc exists
           <tr>
             <td>aliasList</td>
             <td>Aliases for check names that can be used in code within <code>SuppressWarnings</code></td>
-            <td><a href="property_types.html#string">String</a> in a format of comma separated attribute=value entries.
+            <td><a href="property_types.html#stringSet">String Set</a> in a format of comma separated attribute=value entries.
             The attribute is the fully qualified name of the Check and value is its alias.</td>
             <td>null</td>
           </tr>

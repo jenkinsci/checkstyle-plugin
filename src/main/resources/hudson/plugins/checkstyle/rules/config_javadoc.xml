@@ -40,12 +40,7 @@
             <td>target</td>
             <td>allows to specify targets to check at-clauses.</td>
             <td>subset of tokens
-              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
-              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">INTERFACE_DEF</a>,
-              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">ENUM_DEF</a>,
-              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">METHOD_DEF</a>,
-              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">CTOR_DEF</a>,
-              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">VARIABLE_DEF</a>.
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a>
             </td>
             <td>
               <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">CLASS_DEF</a>,
@@ -59,7 +54,7 @@
           <tr>
             <td>tagOrder</td>
             <td>allows to specify the order by tags.</td>
-            <td><a href="property_types.html#string">String</a></td>
+            <td><a href="property_types.html#stringSet">String Set</a></td>
             <td><code>&#64;author, &#64;version, &#64;param,
                   &#64;return, &#64;throws, &#64;exception, &#64;see, &#64;since, &#64;serial,
                   &#64;serialField, &#64;serialData, &#64;deprecated</code></td>
@@ -220,46 +215,46 @@ public int checkReturnTag(final int aTagIndex,
           <tr>
             <td>allowedAnnotations</td>
             <td>List of annotations that could allow missed documentation.</td>
-            <td><a href="property_types.html#stringSet">list of strings</a></td>
+            <td><a href="property_types.html#stringSet">String Set</a></td>
             <td><code>Override</code></td>
           </tr>
           <tr>
             <td>validateThrows</td>
             <td>Allows validating throws tags.</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
             <td>scope</td>
             <td>visibility scope where Javadoc comments are checked</td>
-            <td><a href="property_types.html#scope">scope</a></td>
+            <td><a href="property_types.html#scope">Scope</a></td>
             <td><code>private</code></td>
           </tr>
           <tr>
             <td>excludeScope</td>
             <td>visibility scope where Javadoc comments are not checked</td>
-            <td><a href="property_types.html#scope">scope</a></td>
+            <td><a href="property_types.html#scope">Scope</a></td>
             <td><code>null</code></td>
           </tr>
           <tr>
             <td>allowUndeclaredRTE</td>
             <td>whether to allow documented exceptions that
             are not declared if they are a subclass of <code>java.lang.RuntimeException</code></td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowThrowsTagsForSubclasses</td>
             <td>whether to allow documented exceptions that
             are subclass of one of declared exception.</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowMissingParamTags</td>
             <td>whether to ignore errors when a method has parameters
             but does not have matching param tags in the javadoc.</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
@@ -267,20 +262,20 @@ public int checkReturnTag(final int aTagIndex,
             <td>whether to ignore errors when a method declares
             that it throws exceptions but does have matching throws tags
             in the javadoc.</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowMissingReturnTag</td>
             <td>whether to ignore errors when a method returns
             non-void type does have a return tag in the javadoc.</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowMissingJavadoc</td>
             <td>whether to ignore errors when a method javadoc is missed.</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
@@ -307,7 +302,7 @@ public boolean isSomething()
 }
               </pre>
             </td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
@@ -322,7 +317,7 @@ public boolean isSomething()
             typo or refactoring problem in the
             javadoc and logs the problem in the normal checkstyle report
             (potentially masking a configuration error).</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>true</code></td>
           </tr>
           <tr>
@@ -334,14 +329,14 @@ public boolean isSomething()
             logLoadErrors is set true are suppressed from being reported as
             violations in the checkstyle report.
             </td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
             <td>ignoreMethodNamesRegex</td>
             <td>ignore method whose names are matching specified regex</td>
-            <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><code>null</code> (tag not required)</td>
+            <td><a href="property_types.html#regexp">Regular Expression</a></td>
+            <td><code>null</code></td>
           </tr>
           <tr>
             <td>tokens</td>
@@ -514,7 +509,7 @@ public boolean isSomething()
               If set then allow the use of a
               <code>package.html</code> file.
             </td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
@@ -783,13 +778,13 @@ public boolean isSomething()
           <tr>
             <td>scope</td>
             <td>visibility scope where Javadoc comments are checked</td>
-            <td><a href="property_types.html#scope">scope</a></td>
+            <td><a href="property_types.html#scope">Scope</a></td>
             <td><code>private</code></td>
           </tr>
           <tr>
             <td>excludeScope</td>
             <td>visibility scope where Javadoc comments are not checked</td>
-            <td><a href="property_types.html#scope">scope</a></td>
+            <td><a href="property_types.html#scope">Scope</a></td>
             <td><code>null</code></td>
           </tr>
           <tr>
@@ -797,7 +792,7 @@ public boolean isSomething()
             <td>
               Whether to check the first sentence for proper end of sentence.
             </td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>true</code></td>
           </tr>
           <tr>
@@ -805,21 +800,21 @@ public boolean isSomething()
             <td>
               Format for matching the end of a sentence.
             </td>
-            <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><code>([.?!][ \t\n\r\f&lt;])|([.?!]$)</code></td>
+            <td><a href="property_types.html#regexp">Regular Expression</a></td>
+            <td><code>"([.?!][ \t\n\r\f&lt;])|([.?!]$)"</code></td>
           </tr>
           <tr>
             <td>checkEmptyJavadoc</td>
             <td>
               Whether to check if the Javadoc is missing a describing text.
             </td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
             <td>checkHtml</td>
             <td>Whether to check for incomplete HTML tags.</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>true</code></td>
           </tr>
           <tr>
@@ -1084,38 +1079,38 @@ public boolean isSomething()
           <tr>
             <td>scope</td>
             <td>visibility scope where Javadoc comments are checked</td>
-            <td><a href="property_types.html#scope">scope</a></td>
+            <td><a href="property_types.html#scope">Scope</a></td>
             <td><code>private</code></td>
           </tr>
           <tr>
             <td>excludeScope</td>
             <td>visibility scope where Javadoc comments are not checked</td>
-            <td><a href="property_types.html#scope">scope</a></td>
+            <td><a href="property_types.html#scope">Scope</a></td>
             <td><code>null</code></td>
           </tr>
           <tr>
             <td>authorFormat</td>
             <td>pattern for @author tag</td>
-            <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><code>null</code> (tag not required)</td>
+            <td><a href="property_types.html#regexp">Regular Expression</a></td>
+            <td><code>null</code></td>
           </tr>
           <tr>
             <td>versionFormat</td>
             <td>pattern for @version tag</td>
-            <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><code>null</code> (tag not required)</td>
+            <td><a href="property_types.html#regexp">Regular Expression</a></td>
+            <td><code>null</code></td>
           </tr>
           <tr>
             <td>allowMissingParamTags</td>
             <td>whether to ignore errors when a class has type parameters
                 but does not have matching param tags in the javadoc.</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
             <td>allowUnknownTags</td>
             <td>whether to ignore errors when a Javadoc tag is not recognised.</td>
-            <td><a href="property_types.html#boolean">boolean</a></td>
+            <td><a href="property_types.html#boolean">Boolean</a></td>
             <td><code>false</code></td>
           </tr>
           <tr>
@@ -1262,19 +1257,19 @@ public boolean isSomething()
           <tr>
             <td>scope</td>
             <td>visibility scope where Javadoc comments are checked</td>
-            <td><a href="property_types.html#scope">scope</a></td>
+            <td><a href="property_types.html#scope">Scope</a></td>
             <td><code>private</code></td>
           </tr>
           <tr>
             <td>excludeScope</td>
             <td>visibility scope where Javadoc comments are not checked</td>
-            <td><a href="property_types.html#scope">scope</a></td>
+            <td><a href="property_types.html#scope">Scope</a></td>
             <td><code>null</code></td>
           </tr>
           <tr>
               <td>ignoreNamePattern</td>
               <td>regexp to define variable names to ignore</td>
-              <td><a href="property_types.html#regexp">regular expression</a></td>
+              <td><a href="property_types.html#regexp">Regular Expression</a></td>
               <td><code>null</code></td>
           </tr>
           <tr>
@@ -1377,6 +1372,33 @@ public boolean isSomething()
         </p>
       </subsection>
 
+      <subsection name="Properties">
+        <table>
+          <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>type</th>
+            <th>default value</th>
+          </tr>
+          <tr>
+            <td>javadocTokens</td>
+            <td>javadoc tokens to check</td>
+            <td>subset of javadoc tokens
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/JavadocTokenTypes.html#PARAM_LITERAL">PARAM_LITERAL</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/JavadocTokenTypes.html#RETURN_LITERAL">RETURN_LITERAL</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/JavadocTokenTypes.html#THROWS_LITERAL">THROWS_LITERAL</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/JavadocTokenTypes.html#DEPRECATED_LITERAL">DEPRECATED_LITERAL</a>.
+            </td>
+            <td>
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/JavadocTokenTypes.html#PARAM_LITERAL">PARAM_LITERAL</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/JavadocTokenTypes.html#RETURN_LITERAL">RETURN_LITERAL</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/JavadocTokenTypes.html#THROWS_LITERAL">THROWS_LITERAL</a>,
+              <a href="apidocs/com/puppycrawl/tools/checkstyle/api/JavadocTokenTypes.html#DEPRECATED_LITERAL">DEPRECATED_LITERAL</a>.
+            </td>
+          </tr>
+        </table>
+      </subsection>
+
       <subsection name="Examples">
         <p>
           Default configuration that will check <code>@param</code>, <code>@return</code>,
@@ -1466,7 +1488,7 @@ public boolean isSomething()
           <tr>
             <td>ignoredTags</td>
             <td>allows to specify at-clauses which are ignored by the check.</td>
-            <td><a href="property_types.html#string">String</a></td>
+            <td><a href="property_types.html#stringSet">String Set</a></td>
             <td><code>null</code></td>
           </tr>
           <tr>
@@ -1574,8 +1596,8 @@ public boolean isSomething()
           <tr>
             <td>forbiddenSummaryFragments</td>
             <td>forbidden summary fragments</td>
-            <td><a href="property_types.html#regexp">regular expression</a></td>
-            <td><code>^$</code></td>
+            <td><a href="property_types.html#regexp">Regular Expression</a></td>
+            <td><code>"^$"</code></td>
           </tr>
           <tr>
             <td>period</td>
@@ -1677,13 +1699,9 @@ public boolean isSomething()
     <section name="WriteTag">
       <subsection name="Description">
         <p>
-         Outputs a JavaDoc tag as information. Can be used e.g. with the
-         stylesheets that sort the report by author name.  To define the
+         Requires user defined JavaDoc tag to be present in javadoc comment with defined format. To define the
          format for a tag, set property tagFormat to a regular
-         expression.  This check uses two different severity levels. The
-         normal one is used for reporting when the tag is missing. The
-         additional one (tagSeverity) is used for the level of reporting
-         when the tag exists.
+         expression. Property tagSeverity is used for severity of events when the tag exists.
         </p>
       </subsection>
 
@@ -1704,13 +1722,13 @@ public boolean isSomething()
           <tr>
             <td>tagFormat</td>
             <td>Format of tag</td>
-            <td><a href="property_types.html#regexp">regular expression</a></td>
+            <td><a href="property_types.html#regexp">Regular Expression</a></td>
             <td><code>null</code></td>
           </tr>
           <tr>
             <td>tagSeverity</td>
             <td>Severity level when tag is found and printed</td>
-            <td><a href="property_types.html#severity">severity</a></td>
+            <td><a href="property_types.html#severity">Severity</a></td>
             <td><code>info</code></td>
           </tr>
           <tr>
