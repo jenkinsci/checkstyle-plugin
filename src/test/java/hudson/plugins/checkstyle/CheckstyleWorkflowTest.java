@@ -2,7 +2,6 @@ package hudson.plugins.checkstyle;
 
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
@@ -20,7 +19,7 @@ public class CheckstyleWorkflowTest {
     /**
      * Run a workflow job using {@link CheckStylePublisher} and check for success.
      */
-    @Test @Ignore
+    @Test
     public void checkstylePublisherWorkflowStep() throws Exception {
         WorkflowJob job = jenkinsRule.jenkins.createProject(WorkflowJob.class, "checkstylePublisherWorkflowStep");
         FilePath workspace = jenkinsRule.jenkins.getWorkspaceFor(job);
@@ -40,7 +39,7 @@ public class CheckstyleWorkflowTest {
      * Run a workflow job using {@link CheckStylePublisher} with a failing threshold of 0, so the given example file
      * "/hudson/plugins/checkstyle/parser/checkstyle-result-build1.xml" will make the build to fail.
      */
-    @Test @Ignore
+    @Test
     public void checkstylePublisherWorkflowStepSetLimits() throws Exception {
         WorkflowJob job = jenkinsRule.jenkins.createProject(WorkflowJob.class, "checkstylePublisherWorkflowStepSetLimits");
         FilePath workspace = jenkinsRule.jenkins.getWorkspaceFor(job);
@@ -60,7 +59,7 @@ public class CheckstyleWorkflowTest {
      * Run a workflow job using {@link CheckStylePublisher} with a unstable threshold of 0, so the given example file
      * "/hudson/plugins/checkstyle/parser/checkstyle-result-build1.xml" will make the build to fail.
      */
-    @Test @Ignore
+    @Test
     public void checkstylePublisherWorkflowStepFailure() throws Exception {
         WorkflowJob job = jenkinsRule.jenkins.createProject(WorkflowJob.class, "checkstylePublisherWorkflowStepFailure");
         FilePath workspace = jenkinsRule.jenkins.getWorkspaceFor(job);
