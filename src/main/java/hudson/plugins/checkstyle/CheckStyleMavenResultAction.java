@@ -42,7 +42,8 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
     @Override
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
         return new CheckStyleMavenResultAction(build, getHealthDescriptor(), getDefaultEncoding(),
-                new CheckStyleResult(build, getDefaultEncoding(), new ParserResult(), false, false));
+                new CheckStyleResult(build, getDefaultEncoding(), new ParserResult(),
+                        usePreviousBuildAsStable(), useOnlyStableBuildsAsReference()));
     }
 
     @Override

@@ -3,6 +3,8 @@ package hudson.plugins.checkstyle;
 import java.util.List;
 import java.util.Map;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import hudson.maven.AggregatableAction;
 import hudson.maven.MavenAggregatedReport;
 import hudson.maven.MavenBuild;
@@ -22,6 +24,7 @@ import hudson.plugins.analysis.core.ParserResult;
  * @author Ulli Hafner
  * @deprecated not used anymore
  */
+@SuppressWarnings("deprecation")
 @Deprecated
 public class MavenCheckStyleResultAction extends CheckStyleResultAction implements AggregatableAction, MavenAggregatedReport {
     /** The default encoding to be used when reading and parsing files. */
@@ -95,7 +98,7 @@ public class MavenCheckStyleResultAction extends CheckStyleResultAction implemen
 
     /** Backward compatibility. @deprecated */
     @SuppressWarnings("PMD")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("")
+    @SuppressFBWarnings("")
     @Deprecated
     private transient String height;
 }
