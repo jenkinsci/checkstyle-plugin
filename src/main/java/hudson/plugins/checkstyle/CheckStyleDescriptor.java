@@ -2,13 +2,14 @@ package hudson.plugins.checkstyle;
 
 import hudson.Extension;
 import hudson.plugins.analysis.core.PluginDescriptor;
+import org.jenkinsci.Symbol;
 
 /**
  * Descriptor for the class {@link CheckStylePublisher}.
  *
  * @author Ulli Hafner
  */
-@Extension(ordinal = 100) // NOCHECKSTYLE
+@Extension(ordinal = 100) @Symbol("checkstyle") // NOCHECKSTYLE
 public final class CheckStyleDescriptor extends PluginDescriptor {
     /** The ID of this plug-in is used as URL. */
     static final String PLUGIN_ID = "checkstyle";
