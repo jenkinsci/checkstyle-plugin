@@ -11,7 +11,7 @@
   <artifactId>checkstyle</artifactId>
   <packaging>hpi</packaging>
   <name>Checkstyle Plug-in</name>
-  <version>3.48-SNAPSHOT</version>
+  <version>3.48</version>
   <url>http://wiki.jenkins-ci.org/x/GYCGAQ</url>
   <description>This plug-in generates the trend report for
     Checkstyle, an open source static code analysis program.
@@ -53,7 +53,7 @@
     <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
     <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-    <tag>HEAD</tag>
+    <tag>checkstyle-3.48</tag>
   </scm>
 
   <repositories>
