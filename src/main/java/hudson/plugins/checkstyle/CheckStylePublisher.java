@@ -78,7 +78,7 @@ public class CheckStylePublisher extends HealthAwarePublisher {
         ParserResult project = workspace.act(parser);
         logger.logLines(project.getLogMessages());
 
-        blame(project.getAnnotations(), build, workspace, logger);
+        blame(project.getAnnotations(), build, workspace);
 
         CheckStyleResult result = new CheckStyleResult(build, getDefaultEncoding(), project,
                 usePreviousBuildAsReference(), useOnlyStableBuildsAsReference());
