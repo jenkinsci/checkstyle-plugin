@@ -15,8 +15,8 @@ import com.google.common.collect.Sets;
 import static org.junit.Assert.*;
 
 import hudson.model.Result;
-import hudson.plugins.analysis.core.AnnotationDifferencer;
 import hudson.plugins.analysis.core.BuildResultEvaluator;
+import hudson.plugins.analysis.core.IssueDifference;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.Thresholds;
 import hudson.plugins.analysis.util.model.FileAnnotation;
@@ -50,7 +50,7 @@ public class CheckStyleParserTest {
         Collection<FileAnnotation> second = parse("checkstyle-result-build2.xml");
         assertEquals("Wrong number of annotations detected.", 3, second.size());
 
-        Set<FileAnnotation> newAnnotations = AnnotationDifferencer.getNewAnnotations(Sets.newHashSet(second), Sets.newHashSet(first));
+        Set<FileAnnotation> newAnnotations = new IssueDifference(Sets.newHashSet(second), Sets.newHashSet(first)).getNewIssues();
         assertEquals("Wrong number of annotations detected.", 2, newAnnotations.size());
 
         result = evaluator.evaluateBuildResult(logger, t, first, newAnnotations);
@@ -59,7 +59,7 @@ public class CheckStyleParserTest {
         Collection<FileAnnotation> third = parse("checkstyle-result-build3.xml");
         assertEquals("Wrong number of annotations detected.", 1, third.size());
 
-        Set<FileAnnotation> newAnnotationsInThird = AnnotationDifferencer.getNewAnnotations(Sets.newHashSet(third), Sets.newHashSet(first));
+        Set<FileAnnotation> newAnnotationsInThird = new IssueDifference(Sets.newHashSet(third), Sets.newHashSet(first)).getNewIssues();
         assertEquals("Wrong number of annotations detected.", 1, newAnnotationsInThird.size());
 
         result = evaluator.evaluateBuildResult(logger, t, first, newAnnotationsInThird);
@@ -68,7 +68,7 @@ public class CheckStyleParserTest {
         Collection<FileAnnotation> fourth = parse("checkstyle-result-build4.xml");
         assertEquals("Wrong number of annotations detected.", 0, fourth.size());
 
-        Set<FileAnnotation> newAnnotationsInFourth = AnnotationDifferencer.getNewAnnotations(Sets.newHashSet(fourth), Sets.newHashSet(first));
+        Set<FileAnnotation> newAnnotationsInFourth = new IssueDifference(Sets.newHashSet(fourth), Sets.newHashSet(first)).getNewIssues();
         assertEquals("Wrong number of annotations detected.", 0, newAnnotationsInFourth.size());
 
         result = evaluator.evaluateBuildResult(logger, t, first, newAnnotationsInFourth);
