@@ -36,6 +36,16 @@ public class ParseWarningsStep extends Step {
     private String defaultEncoding;
     private boolean shouldDetectModules;
 
+    @DataBoundConstructor
+    public ParseWarningsStep() {
+        // required for Stapler
+    }
+
+    @CheckForNull
+    public String getPattern() {
+        return pattern;
+    }
+
     /**
      * Sets the Ant file-set pattern of files to work with.
      *
@@ -46,9 +56,8 @@ public class ParseWarningsStep extends Step {
         this.pattern = pattern;
     }
 
-    @CheckForNull
-    public String getPattern() {
-        return pattern;
+    public boolean getShouldDetectModules() {
+        return shouldDetectModules;
     }
 
     /**
@@ -63,13 +72,8 @@ public class ParseWarningsStep extends Step {
     }
 
     @CheckForNull
-    public boolean getShouldDetectModules() {
-        return shouldDetectModules;
-    }
-
-    @CheckForNull
-    public boolean shouldDetectModules() {
-        return shouldDetectModules;
+    public String getDefaultEncoding() {
+        return defaultEncoding;
     }
 
     /**
@@ -80,16 +84,6 @@ public class ParseWarningsStep extends Step {
     @DataBoundSetter
     public void setDefaultEncoding(final String defaultEncoding) {
         this.defaultEncoding = defaultEncoding;
-    }
-
-    @CheckForNull
-    public String getDefaultEncoding() {
-        return defaultEncoding;
-    }
-
-    @DataBoundConstructor
-    public ParseWarningsStep() {
-
     }
 
     @Override
@@ -109,7 +103,7 @@ public class ParseWarningsStep extends Step {
 
             pattern = step.getPattern();
             defaultEncoding = step.getDefaultEncoding();
-            shouldDetectModules = step.shouldDetectModules();
+            shouldDetectModules = step.getShouldDetectModules();
         }
 
         @Override

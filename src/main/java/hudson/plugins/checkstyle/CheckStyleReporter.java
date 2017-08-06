@@ -150,7 +150,8 @@ public class CheckStyleReporter extends HealthAwareReporter<CheckStyleResult> {
 
     @Override
     protected MavenAggregatedReport createMavenAggregatedReport(final MavenBuild build, final CheckStyleResult result) {
-        return new CheckStyleMavenResultAction(build, this, getDefaultEncoding(), result);
+        return new CheckStyleMavenResultAction(build, this, getDefaultEncoding(), result,
+                usePreviousBuildAsReference(), useOnlyStableBuildsAsReference());
     }
 
     @Override

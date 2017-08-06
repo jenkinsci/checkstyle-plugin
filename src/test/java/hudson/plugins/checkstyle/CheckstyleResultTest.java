@@ -1,8 +1,9 @@
 package hudson.plugins.checkstyle;
 
-import hudson.model.AbstractBuild;
-import hudson.plugins.analysis.core.BuildHistory;
+import hudson.model.Run;
+import hudson.plugins.analysis.core.HistoryProvider;
 import hudson.plugins.analysis.core.ParserResult;
+import hudson.plugins.analysis.core.ReferenceProvider;
 import hudson.plugins.analysis.test.BuildResultTest;
 
 /**
@@ -10,8 +11,13 @@ import hudson.plugins.analysis.test.BuildResultTest;
  */
 public class CheckstyleResultTest extends BuildResultTest<CheckStyleResult> {
     @Override
-    protected CheckStyleResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project, final BuildHistory history) {
-        return new CheckStyleResult(build, history, project, "UTF8", false);
+    protected CheckStyleResult createBuildResult(final Run<?, ?> build, final ParserResult project, final ReferenceProvider referenceProvider, final HistoryProvider historyProvider) {
+            return new CheckStyleResult(build, referenceProvider, project, "UTF8", false) {
+                @Override
+                protected HistoryProvider createBuildHistory(final Run<?, ?> build) {
+                    return historyProvider;
+                }
+            };
     }
 }
 

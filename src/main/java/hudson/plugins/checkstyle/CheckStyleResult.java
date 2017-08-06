@@ -3,9 +3,10 @@ package hudson.plugins.checkstyle;
 import com.thoughtworks.xstream.XStream;
 
 import hudson.model.Run;
-import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
+import hudson.plugins.analysis.core.ReferenceFinder;
+import hudson.plugins.analysis.core.ReferenceProvider;
 import hudson.plugins.analysis.core.ResultAction;
 import hudson.plugins.checkstyle.parser.Warning;
 
@@ -58,11 +59,15 @@ public class CheckStyleResult extends BuildResult {
     protected CheckStyleResult(final Run<?, ?> build, final String defaultEncoding, final ParserResult result,
             final boolean usePreviousBuildAsReference, final boolean useStableBuildAsReference,
             final Class<? extends ResultAction<CheckStyleResult>> actionType) {
-        this(build, new BuildHistory(build, actionType, usePreviousBuildAsReference, useStableBuildAsReference),
+        this(build, ReferenceFinder.create(build, actionType, usePreviousBuildAsReference, useStableBuildAsReference),
                 result, defaultEncoding, true);
     }
 
-    CheckStyleResult(final Run<?, ?> build, final BuildHistory history,
+    public CheckStyleResult(final Run run, final String defaultEncoding, final ParserResult warnings, final ReferenceProvider referenceProvider) {
+        super(run, referenceProvider, warnings, defaultEncoding, true);
+    }
+
+    CheckStyleResult(final Run<?, ?> build, final ReferenceProvider history,
                      final ParserResult result, final String defaultEncoding, final boolean canSerialize) {
         super(build, history, result, defaultEncoding);
 

@@ -18,6 +18,8 @@ import hudson.Extension;
 import hudson.model.Run;
 import hudson.plugins.analysis.core.NullHealthDescriptor;
 import hudson.plugins.analysis.core.ParserResult;
+import hudson.plugins.analysis.core.ReferenceFinder;
+import hudson.plugins.analysis.core.ReferenceProvider;
 import hudson.plugins.checkstyle.CheckStyleResult;
 import hudson.plugins.checkstyle.CheckStyleResultAction;
 
@@ -28,6 +30,50 @@ import hudson.plugins.checkstyle.CheckStyleResultAction;
 public class PublishWarningsStep extends Step {
     private ParserResult warnings;
     private String defaultEncoding;
+    private boolean usePreviousBuildAsReference;
+    private boolean useStableBuildAsReference;
+
+    @DataBoundConstructor
+    public PublishWarningsStep(final ParserResult warnings) {
+        this.warnings = warnings;
+    }
+
+    public ParserResult getWarnings() {
+        return warnings;
+    }
+
+    public boolean getUsePreviousBuildAsReference() {
+        return usePreviousBuildAsReference;
+    }
+
+    /**
+     * Determines if the previous build should always be used as the reference build, no matter its overall result.
+     *
+     * @param usePreviousBuildAsReference if {@code true} then the previous build is always used
+     */
+    @DataBoundSetter
+    public void setUsePreviousBuildAsReference(final boolean usePreviousBuildAsReference) {
+        this.usePreviousBuildAsReference = usePreviousBuildAsReference;
+    }
+
+    public boolean getUseStableBuildAsReference() {
+        return useStableBuildAsReference;
+    }
+
+    /**
+     * Determines whether only stable builds should be used as reference builds or not.
+     *
+     * @param useStableBuildAsReference if {@code true} then a stable build is used as reference
+     */
+    @DataBoundSetter
+    public void setUseStableBuildAsReference(final boolean useStableBuildAsReference) {
+        this.useStableBuildAsReference = useStableBuildAsReference;
+    }
+
+    @CheckForNull
+    public String getDefaultEncoding() {
+        return defaultEncoding;
+    }
 
     /**
      * Sets the default encoding used to read files (warnings, source code, etc.).
@@ -39,30 +85,28 @@ public class PublishWarningsStep extends Step {
         this.defaultEncoding = defaultEncoding;
     }
 
-    @CheckForNull
-    public String getDefaultEncoding() {
-        return defaultEncoding;
-    }
-
-    @DataBoundConstructor
-    public PublishWarningsStep(final ParserResult warnings) {
-        this.warnings = warnings;
-    }
-
     @Override
     public StepExecution start(final StepContext stepContext) throws Exception {
         return new Execution(stepContext, this);
     }
 
     public static class Execution extends SynchronousNonBlockingStepExecution<Void> {
-        private final ParserResult warnings;
-        private final String defaultEncoding;
+        private boolean useStableBuildAsReference;
+        private boolean usePreviousBuildAsReference;
+        private String defaultEncoding;
+        private ParserResult warnings;
 
         protected Execution(@Nonnull final StepContext context, final PublishWarningsStep step) {
             super(context);
 
-            this.warnings = step.warnings;
-            this.defaultEncoding = step.defaultEncoding;
+            usePreviousBuildAsReference = step.usePreviousBuildAsReference;
+            useStableBuildAsReference = step.useStableBuildAsReference;
+            defaultEncoding = step.defaultEncoding;
+
+            warnings = step.warnings;
+            if (warnings == null) {
+                throw new NullPointerException("No warnings provided.");
+            }
         }
 
         @Override
@@ -70,7 +114,9 @@ public class PublishWarningsStep extends Step {
             Run run = getContext().get(Run.class);
 
             // FIXME: Split previous and reference result from history
-            CheckStyleResult result = new CheckStyleResult(run, defaultEncoding, warnings, false,false);
+            ReferenceProvider referenceProvider = ReferenceFinder.create(run, CheckStyleResultAction.class,
+                    usePreviousBuildAsReference, useStableBuildAsReference);
+            CheckStyleResult result = new CheckStyleResult(run, defaultEncoding, warnings, referenceProvider);
             // FIXME: split out health descriptor
             // FIXME: remove thresholds from health descriptor
             run.addAction(new CheckStyleResultAction(run, new NullHealthDescriptor(), result));

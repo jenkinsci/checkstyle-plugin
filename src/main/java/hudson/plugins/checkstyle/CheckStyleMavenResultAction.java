@@ -35,15 +35,16 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
      *            the result in this build
      */
     public CheckStyleMavenResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor,
-            final String defaultEncoding, final CheckStyleResult result) {
-        super(new CheckStyleResultAction(owner, healthDescriptor, result), defaultEncoding, "CHECKSTYLE");
+            final String defaultEncoding, final CheckStyleResult result, final boolean usePreviousBuildAsReference, final boolean useStableBuildAsReference) {
+        super(new CheckStyleResultAction(owner, healthDescriptor, result), defaultEncoding, "CHECKSTYLE",
+                usePreviousBuildAsReference, useStableBuildAsReference);
     }
 
     @Override
     public MavenAggregatedReport createAggregatedAction(final MavenModuleSetBuild build, final Map<MavenModule, List<MavenBuild>> moduleBuilds) {
         return new CheckStyleMavenResultAction(build, getHealthDescriptor(), getDefaultEncoding(),
-                new CheckStyleResult(build, getDefaultEncoding(), new ParserResult(),
-                        usePreviousBuildAsStable(), useOnlyStableBuildsAsReference()));
+                new CheckStyleResult(build, getDefaultEncoding(), new ParserResult(), usePreviousBuildAsStable(), useOnlyStableBuildsAsReference()),
+                usePreviousBuildAsStable(), useOnlyStableBuildsAsReference());
     }
 
     @Override
@@ -59,9 +60,7 @@ public class CheckStyleMavenResultAction extends MavenResultAction<CheckStyleRes
     @Override
     protected CheckStyleResult createResult(final CheckStyleResult existingResult, final CheckStyleResult additionalResult) {
         return new CheckStyleReporterResult(getOwner(), additionalResult.getDefaultEncoding(),
-                aggregate(existingResult, additionalResult),
-                existingResult.usePreviousBuildAsStable(),
-                existingResult.useOnlyStableBuildsAsReference());
+                aggregate(existingResult, additionalResult), usePreviousBuildAsStable(), useOnlyStableBuildsAsReference());
     }
 }
 
