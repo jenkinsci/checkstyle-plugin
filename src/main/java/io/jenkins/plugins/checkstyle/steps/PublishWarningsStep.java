@@ -113,9 +113,9 @@ public class PublishWarningsStep extends Step {
         protected Void run() throws Exception {
             Run run = getContext().get(Run.class);
 
-            // FIXME: Split previous and reference result from history
             ReferenceProvider referenceProvider = ReferenceFinder.create(run, CheckStyleResultAction.class,
                     usePreviousBuildAsReference, useStableBuildAsReference);
+            // TODO: allow other reference provider implementations, how to parmeterize these instances?
             CheckStyleResult result = new CheckStyleResult(run, defaultEncoding, warnings, referenceProvider);
             // FIXME: split out health descriptor
             // FIXME: remove thresholds from health descriptor
