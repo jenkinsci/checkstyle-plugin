@@ -10,6 +10,7 @@
       field="useStableBuildAsReference">
     <f:checkbox/>
   </f:entry>
+  <u:health id="${id}"/>
   <u:defaultEncoding id="warnings"/>
 
 </j:jelly>

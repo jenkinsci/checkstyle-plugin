@@ -4,6 +4,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.workflow.steps.Step;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 import org.jenkinsci.plugins.workflow.steps.StepDescriptor;
@@ -16,10 +17,11 @@ import com.google.common.collect.Sets;
 
 import hudson.Extension;
 import hudson.model.Run;
-import hudson.plugins.analysis.core.NullHealthDescriptor;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ReferenceFinder;
 import hudson.plugins.analysis.core.ReferenceProvider;
+import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.checkstyle.CheckStyleHealthDescriptor;
 import hudson.plugins.checkstyle.CheckStyleResult;
 import hudson.plugins.checkstyle.CheckStyleResultAction;
 
@@ -28,10 +30,21 @@ import hudson.plugins.checkstyle.CheckStyleResultAction;
 
  */
 public class PublishWarningsStep extends Step {
+    private static final String DEFAULT_MINIMUM_PRIORITY = "low";
+
     private ParserResult warnings;
-    private String defaultEncoding;
+
     private boolean usePreviousBuildAsReference;
     private boolean useStableBuildAsReference;
+
+    private String defaultEncoding;
+
+    /** Report health as 100% when the number of warnings is less than this value. */
+    private String healthy;
+    /** Report health as 0% when the number of warnings is greater than this value. */
+    private String unHealthy;
+    /** Determines which warning priorities should be considered when evaluating the build health. */
+    private String minimumPriority = DEFAULT_MINIMUM_PRIORITY;
 
     @DataBoundConstructor
     public PublishWarningsStep(final ParserResult warnings) {
@@ -85,12 +98,61 @@ public class PublishWarningsStep extends Step {
         this.defaultEncoding = defaultEncoding;
     }
 
+    @CheckForNull
+    public String getHealthy() {
+        return healthy;
+    }
+
+    /**
+     * Sets the healthy threshold, i.e. the number of issues when health is reported as 100%.
+     *
+     * @param healthy the number of issues when health is reported as 100%
+     */
+    @DataBoundSetter
+    public void setHealthy(final String healthy) {
+        this.healthy = healthy;
+    }
+
+    @CheckForNull
+    public String getUnHealthy() {
+        return unHealthy;
+    }
+
+    /**
+     * Sets the healthy threshold, i.e. the number of issues when health is reported as 0%.
+     *
+     * @param unHealthy the number of issues when health is reported as 0%
+     */
+    @DataBoundSetter
+    public void setUnHealthy(final String unHealthy) {
+        this.unHealthy = unHealthy;
+    }
+
+    @CheckForNull
+    public String getMinimumPriority() {
+        return minimumPriority;
+    }
+
+    /**
+     * Sets the minimum priority to consider when computing the health report. Issues with a priority less than this
+     * value will be ignored.
+     *
+     * @param minimumPriority the priority to consider
+     */
+    @DataBoundSetter
+    public void setMinimumPriority(final String minimumPriority) {
+        this.minimumPriority = StringUtils.defaultIfEmpty(minimumPriority, DEFAULT_MINIMUM_PRIORITY);
+    }
+
     @Override
     public StepExecution start(final StepContext stepContext) throws Exception {
         return new Execution(stepContext, this);
     }
 
     public static class Execution extends SynchronousNonBlockingStepExecution<Void> {
+        private final String healthy;
+        private final String unHealthy;
+        private final String minimumPriority;
         private boolean useStableBuildAsReference;
         private boolean usePreviousBuildAsReference;
         private String defaultEncoding;
@@ -102,11 +164,18 @@ public class PublishWarningsStep extends Step {
             usePreviousBuildAsReference = step.usePreviousBuildAsReference;
             useStableBuildAsReference = step.useStableBuildAsReference;
             defaultEncoding = step.defaultEncoding;
+            healthy = step.healthy;
+            unHealthy = step.unHealthy;
+            minimumPriority = step.minimumPriority;
 
             warnings = step.warnings;
             if (warnings == null) {
                 throw new NullPointerException("No warnings provided.");
             }
+        }
+
+        private Priority getMinimumPriority() {
+            return Priority.valueOf(StringUtils.upperCase(minimumPriority));
         }
 
         @Override
@@ -115,11 +184,11 @@ public class PublishWarningsStep extends Step {
 
             ReferenceProvider referenceProvider = ReferenceFinder.create(run, CheckStyleResultAction.class,
                     usePreviousBuildAsReference, useStableBuildAsReference);
-            // TODO: allow other reference provider implementations, how to parmeterize these instances?
+            // TODO: allow other reference provider implementations, how to parametrize these instances?
             CheckStyleResult result = new CheckStyleResult(run, defaultEncoding, warnings, referenceProvider);
-            // FIXME: split out health descriptor
-            // FIXME: remove thresholds from health descriptor
-            run.addAction(new CheckStyleResultAction(run, new NullHealthDescriptor(), result));
+            // TODO: why is the health descriptor persisted and not the health? (Is this due to localization?)
+            CheckStyleHealthDescriptor healthDescriptor = new CheckStyleHealthDescriptor(healthy, unHealthy, getMinimumPriority());
+            run.addAction(new CheckStyleResultAction(run, healthDescriptor, result));
 
             return null;
         }
