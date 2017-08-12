@@ -3,7 +3,10 @@ package hudson.plugins.checkstyle;
 import com.thoughtworks.xstream.XStream;
 
 import hudson.model.Run;
+import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.core.BuildResult;
+import hudson.plugins.analysis.core.DefaultResultSelector;
+import hudson.plugins.analysis.core.HistoryProvider;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ReferenceFinder;
 import hudson.plugins.analysis.core.ReferenceProvider;
@@ -60,16 +63,18 @@ public class CheckStyleResult extends BuildResult {
             final boolean usePreviousBuildAsReference, final boolean useStableBuildAsReference,
             final Class<? extends ResultAction<CheckStyleResult>> actionType) {
         this(build, ReferenceFinder.create(build, actionType, usePreviousBuildAsReference, useStableBuildAsReference),
+                new BuildHistory(build, new DefaultResultSelector(CheckStyleResultAction.class)),
                 result, defaultEncoding, true);
     }
 
-    public CheckStyleResult(final Run run, final String defaultEncoding, final ParserResult warnings, final ReferenceProvider referenceProvider) {
-        super(run, referenceProvider, warnings, defaultEncoding, true);
+    public CheckStyleResult(final Run run, final String defaultEncoding, final ParserResult warnings,
+            final ReferenceProvider referenceProvider, final HistoryProvider history) {
+        super(run, referenceProvider, history, warnings, defaultEncoding, true);
     }
 
-    CheckStyleResult(final Run<?, ?> build, final ReferenceProvider history,
+    CheckStyleResult(final Run<?, ?> build, final ReferenceProvider referenceProvider, final HistoryProvider buildHistory,
                      final ParserResult result, final String defaultEncoding, final boolean canSerialize) {
-        super(build, history, result, defaultEncoding);
+        super(build, referenceProvider, buildHistory, result, defaultEncoding);
 
         if (canSerialize) {
             serializeAnnotations(result.getAnnotations());

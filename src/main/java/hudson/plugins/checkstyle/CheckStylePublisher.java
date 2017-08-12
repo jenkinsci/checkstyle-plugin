@@ -20,6 +20,8 @@ import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwarePublisher;
 import hudson.plugins.analysis.core.ParserResult;
+import hudson.plugins.analysis.core.ReferenceFinder;
+import hudson.plugins.analysis.core.ReferenceProvider;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
 
@@ -80,6 +82,8 @@ public class CheckStylePublisher extends HealthAwarePublisher {
 
         blame(project.getAnnotations(), build, workspace);
 
+        ReferenceProvider referenceProvider = ReferenceFinder.create(build, CheckStyleResultAction.class,
+                usePreviousBuildAsReference(), useOnlyStableBuildsAsReference());
         CheckStyleResult result = new CheckStyleResult(build, getDefaultEncoding(), project,
                 usePreviousBuildAsReference(), useOnlyStableBuildsAsReference());
         build.addAction(new CheckStyleResultAction(build, this, result));

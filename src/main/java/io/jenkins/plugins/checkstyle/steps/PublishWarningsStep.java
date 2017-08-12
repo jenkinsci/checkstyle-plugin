@@ -17,6 +17,8 @@ import com.google.common.collect.Sets;
 
 import hudson.Extension;
 import hudson.model.Run;
+import hudson.plugins.analysis.core.BuildHistory;
+import hudson.plugins.analysis.core.DefaultResultSelector;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ReferenceFinder;
 import hudson.plugins.analysis.core.ReferenceProvider;
@@ -182,10 +184,12 @@ public class PublishWarningsStep extends Step {
         protected Void run() throws Exception {
             Run run = getContext().get(Run.class);
 
-            ReferenceProvider referenceProvider = ReferenceFinder.create(run, CheckStyleResultAction.class,
-                    usePreviousBuildAsReference, useStableBuildAsReference);
+            DefaultResultSelector selector = new DefaultResultSelector(CheckStyleResultAction.class);
+            ReferenceProvider referenceProvider = ReferenceFinder.create(run,
+                    selector, usePreviousBuildAsReference, useStableBuildAsReference);
+            BuildHistory buildHistory = new BuildHistory(run, new DefaultResultSelector(CheckStyleResultAction.class));
             // TODO: allow other reference provider implementations, how to parametrize these instances?
-            CheckStyleResult result = new CheckStyleResult(run, defaultEncoding, warnings, referenceProvider);
+            CheckStyleResult result = new CheckStyleResult(run, defaultEncoding, warnings, referenceProvider, buildHistory);
             // TODO: why is the health descriptor persisted and not the health? (Is this due to localization?)
             CheckStyleHealthDescriptor healthDescriptor = new CheckStyleHealthDescriptor(healthy, unHealthy, getMinimumPriority());
             run.addAction(new CheckStyleResultAction(run, healthDescriptor, result));
