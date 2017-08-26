@@ -17,6 +17,7 @@ import com.google.common.collect.Sets;
 
 import hudson.Extension;
 import hudson.model.Run;
+import hudson.plugins.analysis.core.AbstractResultAction;
 import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.core.DefaultResultSelector;
 import hudson.plugins.analysis.core.ParserResult;
@@ -151,7 +152,7 @@ public class PublishWarningsStep extends Step {
         return new Execution(stepContext, this);
     }
 
-    public static class Execution extends SynchronousNonBlockingStepExecution<Void> {
+    public static class Execution extends SynchronousNonBlockingStepExecution<AbstractResultAction> {
         private final String healthy;
         private final String unHealthy;
         private final String minimumPriority;
@@ -181,7 +182,7 @@ public class PublishWarningsStep extends Step {
         }
 
         @Override
-        protected Void run() throws Exception {
+        protected AbstractResultAction run() throws Exception {
             Run run = getContext().get(Run.class);
 
             DefaultResultSelector selector = new DefaultResultSelector(CheckStyleResultAction.class);
@@ -192,9 +193,10 @@ public class PublishWarningsStep extends Step {
             CheckStyleResult result = new CheckStyleResult(run, defaultEncoding, warnings, referenceProvider, buildHistory);
             // TODO: why is the health descriptor persisted and not the health? (Is this due to localization?)
             CheckStyleHealthDescriptor healthDescriptor = new CheckStyleHealthDescriptor(healthy, unHealthy, getMinimumPriority());
-            run.addAction(new CheckStyleResultAction(run, healthDescriptor, result));
+            CheckStyleResultAction action = new CheckStyleResultAction(run, healthDescriptor, result);
+            run.addAction(action);
 
-            return null;
+            return action;
         }
     }
 
@@ -207,7 +209,7 @@ public class PublishWarningsStep extends Step {
 
         @Override
         public String getFunctionName() {
-            return "publishWarnings";
+            return "publishCheckStyleWarnings";
         }
 
         @Override

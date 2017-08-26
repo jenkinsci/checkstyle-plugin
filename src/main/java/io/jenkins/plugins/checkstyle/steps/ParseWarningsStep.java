@@ -176,7 +176,7 @@ public class ParseWarningsStep extends Step {
 
         @Override
         public String getFunctionName() {
-            return "parseWarnings";
+            return "parseCheckStyleWarnings";
         }
 
         @Override
