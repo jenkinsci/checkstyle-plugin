@@ -13,7 +13,7 @@ import hudson.plugins.analysis.core.PluginDescriptor;
 @Extension(ordinal = 100) @Symbol("checkstyle")
 public final class CheckStyleDescriptor extends PluginDescriptor {
     /** The ID of this plug-in is used as URL. */
-    static final String PLUGIN_ID = "checkstyle";
+    public static final String PLUGIN_ID = "checkstyle";
     /** The URL of the result action. */
     static final String RESULT_URL = PluginDescriptor.createResultUrlName(PLUGIN_ID);
     /** Icons prefix. */
