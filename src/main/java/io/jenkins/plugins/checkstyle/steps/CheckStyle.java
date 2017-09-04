@@ -22,7 +22,6 @@ import hudson.plugins.checkstyle.parser.CheckStyleParser;
  */
 @Extension
 public class CheckStyle extends IssueParser {
-    private static final String DEFAULT_PATTERN = "**/checkstyle-result.xml";
 
     @DataBoundConstructor
     public CheckStyle() {
