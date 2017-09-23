@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import hudson.plugins.analysis.util.WarningFingerprint;
 import org.apache.commons.digester3.Digester;
 import org.apache.commons.lang.StringUtils;
 import org.xml.sax.SAXException;
@@ -123,7 +124,9 @@ public class CheckStyleParser extends AbstractAnnotationParser {
                     warning.setFileName(file.getName());
                     warning.setPackageName(packageName);
                     warning.setColumnPosition(error.getColumn());
-                    warning.setContextHashCode(createDigest(file.getName(), type, error.getLine()));
+                    warning.setContextHashCode(createContextHashCode(file.getName(), error.getLine(), type));
+                    WarningFingerprint wf = createFingerprint(file.getName(), error.getLine(), type);
+                    warning.setFingerprint(wf);
                     annotations.add(warning);
                 }
             }
