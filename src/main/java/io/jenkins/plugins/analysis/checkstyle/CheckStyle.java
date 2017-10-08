@@ -6,7 +6,7 @@ import java.util.Collection;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
-import io.jenkins.plugins.analysis.core.steps.IssueParser;
+import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
 
 import hudson.Extension;
 import hudson.plugins.analysis.util.model.FileAnnotation;
@@ -21,7 +21,7 @@ import hudson.plugins.checkstyle.parser.CheckStyleParser;
  * @author Ullrich Hafner
  */
 @Extension
-public class CheckStyle extends IssueParser {
+public class CheckStyle extends StaticAnalysisTool {
 
     @DataBoundConstructor
     public CheckStyle() {
