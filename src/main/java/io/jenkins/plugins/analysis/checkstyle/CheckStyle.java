@@ -16,13 +16,15 @@ import hudson.plugins.checkstyle.Messages;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
 
 /**
- * FIXME: write comment.
+ * Provides customized messages for CheckStyle.
  *
  * @author Ullrich Hafner
  */
 @Extension
 public class CheckStyle extends StaticAnalysisTool {
-
+    /**
+     * Creates a new instance of {@link CheckStyle}.
+     */
     @DataBoundConstructor
     public CheckStyle() {
         super(CheckStyleDescriptor.PLUGIN_ID, CheckStylePublisher.DEFAULT_PATTERN);
@@ -62,6 +64,7 @@ public class CheckStyle extends StaticAnalysisTool {
         return get().getSummaryIconUrl();
     }
 
+    /** Descriptor for CheckStyle. */
     @Extension
-    public static final IssueParserDescriptor D = new IssueParserDescriptor(CheckStyle.class);
+    public static final StaticAnalysisToolDescriptor D = new StaticAnalysisToolDescriptor(CheckStyle.class);
 }
