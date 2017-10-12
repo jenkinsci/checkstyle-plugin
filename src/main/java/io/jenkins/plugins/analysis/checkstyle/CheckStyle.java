@@ -11,7 +11,6 @@ import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
 import hudson.Extension;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.checkstyle.CheckStyleDescriptor;
-import hudson.plugins.checkstyle.CheckStylePublisher;
 import hudson.plugins.checkstyle.Messages;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
 
@@ -27,7 +26,7 @@ public class CheckStyle extends StaticAnalysisTool {
      */
     @DataBoundConstructor
     public CheckStyle() {
-        super(CheckStyleDescriptor.PLUGIN_ID, CheckStylePublisher.DEFAULT_PATTERN);
+        super(CheckStyleDescriptor.PLUGIN_ID);
     }
 
     @Override
