@@ -19,7 +19,6 @@ import hudson.plugins.checkstyle.parser.CheckStyleParser;
  *
  * @author Ullrich Hafner
  */
-@Extension
 public class CheckStyle extends StaticAnalysisTool {
     /**
      * Creates a new instance of {@link CheckStyle}.
@@ -65,5 +64,9 @@ public class CheckStyle extends StaticAnalysisTool {
 
     /** Descriptor for CheckStyle. */
     @Extension
-    public static final StaticAnalysisToolDescriptor D = new StaticAnalysisToolDescriptor(CheckStyle.class);
+    public static final class Descriptor extends StaticAnalysisToolDescriptor {
+        public Descriptor() {
+            super(CheckStyle.class);
+        }
+    }
 }
