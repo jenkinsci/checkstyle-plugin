@@ -1,2 +1,6 @@
 target
-work/
+*.iml
+.classpath
+.project
+.settings
+.idea
