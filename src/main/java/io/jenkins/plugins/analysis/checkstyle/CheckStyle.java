@@ -15,7 +15,7 @@ import hudson.plugins.checkstyle.Messages;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
 
 /**
- * Provides customized messages for CheckStyle.
+ * Provides a parser and customized messages for CheckStyle.
  *
  * @author Ullrich Hafner
  */
@@ -25,7 +25,7 @@ public class CheckStyle extends StaticAnalysisTool {
      */
     @DataBoundConstructor
     public CheckStyle() {
-        super(CheckStyleDescriptor.PLUGIN_ID);
+        // empty constructor required for stapler
     }
 
     @Override
@@ -33,40 +33,40 @@ public class CheckStyle extends StaticAnalysisTool {
         return new CheckStyleParser().parse(file, moduleName);
     }
 
-    @Override
-    protected String getName() {
-        return "CheckStyle";
-    }
-
-    @Override
-    public String getLinkName() {
-        return Messages.Checkstyle_ProjectAction_Name();
-    }
-
-    @Override
-    public String getTrendName() {
-        return Messages.Checkstyle_Trend_Name();
-    }
-
-    @Override
-    public String getSmallIconUrl() {
-        return get().getIconUrl();
-    }
-
-    private CheckStyleDescriptor get() {
-        return new CheckStyleDescriptor();
-    }
-
-    @Override
-    public String getLargeIconUrl() {
-        return get().getSummaryIconUrl();
-    }
-
-    /** Descriptor for CheckStyle. */
+    /** Registers this tool as extension point implementation. */
     @Extension
     public static final class Descriptor extends StaticAnalysisToolDescriptor {
         public Descriptor() {
-            super(CheckStyle.class);
+            super(CheckStyleDescriptor.PLUGIN_ID);
+        }
+
+        @Override
+        public String getName() {
+            return "CheckStyle";
+        }
+
+        @Override
+        public String getLinkName() {
+            return Messages.Checkstyle_ProjectAction_Name();
+        }
+
+        @Override
+        public String getTrendName() {
+            return Messages.Checkstyle_Trend_Name();
+        }
+
+        @Override
+        public String getSmallIconUrl() {
+            return get().getIconUrl();
+        }
+
+        private CheckStyleDescriptor get() {
+            return new CheckStyleDescriptor();
+        }
+
+        @Override
+        public String getLargeIconUrl() {
+            return get().getSummaryIconUrl();
         }
     }
 }
