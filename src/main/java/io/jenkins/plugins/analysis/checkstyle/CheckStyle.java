@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import io.jenkins.plugins.analysis.core.steps.DefaultLabelProvider;
 import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
 
 import hudson.Extension;
@@ -37,6 +38,12 @@ public class CheckStyle extends StaticAnalysisTool {
     @Extension
     public static final class Descriptor extends StaticAnalysisToolDescriptor {
         public Descriptor() {
+            super(new CheckStyleLabelProvider());
+        }
+    }
+
+    private static class CheckStyleLabelProvider extends DefaultLabelProvider {
+        private CheckStyleLabelProvider() {
             super(CheckStyleDescriptor.PLUGIN_ID);
         }
 
