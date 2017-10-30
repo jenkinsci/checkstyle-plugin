@@ -89,7 +89,7 @@ public class CheckStyleParser extends AbstractAnnotationParser {
      * @return a maven module of the annotations API
      */
     private Collection<FileAnnotation> convert(final CheckStyle collection, final String moduleName) {
-        ArrayList<FileAnnotation> annotations = new ArrayList<FileAnnotation>();
+        ArrayList<FileAnnotation> annotations = new ArrayList<>();
 
         for (hudson.plugins.checkstyle.parser.File file : collection.getFiles()) {
             if (isValidWarning(file)) {

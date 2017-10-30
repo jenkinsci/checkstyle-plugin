@@ -2,15 +2,14 @@ package io.jenkins.plugins.analysis.checkstyle;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import edu.hm.hafner.analysis.Issues;
 import io.jenkins.plugins.analysis.core.steps.DefaultLabelProvider;
 import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
 
 import hudson.Extension;
-import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.checkstyle.CheckStyleDescriptor;
 import hudson.plugins.checkstyle.Messages;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
@@ -30,8 +29,8 @@ public class CheckStyle extends StaticAnalysisTool {
     }
 
     @Override
-    public Collection<FileAnnotation> parse(final File file, final String moduleName) throws InvocationTargetException {
-        return new CheckStyleParser().parse(file, moduleName);
+    public Issues parse(final File file, final String moduleName) throws InvocationTargetException {
+        return new CheckStyleParser().parseIssues(file, moduleName).withOrigin(CheckStyleDescriptor.PLUGIN_ID);
     }
 
     /** Registers this tool as extension point implementation. */
