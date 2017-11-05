@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import edu.hm.hafner.analysis.Issue;
 import edu.hm.hafner.analysis.Issues;
 import io.jenkins.plugins.analysis.core.steps.DefaultLabelProvider;
 import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
@@ -29,8 +30,10 @@ public class CheckStyle extends StaticAnalysisTool {
     }
 
     @Override
-    public Issues parse(final File file, final String moduleName) throws InvocationTargetException {
-        return new CheckStyleParser().parseIssues(file, moduleName).withOrigin(CheckStyleDescriptor.PLUGIN_ID);
+    public Issues<Issue> parse(final File file, final String moduleName) throws InvocationTargetException {
+        Issues<Issue> issues = new CheckStyleParser().parseIssues(file, moduleName);
+
+        return withOrigin(issues, CheckStyleDescriptor.PLUGIN_ID);
     }
 
     /** Registers this tool as extension point implementation. */
