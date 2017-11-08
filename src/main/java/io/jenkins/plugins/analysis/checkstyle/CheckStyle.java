@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import edu.hm.hafner.analysis.Issue;
+import edu.hm.hafner.analysis.IssueBuilder;
 import edu.hm.hafner.analysis.Issues;
 import io.jenkins.plugins.analysis.core.steps.DefaultLabelProvider;
 import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
@@ -13,7 +14,7 @@ import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool;
 import hudson.Extension;
 import hudson.plugins.checkstyle.CheckStyleDescriptor;
 import hudson.plugins.checkstyle.Messages;
-import hudson.plugins.checkstyle.parser.CheckStyleParser;
+import hudson.plugins.checkstyle.rules.CheckStyleRules;
 
 /**
  * Provides a parser and customized messages for CheckStyle.
@@ -30,10 +31,8 @@ public class CheckStyle extends StaticAnalysisTool {
     }
 
     @Override
-    public Issues<Issue> parse(final File file, final String moduleName) throws InvocationTargetException {
-        Issues<Issue> issues = new CheckStyleParser().parseIssues(file, moduleName);
-
-        return withOrigin(issues, CheckStyleDescriptor.PLUGIN_ID);
+    public Issues<Issue> parse(final File file, final IssueBuilder builder) throws InvocationTargetException {
+        return new CheckStyleParser().parse(file, builder);
     }
 
     /** Registers this tool as extension point implementation. */
@@ -44,8 +43,8 @@ public class CheckStyle extends StaticAnalysisTool {
         }
     }
 
-    private static class CheckStyleLabelProvider extends DefaultLabelProvider {
-        private CheckStyleLabelProvider() {
+    static class CheckStyleLabelProvider extends DefaultLabelProvider {
+        CheckStyleLabelProvider() {
             super(CheckStyleDescriptor.PLUGIN_ID);
         }
 
@@ -62,6 +61,11 @@ public class CheckStyle extends StaticAnalysisTool {
         @Override
         public String getTrendName() {
             return Messages.Checkstyle_Trend_Name();
+        }
+
+        @Override
+        public String getDescription(final Issue issue) {
+            return CheckStyleRules.getInstance().getDescription(issue.getType());
         }
 
         @Override
