@@ -17,7 +17,6 @@ import edu.hm.hafner.analysis.ParsingException;
 import edu.hm.hafner.analysis.Priority;
 
 import hudson.plugins.analysis.util.PackageDetectors;
-import hudson.plugins.checkstyle.CheckStyleDescriptor;
 import hudson.plugins.checkstyle.parser.CheckStyle;
 import hudson.plugins.checkstyle.parser.Error;
 import hudson.plugins.checkstyle.parser.File;
@@ -28,10 +27,6 @@ import hudson.plugins.checkstyle.parser.File;
  * @author Ulli Hafner
  */
 public class CheckStyleParser extends AbstractParser {
-    public CheckStyleParser() {
-        super(CheckStyleDescriptor.PLUGIN_ID);
-    }
-
     @Override
     public Issues<Issue> parse(final Reader reader, final IssueBuilder builder) throws ParsingCanceledException, ParsingException {
         try {
