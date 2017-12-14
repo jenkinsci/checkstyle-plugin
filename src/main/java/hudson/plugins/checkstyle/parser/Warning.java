@@ -2,11 +2,11 @@ package hudson.plugins.checkstyle.parser;
 
 import org.apache.commons.lang.StringUtils;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import hudson.plugins.analysis.util.model.AbstractAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
-import hudson.plugins.checkstyle.rules.CheckStyleRules;
+import hudson.plugins.checkstyle.rules.CheckStyleRuleInfoProvider;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * A serializable Java Bean class representing a warning.
@@ -64,7 +64,7 @@ public class Warning extends AbstractAnnotation {
 
     @Override
     public String getToolTip() {
-        return CheckStyleRules.getInstance().getDescription(getType());
+        return CheckStyleRuleInfoProvider.getInstance().getDescription(getType());
     }
 
     /** Not used anymore. @deprecated */
