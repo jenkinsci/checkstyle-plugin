@@ -93,6 +93,13 @@ public class CheckStylePublisher extends HealthAwarePublisher {
         return (CheckStyleDescriptor)super.getDescriptor();
     }
 
+    /**
+     * FIXME: Document method createAggregator
+     * @param build
+     * @param launcher
+     * @param listener
+     * @return
+     */
     public MatrixAggregator createAggregator(final MatrixBuild build, final Launcher launcher,
             final BuildListener listener) {
         return new CheckStyleAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding(),
