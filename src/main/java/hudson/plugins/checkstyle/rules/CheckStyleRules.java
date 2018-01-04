@@ -12,9 +12,10 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.digester3.Digester;
 import org.apache.commons.lang.StringUtils;
 import org.xml.sax.SAXException;
+
+import hudson.plugins.analysis.util.SecureDigester;
 
 /**
  * Reads the meta data of the Checkstyle rules from the DocBook files of the Checkstyle distribution.
@@ -54,7 +55,7 @@ public final class CheckStyleRules {
             for (int i = 0; i < ruleFiles.length; i++) {
                 String ruleFile = ruleFiles[i];
                 InputStream inputStream = CheckStyleRules.class.getResourceAsStream("config_" + ruleFile + ".xml");
-                Digester digester = createDigester();
+                SecureDigester digester = createDigester();
                 List<Rule> rules = new ArrayList<Rule>();
                 digester.push(rules);
                 digester.parse(inputStream);
@@ -87,10 +88,8 @@ public final class CheckStyleRules {
      * @throws ParserConfigurationException
      *             if digester is not configured properly
      */
-    private Digester createDigester() throws ParserConfigurationException {
-        Digester digester = new Digester();
-        digester.setValidating(false);
-        digester.setClassLoader(CheckStyleRules.class.getClassLoader());
+    private SecureDigester createDigester() throws ParserConfigurationException {
+        SecureDigester digester = new SecureDigester(CheckStyleRules.class);
 
         String section = "*/section";
         digester.addObjectCreate(section, Rule.class);
