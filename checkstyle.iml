@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
-    <output url="file://$MAVEN_REPOSITORY$/org/jvnet/hudson/plugins/analysis-pom/1.68/target/classes" />
-    <output-test url="file://$MAVEN_REPOSITORY$/org/jvnet/hudson/plugins/analysis-pom/1.68/target/test-classes" />
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/localizer" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
@@ -32,6 +32,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.jgit:org.eclipse.jgit.http.server:3.5.1.201410131835-r" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins:ssh-credentials:1.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins:credentials:1.16.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jvnet.hudson.plugins:analysis-core:1.95" level="project" />
     <orderEntry type="library" name="Maven: org.jvnet.hudson.plugins:analysis-core:1.95" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jvnet.hudson.plugins:analysis-test:1.20" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-core:2.7.11" level="project" />
