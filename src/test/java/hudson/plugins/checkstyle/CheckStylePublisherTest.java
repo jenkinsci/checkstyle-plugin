@@ -23,9 +23,16 @@
  */
 package hudson.plugins.checkstyle;
 
+import hudson.Extension;
+import hudson.Launcher;
+import hudson.model.AbstractBuild;
+import hudson.model.AbstractProject;
+import hudson.model.BuildListener;
 import hudson.model.FreeStyleProject;
 import hudson.model.Result;
 import hudson.model.UnprotectedRootAction;
+import hudson.tasks.BuildStepDescriptor;
+import hudson.tasks.Builder;
 import hudson.tasks.Shell;
 import hudson.util.HttpResponses;
 import org.apache.commons.io.FileUtils;
@@ -37,6 +44,7 @@ import org.jvnet.hudson.test.TestExtension;
 import org.kohsuke.stapler.HttpResponse;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;
@@ -52,25 +60,24 @@ public class CheckStylePublisherTest {
     @Test
     @Issue("SECURITY-656")
     public void testXxe() throws Exception {
-        String xxeInUserContentLink = j.getURL() + "userContent/xxe.xml";
         String oobInUserContentLink = j.getURL() + "userContent/oob.xml";
         String triggerLink = j.getURL() + "triggerMe";
-
+    
         String xxeFile = this.getClass().getResource("testXxe-xxe.xml").getFile();
         String xxeFileContent = FileUtils.readFileToString(new File(xxeFile), StandardCharsets.UTF_8);
         String adaptedXxeFileContent = xxeFileContent.replace("$OOB_LINK$", oobInUserContentLink);
-
+    
         String oobFile = this.getClass().getResource("testXxe-oob.xml").getFile();
         String oobFileContent = FileUtils.readFileToString(new File(oobFile), StandardCharsets.UTF_8);
         String adaptedOobFileContent = oobFileContent.replace("$TARGET_URL$", triggerLink);
-
+    
         File userContentDir = new File(j.jenkins.getRootDir(), "userContent");
-        FileUtils.writeStringToFile(new File(userContentDir, "xxe.xml"), adaptedXxeFileContent);
         FileUtils.writeStringToFile(new File(userContentDir, "oob.xml"), adaptedOobFileContent);
-
+    
         FreeStyleProject project = j.createFreeStyleProject();
-        Shell copyToWorkspace = new Shell("curl \"" + xxeInUserContentLink + "\" > xxe.xml");
-        project.getBuildersList().add(copyToWorkspace);
+        DownloadBuilder builder = new DownloadBuilder();
+        builder.fileContent = adaptedXxeFileContent;
+        project.getBuildersList().add(builder);
 
         CheckStylePublisher publisher = new CheckStylePublisher();
         publisher.setPattern("xxe.xml");
@@ -80,6 +87,34 @@ public class CheckStylePublisherTest {
 
         YouCannotTriggerMe urlHandler = j.jenkins.getExtensionList(UnprotectedRootAction.class).get(YouCannotTriggerMe.class);
         assertEquals(0, urlHandler.triggerCount);
+    }
+
+    public static class DownloadBuilder extends Builder {
+        String fileContent;
+
+        @Override
+        public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) {
+            try {
+                FileUtils.writeStringToFile(new File(build.getWorkspace().getRemote(), "xxe.xml"), fileContent);
+            } catch (IOException e) {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Extension
+        public static class DescriptorImpl extends BuildStepDescriptor<Builder> {
+            @Override
+            public boolean isApplicable(Class<? extends AbstractProject> jobType) {
+                return true;
+            }
+
+            @Override
+            public String getDisplayName() {
+                return null;
+            }
+        }
     }
 
     @TestExtension("testXxe")
