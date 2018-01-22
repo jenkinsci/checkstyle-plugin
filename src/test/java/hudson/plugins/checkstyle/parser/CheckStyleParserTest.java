@@ -8,7 +8,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 import hudson.model.FreeStyleProject;
 import hudson.model.UnprotectedRootAction;
@@ -212,7 +211,7 @@ public class CheckStyleParserTest {
     
     @Test
     @Issue("SECURITY-656")
-    public void testXxe() throws IOException, ExecutionException, InterruptedException {
+    public void testXxe() throws Exception {
         String xxeInUserContentLink = j.getURL() + "userContent/xxe.xml";
         String oobInUserContentLink = j.getURL() + "userContent/oob.xml";
         String triggerLink = j.getURL() + "triggerMe";
