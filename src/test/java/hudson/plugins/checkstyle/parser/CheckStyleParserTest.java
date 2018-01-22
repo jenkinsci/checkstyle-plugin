@@ -112,7 +112,7 @@ public class CheckStyleParserTest {
         ParserResult withoutDuplicates = new ParserResult(annotations);
         assertEquals("Wrong number of annotations detected.", 58, withoutDuplicates.getNumberOfAnnotations());
     }
-    
+
     /**
      * Tests parsing of a file with Scala style warnings.
      *
