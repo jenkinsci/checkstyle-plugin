@@ -1,13 +1,23 @@
 package hudson.plugins.checkstyle.parser;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
+import hudson.model.FreeStyleProject;
+import hudson.model.UnprotectedRootAction;
+import hudson.plugins.checkstyle.CheckStylePublisher;
+import hudson.tasks.Shell;
+import hudson.util.HttpResponses;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.junit.Rule;
 import org.junit.Test;
 
 import com.google.common.collect.Sets;
@@ -24,17 +34,27 @@ import hudson.plugins.analysis.util.model.MavenModule;
 import hudson.plugins.analysis.util.model.Priority;
 import hudson.plugins.analysis.util.model.WorkspaceFile;
 import hudson.plugins.checkstyle.rules.CheckStyleRules;
+import org.jvnet.hudson.test.Issue;
+import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.TestExtension;
+import org.jvnet.hudson.test.WithoutJenkins;
+import org.kohsuke.stapler.HttpResponse;
 
 /**
  * Tests the extraction of CheckStyle analysis results.
  */
 public class CheckStyleParserTest {
+
+    @Rule
+    public JenkinsRule j = new JenkinsRule();
+
     /**
      * Parses a sequence of files
      *
      * @throws InvocationTargetException if the file could not be read
      */
     @Test
+    @WithoutJenkins
     public void shouldComputeDeltas() throws InvocationTargetException {
         BuildResultEvaluator evaluator = new BuildResultEvaluator("url");
         StringBuilder logger = new StringBuilder();
@@ -82,6 +102,7 @@ public class CheckStyleParserTest {
      * @see <a href="http://issues.jenkins-ci.org/browse/JENKINS-25511">Issue 25511</a>
      */
     @Test
+    @WithoutJenkins
     public void issue25511() throws InvocationTargetException {
         Collection<FileAnnotation> annotations = parse("issue25511.xml");
 
@@ -104,6 +125,7 @@ public class CheckStyleParserTest {
      * @see <a href="http://issues.jenkins-ci.org/browse/JENKINS-19122">Issue 19122</a>
      */
     @Test
+    @WithoutJenkins
     public void testColumnPositions() throws InvocationTargetException {
         Collection<FileAnnotation> annotations = parse("issue19122.xml");
 
@@ -121,6 +143,7 @@ public class CheckStyleParserTest {
      * @see <a href="http://issues.jenkins-ci.org/browse/JENKINS-17287">Issue 17287</a>
      */
     @Test
+    @WithoutJenkins
     public void testParsingOfScalaStyleFormat() throws InvocationTargetException {
         Collection<FileAnnotation> annotations = parse("scalastyle-output.xml");
 
@@ -133,6 +156,7 @@ public class CheckStyleParserTest {
      * @throws InvocationTargetException Signals that an I/O exception has occurred
      */
     @Test
+    @WithoutJenkins
     public void analyseCheckStyleFile() throws InvocationTargetException {
         CheckStyleRules.getInstance().initialize();
 
@@ -184,5 +208,63 @@ public class CheckStyleParserTest {
             IOUtils.closeQuietly(inputStream);
         }
         return annotations;
+    }
+    
+    @Test
+    @Issue("SECURITY-656")
+    public void testXxe() throws IOException, ExecutionException, InterruptedException {
+        String xxeInUserContentLink = j.getURL() + "userContent/xxe.xml";
+        String oobInUserContentLink = j.getURL() + "userContent/oob.xml";
+        String triggerLink = j.getURL() + "triggerMe";
+        
+        String xxeFile = this.getClass().getResource("testXxe-xxe.xml").getFile();
+        String xxeFileContent = FileUtils.readFileToString(new java.io.File(xxeFile), StandardCharsets.UTF_8);
+        String adaptedXxeFileContent = xxeFileContent.replace("$OOB_LINK$", oobInUserContentLink);
+        
+        String oobFile = this.getClass().getResource("testXxe-oob.xml").getFile();
+        String oobFileContent = FileUtils.readFileToString(new java.io.File(oobFile), StandardCharsets.UTF_8);
+        String adaptedOobFileContent = oobFileContent.replace("$TARGET_URL$", triggerLink);
+        
+        java.io.File userContentDir = new java.io.File(j.jenkins.getRootDir(), "userContent");
+        FileUtils.writeStringToFile(new java.io.File(userContentDir, "xxe.xml"), adaptedXxeFileContent);
+        FileUtils.writeStringToFile(new File(userContentDir, "oob.xml"), adaptedOobFileContent);
+        
+        FreeStyleProject project = j.createFreeStyleProject();
+        Shell copyToWorkspace = new Shell("curl \"" + xxeInUserContentLink + "\" > xxe.xml");
+        project.getBuildersList().add(copyToWorkspace);
+        
+        CheckStylePublisher publisher = new CheckStylePublisher();
+        publisher.setPattern("xxe.xml");
+        project.getPublishersList().add(publisher);
+        
+        assertEquals(Result.SUCCESS, project.scheduleBuild2(0).get().getResult());
+        
+        YouCannotTriggerMe urlHandler = j.jenkins.getExtensionList(UnprotectedRootAction.class).get(YouCannotTriggerMe.class);
+        assertEquals(urlHandler.triggerCount, 0);
+    }
+    
+    @TestExtension("testXxe")
+    public static class YouCannotTriggerMe implements UnprotectedRootAction {
+        private int triggerCount = 0;
+        
+        @Override
+        public String getIconFileName() {
+            return null;
+        }
+        
+        @Override
+        public String getDisplayName() {
+            return null;
+        }
+        
+        @Override
+        public String getUrlName() {
+            return "triggerMe";
+        }
+        
+        public HttpResponse doIndex() {
+            triggerCount++;
+            return HttpResponses.plainText("triggered");
+        }
     }
 }
