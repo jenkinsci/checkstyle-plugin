@@ -7,12 +7,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.commons.digester3.Digester;
 import org.apache.commons.lang.StringUtils;
 import org.xml.sax.SAXException;
 
 import hudson.plugins.analysis.core.AbstractAnnotationParser;
 import hudson.plugins.analysis.util.PackageDetectors;
-import hudson.plugins.analysis.util.SecureDigester;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
 
@@ -45,8 +45,8 @@ public class CheckStyleParser extends AbstractAnnotationParser {
     @Override
     public Collection<FileAnnotation> parse(final InputStream file, final String moduleName) throws InvocationTargetException {
         try {
-            SecureDigester digester = new SecureDigester(CheckStyleParser.class);
-
+            Digester digester = new Digester();
+            digester.setClassLoader(CheckStyleParser.class.getClassLoader());
             String rootXPath = "checkstyle";
             digester.addObjectCreate(rootXPath, CheckStyle.class);
             digester.addSetProperties(rootXPath);
