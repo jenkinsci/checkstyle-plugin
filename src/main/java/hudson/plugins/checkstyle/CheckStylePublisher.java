@@ -7,21 +7,22 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest;
 
-import net.sf.json.JSONObject;
-
-import hudson.FilePath;
-import hudson.Launcher;
-import hudson.matrix.MatrixAggregator;
-import hudson.matrix.MatrixBuild;
 import hudson.model.BuildListener;
 import hudson.model.Run;
 import hudson.model.TaskListener;
+
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.FilesParser;
 import hudson.plugins.analysis.core.HealthAwarePublisher;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.checkstyle.parser.CheckStyleParser;
+
+import hudson.FilePath;
+import hudson.Launcher;
+import hudson.matrix.MatrixAggregator;
+import hudson.matrix.MatrixBuild;
+import net.sf.json.JSONObject;
 
 /**
  * Publishes the results of the Checkstyle analysis (freestyle project type).
@@ -92,7 +93,13 @@ public class CheckStylePublisher extends HealthAwarePublisher {
         return (CheckStyleDescriptor)super.getDescriptor();
     }
 
-    @Override
+    /**
+     * FIXME: Document method createAggregator
+     * @param build
+     * @param launcher
+     * @param listener
+     * @return
+     */
     public MatrixAggregator createAggregator(final MatrixBuild build, final Launcher launcher,
             final BuildListener listener) {
         return new CheckStyleAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding(),

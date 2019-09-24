@@ -1,7 +1,10 @@
 package hudson.plugins.checkstyle;
 
+import hudson.plugins.checkstyle.rules.CheckStyleRuleInfoProvider;
+import hudson.plugins.checkstyle.rules.CheckStyleRuleInfoPlugin;
+
 import hudson.Plugin;
-import hudson.plugins.checkstyle.rules.CheckStyleRules;
+import jenkins.model.Jenkins;
 
 /**
  * Initializes the Checkstyle messages and descriptions.
@@ -11,6 +14,10 @@ import hudson.plugins.checkstyle.rules.CheckStyleRules;
 public class CheckStylePlugin extends Plugin {
     @Override
     public void start() {
-        CheckStyleRules.getInstance().initialize();
+        final CheckStyleRuleInfoProvider csrip = CheckStyleRuleInfoProvider.getInstance();
+        csrip.initialize();
+        for (CheckStyleRuleInfoPlugin plugin : Jenkins.getActiveInstance().getExtensionList(CheckStyleRuleInfoPlugin.class)) {
+           csrip.add(plugin);
+        }
     }
 }
